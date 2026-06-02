@@ -260,54 +260,112 @@ export default function HomePage() {
         {/* ══════════════════════════════════════════
             1. HERO
         ══════════════════════════════════════════ */}
-        <section className="hero-section" style={{
-          position: 'relative', width: '100%', minHeight: '100vh',
-          overflow: 'hidden', background: `linear-gradient(180deg,#e8f5c0 0%,${C.hero} 60%,#cce890 100%)`,
-          display: 'flex', flexDirection: 'column',
-        }}>
-          {/* Radial left-side glow */}
+        <style>{`
+          /* ── Mobile hero layout ───────────────────────────────── */
+          .hero-wrap {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(180deg,#e8f5c0 0%,${C.hero} 60%,#cce890 100%);
+            display: flex;
+            flex-direction: column;
+          }
+
+          /* Desktop: image absolute right, text takes left half */
+          @media (min-width: 769px) {
+            .hero-inner {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              min-height: 100vh;
+              padding: 100px 50% 60px 5%;
+            }
+            .hero-product-img {
+              position: absolute;
+              right: ${HERO_IMAGE.right};
+              bottom: ${HERO_IMAGE.bottom};
+              height: ${HERO_IMAGE.height};
+              width: auto;
+              object-fit: contain;
+              z-index: 2;
+            }
+          }
+
+          /* Mobile: stack — image on top, text below, no overlap */
+          @media (max-width: 768px) {
+            .hero-wrap { min-height: auto; padding-bottom: 40px; }
+            .hero-inner {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              padding: 90px 24px 32px;
+              position: relative;
+              z-index: 4;
+            }
+            .hero-product-img {
+              position: relative;
+              display: block;
+              width: 90%;
+              max-width: 340px;
+              height: auto;
+              margin: 0 auto 28px;
+              object-fit: contain;
+              z-index: 2;
+              animation: hero-float ${HERO_IMAGE.floatDuration}s ease-in-out infinite !important;
+            }
+            .hero-headline {
+              font-size: clamp(2.2rem, 10vw, 3.2rem) !important;
+            }
+            .btn-white, .btn-olive {
+              width: 100%;
+              justify-content: center;
+            }
+          }
+
+          /* Tablet */
+          @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-product-img {
+              height: 65vh !important;
+            }
+            .hero-inner { padding-right: 48% !important; }
+          }
+        `}</style>
+
+        <section className="hero-wrap">
+          {/* Radial glow */}
           <div style={{
             position:'absolute',inset:0,zIndex:1,pointerEvents:'none',
             background:'radial-gradient(ellipse 60% 80% at 18% 50%,rgba(210,240,110,.55) 0%,transparent 68%)',
           }}/>
 
-          {/* Product image — all settings in HERO_IMAGE config at top of file */}
+          {/* Product image */}
           <img
             src={HERO_IMAGE.src}
             alt="Avocadoria dessert cups"
-            className="hero-img-anim"
-            style={{
-              position:  'absolute',
-              right:     HERO_IMAGE.right,
-              bottom:    HERO_IMAGE.bottom,
-              height:    HERO_IMAGE.height,
-              width:     'auto',
-              objectFit: 'contain',
-              zIndex:    2,
-            }}
+            className="hero-img-anim hero-product-img"
+            style={{ zIndex: 2 }}
           />
 
-          {/* Gradient overlay over image */}
+          {/* Gradient overlay — desktop only meaningful */}
           <div style={{
-            position:'absolute',inset:0,zIndex:3,pointerEvents:'none',
+            position:'absolute', inset:0, zIndex:3, pointerEvents:'none',
             background: buildOverlay(OVERLAY),
           }}/>
 
           {/* Hero text */}
-          <div className="hero-text-col" style={{
-            position:'relative',zIndex:4,display:'flex',flexDirection:'column',
-            justifyContent:'center',minHeight:'100vh',
-            paddingLeft:'5%',paddingRight:'50%',paddingBottom:'60px',
+          <div className="hero-inner" style={{
+            position:'relative', zIndex:4,
             opacity: loaded ? 1 : 0,
             transform: loaded ? 'translateY(0)' : 'translateY(24px)',
-            transition:'opacity .7s ease .2s,transform .7s ease .2s',
+            transition:'opacity .7s ease .2s, transform .7s ease .2s',
           }}>
             <h1 className="hero-headline">
               Home of No. 1<br />
               Avocado-Based<br />
               Desserts
             </h1>
-            <div style={{ display:'flex', gap:'16px', flexWrap:'wrap' }}>
+            <div style={{ display:'flex', gap:'12px', flexWrap:'wrap', width:'100%' }}>
               <Link to="/menu"       className="btn-white">Our Menu</Link>
               <Link to="/our-stores" className="btn-olive">Our Stores</Link>
             </div>
