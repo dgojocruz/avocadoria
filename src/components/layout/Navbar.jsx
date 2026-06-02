@@ -37,8 +37,8 @@ const NAV_STYLE = {
   colorDefault:     '#8A5F3C',
   colorActive:      '#b6c548',
   fontFamily:       'Nunito, sans-serif',
-  fontSize:         '24px',
-  fontWeight:       '800',
+  fontSize:         '17px',
+  fontWeight:       '700',
   letterSpacing:    '0.02em',
 
   // Emboss — light highlight above, shadow below = raised look
@@ -95,7 +95,7 @@ export default function Navbar() {
             src="/logo.png"
             alt="Avocadoria"
             style={{
-              height: '200px',
+              height: '88px',
               width: 'auto',
               display: 'block',
               filter: [
@@ -110,7 +110,7 @@ export default function Navbar() {
         </Link>
 
         {/* ── Desktop nav ── */}
-        <nav aria-label="Main navigation" style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="hidden lg:flex">
+        <nav aria-label="Main navigation" style={{ display: 'flex', alignItems: 'center', gap: '32px' }} className="hidden lg:flex nav-gap">
           {NAV_LINKS.map(({ label, to }) => (
             <NavLink
               key={to}

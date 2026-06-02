@@ -769,7 +769,7 @@ export default function OurStoresPage() {
         {showResults && (() => {
           const LAYOUT = {
             // ── Overall container ────────────────────────────────
-            navbarHeight:    150,    // px — must match your navbar height
+            navbarHeight:    88,    // px — must match your navbar height
             containerMaxW:   1280,  // px — max width of the whole panel
             containerPadX:   24,    // px — left/right page margin
 
@@ -894,10 +894,12 @@ export default function OurStoresPage() {
               margin: '0 auto',
               padding: `${LAYOUT.sectionPaddingT}px ${LAYOUT.containerPadX}px ${LAYOUT.sectionPaddingB}px`,
               display: 'grid',
-              gridTemplateColumns: `${LAYOUT.listWidth}px 1fr`,
+              gridTemplateColumns: `min(${LAYOUT.listWidth}px, 100%) 1fr`,
               gap: `${LAYOUT.gapBetween}px`,
               alignItems: 'start',
-            }}>
+            }}
+            className="stores-grid"
+            >
 
               {/* ── LEFT: branch list ── */}
               <div style={{

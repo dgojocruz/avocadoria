@@ -22,6 +22,52 @@ function buildOverlay({ direction, fadeStart, fadeEnd, color, opacity }) {
   return `linear-gradient(${direction},rgba(${r},${g},${b},0) ${fadeStart}%,rgba(${r},${g},${b},${opacity}) ${fadeEnd}%)`
 }
 
+// ─── Hero image config ────────────────────────────────────────────────────────
+// All animation and positioning settings for the hero product image.
+// Change any value here — no need to touch the CSS or JSX below.
+//
+// ── Position ─────────────────────────────────────────────────────────────────
+// right:         distance from the right edge of the screen   e.g. '-2%' | '5%'
+// bottom:        distance from the bottom of the hero section e.g. '8%'  | '0%'
+// height:        size of the image                            e.g. '88vh'| '70vh'
+//
+// ── Slide-in (Phase 1 — plays once on page load) ─────────────────────────────
+// slideFrom:     starting X offset (px) — positive = slides from right
+//                larger number = more dramatic entrance         e.g. 120
+// slideRotateStart: starting tilt angle in degrees             e.g. 2
+// slideDuration: how long the entry animation takes (seconds)  e.g. 1.1
+//
+// ── Float (Phase 2 — loops forever after slide-in) ───────────────────────────
+// floatHeight:   how many px the image bobs up and down        e.g. 22
+// floatRotate:   how many degrees it tilts while floating       e.g. 1.5
+// floatDuration: one full bob cycle in seconds                  e.g. 3.8
+//                slower = lazier / more relaxed feel
+//                faster = more energetic / playful feel
+// floatDelay:    seconds after slide-in before float starts     e.g. 1.1
+//                (set equal to slideDuration for seamless chain)
+// ─────────────────────────────────────────────────────────────────────────────
+const HERO_IMAGE = {
+  // ── Source
+  src:              '/hero-bg.png',
+
+  // ── Position & size
+  right:            '-2%',
+  bottom:           '8%',
+  height:           '88vh',
+
+  // ── Slide-in
+  slideFrom:        120,       // px from right — bigger = more dramatic
+  slideRotateStart: 2,         // degrees tilt at start
+  slideDuration:    1.1,       // seconds
+
+  // ── Float loop
+  floatHeight:      22,        // px up/down
+  floatRotate:      1.5,       // degrees tilt while floating
+  floatDuration:    3.8,       // seconds per cycle — try 2.5 (fast) or 5.0 (slow)
+  floatDelay:       1.1,       // seconds — match slideDuration for seamless chain
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
 // ─── Discover Avo Faves button config ────────────────────────────────────────
 // label:         button text
 // fontSize:      any CSS font-size value e.g. '16px', '1.2rem', 'clamp(1rem,2vw,1.4rem)'
@@ -104,28 +150,21 @@ export default function HomePage() {
           font-weight: normal; font-style: normal; font-display: swap;
         }
 
-        /* ── Hero image: Option D — Slide in then Float ──────────────────
-           Phase 1: slides in from the right on page load (0.9s)
-           Phase 2: transitions into a gentle float loop forever after
-           Adjust durations and distances below to taste:
-             --slide-distance: how far it slides in from (px)
-             --float-height:   how high it bobs up (px)
-             --float-speed:    one full bob cycle duration (s)
-        ────────────────────────────────────────────────────────────────── */
+        /* ── Hero image animation — driven by HERO_IMAGE config ── */
         @keyframes hero-slide-in {
-          0%   { opacity:0; transform: translateX(120px) rotate(2deg); }
-          50%  { opacity:1; transform: translateX(-12px) rotate(-0.5deg); }
-          80%  { transform: translateX(6px) rotate(0.5deg); }
+          0%   { opacity:0; transform: translateX(${HERO_IMAGE.slideFrom}px) rotate(${HERO_IMAGE.slideRotateStart}deg); }
+          60%  { opacity:1; transform: translateX(${-HERO_IMAGE.slideFrom * 0.1}px) rotate(${-HERO_IMAGE.slideRotateStart * 0.25}deg); }
+          80%  { transform: translateX(${HERO_IMAGE.slideFrom * 0.05}px) rotate(${HERO_IMAGE.slideRotateStart * 0.25}deg); }
           100% { opacity:1; transform: translateX(0px) rotate(0deg); }
         }
         @keyframes hero-float {
-          0%,100% { transform: translateY(0px) rotate(-1.5deg); }
-          50%      { transform: translateY(-22px) rotate(1.5deg); }
+          0%,100% { transform: translateY(0px) rotate(-${HERO_IMAGE.floatRotate}deg); }
+          50%      { transform: translateY(-${HERO_IMAGE.floatHeight}px) rotate(${HERO_IMAGE.floatRotate}deg); }
         }
         .hero-img-anim {
           animation:
-            hero-slide-in 1.1s cubic-bezier(.22,1,.36,1) forwards,
-            hero-float    3.8s ease-in-out 1.1s infinite;
+            hero-slide-in ${HERO_IMAGE.slideDuration}s cubic-bezier(.22,1,.36,1) forwards,
+            hero-float    ${HERO_IMAGE.floatDuration}s ease-in-out ${HERO_IMAGE.floatDelay}s infinite;
         }
 
         @keyframes shimmer-sweep {
@@ -221,7 +260,7 @@ export default function HomePage() {
         {/* ══════════════════════════════════════════
             1. HERO
         ══════════════════════════════════════════ */}
-        <section style={{
+        <section className="hero-section" style={{
           position: 'relative', width: '100%', minHeight: '100vh',
           overflow: 'hidden', background: `linear-gradient(180deg,#e8f5c0 0%,${C.hero} 60%,#cce890 100%)`,
           display: 'flex', flexDirection: 'column',
@@ -232,19 +271,19 @@ export default function HomePage() {
             background:'radial-gradient(ellipse 60% 80% at 18% 50%,rgba(210,240,110,.55) 0%,transparent 68%)',
           }}/>
 
-          {/* Product image — Option D: slides in from right, then floats forever */}
+          {/* Product image — all settings in HERO_IMAGE config at top of file */}
           <img
-            src="/hero-bg.png"
+            src={HERO_IMAGE.src}
             alt="Avocadoria dessert cups"
             className="hero-img-anim"
             style={{
-              position:   'absolute',
-              right:      '-2%',
-              bottom:     '-2%',
-              height:     '80vh',
-              width:      'auto',
-              objectFit:  'contain',
-              zIndex:     2,
+              position:  'absolute',
+              right:     HERO_IMAGE.right,
+              bottom:    HERO_IMAGE.bottom,
+              height:    HERO_IMAGE.height,
+              width:     'auto',
+              objectFit: 'contain',
+              zIndex:    2,
             }}
           />
 
@@ -255,7 +294,7 @@ export default function HomePage() {
           }}/>
 
           {/* Hero text */}
-          <div style={{
+          <div className="hero-text-col" style={{
             position:'relative',zIndex:4,display:'flex',flexDirection:'column',
             justifyContent:'center',minHeight:'100vh',
             paddingLeft:'5%',paddingRight:'50%',paddingBottom:'60px',
