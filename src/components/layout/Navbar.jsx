@@ -81,7 +81,7 @@ export default function Navbar() {
         alignItems:     'center',
         justifyContent: 'space-between',
         width:          '100%',
-        paddingRight:   '40px',
+        paddingRight:   'clamp(16px, 3vw, 40px)',
       }}>
 
         {/* ── Logo — flush left, large like design ── */}
@@ -95,7 +95,7 @@ export default function Navbar() {
             src="/logo.png"
             alt="Avocadoria"
             style={{
-              height: '88px',
+              height: 'clamp(52px, 8vw, 88px)',
               width: 'auto',
               display: 'block',
               filter: [
