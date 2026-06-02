@@ -1,0 +1,1179 @@
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
+import SEO from '@/components/ui/SEO'
+
+// ─── BRANCH DATA ─────────────────────────────────────────────────────────────
+// Source: avocadoria_branches_embed_urls.xlsx
+// To add orderUrl later: find the branch by name and set orderUrl:'https://...'
+// To add a new branch: copy any entry, give it a new id, and fill in details.
+// ─────────────────────────────────────────────────────────────────────────────
+const BRANCHES = [
+  {id:0,name:'168 Mall - 5th Floor',address:'168mall 5th Floor Foodcourt Binondo, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.6065,lng:120.9734,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20168mall%205th%20Floor%20Foodcourt%20Binondo%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=168mall+5th+Floor+Foodcourt+Binondo%2C+Manila+Philippines',orderUrl:null},
+  {id:1,name:'168 Mall - Ground Floor',address:'Ground Flr. Entrance Soler St. Binondo, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.6065,lng:120.9734,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Flr.%20Entrance%20Soler%20St.%20Binondo%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Flr.+Entrance+Soler+St.+Binondo%2C+Manila+Philippines',orderUrl:null},
+  {id:2,name:'999 Shopping Mall',address:'Stall 6 Food World Express Isetann Recto, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.6032,lng:120.9847,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Stall%206%20Food%20World%20Express%20Isetann%20Recto%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Stall+6+Food+World+Express+Isetann+Recto%2C+Manila+Philippines',orderUrl:null},
+  {id:3,name:'Alabang Town Center',address:'Ground Level Entertainment Complex, Alabang Town Center, Muntinlupa',island:'Metro Manila',region:'Metro Manila',lat:14.4223,lng:121.0402,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Level%20Entertainment%20Complex%2C%20Alabang%20Town%20Center%2C%20Muntinlupa%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Level+Entertainment+Complex%2C+Alabang+Town+Center%2C+Muntinlupa+Philippines',orderUrl:null},
+  {id:4,name:'AsiaTown at McKinley West',address:'1630 Le Grand Ave, Taguig, Metro Manila',island:'Metro Manila',region:'Metro Manila',lat:14.5383,lng:121.0532,embedUrl:'https://maps.google.com/maps?q=Avocadoria%201630%20Le%20Grand%20Ave%2C%20Taguig%2C%20Metro%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=1630+Le+Grand+Ave%2C+Taguig%2C+Metro+Manila+Philippines',orderUrl:null},
+  {id:5,name:'Ayala Malls Cloverleaf',address:'4th Level Ayala Malls Cloverleaf, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.655,lng:121.0011,embedUrl:'https://maps.google.com/maps?q=Avocadoria%204th%20Level%20Ayala%20Malls%20Cloverleaf%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=4th+Level+Ayala+Malls+Cloverleaf%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:6,name:'Ayala Malls Fairview Terraces',address:'LGF Ayala Mall Fairview Terraces Quirino Highway Novaliches Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.7353,lng:121.059,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20LGF%20Ayala%20Mall%20Fairview%20Terraces%20Quirino%20Highway%20Novaliches%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=LGF+Ayala+Mall+Fairview+Terraces+Quirino+Highway+Novaliches+Quezon+City+Philippines',orderUrl:null},
+  {id:7,name:'Ayala Malls Manila Bay',address:'2nd Floor Building B Ayala Malls Manila Bay',island:'Metro Manila',region:'Metro Manila',lat:14.5252,lng:120.9901,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%20Building%20B%20Ayala%20Malls%20Manila%20Bay%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor+Building+B+Ayala+Malls+Manila+Bay+Philippines',orderUrl:null},
+  {id:8,name:'Ayala Malls Marikina',address:'Liwasang Kalayaan, Marikina, 1800 Metro Manila',island:'Metro Manila',region:'Metro Manila',lat:14.6488,lng:121.1147,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Liwasang%20Kalayaan%2C%20Marikina%2C%201800%20Metro%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Liwasang+Kalayaan%2C+Marikina%2C+1800+Metro+Manila+Philippines',orderUrl:null},
+  {id:9,name:'Ayala Malls Market Market',address:'3rd Floor Market Market Mall BGC, Taguig',island:'Metro Manila',region:'Metro Manila',lat:14.5466,lng:121.0495,embedUrl:'https://maps.google.com/maps?q=Avocadoria%203rd%20Floor%20Market%20Market%20Mall%20BGC%2C%20Taguig%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=3rd+Floor+Market+Market+Mall+BGC%2C+Taguig+Philippines',orderUrl:null},
+  {id:10,name:'Ayala Malls The 30th',address:'Lower Ground, Ayala Malls The 30th, 30 Meralco Ave, Ortigas Center, Pasig',island:'Metro Manila',region:'Metro Manila',lat:14.5802,lng:121.0642,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lower%20Ground%2C%20Ayala%20Malls%20The%2030th%2C%2030%20Meralco%20Ave%2C%20Ortigas%20Center%2C%20Pasig%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lower+Ground%2C+Ayala+Malls+The+30th%2C+30+Meralco+Ave%2C+Ortigas+Center%2C+Pasig+Philippines',orderUrl:null},
+  {id:11,name:'Ayala Malls Trinoma',address:'2nd Level Food Choices, Trinoma, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6533,lng:121.0334,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Level%20Food%20Choices%2C%20Trinoma%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Level+Food+Choices%2C+Trinoma%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:12,name:'Ayala Malls Vertis North',address:'Basement 1 Ayala Malls Vertis North, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6523,lng:121.0358,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Basement%201%20Ayala%20Malls%20Vertis%20North%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Basement+1+Ayala+Malls+Vertis+North%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:13,name:'Batasan Hills',address:'A-Plaza Bldg. 1st Floor, Batasan Hills, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6911,lng:121.1012,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20A-Plaza%20Bldg.%201st%20Floor%2C%20Batasan%20Hills%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=A-Plaza+Bldg.+1st+Floor%2C+Batasan+Hills%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:14,name:'Centris Mall',address:'2nd Floor, Centris Station, Eton Centris, Edsa Corner Quezon Avenue, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6288,lng:121.015,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%2C%20Centris%20Station%2C%20Eton%20Centris%2C%20Edsa%20Corner%20Quezon%20Avenue%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor%2C+Centris+Station%2C+Eton+Centris%2C+Edsa+Corner+Quezon+Avenue%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:15,name:'Double Dragon Plaza',address:'Ground Floor Double Dragon Plaza DD Meridian Park, Pasay City',island:'Metro Manila',region:'Metro Manila',lat:14.5364,lng:120.9913,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Double%20Dragon%20Plaza%20DD%20Meridian%20Park%2C%20Pasay%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Double+Dragon+Plaza+DD+Meridian+Park%2C+Pasay+City+Philippines',orderUrl:null},
+  {id:16,name:'Drive and Dine - Meycauayan',address:'Canumay West, Valenzuela, 1447 Metro Manila',island:'Metro Manila',region:'Metro Manila',lat:14.7192,lng:120.9866,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Canumay%20West%2C%20Valenzuela%2C%201447%20Metro%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Canumay+West%2C+Valenzuela%2C+1447+Metro+Manila+Philippines',orderUrl:null},
+  {id:17,name:'Estancia Mall',address:'LG East Wing Estancia Mall, Pasig City',island:'Metro Manila',region:'Metro Manila',lat:14.5819,lng:121.0636,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20LG%20East%20Wing%20Estancia%20Mall%2C%20Pasig%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=LG+East+Wing+Estancia+Mall%2C+Pasig+City+Philippines',orderUrl:null},
+  {id:18,name:'Ever Commonwealth',address:'Ever Gotesco Avenue, Commonwealth Ave, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6781,lng:121.0854,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ever%20Gotesco%20Avenue%2C%20Commonwealth%20Ave%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ever+Gotesco+Avenue%2C+Commonwealth+Ave%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:19,name:'Evia Lifestyle Mall',address:'2/F Bldg. C Evia Lifestyle Center, Daang Hari Road, Las Piñas City',island:'Metro Manila',region:'Metro Manila',lat:14.4272,lng:120.9928,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202/F%20Bldg.%20C%20Evia%20Lifestyle%20Center%2C%20Daang%20Hari%20Road%2C%20Las%20Pi%C3%B1as%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2/F+Bldg.+C+Evia+Lifestyle+Center%2C+Daang+Hari+Road%2C+Las+Piñas+City+Philippines',orderUrl:null},
+  {id:20,name:'F. Varona, Tondo Manila',address:'Ugbo Tondo, Simoun St., Manila',island:'Metro Manila',region:'Metro Manila',lat:14.6233,lng:120.9638,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ugbo%20Tondo%2C%20Simoun%20St.%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ugbo+Tondo%2C+Simoun+St.%2C+Manila+Philippines',orderUrl:null},
+  {id:21,name:'Festival Mall Alabang',address:'Ground Floor Festival Mall, Alabang, Muntinlupa',island:'Metro Manila',region:'Metro Manila',lat:14.4226,lng:121.0269,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Festival%20Mall%2C%20Alabang%2C%20Muntinlupa%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Festival+Mall%2C+Alabang%2C+Muntinlupa+Philippines',orderUrl:null},
+  {id:22,name:'Fishermall Malabon',address:'2F Fisher Mall Malabon',island:'Metro Manila',region:'Metro Manila',lat:14.6568,lng:120.9608,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202F%20Fisher%20Mall%20Malabon%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2F+Fisher+Mall+Malabon+Philippines',orderUrl:null},
+  {id:23,name:'Fishermall QC',address:'2F Fisher Mall, Quezon Avenue, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6337,lng:121.0196,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202F%20Fisher%20Mall%2C%20Quezon%20Avenue%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2F+Fisher+Mall%2C+Quezon+Avenue%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:24,name:'Food District BGC',address:'Kiosk 3, LG One Bonifacio High Street Mall, Taguig',island:'Metro Manila',region:'Metro Manila',lat:14.5512,lng:121.0469,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Kiosk%203%2C%20LG%20One%20Bonifacio%20High%20Street%20Mall%2C%20Taguig%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Kiosk+3%2C+LG+One+Bonifacio+High+Street+Mall%2C+Taguig+Philippines',orderUrl:null},
+  {id:25,name:'FTI Hypermarket',address:'GF Hypermarket, FTI Complex, Taguig',island:'Metro Manila',region:'Metro Manila',lat:14.5172,lng:121.0364,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20GF%20Hypermarket%2C%20FTI%20Complex%2C%20Taguig%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=GF+Hypermarket%2C+FTI+Complex%2C+Taguig+Philippines',orderUrl:null},
+  {id:26,name:'Gateway Mall',address:'Gateway Mall 1, Ground Floor, Cubao, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6209,lng:121.0526,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Gateway%20Mall%201%2C%20Ground%20Floor%2C%20Cubao%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Gateway+Mall+1%2C+Ground+Floor%2C+Cubao%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:27,name:'Greenhills Unimart',address:'Ground Floor Unimart Grocery Greenhills, San Juan City',island:'Metro Manila',region:'Metro Manila',lat:14.6016,lng:121.0516,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Unimart%20Grocery%20Greenhills%2C%20San%20Juan%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Unimart+Grocery+Greenhills%2C+San+Juan+City+Philippines',orderUrl:null},
+  {id:28,name:'Greenhills Virra Mall',address:'2nd Floor VMall Greenhills, San Juan City',island:'Metro Manila',region:'Metro Manila',lat:14.602,lng:121.0498,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%20VMall%20Greenhills%2C%20San%20Juan%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor+VMall+Greenhills%2C+San+Juan+City+Philippines',orderUrl:null},
+  {id:29,name:'IPC Mckinley Hill',address:'2nd Food Junction IPC Bldg. McKinley Hills Fort Bonifacio, Taguig',island:'Metro Manila',region:'Metro Manila',lat:14.5384,lng:121.0532,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Food%20Junction%20IPC%20Bldg.%20McKinley%20Hills%20Fort%20Bonifacio%2C%20Taguig%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Food+Junction+IPC+Bldg.+McKinley+Hills+Fort+Bonifacio%2C+Taguig+Philippines',orderUrl:null},
+  {id:30,name:'Kai Mall',address:'GF Stall 11 Kai Mall, Caloocan City',island:'Metro Manila',region:'Metro Manila',lat:14.7607,lng:121.051,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20GF%20Stall%2011%20Kai%20Mall%2C%20Caloocan%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=GF+Stall+11+Kai+Mall%2C+Caloocan+City+Philippines',orderUrl:null},
+  {id:31,name:'Landmark Manila Bay',address:'Landmark Manila Bay Foodcourt, Basement 1, Paranaque City',island:'Metro Manila',region:'Metro Manila',lat:14.5244,lng:120.9901,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Landmark%20Manila%20Bay%20Foodcourt%2C%20Basement%201%2C%20Paranaque%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Landmark+Manila+Bay+Foodcourt%2C+Basement+1%2C+Paranaque+City+Philippines',orderUrl:null},
+  {id:32,name:'Landmark Trinoma',address:'Ground Floor Food Center Landmark Trinoma, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6533,lng:121.0334,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Food%20Center%20Landmark%20Trinoma%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Food+Center+Landmark+Trinoma%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:33,name:'Landmark Makati',address:'Basement 1 Food Center, Ayala Center, Makati City',island:'Metro Manila',region:'Metro Manila',lat:14.5536,lng:121.0222,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Basement%201%20Food%20Center%2C%20Ayala%20Center%2C%20Makati%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Basement+1+Food+Center%2C+Ayala+Center%2C+Makati+City+Philippines',orderUrl:null},
+  {id:34,name:'Lucky Chinatown Mall',address:'Ground Floor, Lucky Chinatown, Binondo, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.6038,lng:120.9742,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%2C%20Lucky%20Chinatown%2C%20Binondo%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor%2C+Lucky+Chinatown%2C+Binondo%2C+Manila+Philippines',orderUrl:null},
+  {id:35,name:'Moriones, Tondo',address:'399 Moriones St. Tondo Manila',island:'Metro Manila',region:'Metro Manila',lat:14.61,lng:120.9655,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20399%20Moriones%20St.%20Tondo%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=399+Moriones+St.+Tondo+Manila+Philippines',orderUrl:null},
+  {id:36,name:'One Ayala Mall',address:'Kiosk G-005, Lower G/F One Ayala Cor. Edsa, Makati City',island:'Metro Manila',region:'Metro Manila',lat:14.5506,lng:121.0283,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Kiosk%20G-005%2C%20Lower%20G/F%20One%20Ayala%20Cor.%20Edsa%2C%20Makati%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Kiosk+G-005%2C+Lower+G/F+One+Ayala+Cor.+Edsa%2C+Makati+City+Philippines',orderUrl:null},
+  {id:37,name:'Paco Market Mall',address:'Ground Floor, Paco Mall, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.5788,lng:120.9987,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%2C%20Paco%20Mall%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor%2C+Paco+Mall%2C+Manila+Philippines',orderUrl:null},
+  {id:38,name:'Pasay Rotonda',address:'Metro Point Mall, Edsa Corner Taft Ave, Pasay City',island:'Metro Manila',region:'Metro Manila',lat:14.5488,lng:120.9984,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Metro%20Point%20Mall%2C%20Edsa%20Corner%20Taft%20Ave%2C%20Pasay%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Metro+Point+Mall%2C+Edsa+Corner+Taft+Ave%2C+Pasay+City+Philippines',orderUrl:null},
+  {id:39,name:'Paseo Center Makati',address:'G/F Paseo Center, Paseo De Roxas, Makati City',island:'Metro Manila',region:'Metro Manila',lat:14.5577,lng:121.0229,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20Paseo%20Center%2C%20Paseo%20De%20Roxas%2C%20Makati%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+Paseo+Center%2C+Paseo+De+Roxas%2C+Makati+City+Philippines',orderUrl:null},
+  {id:40,name:'PITX',address:'Level 1 Paranaque Integrated Terminal Exchange, Kennedy Road, Parañaque',island:'Metro Manila',region:'Metro Manila',lat:14.5101,lng:120.9913,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%201%20Paranaque%20Integrated%20Terminal%20Exchange%2C%20Kennedy%20Road%2C%20Para%C3%B1aque%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+1+Paranaque+Integrated+Terminal+Exchange%2C+Kennedy+Road%2C+Parañaque+Philippines',orderUrl:null},
+  {id:41,name:'R. Square',address:'2622 Taft Ave, Malate, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202622%20Taft%20Ave%2C%20Malate%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2622+Taft+Ave%2C+Malate%2C+Manila+Philippines',orderUrl:null},
+  {id:42,name:'Robinsons Galleria Ortigas',address:'Level 1 Robinsons Galleria, Edsa Cor. Ortigas Ave, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%201%20Robinsons%20Galleria%2C%20Edsa%20Cor.%20Ortigas%20Ave%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+1+Robinsons+Galleria%2C+Edsa+Cor.+Ortigas+Ave%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:43,name:'Robinsons Las Pinas',address:'Level 1 Robinsons Place Las Piñas, Alabang-Zapote Rd., Las Piñas City',island:'Metro Manila',region:'Metro Manila',lat:14.4448,lng:120.9936,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%201%20Robinsons%20Place%20Las%20Pi%C3%B1as%2C%20Alabang-Zapote%20Rd.%2C%20Las%20Pi%C3%B1as%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+1+Robinsons+Place+Las+Piñas%2C+Alabang-Zapote+Rd.%2C+Las+Piñas+City+Philippines',orderUrl:null},
+  {id:44,name:'Robinsons Malabon',address:'Governor Pascual Avenue, Malabon',island:'Metro Manila',region:'Metro Manila',lat:14.6691,lng:120.9667,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Governor%20Pascual%20Avenue%2C%20Malabon%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Governor+Pascual+Avenue%2C+Malabon+Philippines',orderUrl:null},
+  {id:45,name:'Robinsons Manila',address:'Level 2, Padre Faura Wing, Ermita, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%202%2C%20Padre%20Faura%20Wing%2C%20Ermita%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+2%2C+Padre+Faura+Wing%2C+Ermita%2C+Manila+Philippines',orderUrl:null},
+  {id:46,name:'Robinsons Metro East',address:'Robinsons Metro East, Marcos Highway, Pasig City',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Robinsons%20Metro%20East%2C%20Marcos%20Highway%2C%20Pasig%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Robinsons+Metro+East%2C+Marcos+Highway%2C+Pasig+City+Philippines',orderUrl:null},
+  {id:47,name:'Shaw Central Mall',address:'Shaw Center Mall, Shaw Boulevard, Mandaluyong City',island:'Metro Manila',region:'Metro Manila',lat:14.589,lng:121.0371,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Shaw%20Center%20Mall%2C%20Shaw%20Boulevard%2C%20Mandaluyong%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Shaw+Center+Mall%2C+Shaw+Boulevard%2C+Mandaluyong+City+Philippines',orderUrl:null},
+  {id:48,name:'Shopwise Makati',address:'GF Shopwise Makati, Chino Roces Ave., Makati',island:'Metro Manila',region:'Metro Manila',lat:14.5667,lng:121.0129,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20GF%20Shopwise%20Makati%2C%20Chino%20Roces%20Ave.%2C%20Makati%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=GF+Shopwise+Makati%2C+Chino+Roces+Ave.%2C+Makati+Philippines',orderUrl:null},
+  {id:49,name:'Shopwise Sucat',address:'Ground Floor Shopwise Sucat, Paranaque',island:'Metro Manila',region:'Metro Manila',lat:14.4565,lng:121.0355,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Shopwise%20Sucat%2C%20Paranaque%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Shopwise+Sucat%2C+Paranaque+Philippines',orderUrl:null},
+  {id:50,name:'SM Araneta City Cubao',address:'SM Araneta City, Cubao, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6193,lng:121.0577,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20Araneta%20City%2C%20Cubao%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+Araneta+City%2C+Cubao%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:51,name:'SM Center Las Pinas',address:'SM Hypermarket, SM Center, Alabang-Zapote Rd, Las Piñas',island:'Metro Manila',region:'Metro Manila',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20Hypermarket%2C%20SM%20Center%2C%20Alabang-Zapote%20Rd%2C%20Las%20Pi%C3%B1as%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+Hypermarket%2C+SM+Center%2C+Alabang-Zapote+Rd%2C+Las+Piñas+Philippines',orderUrl:null},
+  {id:52,name:'SM Center Muntinlupa',address:'SM Muntinlupa Ground Level, Muntinlupa City',island:'Metro Manila',region:'Metro Manila',lat:14.378,lng:121.0461,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20Muntinlupa%20Ground%20Level%2C%20Muntinlupa%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+Muntinlupa+Ground+Level%2C+Muntinlupa+City+Philippines',orderUrl:null},
+  {id:53,name:'SM Center Pasig',address:'SM Center Frontera Verde, E Rodriguez Jr Ave, Pasig City',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20Center%20Frontera%20Verde%2C%20E%20Rodriguez%20Jr%20Ave%2C%20Pasig%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+Center+Frontera+Verde%2C+E+Rodriguez+Jr+Ave%2C+Pasig+City+Philippines',orderUrl:null},
+  {id:54,name:'SM City BF Paranaque',address:'2F SM City BF Paranaque, Dr Arcadio Santos Ave, Parañaque',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202F%20SM%20City%20BF%20Paranaque%2C%20Dr%20Arcadio%20Santos%20Ave%2C%20Para%C3%B1aque%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2F+SM+City+BF+Paranaque%2C+Dr+Arcadio+Santos+Ave%2C+Parañaque+Philippines',orderUrl:null},
+  {id:55,name:'SM City Bicutan',address:'SM City Bicutan, Taguig',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20City%20Bicutan%2C%20Taguig%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+City+Bicutan%2C+Taguig+Philippines',orderUrl:null},
+  {id:56,name:'SM City Caloocan',address:'SM City Caloocan Deparo Road, Caloocan City',island:'Metro Manila',region:'Metro Manila',lat:14.7501,lng:121.0199,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20City%20Caloocan%20Deparo%20Road%2C%20Caloocan%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+City+Caloocan+Deparo+Road%2C+Caloocan+City+Philippines',orderUrl:null},
+  {id:57,name:'SM City East Ortigas',address:'2F SM City East Ortigas, Pasig',island:'Metro Manila',region:'Metro Manila',lat:14.5883,lng:121.1061,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202F%20SM%20City%20East%20Ortigas%2C%20Pasig%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2F+SM+City+East+Ortigas%2C+Pasig+Philippines',orderUrl:null},
+  {id:58,name:'SM City Fairview',address:'Lower Ground Level SM Fairview, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lower%20Ground%20Level%20SM%20Fairview%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lower+Ground+Level+SM+Fairview%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:59,name:'SM City Manila',address:'4th Floor SM City Manila',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%204th%20Floor%20SM%20City%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=4th+Floor+SM+City+Manila+Philippines',orderUrl:null},
+  {id:60,name:'SM City Novaliches',address:'SM Novaliches Ground Level, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.7192,lng:121.0398,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20Novaliches%20Ground%20Level%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+Novaliches+Ground+Level%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:61,name:'SM City San Lazaro',address:'Lower Ground Floor SM City San Lazaro, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lower%20Ground%20Floor%20SM%20City%20San%20Lazaro%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lower+Ground+Floor+SM+City+San+Lazaro%2C+Manila+Philippines',orderUrl:null},
+  {id:62,name:'SM City Sangandaan',address:'SM Center Sangandaan, Samson Road, Caloocan City',island:'Metro Manila',region:'Metro Manila',lat:14.6739,lng:121.0177,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20Center%20Sangandaan%2C%20Samson%20Road%2C%20Caloocan%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+Center+Sangandaan%2C+Samson+Road%2C+Caloocan+City+Philippines',orderUrl:null},
+  {id:63,name:'SM City Sta. Mesa',address:'Level 2 SM City Sta Mesa, R Magsaysay Blvd, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%202%20SM%20City%20Sta%20Mesa%2C%20R%20Magsaysay%20Blvd%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+2+SM+City+Sta+Mesa%2C+R+Magsaysay+Blvd%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:64,name:'SM City Sucat',address:'Ground Level Building B SM City Sucat, Paranaque',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Level%20Building%20B%20SM%20City%20Sucat%2C%20Paranaque%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Level+Building+B+SM+City+Sucat%2C+Paranaque+Philippines',orderUrl:null},
+  {id:65,name:'SM City Valenzuela',address:'SM City Valenzuela, McArthur Highway, Valenzuela City',island:'Metro Manila',region:'Metro Manila',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20City%20Valenzuela%2C%20McArthur%20Highway%2C%20Valenzuela%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+City+Valenzuela%2C+McArthur+Highway%2C+Valenzuela+City+Philippines',orderUrl:null},
+  {id:66,name:'SM Hypermarket Cubao',address:'24 Main Ave Cubao, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%2024%20Main%20Ave%20Cubao%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=24+Main+Ave+Cubao%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:67,name:'SM Hypermarket Novaliches',address:'402 Quirino Hwy, Novaliches, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20402%20Quirino%20Hwy%2C%20Novaliches%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=402+Quirino+Hwy%2C+Novaliches%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:68,name:'SM Megamall',address:'5/F SM Megamall, Ortigas Center, Pasig',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%205/F%20SM%20Megamall%2C%20Ortigas%20Center%2C%20Pasig%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=5/F+SM+Megamall%2C+Ortigas+Center%2C+Pasig+Philippines',orderUrl:null},
+  {id:69,name:'SM Retail HQ',address:'6F SM Retail HQ Building A, J.W. Diokno Blvd, Pasay',island:'Metro Manila',region:'Metro Manila',lat:14.5451,lng:120.9824,embedUrl:'https://maps.google.com/maps?q=Avocadoria%206F%20SM%20Retail%20HQ%20Building%20A%2C%20J.W.%20Diokno%20Blvd%2C%20Pasay%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=6F+SM+Retail+HQ+Building+A%2C+J.W.+Diokno+Blvd%2C+Pasay+Philippines',orderUrl:null},
+  {id:70,name:'SM Southmall',address:'2F Food Hall, SM Southmall, Alabang-Zapote Rd, Las Piñas',island:'Metro Manila',region:'Metro Manila',lat:14.4284,lng:121.0187,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202F%20Food%20Hall%2C%20SM%20Southmall%2C%20Alabang-Zapote%20Rd%2C%20Las%20Pi%C3%B1as%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2F+Food+Hall%2C+SM+Southmall%2C+Alabang-Zapote+Rd%2C+Las+Piñas+Philippines',orderUrl:null},
+  {id:71,name:'SMDC Light Mall',address:'Ground Floor SM Light Mall, Mandaluyong',island:'Metro Manila',region:'Metro Manila',lat:14.5746,lng:121.049,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20Light%20Mall%2C%20Mandaluyong%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+Light+Mall%2C+Mandaluyong+Philippines',orderUrl:null},
+  {id:72,name:'SMDC Mplace',address:'Ground Floor SMDC Mplace, Panay Avenue, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6319,lng:121.0203,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SMDC%20Mplace%2C%20Panay%20Avenue%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SMDC+Mplace%2C+Panay+Avenue%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:73,name:'SMDC Sun Mall',address:'CT2 SMDC Sun Mall, España Blvd., Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6041,lng:121.0188,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20CT2%20SMDC%20Sun%20Mall%2C%20Espa%C3%B1a%20Blvd.%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=CT2+SMDC+Sun+Mall%2C+España+Blvd.%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:74,name:'Starmall Shaw Boulevard',address:'G/F Starmall Edsa Shaw, Mandaluyong City',island:'Metro Manila',region:'Metro Manila',lat:14.5828,lng:121.0535,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20Starmall%20Edsa%20Shaw%2C%20Mandaluyong%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+Starmall+Edsa+Shaw%2C+Mandaluyong+City+Philippines',orderUrl:null},
+  {id:75,name:'The Market Place Glorietta',address:'G/F Marketplace Makati, Rustans Mall, Ayala Ave., Makati City',island:'Metro Manila',region:'Metro Manila',lat:14.552,lng:121.0267,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20Marketplace%20Makati%2C%20Rustans%20Mall%2C%20Ayala%20Ave.%2C%20Makati%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+Marketplace+Makati%2C+Rustans+Mall%2C+Ayala+Ave.%2C+Makati+City+Philippines',orderUrl:null},
+  {id:76,name:'Tutuban Mall',address:'Level 1 Main Station Tutuban Center Mall, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.6084,lng:120.973,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%201%20Main%20Station%20Tutuban%20Center%20Mall%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+1+Main+Station+Tutuban+Center+Mall%2C+Manila+Philippines',orderUrl:null},
+  {id:77,name:'UP Shopping Center',address:'2nd Floor UP Diliman Shopping Center, Diliman, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.6488,lng:121.0509,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%20UP%20Diliman%20Shopping%20Center%2C%20Diliman%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor+UP+Diliman+Shopping+Center%2C+Diliman%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:78,name:'UPAD Hotel Taft',address:'912 Pablo Ocampo Street, Malate, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.5762,lng:120.9819,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20912%20Pablo%20Ocampo%20Street%2C%20Malate%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=912+Pablo+Ocampo+Street%2C+Malate%2C+Manila+Philippines',orderUrl:null},
+  {id:79,name:'Victory Mall Quiapo Underpass',address:'Victory Lacson Underpass Plaza, Quezon Blvd, Quiapo, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.598,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Victory%20Lacson%20Underpass%20Plaza%2C%20Quezon%20Blvd%2C%20Quiapo%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Victory+Lacson+Underpass+Plaza%2C+Quezon+Blvd%2C+Quiapo%2C+Manila+Philippines',orderUrl:null},
+  {id:80,name:'Vista Mall Las Pinas',address:'Ground Floor Vista Mall Las Pinas',island:'Metro Manila',region:'Metro Manila',lat:14.4432,lng:120.9791,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Vista%20Mall%20Las%20Pinas%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Vista+Mall+Las+Pinas+Philippines',orderUrl:null},
+  {id:81,name:'Vista Mall Taguig',address:'Ground Floor Vista Mall Taguig, Tuktukan, Taguig City',island:'Metro Manila',region:'Metro Manila',lat:14.5327,lng:121.0712,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Vista%20Mall%20Taguig%2C%20Tuktukan%2C%20Taguig%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Vista+Mall+Taguig%2C+Tuktukan%2C+Taguig+City+Philippines',orderUrl:null},
+  {id:82,name:'Waltermart Bicutan',address:'GF Waltermart Bicutan, Km 16 East Service Rd., Paranaque',island:'Metro Manila',region:'Metro Manila',lat:14.4808,lng:121.0458,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20GF%20Waltermart%20Bicutan%2C%20Km%2016%20East%20Service%20Rd.%2C%20Paranaque%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=GF+Waltermart+Bicutan%2C+Km+16+East+Service+Rd.%2C+Paranaque+Philippines',orderUrl:null},
+  {id:83,name:'Waltermart Caloocan',address:'1174 A. Mabini St, Maypajo, Caloocan',island:'Metro Manila',region:'Metro Manila',lat:14.6417,lng:120.9757,embedUrl:'https://maps.google.com/maps?q=Avocadoria%201174%20A.%20Mabini%20St%2C%20Maypajo%2C%20Caloocan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=1174+A.+Mabini+St%2C+Maypajo%2C+Caloocan+Philippines',orderUrl:null},
+  {id:84,name:'Waltermart E. Rodriguez',address:'222 E. Rodriguez Ave., Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20222%20E.%20Rodriguez%20Ave.%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=222+E.+Rodriguez+Ave.%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:85,name:'Waltermart Macapagal',address:'GF Waltermart Macapagal, Diosdado Macapagal Ave., Pasay',island:'Metro Manila',region:'Metro Manila',lat:14.5416,lng:120.9881,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20GF%20Waltermart%20Macapagal%2C%20Diosdado%20Macapagal%20Ave.%2C%20Pasay%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=GF+Waltermart+Macapagal%2C+Diosdado+Macapagal+Ave.%2C+Pasay+Philippines',orderUrl:null},
+  {id:86,name:'Waltermart Makati',address:'2F Waltermart Supermarket Chino Roces Avenue, Makati City',island:'Metro Manila',region:'Metro Manila',lat:14.5517,lng:121.0134,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202F%20Waltermart%20Supermarket%20Chino%20Roces%20Avenue%2C%20Makati%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2F+Waltermart+Supermarket+Chino+Roces+Avenue%2C+Makati+City+Philippines',orderUrl:null},
+  {id:87,name:'Waltermart North Edsa',address:'1F Waltermart North Edsa, 8001 Edsa, Project 7, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%201F%20Waltermart%20North%20Edsa%2C%208001%20Edsa%2C%20Project%207%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=1F+Waltermart+North+Edsa%2C+8001+Edsa%2C+Project+7%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:88,name:'Waltermart Sucat',address:'Waltermart Sucat, Dr. A. Santos Ave, Parañaque',island:'Metro Manila',region:'Metro Manila',lat:14.4691,lng:121.0112,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Waltermart%20Sucat%2C%20Dr.%20A.%20Santos%20Ave%2C%20Para%C3%B1aque%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Waltermart+Sucat%2C+Dr.+A.+Santos+Ave%2C+Parañaque+Philippines',orderUrl:null},
+  {id:89,name:'Wilcon City Center',address:'Ground Level, 121 Visayas Ave, Project 8, Quezon City',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Level%2C%20121%20Visayas%20Ave%2C%20Project%208%2C%20Quezon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Level%2C+121+Visayas+Ave%2C+Project+8%2C+Quezon+City+Philippines',orderUrl:null},
+  {id:90,name:'Worldwide Corporate Center',address:'G/F Shaw Center Mall, 360 Shaw Blvd, Mandaluyong City',island:'Metro Manila',region:'Metro Manila',lat:14.589,lng:121.0371,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20Shaw%20Center%20Mall%2C%20360%20Shaw%20Blvd%2C%20Mandaluyong%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+Shaw+Center+Mall%2C+360+Shaw+Blvd%2C+Mandaluyong+City+Philippines',orderUrl:null},
+  {id:91,name:'Youniversity Suites Ubelt',address:'GF La Village, 2118 Recto Ave, Binondo, Manila',island:'Metro Manila',region:'Metro Manila',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20GF%20La%20Village%2C%202118%20Recto%20Ave%2C%20Binondo%2C%20Manila%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=GF+La+Village%2C+2118+Recto+Ave%2C+Binondo%2C+Manila+Philippines',orderUrl:null},
+  {id:92,name:'Zuellig Building Makati',address:'2F Zuellig Building, Makati Avenue Cor. Paseo De Roxas, Makati City',island:'Metro Manila',region:'Metro Manila',lat:14.5578,lng:121.0267,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202F%20Zuellig%20Building%2C%20Makati%20Avenue%20Cor.%20Paseo%20De%20Roxas%2C%20Makati%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2F+Zuellig+Building%2C+Makati+Avenue+Cor.+Paseo+De+Roxas%2C+Makati+City+Philippines',orderUrl:null},
+  {id:93,name:'Antipolo Triangle Mall',address:'Antipolo Triangle Mall, Sen. Lorenzo Sumulong Memorial Circle, Antipolo',island:'Luzon',region:'Luzon — Rizal',lat:14.582,lng:121.1817,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Antipolo%20Triangle%20Mall%2C%20Sen.%20Lorenzo%20Sumulong%20Memorial%20Circle%2C%20Antipolo%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Antipolo+Triangle+Mall%2C+Sen.+Lorenzo+Sumulong+Memorial+Circle%2C+Antipolo+Philippines',orderUrl:null},
+  {id:94,name:'Ayala Malls Harbor Point',address:'2nd Floor Ayala Malls Harbor Point, Subic Bay Freeport Zone',island:'Luzon',region:'Luzon — Other Provinces',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%20Ayala%20Malls%20Harbor%20Point%2C%20Subic%20Bay%20Freeport%20Zone%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor+Ayala+Malls+Harbor+Point%2C+Subic+Bay+Freeport+Zone+Philippines',orderUrl:null},
+  {id:95,name:'Ayala Malls Serin',address:'Lower Ground Level Ayala Malls Serin, Silang Junction North, Tagaytay',island:'Luzon',region:'Luzon — CALABARZON',lat:14.1126,lng:120.9591,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lower%20Ground%20Level%20Ayala%20Malls%20Serin%2C%20Silang%20Junction%20North%2C%20Tagaytay%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lower+Ground+Level+Ayala+Malls+Serin%2C+Silang+Junction+North%2C+Tagaytay+Philippines',orderUrl:null},
+  {id:96,name:'Ayala Malls Solenad',address:'Building D Solenad, Nuvali Boulevard, Santa Rosa, Laguna',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Building%20D%20Solenad%2C%20Nuvali%20Boulevard%2C%20Santa%20Rosa%2C%20Laguna%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Building+D+Solenad%2C+Nuvali+Boulevard%2C+Santa+Rosa%2C+Laguna+Philippines',orderUrl:null},
+  {id:97,name:'Ayala Malls Vermosa',address:'3rd Floor Ayala Malls Vermosa, Imus, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%203rd%20Floor%20Ayala%20Malls%20Vermosa%2C%20Imus%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=3rd+Floor+Ayala+Malls+Vermosa%2C+Imus%2C+Cavite+Philippines',orderUrl:null},
+  {id:98,name:'Ayala Pavilion Mall',address:'Foodcourt Greenfield Pavilion Edsa Cor United St, Mandaluyong',island:'Luzon',region:'Luzon — Other Provinces',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Foodcourt%20Greenfield%20Pavilion%20Edsa%20Cor%20United%20St%2C%20Mandaluyong%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Foodcourt+Greenfield+Pavilion+Edsa+Cor+United+St%2C+Mandaluyong+Philippines',orderUrl:null},
+  {id:99,name:'Bayombong Nueva Vizcaya',address:'The Cornerstone Bldg., Capt. Dela Cruz St., Bayombong, Nueva Vizcaya',island:'Luzon',region:'Luzon — Ilocos / Pangasinan / CAR',lat:16.4829,lng:121.1502,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20The%20Cornerstone%20Bldg.%2C%20Capt.%20Dela%20Cruz%20St.%2C%20Bayombong%2C%20Nueva%20Vizcaya%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=The+Cornerstone+Bldg.%2C+Capt.+Dela+Cruz+St.%2C+Bayombong%2C+Nueva+Vizcaya+Philippines',orderUrl:null},
+  {id:100,name:'Bicol International Airport',address:'GF Arrival And Waiting Lounge, Bicol International Airport, Daraga, Albay',island:'Luzon',region:'Luzon — Bicol',lat:13.1116,lng:123.6817,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20GF%20Arrival%20And%20Waiting%20Lounge%2C%20Bicol%20International%20Airport%2C%20Daraga%2C%20Albay%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=GF+Arrival+And+Waiting+Lounge%2C+Bicol+International+Airport%2C+Daraga%2C+Albay+Philippines',orderUrl:null},
+  {id:101,name:'C. Raymundo Pasig',address:'C. Raymundo Ave., Corner Narra St. Maybunga, Pasig City',island:'Luzon',region:'Luzon — Other Provinces',lat:14.5995,lng:120.9842,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20C.%20Raymundo%20Ave.%2C%20Corner%20Narra%20St.%20Maybunga%2C%20Pasig%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=C.+Raymundo+Ave.%2C+Corner+Narra+St.+Maybunga%2C+Pasig+City+Philippines',orderUrl:null},
+  {id:102,name:'Central Mall Dasmarinas',address:'Salitran, Dasmariñas, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Salitran%2C%20Dasmari%C3%B1as%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Salitran%2C+Dasmariñas%2C+Cavite+Philippines',orderUrl:null},
+  {id:103,name:'City Walk Tarlac',address:'Zamora St, Tarlac City',island:'Luzon',region:'Luzon — Central Luzon',lat:15.485,lng:120.5891,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Zamora%20St%2C%20Tarlac%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Zamora+St%2C+Tarlac+City+Philippines',orderUrl:null},
+  {id:104,name:'Coron, Palawan',address:'National Highway, Brgy. V, Coron, Palawan',island:'Luzon',region:'Luzon — MIMAROPA',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20National%20Highway%2C%20Brgy.%20V%2C%20Coron%2C%20Palawan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=National+Highway%2C+Brgy.+V%2C+Coron%2C+Palawan+Philippines',orderUrl:null},
+  {id:105,name:'CSI The City Mall Dagupan',address:'Lucao District, Dagupan City, Pangasinan',island:'Luzon',region:'Luzon — Ilocos / Pangasinan / CAR',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lucao%20District%2C%20Dagupan%20City%2C%20Pangasinan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lucao+District%2C+Dagupan+City%2C+Pangasinan+Philippines',orderUrl:null},
+  {id:106,name:'Fora Mall Tagaytay',address:'Emilio Aguinaldo Highway, Silang Junction South, Tagaytay City, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.1151,lng:120.9619,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Emilio%20Aguinaldo%20Highway%2C%20Silang%20Junction%20South%2C%20Tagaytay%20City%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Emilio+Aguinaldo+Highway%2C+Silang+Junction+South%2C+Tagaytay+City%2C+Cavite+Philippines',orderUrl:null},
+  {id:107,name:'Gaisano City Mall CDO',address:'Ground Floor Gaisano Mall, Cagayan de Oro',island:'Luzon',region:'Luzon — Cagayan Valley',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Gaisano%20Mall%2C%20Cagayan%20de%20Oro%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Gaisano+Mall%2C+Cagayan+de+Oro+Philippines',orderUrl:null},
+  {id:108,name:'Gateway Mall Sta. Rosa',address:'Old National Highway, Santa Rosa, Laguna',island:'Luzon',region:'Luzon — CALABARZON',lat:14.6209,lng:121.0526,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Old%20National%20Highway%2C%20Santa%20Rosa%2C%20Laguna%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Old+National+Highway%2C+Santa+Rosa%2C+Laguna+Philippines',orderUrl:null},
+  {id:109,name:'Imall Antipolo',address:'LGF Imall Antipolo, Sumulong St., San Roque, Antipolo, Rizal',island:'Luzon',region:'Luzon — Rizal',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20LGF%20Imall%20Antipolo%2C%20Sumulong%20St.%2C%20San%20Roque%2C%20Antipolo%2C%20Rizal%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=LGF+Imall+Antipolo%2C+Sumulong+St.%2C+San+Roque%2C+Antipolo%2C+Rizal+Philippines',orderUrl:null},
+  {id:110,name:'LCC CBD Terminal 2 Naga',address:'Bicol Central Station, Brgy. Triangulo, Naga City',island:'Luzon',region:'Luzon — Bicol',lat:13.1516,lng:123.732,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Bicol%20Central%20Station%2C%20Brgy.%20Triangulo%2C%20Naga%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Bicol+Central+Station%2C+Brgy.+Triangulo%2C+Naga+City+Philippines',orderUrl:null},
+  {id:111,name:'LCC Legazpi',address:'LCC Food Court, LCC Mall Legazpi, Peñaranda St. Legazpi City, Albay',island:'Luzon',region:'Luzon — Bicol',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20LCC%20Food%20Court%2C%20LCC%20Mall%20Legazpi%2C%20Pe%C3%B1aranda%20St.%20Legazpi%20City%2C%20Albay%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=LCC+Food+Court%2C+LCC+Mall+Legazpi%2C+Peñaranda+St.+Legazpi+City%2C+Albay+Philippines',orderUrl:null},
+  {id:112,name:'Puregold Maunlad Malolos',address:'L Valencia St, Malolos, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:14.8428,lng:120.8136,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20L%20Valencia%20St%2C%20Malolos%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=L+Valencia+St%2C+Malolos%2C+Bulacan+Philippines',orderUrl:null},
+  {id:113,name:'Robinsons Antipolo',address:'NK14 L1 Robinsons Place Antipolo, Sumulong Highway, Antipolo City',island:'Luzon',region:'Luzon — Rizal',lat:14.5784,lng:121.1865,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20NK14%20L1%20Robinsons%20Place%20Antipolo%2C%20Sumulong%20Highway%2C%20Antipolo%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=NK14+L1+Robinsons+Place+Antipolo%2C+Sumulong+Highway%2C+Antipolo+City+Philippines',orderUrl:null},
+  {id:114,name:'Robinsons Calasiao',address:'Level 2, Robinsons Place Calasiao, Pangasinan',island:'Luzon',region:'Luzon — Ilocos / Pangasinan / CAR',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%202%2C%20Robinsons%20Place%20Calasiao%2C%20Pangasinan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+2%2C+Robinsons+Place+Calasiao%2C+Pangasinan+Philippines',orderUrl:null},
+  {id:115,name:'Robinsons Galleria South San Pedro',address:'Robinsons San Pedro, San Pedro, Laguna',island:'Luzon',region:'Luzon — CALABARZON',lat:14.3521,lng:121.0622,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Robinsons%20San%20Pedro%2C%20San%20Pedro%2C%20Laguna%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Robinsons+San+Pedro%2C+San+Pedro%2C+Laguna+Philippines',orderUrl:null},
+  {id:116,name:'Robinsons General Trias',address:'2nd Floor Robinsons Place, Brgy Tejero, General Trias, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.3969,lng:120.865,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%20Robinsons%20Place%2C%20Brgy%20Tejero%2C%20General%20Trias%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor+Robinsons+Place%2C+Brgy+Tejero%2C+General+Trias%2C+Cavite+Philippines',orderUrl:null},
+  {id:117,name:'Robinsons Ilocos',address:'San Francisco, San Nicolas, Robinsons Ilocos, Ilocos Norte',island:'Luzon',region:'Luzon — Ilocos / Pangasinan / CAR',lat:18.1789,lng:120.5917,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20San%20Francisco%2C%20San%20Nicolas%2C%20Robinsons%20Ilocos%2C%20Ilocos%20Norte%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=San+Francisco%2C+San+Nicolas%2C+Robinsons+Ilocos%2C+Ilocos+Norte+Philippines',orderUrl:null},
+  {id:118,name:'Robinsons Imus',address:'2nd Floor Food Court, Robinsons Place Imus, Aguinaldo Hwy, Imus, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.4129,lng:120.9417,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%20Food%20Court%2C%20Robinsons%20Place%20Imus%2C%20Aguinaldo%20Hwy%2C%20Imus%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor+Food+Court%2C+Robinsons+Place+Imus%2C+Aguinaldo+Hwy%2C+Imus%2C+Cavite+Philippines',orderUrl:null},
+  {id:119,name:'Robinsons La Union',address:'4th Floor Eat Street Robinsons La Union, San Fernando, La Union',island:'Luzon',region:'Luzon — Ilocos / Pangasinan / CAR',lat:16.6006,lng:120.3186,embedUrl:'https://maps.google.com/maps?q=Avocadoria%204th%20Floor%20Eat%20Street%20Robinsons%20La%20Union%2C%20San%20Fernando%2C%20La%20Union%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=4th+Floor+Eat+Street+Robinsons+La+Union%2C+San+Fernando%2C+La+Union+Philippines',orderUrl:null},
+  {id:120,name:'Robinsons Lipa',address:'Level 1 Robinsons Lipa, President Jose P. Laurel Hwy, Lipa City, Batangas',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%201%20Robinsons%20Lipa%2C%20President%20Jose%20P.%20Laurel%20Hwy%2C%20Lipa%20City%2C%20Batangas%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+1+Robinsons+Lipa%2C+President+Jose+P.+Laurel+Hwy%2C+Lipa+City%2C+Batangas+Philippines',orderUrl:null},
+  {id:121,name:'Robinsons Naga',address:'Robinsons Naga, Ground Floor, Naga City',island:'Luzon',region:'Luzon — Bicol',lat:13.6154,lng:123.1934,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Robinsons%20Naga%2C%20Ground%20Floor%2C%20Naga%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Robinsons+Naga%2C+Ground+Floor%2C+Naga+City+Philippines',orderUrl:null},
+  {id:122,name:'Robinsons Place Dasmarinas',address:'2/F Robinsons Place Dasmarinas, Aguinaldo Hwy, Dasmariñas, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202/F%20Robinsons%20Place%20Dasmarinas%2C%20Aguinaldo%20Hwy%2C%20Dasmari%C3%B1as%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2/F+Robinsons+Place+Dasmarinas%2C+Aguinaldo+Hwy%2C+Dasmariñas%2C+Cavite+Philippines',orderUrl:null},
+  {id:123,name:'Robinsons Santiago',address:'G/F Robinsons Place, Mabini, Santiago City, Isabela',island:'Luzon',region:'Luzon — Cagayan Valley',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20Robinsons%20Place%2C%20Mabini%2C%20Santiago%20City%2C%20Isabela%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+Robinsons+Place%2C+Mabini%2C+Santiago+City%2C+Isabela+Philippines',orderUrl:null},
+  {id:124,name:'Robinsons Tuguegarao',address:'Ground Floor Robinsons Place Tuguegarao, Cagayan',island:'Luzon',region:'Luzon — Cagayan Valley',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Robinsons%20Place%20Tuguegarao%2C%20Cagayan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Robinsons+Place+Tuguegarao%2C+Cagayan+Philippines',orderUrl:null},
+  {id:125,name:'Shell Mamplasan',address:'Shell SLEX Northbound, Santo Tomas, Biñan, Laguna',island:'Luzon',region:'Luzon — CALABARZON',lat:14.3093,lng:121.0738,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Shell%20SLEX%20Northbound%2C%20Santo%20Tomas%2C%20Bi%C3%B1an%2C%20Laguna%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Shell+SLEX+Northbound%2C+Santo+Tomas%2C+Biñan%2C+Laguna+Philippines',orderUrl:null},
+  {id:126,name:'Shell NLEX Balagtas',address:'North Luzon Expressway Shell Balagtas, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:14.831,lng:120.9086,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20North%20Luzon%20Expressway%20Shell%20Balagtas%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=North+Luzon+Expressway+Shell+Balagtas%2C+Bulacan+Philippines',orderUrl:null},
+  {id:127,name:'Shopwise Antipolo',address:'Ground Floor Shopwise Antipolo, Rizal',island:'Luzon',region:'Luzon — Rizal',lat:14.5813,lng:121.1754,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Shopwise%20Antipolo%2C%20Rizal%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Shopwise+Antipolo%2C+Rizal+Philippines',orderUrl:null},
+  {id:128,name:'SM Center Angono',address:'Ground Floor SM Center Angono, Mla. East Rd., Angono, Rizal',island:'Luzon',region:'Luzon — Rizal',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20Center%20Angono%2C%20Mla.%20East%20Rd.%2C%20Angono%2C%20Rizal%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+Center+Angono%2C+Mla.+East+Rd.%2C+Angono%2C+Rizal+Philippines',orderUrl:null},
+  {id:129,name:'SM Center Imus',address:'Ground Floor SM Center Imus, Brgy Nia Road, Imus, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.4089,lng:120.9246,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20Center%20Imus%2C%20Brgy%20Nia%20Road%2C%20Imus%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+Center+Imus%2C+Brgy+Nia+Road%2C+Imus%2C+Cavite+Philippines',orderUrl:null},
+  {id:130,name:'SM Center Pulilan',address:'SM Center Pulilan, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20Center%20Pulilan%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+Center+Pulilan%2C+Bulacan+Philippines',orderUrl:null},
+  {id:131,name:'SM Center Tuguegarao Downtown',address:'GF SM Center Tuguegarao Downtown, Luna St. Cor. Mabini St., Tuguegarao City, Cagayan',island:'Luzon',region:'Luzon — Cagayan Valley',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20GF%20SM%20Center%20Tuguegarao%20Downtown%2C%20Luna%20St.%20Cor.%20Mabini%20St.%2C%20Tuguegarao%20City%2C%20Cagayan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=GF+SM+Center+Tuguegarao+Downtown%2C+Luna+St.+Cor.+Mabini+St.%2C+Tuguegarao+City%2C+Cagayan+Philippines',orderUrl:null},
+  {id:132,name:'SM City Bacoor',address:'3rd Floor SM City Bacoor, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.4451,lng:120.9512,embedUrl:'https://maps.google.com/maps?q=Avocadoria%203rd%20Floor%20SM%20City%20Bacoor%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=3rd+Floor+SM+City+Bacoor%2C+Cavite+Philippines',orderUrl:null},
+  {id:133,name:'SM City Baguio',address:'Upper Ground Floor SM Baguio, Baguio City',island:'Luzon',region:'Luzon — Ilocos / Pangasinan / CAR',lat:16.4089,lng:120.5998,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Upper%20Ground%20Floor%20SM%20Baguio%2C%20Baguio%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Upper+Ground+Floor+SM+Baguio%2C+Baguio+City+Philippines',orderUrl:null},
+  {id:134,name:'SM City Baliwag',address:'21 Doña Remedios Trinidad Hwy, Baliwag, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%2021%20Do%C3%B1a%20Remedios%20Trinidad%20Hwy%2C%20Baliwag%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=21+Doña+Remedios+Trinidad+Hwy%2C+Baliwag%2C+Bulacan+Philippines',orderUrl:null},
+  {id:135,name:'SM City Bataan',address:'2nd Floor SM City Bataan, Balanga',island:'Luzon',region:'Luzon — Central Luzon',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%20SM%20City%20Bataan%2C%20Balanga%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor+SM+City+Bataan%2C+Balanga+Philippines',orderUrl:null},
+  {id:136,name:'SM City Cabanatuan',address:'Level 3 SM Cabanatuan, Maharlika Highway, Cabanatuan City',island:'Luzon',region:'Luzon — Other Provinces',lat:15.4669,lng:120.9544,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%203%20SM%20Cabanatuan%2C%20Maharlika%20Highway%2C%20Cabanatuan%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+3+SM+Cabanatuan%2C+Maharlika+Highway%2C+Cabanatuan+City+Philippines',orderUrl:null},
+  {id:137,name:'SM City Calamba',address:'National Road, Brgy Real, Calamba City, Laguna',island:'Luzon',region:'Luzon — CALABARZON',lat:14.2034,lng:121.1551,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20National%20Road%2C%20Brgy%20Real%2C%20Calamba%20City%2C%20Laguna%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=National+Road%2C+Brgy+Real%2C+Calamba+City%2C+Laguna+Philippines',orderUrl:null},
+  {id:138,name:'SM City Cauayan',address:'SM City Cauayan, City Of Cauayan, Isabela',island:'Luzon',region:'Luzon — Cagayan Valley',lat:16.9372,lng:121.7676,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20City%20Cauayan%2C%20City%20Of%20Cauayan%2C%20Isabela%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+City+Cauayan%2C+City+Of+Cauayan%2C+Isabela+Philippines',orderUrl:null},
+  {id:139,name:'SM City Clark',address:'SM Ground Level, Manuel A. Roxas Hwy, Clark Freeport, Angeles, Pampanga',island:'Luzon',region:'Luzon — Central Luzon',lat:15.1673,lng:120.5801,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20Ground%20Level%2C%20Manuel%20A.%20Roxas%20Hwy%2C%20Clark%20Freeport%2C%20Angeles%2C%20Pampanga%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+Ground+Level%2C+Manuel+A.+Roxas+Hwy%2C+Clark+Freeport%2C+Angeles%2C+Pampanga+Philippines',orderUrl:null},
+  {id:140,name:'SM City Daet',address:'3rd Floor SM City Daet, Daet, Camarines Norte',island:'Luzon',region:'Luzon — Bicol',lat:14.1215,lng:122.9458,embedUrl:'https://maps.google.com/maps?q=Avocadoria%203rd%20Floor%20SM%20City%20Daet%2C%20Daet%2C%20Camarines%20Norte%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=3rd+Floor+SM+City+Daet%2C+Daet%2C+Camarines+Norte+Philippines',orderUrl:null},
+  {id:141,name:'SM City Dasmarinas',address:'Lower Ground Floor SM City Dasmarinas, Dasmariñas, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lower%20Ground%20Floor%20SM%20City%20Dasmarinas%2C%20Dasmari%C3%B1as%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lower+Ground+Floor+SM+City+Dasmarinas%2C+Dasmariñas%2C+Cavite+Philippines',orderUrl:null},
+  {id:142,name:'SM City La Union',address:'Along Diversion Road, Barangay Biday, San Fernando City, La Union',island:'Luzon',region:'Luzon — Ilocos / Pangasinan / CAR',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Along%20Diversion%20Road%2C%20Barangay%20Biday%2C%20San%20Fernando%20City%2C%20La%20Union%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Along+Diversion+Road%2C+Barangay+Biday%2C+San+Fernando+City%2C+La+Union+Philippines',orderUrl:null},
+  {id:143,name:'SM City Laoag',address:'Lower Ground Floor SM City Laoag, Laoag City, Ilocos Norte',island:'Luzon',region:'Luzon — Ilocos / Pangasinan / CAR',lat:18.1874,lng:120.585,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lower%20Ground%20Floor%20SM%20City%20Laoag%2C%20Laoag%20City%2C%20Ilocos%20Norte%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lower+Ground+Floor+SM+City+Laoag%2C+Laoag+City%2C+Ilocos+Norte+Philippines',orderUrl:null},
+  {id:144,name:'SM City Lemery',address:'Ground Floor SM City Lemery, Batangas',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20City%20Lemery%2C%20Batangas%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+City+Lemery%2C+Batangas+Philippines',orderUrl:null},
+  {id:145,name:'SM City Lucena',address:'2nd Level SM City Lucena, Maharlika Highway, Lucena City',island:'Luzon',region:'Luzon — Other Provinces',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Level%20SM%20City%20Lucena%2C%20Maharlika%20Highway%2C%20Lucena%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Level+SM+City+Lucena%2C+Maharlika+Highway%2C+Lucena+City+Philippines',orderUrl:null},
+  {id:146,name:'SM City Marilao',address:'Ground Floor SM Marilao, 3019 Macarthur Hwy, Marilao, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:14.7544,lng:120.9558,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20Marilao%2C%203019%20Macarthur%20Hwy%2C%20Marilao%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+Marilao%2C+3019+Macarthur+Hwy%2C+Marilao%2C+Bulacan+Philippines',orderUrl:null},
+  {id:147,name:'SM City Masinag',address:'Upper Ground SM City Masinag, Antipolo, Rizal',island:'Luzon',region:'Luzon — Rizal',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Upper%20Ground%20SM%20City%20Masinag%2C%20Antipolo%2C%20Rizal%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Upper+Ground+SM+City+Masinag%2C+Antipolo%2C+Rizal+Philippines',orderUrl:null},
+  {id:148,name:'SM City Molino',address:'Ground Floor SM Molino, Bacoor, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.3832,lng:120.9776,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20Molino%2C%20Bacoor%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+Molino%2C+Bacoor%2C+Cavite+Philippines',orderUrl:null},
+  {id:149,name:'SM City Olongapo Central',address:'Level 4 SM City Olongapo Central, Rizal Avenue Extension, Olongapo City',island:'Luzon',region:'Luzon — Central Luzon',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%204%20SM%20City%20Olongapo%20Central%2C%20Rizal%20Avenue%20Extension%2C%20Olongapo%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+4+SM+City+Olongapo+Central%2C+Rizal+Avenue+Extension%2C+Olongapo+City+Philippines',orderUrl:null},
+  {id:150,name:'SM City Pampanga',address:'SM Pampanga, Jose Abad Santos Ave, Mexico, Pampanga',island:'Luzon',region:'Luzon — Central Luzon',lat:15.0278,lng:120.6935,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20Pampanga%2C%20Jose%20Abad%20Santos%20Ave%2C%20Mexico%2C%20Pampanga%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+Pampanga%2C+Jose+Abad+Santos+Ave%2C+Mexico%2C+Pampanga+Philippines',orderUrl:null},
+  {id:151,name:'SM City Rosales',address:'Ground Floor SM Rosales, Pangasinan',island:'Luzon',region:'Luzon — Ilocos / Pangasinan / CAR',lat:15.8782,lng:120.6026,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20Rosales%2C%20Pangasinan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+Rosales%2C+Pangasinan+Philippines',orderUrl:null},
+  {id:152,name:'SM City Rosario',address:'General Trias Dr, Tejeros Convention, Rosario, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.4092,lng:120.8573,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20General%20Trias%20Dr%2C%20Tejeros%20Convention%2C%20Rosario%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=General+Trias+Dr%2C+Tejeros+Convention%2C+Rosario%2C+Cavite+Philippines',orderUrl:null},
+  {id:153,name:'SM City San Jose Delmonte',address:'Lower Ground Floor SM City Quirino Highway, San Jose Del Monte, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lower%20Ground%20Floor%20SM%20City%20Quirino%20Highway%2C%20San%20Jose%20Del%20Monte%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lower+Ground+Floor+SM+City+Quirino+Highway%2C+San+Jose+Del+Monte%2C+Bulacan+Philippines',orderUrl:null},
+  {id:154,name:'SM City San Pablo',address:'2F SM City San Pablo, San Pablo, Laguna',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202F%20SM%20City%20San%20Pablo%2C%20San%20Pablo%2C%20Laguna%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2F+SM+City+San+Pablo%2C+San+Pablo%2C+Laguna+Philippines',orderUrl:null},
+  {id:155,name:'SM City Sorsogon',address:'2nd Floor Foodcourt, Maharlika Highway, Sorsogon City',island:'Luzon',region:'Luzon — Bicol',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%20Foodcourt%2C%20Maharlika%20Highway%2C%20Sorsogon%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor+Foodcourt%2C+Maharlika+Highway%2C+Sorsogon+City+Philippines',orderUrl:null},
+  {id:156,name:'SM City Tanza',address:'Ground Floor SM City Tanza, Antero Soriano Highway, Tanza, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.3926,lng:120.8489,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20City%20Tanza%2C%20Antero%20Soriano%20Highway%2C%20Tanza%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+City+Tanza%2C+Antero+Soriano+Highway%2C+Tanza%2C+Cavite+Philippines',orderUrl:null},
+  {id:157,name:'SM City Tarlac',address:'SM City Tarlac, MacArthur Highway, Tarlac City',island:'Luzon',region:'Luzon — Central Luzon',lat:15.4774,lng:120.5949,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20City%20Tarlac%2C%20MacArthur%20Highway%2C%20Tarlac%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+City+Tarlac%2C+MacArthur+Highway%2C+Tarlac+City+Philippines',orderUrl:null},
+  {id:158,name:'SM City Telabastagan',address:'G/F SM City Telabastagan, San Fernando, Pampanga',island:'Luzon',region:'Luzon — Central Luzon',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20SM%20City%20Telabastagan%2C%20San%20Fernando%2C%20Pampanga%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+SM+City+Telabastagan%2C+San+Fernando%2C+Pampanga+Philippines',orderUrl:null},
+  {id:159,name:'SM City Trece Martires',address:'SM City Trece Martires, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20City%20Trece%20Martires%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+City+Trece+Martires%2C+Cavite+Philippines',orderUrl:null},
+  {id:160,name:'SM City Tuguegarao',address:'GF SM Tuguegarao, Bagay Rd, Tuguegarao, Cagayan',island:'Luzon',region:'Luzon — Cagayan Valley',lat:17.6274,lng:121.718,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20GF%20SM%20Tuguegarao%2C%20Bagay%20Rd%2C%20Tuguegarao%2C%20Cagayan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=GF+SM+Tuguegarao%2C+Bagay+Rd%2C+Tuguegarao%2C+Cagayan+Philippines',orderUrl:null},
+  {id:161,name:'SM Mega Center Cabanatuan',address:'UG Level SM Mega Center, Gen. Tinio St., Cabanatuan City',island:'Luzon',region:'Luzon — Other Provinces',lat:15.4878,lng:120.9679,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20UG%20Level%20SM%20Mega%20Center%2C%20Gen.%20Tinio%20St.%2C%20Cabanatuan%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=UG+Level+SM+Mega+Center%2C+Gen.+Tinio+St.%2C+Cabanatuan+City+Philippines',orderUrl:null},
+  {id:162,name:'Tabaco City',address:'High Point Bldg, Karangahan Blvd, Tabaco City, Albay',island:'Luzon',region:'Luzon — Bicol',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20High%20Point%20Bldg%2C%20Karangahan%20Blvd%2C%20Tabaco%20City%2C%20Albay%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=High+Point+Bldg%2C+Karangahan+Blvd%2C+Tabaco+City%2C+Albay+Philippines',orderUrl:null},
+  {id:163,name:'Vigan City - Calle Crisologo',address:'19 Crisologo, Vigan City, Ilocos Sur',island:'Luzon',region:'Luzon — Ilocos / Pangasinan / CAR',lat:17.5649,lng:120.3878,embedUrl:'https://maps.google.com/maps?q=Avocadoria%2019%20Crisologo%2C%20Vigan%20City%2C%20Ilocos%20Sur%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=19+Crisologo%2C+Vigan+City%2C+Ilocos+Sur+Philippines',orderUrl:null},
+  {id:164,name:'Vista Mall Malolos',address:'4th Floor Vista Mall Malolos, MacArthur Hwy, Malolos, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:14.875,lng:120.7967,embedUrl:'https://maps.google.com/maps?q=Avocadoria%204th%20Floor%20Vista%20Mall%20Malolos%2C%20MacArthur%20Hwy%2C%20Malolos%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=4th+Floor+Vista+Mall+Malolos%2C+MacArthur+Hwy%2C+Malolos%2C+Bulacan+Philippines',orderUrl:null},
+  {id:165,name:'Vista Mall Sta. Rosa',address:'Second Floor Vista Mall, Santa Rosa-Tagaytay Rd, Santa Rosa, Laguna',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Second%20Floor%20Vista%20Mall%2C%20Santa%20Rosa-Tagaytay%20Rd%2C%20Santa%20Rosa%2C%20Laguna%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Second+Floor+Vista+Mall%2C+Santa+Rosa-Tagaytay+Rd%2C+Santa+Rosa%2C+Laguna+Philippines',orderUrl:null},
+  {id:166,name:'Waltermart Altaraza',address:'Waltermart Town Center, Quirino Highway, San Jose Del Monte, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:14.7781,lng:121.0747,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Waltermart%20Town%20Center%2C%20Quirino%20Highway%2C%20San%20Jose%20Del%20Monte%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Waltermart+Town+Center%2C+Quirino+Highway%2C+San+Jose+Del+Monte%2C+Bulacan+Philippines',orderUrl:null},
+  {id:167,name:'Waltermart Antipolo',address:'L. Sumulong Memorial Circle, Antipolo, Rizal',island:'Luzon',region:'Luzon — Rizal',lat:14.5801,lng:121.173,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20L.%20Sumulong%20Memorial%20Circle%2C%20Antipolo%2C%20Rizal%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=L.+Sumulong+Memorial+Circle%2C+Antipolo%2C+Rizal+Philippines',orderUrl:null},
+  {id:168,name:'Waltermart Arayat',address:'Waltermart, Jose Abad Santos, Arayat, Pampanga',island:'Luzon',region:'Luzon — Central Luzon',lat:15.1444,lng:120.7694,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Waltermart%2C%20Jose%20Abad%20Santos%2C%20Arayat%2C%20Pampanga%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Waltermart%2C+Jose+Abad+Santos%2C+Arayat%2C+Pampanga+Philippines',orderUrl:null},
+  {id:169,name:'Waltermart Bacoor',address:'Waltermart Bacoor, Molino Boulevard, Bacoor, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.4142,lng:120.9675,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Waltermart%20Bacoor%2C%20Molino%20Boulevard%2C%20Bacoor%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Waltermart+Bacoor%2C+Molino+Boulevard%2C+Bacoor%2C+Cavite+Philippines',orderUrl:null},
+  {id:170,name:'Waltermart Bel-Air Sta. Rosa',address:'G/F Waltermart Sta Rosa Bel-Air, Tagaytay-Sta Rosa Road, Sta Rosa, Laguna',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20Waltermart%20Sta%20Rosa%20Bel-Air%2C%20Tagaytay-Sta%20Rosa%20Road%2C%20Sta%20Rosa%2C%20Laguna%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+Waltermart+Sta+Rosa+Bel-Air%2C+Tagaytay-Sta+Rosa+Road%2C+Sta+Rosa%2C+Laguna+Philippines',orderUrl:null},
+  {id:171,name:'Waltermart Cabanatuan',address:'Waltermart Cabanatuan, Maharlika Highway, Cabanatuan City, Nueva Ecija',island:'Luzon',region:'Luzon — Central Luzon',lat:15.4861,lng:120.972,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Waltermart%20Cabanatuan%2C%20Maharlika%20Highway%2C%20Cabanatuan%20City%2C%20Nueva%20Ecija%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Waltermart+Cabanatuan%2C+Maharlika+Highway%2C+Cabanatuan+City%2C+Nueva+Ecija+Philippines',orderUrl:null},
+  {id:172,name:'Waltermart Cabuyao',address:'Km 47 San Cristobal Bridge, Cabuyao City, Laguna',island:'Luzon',region:'Luzon — CALABARZON',lat:14.2326,lng:121.1346,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Km%2047%20San%20Cristobal%20Bridge%2C%20Cabuyao%20City%2C%20Laguna%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Km+47+San+Cristobal+Bridge%2C+Cabuyao+City%2C+Laguna+Philippines',orderUrl:null},
+  {id:173,name:'Waltermart Dasmarinas',address:'Km. 30, Brgy R-2, Dasmariñas, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Km.%2030%2C%20Brgy%20R-2%2C%20Dasmari%C3%B1as%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Km.+30%2C+Brgy+R-2%2C+Dasmariñas%2C+Cavite+Philippines',orderUrl:null},
+  {id:174,name:'Waltermart Gapan',address:'Waltermart Gapan, Maharlika National Highway, Gapan, Nueva Ecija',island:'Luzon',region:'Luzon — Central Luzon',lat:15.3036,lng:120.9465,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Waltermart%20Gapan%2C%20Maharlika%20National%20Highway%2C%20Gapan%2C%20Nueva%20Ecija%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Waltermart+Gapan%2C+Maharlika+National+Highway%2C+Gapan%2C+Nueva+Ecija+Philippines',orderUrl:null},
+  {id:175,name:'Waltermart Guiguinto',address:'Waltermart, Macarthur Hwy, Guiguinto, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:14.8283,lng:120.8738,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Waltermart%2C%20Macarthur%20Hwy%2C%20Guiguinto%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Waltermart%2C+Macarthur+Hwy%2C+Guiguinto%2C+Bulacan+Philippines',orderUrl:null},
+  {id:176,name:'Waltermart Mabalacat',address:'MacArthur Hwy, Brgy. Dau, Mabalacat City, Pampanga',island:'Luzon',region:'Luzon — Central Luzon',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20MacArthur%20Hwy%2C%20Brgy.%20Dau%2C%20Mabalacat%20City%2C%20Pampanga%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=MacArthur+Hwy%2C+Brgy.+Dau%2C+Mabalacat+City%2C+Pampanga+Philippines',orderUrl:null},
+  {id:177,name:'Waltermart Malolos',address:'G/F Waltermart, Macarthur Hwy, Malolos, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:14.872,lng:120.799,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20Waltermart%2C%20Macarthur%20Hwy%2C%20Malolos%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+Waltermart%2C+Macarthur+Hwy%2C+Malolos%2C+Bulacan+Philippines',orderUrl:null},
+  {id:178,name:'Waltermart Naic',address:'Waltermart Naic, Governors Drive, Brgy. Sabang, Naic, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.3195,lng:120.7799,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Waltermart%20Naic%2C%20Governor%27s%20Drive%2C%20Brgy.%20Sabang%2C%20Naic%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Waltermart+Naic%2C+Governors+Drive%2C+Brgy.+Sabang%2C+Naic%2C+Cavite+Philippines',orderUrl:null},
+  {id:179,name:'Waltermart Plaridel',address:'Cagayan Valley Road, Banga 1, Plaridel, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Cagayan%20Valley%20Road%2C%20Banga%201%2C%20Plaridel%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Cagayan+Valley+Road%2C+Banga+1%2C+Plaridel%2C+Bulacan+Philippines',orderUrl:null},
+  {id:180,name:'Waltermart San Jose NE',address:'Ground Floor Waltermart San Jose, Nueva Ecija',island:'Luzon',region:'Luzon — Central Luzon',lat:15.7975,lng:120.9941,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Waltermart%20San%20Jose%2C%20Nueva%20Ecija%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Waltermart+San+Jose%2C+Nueva+Ecija+Philippines',orderUrl:null},
+  {id:181,name:'Waltermart Silang',address:'G/F Waltermart Silang, Gen. Aguinaldo Highway, Silang, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.2294,lng:120.9703,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20Waltermart%20Silang%2C%20Gen.%20Aguinaldo%20Highway%2C%20Silang%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+Waltermart+Silang%2C+Gen.+Aguinaldo+Highway%2C+Silang%2C+Cavite+Philippines',orderUrl:null},
+  {id:182,name:'Waltermart Sta. Maria',address:'G/F Waltermart, Narra St., Sta. Clara, Sta. Maria, Bulacan',island:'Luzon',region:'Luzon — Central Luzon',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20Waltermart%2C%20Narra%20St.%2C%20Sta.%20Clara%2C%20Sta.%20Maria%2C%20Bulacan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+Waltermart%2C+Narra+St.%2C+Sta.+Clara%2C+Sta.+Maria%2C+Bulacan+Philippines',orderUrl:null},
+  {id:183,name:'Waltermart Sta. Rosa Balibago',address:'UGF Waltermart Center Balibago, Sta. Rosa, Laguna',island:'Luzon',region:'Luzon — CALABARZON',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20UGF%20Waltermart%20Center%20Balibago%2C%20Sta.%20Rosa%2C%20Laguna%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=UGF+Waltermart+Center+Balibago%2C+Sta.+Rosa%2C+Laguna+Philippines',orderUrl:null},
+  {id:184,name:'Waltermart Taytay',address:'40 R-5, Taytay, Rizal',island:'Luzon',region:'Luzon — Rizal',lat:14.5795,lng:121.138,embedUrl:'https://maps.google.com/maps?q=Avocadoria%2040%20R-5%2C%20Taytay%2C%20Rizal%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=40+R-5%2C+Taytay%2C+Rizal+Philippines',orderUrl:null},
+  {id:185,name:'Waltermart Trece Martires',address:'Waltermart Trece Martires, Governors Dr., Trece Martires City, Cavite',island:'Luzon',region:'Luzon — CALABARZON',lat:14.2804,lng:120.8706,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Waltermart%20Trece%20Martires%2C%20Governor%27s%20Dr.%2C%20Trece%20Martires%20City%2C%20Cavite%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Waltermart+Trece+Martires%2C+Governors+Dr.%2C+Trece+Martires+City%2C+Cavite+Philippines',orderUrl:null},
+  {id:186,name:'Xentro Mall Antipolo',address:'Ground Floor Xentro Mall Antipolo, Mambugan, Antipolo, Rizal',island:'Luzon',region:'Luzon — Rizal',lat:14.617,lng:121.1357,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Xentro%20Mall%20Antipolo%2C%20Mambugan%2C%20Antipolo%2C%20Rizal%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Xentro+Mall+Antipolo%2C+Mambugan%2C+Antipolo%2C+Rizal+Philippines',orderUrl:null},
+  {id:187,name:'Xentro Mall Calapan',address:'1F Xentromall Calapan, Roxas Drive, Lumang Bayan, Calapan, Oriental Mindoro',island:'Luzon',region:'Luzon — MIMAROPA',lat:13.403,lng:121.1837,embedUrl:'https://maps.google.com/maps?q=Avocadoria%201F%20Xentromall%20Calapan%2C%20Roxas%20Drive%2C%20Lumang%20Bayan%2C%20Calapan%2C%20Oriental%20Mindoro%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=1F+Xentromall+Calapan%2C+Roxas+Drive%2C+Lumang+Bayan%2C+Calapan%2C+Oriental+Mindoro+Philippines',orderUrl:null},
+  {id:188,name:'Xentro Mall Montalban',address:'Xentromall Montalban, Manggahan, Rodriguez, Rizal',island:'Luzon',region:'Luzon — Rizal',lat:14.7294,lng:121.142,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Xentromall%20Montalban%2C%20Manggahan%2C%20Rodriguez%2C%20Rizal%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Xentromall+Montalban%2C+Manggahan%2C+Rodriguez%2C+Rizal+Philippines',orderUrl:null},
+  {id:189,name:'Avocadoria Boracay Extension',address:'Station 2 Front Beach, Boracay, Malay, Aklan',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:11.9674,lng:121.9248,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Station%202%20Front%20Beach%2C%20Boracay%2C%20Malay%2C%20Aklan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Station+2+Front+Beach%2C+Boracay%2C+Malay%2C+Aklan+Philippines',orderUrl:null},
+  {id:190,name:'Ayala Malls Bacolod',address:'Ayala Malls Bacolod, Bacolod City, Negros Occidental',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.7202,lng:122.5621,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ayala%20Malls%20Bacolod%2C%20Bacolod%20City%2C%20Negros%20Occidental%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ayala+Malls+Bacolod%2C+Bacolod+City%2C+Negros+Occidental+Philippines',orderUrl:null},
+  {id:191,name:'Ayala Malls Center Cebu',address:'2L Ayala Center Cebu, Cebu Business Park, Archbishop Reyes Ave, Cebu City',island:'Visayas',region:'Visayas — Cebu / Bohol',lat:10.3182,lng:123.9052,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202L%20Ayala%20Center%20Cebu%2C%20Cebu%20Business%20Park%2C%20Archbishop%20Reyes%20Ave%2C%20Cebu%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2L+Ayala+Center+Cebu%2C+Cebu+Business+Park%2C+Archbishop+Reyes+Ave%2C+Cebu+City+Philippines',orderUrl:null},
+  {id:192,name:'Ayala Malls Central Bloc IT Park',address:'Ayala Malls Central Block, Padriga St, Cebu City',island:'Visayas',region:'Visayas — Cebu / Bohol',lat:10.7202,lng:122.5621,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ayala%20Malls%20Central%20Block%2C%20Padriga%20St%2C%20Cebu%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ayala+Malls+Central+Block%2C+Padriga+St%2C+Cebu+City+Philippines',orderUrl:null},
+  {id:193,name:'Boracay DMall',address:'DMall De Boracay, Malay, Aklan',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:11.9674,lng:121.9248,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20D%27Mall%20De%20Boracay%2C%20Malay%2C%20Aklan%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=DMall+De+Boracay%2C+Malay%2C+Aklan+Philippines',orderUrl:null},
+  {id:194,name:'Festive Walk Iloilo',address:'Festive Walk, Mandurriao, Iloilo City',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.7154,lng:122.5468,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Festive%20Walk%2C%20Mandurriao%2C%20Iloilo%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Festive+Walk%2C+Mandurriao%2C+Iloilo+City+Philippines',orderUrl:null},
+  {id:195,name:'Gaisano Mall Banilad Cebu',address:'Gaisano Country Mall, Banilad, Cebu City',island:'Visayas',region:'Visayas — Cebu / Bohol',lat:10.7202,lng:122.5621,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Gaisano%20Country%20Mall%2C%20Banilad%2C%20Cebu%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Gaisano+Country+Mall%2C+Banilad%2C+Cebu+City+Philippines',orderUrl:null},
+  {id:196,name:'GT Mall Molo',address:'Ground Floor GT Mall Molo, Poblacion, Molo, Iloilo City',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.6962,lng:122.5456,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20GT%20Mall%20Molo%2C%20Poblacion%2C%20Molo%2C%20Iloilo%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+GT+Mall+Molo%2C+Poblacion%2C+Molo%2C+Iloilo+City+Philippines',orderUrl:null},
+  {id:197,name:'GT Mall Pavia',address:'Ground Floor GT Mall Pavia, Ungka 2, Pavia, Iloilo',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.7537,lng:122.538,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20GT%20Mall%20Pavia%2C%20Ungka%202%2C%20Pavia%2C%20Iloilo%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+GT+Mall+Pavia%2C+Ungka+2%2C+Pavia%2C+Iloilo+Philippines',orderUrl:null},
+  {id:198,name:'Panglao, Bohol',address:'Front of Panglao Regents Park Resort, Ester Lim Drive St. Tawala, Panglao, Bohol',island:'Visayas',region:'Visayas — Cebu / Bohol',lat:10.7202,lng:122.5621,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Front%20of%20Panglao%20Regents%20Park%20Resort%2C%20Ester%20Lim%20Drive%20St.%20Tawala%2C%20Panglao%2C%20Bohol%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Front+of+Panglao+Regents+Park+Resort%2C+Ester+Lim+Drive+St.+Tawala%2C+Panglao%2C+Bohol+Philippines',orderUrl:null},
+  {id:199,name:'Robinsons Bacolod',address:'Lacson St, Bacolod City, Negros Occidental',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.7202,lng:122.5621,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lacson%20St%2C%20Bacolod%20City%2C%20Negros%20Occidental%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lacson+St%2C+Bacolod+City%2C+Negros+Occidental+Philippines',orderUrl:null},
+  {id:200,name:'Robinsons Iloilo',address:'UGF Robinsons Iloilo, De Leon St cor. Quezon St, Iloilo City',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.7202,lng:122.5621,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20UGF%20Robinsons%20Iloilo%2C%20De%20Leon%20St%20cor.%20Quezon%20St%2C%20Iloilo%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=UGF+Robinsons+Iloilo%2C+De+Leon+St+cor.+Quezon+St%2C+Iloilo+City+Philippines',orderUrl:null},
+  {id:201,name:'Robinsons Jaro',address:'Level 1 Robinsons Place Jaro, E. Lopez Jaena San Vicente, Jaro, Iloilo City',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.7209,lng:122.5581,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%201%20Robinsons%20Place%20Jaro%2C%20E.%20Lopez%20Jaena%20San%20Vicente%2C%20Jaro%2C%20Iloilo%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+1+Robinsons+Place+Jaro%2C+E.+Lopez+Jaena+San+Vicente%2C+Jaro%2C+Iloilo+City+Philippines',orderUrl:null},
+  {id:202,name:'Robinsons North Tacloban',address:'Ground Floor Robinsons North Tacloban, Tacloban City, Leyte',island:'Visayas',region:'Visayas — Eastern Visayas',lat:11.2399,lng:124.9877,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Robinsons%20North%20Tacloban%2C%20Tacloban%20City%2C%20Leyte%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Robinsons+North+Tacloban%2C+Tacloban+City%2C+Leyte+Philippines',orderUrl:null},
+  {id:203,name:'Robinsons Pavia',address:'Level 2 Robinsons Pavia, Ungka II, Pavia, Iloilo',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.753,lng:122.5392,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Level%202%20Robinsons%20Pavia%2C%20Ungka%20II%2C%20Pavia%2C%20Iloilo%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Level+2+Robinsons+Pavia%2C+Ungka+II%2C+Pavia%2C+Iloilo+Philippines',orderUrl:null},
+  {id:204,name:'SM City Bacolod',address:'G/F SM City Bacolod, Rizal St, Reclamation Area, Bacolod City',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.6736,lng:122.9449,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20SM%20City%20Bacolod%2C%20Rizal%20St%2C%20Reclamation%20Area%2C%20Bacolod%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+SM+City+Bacolod%2C+Rizal+St%2C+Reclamation+Area%2C+Bacolod+City+Philippines',orderUrl:null},
+  {id:205,name:'SM City Bacolod North Bloc',address:'G/F SM City Bacolod North Block, Bacolod City, Negros Occidental',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.6736,lng:122.9449,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20SM%20City%20Bacolod%20North%20Block%2C%20Bacolod%20City%2C%20Negros%20Occidental%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+SM+City+Bacolod+North+Block%2C+Bacolod+City%2C+Negros+Occidental+Philippines',orderUrl:null},
+  {id:206,name:'SM City Cebu',address:'Lower Ground Floor SM City Cebu',island:'Visayas',region:'Visayas — Cebu / Bohol',lat:10.3114,lng:123.9178,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lower%20Ground%20Floor%20SM%20City%20Cebu%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lower+Ground+Floor+SM+City+Cebu+Philippines',orderUrl:null},
+  {id:207,name:'SM City Consolacion',address:'2nd Floor SM Consolacion, Lamac, Consolacion, Cebu',island:'Visayas',region:'Visayas — Cebu / Bohol',lat:10.3796,lng:123.9649,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%20SM%20Consolacion%2C%20Lamac%2C%20Consolacion%2C%20Cebu%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor+SM+Consolacion%2C+Lamac%2C+Consolacion%2C+Cebu+Philippines',orderUrl:null},
+  {id:208,name:'SM City Iloilo',address:'Upper Ground Floor SM City Iloilo, Senator Benigno S. Aquino Jr. Ave, Mandurriao, Iloilo City',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.7144,lng:122.551,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Upper%20Ground%20Floor%20SM%20City%20Iloilo%2C%20Senator%20Benigno%20S.%20Aquino%20Jr.%20Ave%2C%20Mandurriao%2C%20Iloilo%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Upper+Ground+Floor+SM+City+Iloilo%2C+Senator+Benigno+S.+Aquino+Jr.+Ave%2C+Mandurriao%2C+Iloilo+City+Philippines',orderUrl:null},
+  {id:209,name:'SM City Ormoc',address:'Ground Floor SM Center Ormoc, Ormoc City, Leyte',island:'Visayas',region:'Visayas — Eastern Visayas',lat:11.0384,lng:124.6193,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20Center%20Ormoc%2C%20Ormoc%20City%2C%20Leyte%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+Center+Ormoc%2C+Ormoc+City%2C+Leyte+Philippines',orderUrl:null},
+  {id:210,name:'SM City Roxas',address:'Ground Floor SM City Roxas, Arnaldo Boulevard, Roxas City, Capiz',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20City%20Roxas%2C%20Arnaldo%20Boulevard%2C%20Roxas%20City%2C%20Capiz%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+City+Roxas%2C+Arnaldo+Boulevard%2C+Roxas+City%2C+Capiz+Philippines',orderUrl:null},
+  {id:211,name:'SM Hypermarket Pavia',address:'SM Hypermarket Pavia, Iloilo',island:'Visayas',region:'Visayas — Iloilo / Negros / W. Visayas',lat:10.7202,lng:122.5621,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20SM%20Hypermarket%20Pavia%2C%20Iloilo%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=SM+Hypermarket+Pavia%2C+Iloilo+Philippines',orderUrl:null},
+  {id:212,name:'SM Seaside City Cebu',address:'2nd Floor Cube Wing SM Seaside City Cebu, SRP, Cebu City',island:'Visayas',region:'Visayas — Cebu / Bohol',lat:10.7202,lng:122.5621,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%20Cube%20Wing%20SM%20Seaside%20City%20Cebu%2C%20SRP%2C%20Cebu%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor+Cube+Wing+SM+Seaside+City+Cebu%2C+SRP%2C+Cebu+City+Philippines',orderUrl:null},
+  {id:213,name:'The Outlet Lapu Lapu City',address:'The Outlets At Pueblo Verde, Mactan, Lapu-Lapu City, Cebu',island:'Visayas',region:'Visayas — Cebu / Bohol',lat:10.3018,lng:123.9622,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20The%20Outlets%20At%20Pueblo%20Verde%2C%20Mactan%2C%20Lapu-Lapu%20City%2C%20Cebu%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=The+Outlets+At+Pueblo+Verde%2C+Mactan%2C+Lapu-Lapu+City%2C+Cebu+Philippines',orderUrl:null},
+  {id:214,name:'Ayala Malls Abreeza Davao',address:'L2 Abreeza Mall, J.P. Laurel Ave, Poblacion District, Davao City',island:'Mindanao',region:'Mindanao — Davao Region',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20L2%20Abreeza%20Mall%2C%20J.P.%20Laurel%20Ave%2C%20Poblacion%20District%2C%20Davao%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=L2+Abreeza+Mall%2C+J.P.+Laurel+Ave%2C+Poblacion+District%2C+Davao+City+Philippines',orderUrl:null},
+  {id:215,name:'Ayala Malls Centrio CDO',address:'GF CV Roa Wing, Centrio Mall, C.M. Recto Cor. Corrales Ave, Cagayan De Oro',island:'Mindanao',region:'Mindanao — Northern Mindanao / Caraga',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20GF%20CV%20Roa%20Wing%2C%20Centrio%20Mall%2C%20C.M.%20Recto%20Cor.%20Corrales%20Ave%2C%20Cagayan%20De%20Oro%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=GF+CV+Roa+Wing%2C+Centrio+Mall%2C+C.M.+Recto+Cor.+Corrales+Ave%2C+Cagayan+De+Oro+Philippines',orderUrl:null},
+  {id:216,name:'City Mall Cotabato',address:'Citymall Cotabato, Gov. Gutierrez Ave, Cotabato City, Maguindanao',island:'Mindanao',region:'Mindanao — SOCCSKSARGEN',lat:7.2007,lng:124.2408,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Citymall%20Cotabato%2C%20Gov.%20Gutierrez%20Ave%2C%20Cotabato%20City%2C%20Maguindanao%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Citymall+Cotabato%2C+Gov.+Gutierrez+Ave%2C+Cotabato+City%2C+Maguindanao+Philippines',orderUrl:null},
+  {id:217,name:'Gaisano Grand City Gate Mall Davao',address:'Buhangin, Davao City, Davao Del Sur',island:'Mindanao',region:'Mindanao — Davao Region',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Buhangin%2C%20Davao%20City%2C%20Davao%20Del%20Sur%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Buhangin%2C+Davao+City%2C+Davao+Del+Sur+Philippines',orderUrl:null},
+  {id:218,name:'Gaisano Mall Butuan',address:'Gaisano Mall Butuan, Butuan City',island:'Mindanao',region:'Mindanao — Northern Mindanao / Caraga',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Gaisano%20Mall%20Butuan%2C%20Butuan%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Gaisano+Mall+Butuan%2C+Butuan+City+Philippines',orderUrl:null},
+  {id:219,name:'Gaisano Mall Cagayan de Oro',address:'Ground Floor Gaisano Mall, Corrales, CM Recto, Cagayan De Oro',island:'Mindanao',region:'Mindanao — Northern Mindanao / Caraga',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20Gaisano%20Mall%2C%20Corrales%2C%20CM%20Recto%2C%20Cagayan%20De%20Oro%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+Gaisano+Mall%2C+Corrales%2C+CM+Recto%2C+Cagayan+De+Oro+Philippines',orderUrl:null},
+  {id:220,name:'Gaisano Mall Tagum',address:'Upper GF GMall of Tagum, National Hwy, Tagum, Davao Del Norte',island:'Mindanao',region:'Mindanao — Davao Region',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Upper%20GF%20GMall%20of%20Tagum%2C%20National%20Hwy%2C%20Tagum%2C%20Davao%20Del%20Norte%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Upper+GF+GMall+of+Tagum%2C+National+Hwy%2C+Tagum%2C+Davao+Del+Norte+Philippines',orderUrl:null},
+  {id:221,name:'Gaisano Mall Toril',address:'UGF Gaisano Mall of Toril, Lim St, Toril, Davao City',island:'Mindanao',region:'Mindanao — Davao Region',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20UGF%20Gaisano%20Mall%20of%20Toril%2C%20Lim%20St%2C%20Toril%2C%20Davao%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=UGF+Gaisano+Mall+of+Toril%2C+Lim+St%2C+Toril%2C+Davao+City+Philippines',orderUrl:null},
+  {id:222,name:'KCC Mall Cotabato',address:'Quezon Avenue, Cotabato City, Maguindanao',island:'Mindanao',region:'Mindanao — SOCCSKSARGEN',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Quezon%20Avenue%2C%20Cotabato%20City%2C%20Maguindanao%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Quezon+Avenue%2C+Cotabato+City%2C+Maguindanao+Philippines',orderUrl:null},
+  {id:223,name:'KCC Mall de Zamboanga',address:'Basement KCC Mall, Gov. Camins Rd, Zamboanga City',island:'Mindanao',region:'Mindanao — Zamboanga Peninsula',lat:6.9201,lng:122.0734,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Basement%20KCC%20Mall%2C%20Gov.%20Camins%20Rd%2C%20Zamboanga%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Basement+KCC+Mall%2C+Gov.+Camins+Rd%2C+Zamboanga+City+Philippines',orderUrl:null},
+  {id:224,name:'Kidapawan City',address:'Roxas St, Poblacion, Kidapawan, Cotabato',island:'Mindanao',region:'Mindanao — SOCCSKSARGEN',lat:7.0213,lng:125.0902,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Roxas%20St%2C%20Poblacion%2C%20Kidapawan%2C%20Cotabato%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Roxas+St%2C+Poblacion%2C+Kidapawan%2C+Cotabato+Philippines',orderUrl:null},
+  {id:225,name:'NCCC Mall Maa Davao',address:'MacArthur Highway, Corner Don Julian Rodriguez Sr. Ave, Davao City',island:'Mindanao',region:'Mindanao — Davao Region',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20MacArthur%20Highway%2C%20Corner%20Don%20Julian%20Rodriguez%20Sr.%20Ave%2C%20Davao%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=MacArthur+Highway%2C+Corner+Don+Julian+Rodriguez+Sr.+Ave%2C+Davao+City+Philippines',orderUrl:null},
+  {id:226,name:'Pagadian City',address:'61 Sabellano St, Pagadian City, Zamboanga del Sur',island:'Mindanao',region:'Mindanao — Zamboanga Peninsula',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%2061%20Sabellano%20St%2C%20Pagadian%20City%2C%20Zamboanga%20del%20Sur%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=61+Sabellano+St%2C+Pagadian+City%2C+Zamboanga+del+Sur+Philippines',orderUrl:null},
+  {id:227,name:'Panabo, Davao City',address:'G/F Gaisano Grand Mall Panabo City, Davao Del Norte',island:'Mindanao',region:'Mindanao — Davao Region',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20G/F%20Gaisano%20Grand%20Mall%20Panabo%20City%2C%20Davao%20Del%20Norte%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=G/F+Gaisano+Grand+Mall+Panabo+City%2C+Davao+Del+Norte+Philippines',orderUrl:null},
+  {id:228,name:'Robinsons Iligan',address:'Robinsons Place, Iligan City, Lanao Del Norte',island:'Mindanao',region:'Mindanao — Northern Mindanao / Caraga',lat:8.2182,lng:124.2403,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Robinson%27s%20Place%2C%20Iligan%20City%2C%20Lanao%20Del%20Norte%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Robinsons+Place%2C+Iligan+City%2C+Lanao+Del+Norte+Philippines',orderUrl:null},
+  {id:229,name:'Robinsons Pagadian City',address:'F.S. Pajares Ave Cor P.L. Urro St, Pagadian City, Zamboanga Del Sur',island:'Mindanao',region:'Mindanao — Zamboanga Peninsula',lat:7.8272,lng:123.4378,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20F.S.%20Pajares%20Ave%20Cor%20P.L.%20Urro%20St%2C%20Pagadian%20City%2C%20Zamboanga%20Del%20Sur%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=F.S.+Pajares+Ave+Cor+P.L.+Urro+St%2C+Pagadian+City%2C+Zamboanga+Del+Sur+Philippines',orderUrl:null},
+  {id:230,name:'SM City Butuan',address:'2nd Floor SM City Butuan, Butuan City',island:'Mindanao',region:'Mindanao — Northern Mindanao / Caraga',lat:12.8797,lng:121.774,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Floor%20SM%20City%20Butuan%2C%20Butuan%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Floor+SM+City+Butuan%2C+Butuan+City+Philippines',orderUrl:null},
+  {id:231,name:'SM City CDO',address:'Ground Floor SM City Cagayan De Oro',island:'Mindanao',region:'Mindanao — Northern Mindanao / Caraga',lat:8.4558,lng:124.6234,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20City%20Cagayan%20De%20Oro%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+City+Cagayan+De+Oro+Philippines',orderUrl:null},
+  {id:232,name:'SM City CDO Downtown',address:'Claro M. Recto Ave, Cagayan De Oro City, Misamis Oriental',island:'Mindanao',region:'Mindanao — Northern Mindanao / Caraga',lat:8.4558,lng:124.6234,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Claro%20M.%20Recto%20Ave%2C%20Cagayan%20De%20Oro%20City%2C%20Misamis%20Oriental%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Claro+M.+Recto+Ave%2C+Cagayan+De+Oro+City%2C+Misamis+Oriental+Philippines',orderUrl:null},
+  {id:233,name:'SM City Davao',address:'2nd Level Main Building SM City Davao',island:'Mindanao',region:'Mindanao — Davao Region',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Level%20Main%20Building%20SM%20City%20Davao%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Level+Main+Building+SM+City+Davao+Philippines',orderUrl:null},
+  {id:234,name:'SM City General Santos',address:'Cor. Santiago Blvd, San Miguel St, General Santos City, South Cotabato',island:'Mindanao',region:'Mindanao — SOCCSKSARGEN',lat:6.1155,lng:125.181,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Cor.%20Santiago%20Blvd%2C%20San%20Miguel%20St%2C%20General%20Santos%20City%2C%20South%20Cotabato%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Cor.+Santiago+Blvd%2C+San+Miguel+St%2C+General+Santos+City%2C+South+Cotabato+Philippines',orderUrl:null},
+  {id:235,name:'SM City Mindpro',address:'Ground Floor SM City Mindpro, La Purisima St, Zamboanga City',island:'Mindanao',region:'Mindanao — Zamboanga Peninsula',lat:6.9077,lng:122.0761,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20City%20Mindpro%2C%20La%20Purisima%20St%2C%20Zamboanga%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+City+Mindpro%2C+La+Purisima+St%2C+Zamboanga+City+Philippines',orderUrl:null},
+  {id:236,name:'SM City Zamboanga',address:'Lower Ground SM City Zamboanga, Mayor Vitaliano Agan Avenue, Zamboanga City',island:'Mindanao',region:'Mindanao — Zamboanga Peninsula',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lower%20Ground%20SM%20City%20Zamboanga%2C%20Mayor%20Vitaliano%20Agan%20Avenue%2C%20Zamboanga%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lower+Ground+SM+City+Zamboanga%2C+Mayor+Vitaliano+Agan+Avenue%2C+Zamboanga+City+Philippines',orderUrl:null}
+]
+
+// ─── Config ───────────────────────────────────────────────────────────────────
+// CUSTOM_PIN: swap to '/your-logo-pin.png' anytime — null uses built-in SVG
+const CUSTOM_PIN = null
+
+// ─── Avocadoria SVG pin ──────────────────────────────────────────────────────
+function AvoPin({ size = 36, active = false }) {
+  return (
+    <svg width={size} height={Math.round(size * 1.3)} viewBox="0 0 48 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M24 1C12.4 1 3 10.4 3 22C3 37 24 63 24 63C24 63 45 37 45 22C45 10.4 35.6 1 24 1Z"
+        fill={active ? '#3a6b35' : '#b6c548'}
+        style={{ transition: 'fill .2s' }}
+      />
+      <ellipse cx="24" cy="24" rx="12" ry="15" fill="#c8e86a" />
+      <ellipse cx="24" cy="27" rx="6" ry="7.5" fill="#8A5F3C" />
+      <ellipse cx="22" cy="24" rx="2.5" ry="3" fill="#a8784f" opacity=".6" />
+      <circle cx="30" cy="14" r="4" fill="white" opacity=".85" />
+    </svg>
+  )
+}
+
+// ─── Color palette ───────────────────────────────────────────────────────────
+const C = {
+  olive: '#b6c548', dark: '#3a6b35', brown: '#8A5F3C',
+  cream: '#F4FAEC', pale: '#D0E8AF', pink: '#EF7ECB',
+  yellow: '#DFD438',
+}
+
+// ─── Island group colors ─────────────────────────────────────────────────────
+const ISLAND_COLORS = {
+  'Metro Manila': { bg: 'rgba(182,197,72,.12)',   text: '#3a6b35',  border: 'rgba(182,197,72,.4)',  pin: '#b6c548' },
+  'Luzon':        { bg: 'rgba(63,166,43,.1)',     text: '#1e5c13',  border: 'rgba(63,166,43,.3)',   pin: '#3a6b35' },
+  'Visayas':      { bg: 'rgba(239,126,203,.1)',   text: '#8b1f60',  border: 'rgba(239,126,203,.35)',pin: '#EF7ECB' },
+  'Mindanao':     { bg: 'rgba(223,212,56,.12)',   text: '#6b5e00',  border: 'rgba(223,212,56,.4)',  pin: '#8A5F3C' },
+}
+
+// ─── Haversine distance (km) ──────────────────────────────────────────────────
+function haversine(lat1, lng1, lat2, lng2) {
+  const R = 6371
+  const dLat = (lat2 - lat1) * Math.PI / 180
+  const dLng = (lng2 - lng1) * Math.PI / 180
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
+}
+
+// ─── Build SVG pin as base64 data URL (used by Leaflet) ──────────────────────
+// CUSTOM_PIN_URL: set to '/your-logo.png' to use an image instead of SVG
+// null = use the built-in avocado SVG pin
+const CUSTOM_PIN_URL = null
+
+function makePinUrl(color = '#b6c548', active = false) {
+  if (CUSTOM_PIN_URL) return CUSTOM_PIN_URL
+  const stroke = active ? '#fff' : '#fff'
+  const sw     = active ? 3 : 2
+  const scale  = active ? 1.15 : 1
+  const w = Math.round(40 * scale), h = Math.round(52 * scale)
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 48 64">
+    <path d="M24 1C12.4 1 3 10.4 3 22C3 37 24 63 24 63S45 37 45 22C45 10.4 35.6 1 24 1Z" fill="${color}" stroke="${stroke}" stroke-width="${sw}"/>
+    <ellipse cx="24" cy="24" rx="12" ry="15" fill="#c8e86a"/>
+    <ellipse cx="24" cy="27" rx="6" ry="7.5" fill="#8A5F3C"/>
+    <ellipse cx="21.5" cy="23.5" rx="2.5" ry="3" fill="#a8784f" opacity=".6"/>
+    <circle cx="29.5" cy="14" r="3.5" fill="white" opacity=".85"/>
+  </svg>`
+  return 'data:image/svg+xml;base64,' + btoa(svg)
+}
+
+// ─── Main page ────────────────────────────────────────────────────────────────
+export default function OurStoresPage() {
+  const [phase,     setPhase]     = useState('idle')
+  const [search,    setSearch]    = useState('')
+  const [userLoc,   setUserLoc]   = useState(null)
+  const [locError,  setLocError]  = useState(null)
+  const [activeId,  setActiveId]  = useState(null)
+  const [nearestId, setNearestId] = useState(null)
+  const [mapReady,  setMapReady]  = useState(false)
+
+  const searchRef  = useRef(null)
+  const listRef    = useRef(null)
+  const mapRef     = useRef(null)   // DOM node for Leaflet
+  const leafletRef = useRef(null)   // Leaflet map instance
+  const markersRef = useRef({})     // id → Leaflet marker
+  const activeMarkRef = useRef(null)
+
+  // ── Inject Leaflet CSS + JS once ───────────────────────────────────────────
+  useEffect(() => {
+    if (window.__leafletLoaded) { setMapReady(true); return }
+    const css1 = document.createElement('link')
+    css1.rel = 'stylesheet'
+    css1.href = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css'
+    document.head.appendChild(css1)
+
+    const css2 = document.createElement('link')
+    css2.rel = 'stylesheet'
+    css2.href = 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css'
+    document.head.appendChild(css2)
+
+    const injectClusterStyles = () => {
+      const style = document.createElement('style')
+      style.textContent = `
+        .avo-cluster { background: rgba(182,197,72,.25); border-radius: 50%; }
+        .avo-cluster div { background: #b6c548; color: #fff; font-weight: 700; font-family: Nunito,sans-serif; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .avo-popup .leaflet-popup-content-wrapper { border-radius: 14px !important; padding: 0 !important; overflow: hidden; box-shadow: 0 8px 28px rgba(0,0,0,.15) !important; }
+        .avo-popup .leaflet-popup-content { margin: 0 !important; width: 240px !important; font-family: Nunito,sans-serif; }
+        .leaflet-popup-tip-container { display: none; }
+      `
+      document.head.appendChild(style)
+    }
+
+    const js1 = document.createElement('script')
+    js1.src = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js'
+    js1.onload = () => {
+      const js2 = document.createElement('script')
+      js2.src = 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js'
+      js2.onload = () => {
+        injectClusterStyles()
+        window.__leafletLoaded = true
+        setMapReady(true)
+      }
+      document.head.appendChild(js2)
+    }
+    document.head.appendChild(js1)
+  }, [])
+
+  // ── Build Leaflet map once libs are ready + results are showing ────────────
+  const showResults = phase === 'results' || search.length > 0
+
+  useEffect(() => {
+    if (!mapReady || !showResults || !mapRef.current || leafletRef.current) return
+    if (!window.L) return
+
+    const L = window.L
+
+    // Init map
+    const map = L.map(mapRef.current, {
+      center: [12.5, 122.0],
+      zoom: 6,
+      zoomControl: true,
+    })
+    leafletRef.current = map
+
+    // CartoDB light tiles — clean, no API key
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org">OpenStreetMap</a> · © <a href="https://carto.com">CARTO</a>',
+      subdomains: 'abcd', maxZoom: 20,
+    }).addTo(map)
+
+    // Cluster group with custom Avocadoria cluster icon
+    const clusterGroup = L.markerClusterGroup({
+      maxClusterRadius: 48,
+      iconCreateFunction(cluster) {
+        const n = cluster.getChildCount()
+        return L.divIcon({
+          html: `<div style="width:36px;height:36px;background:#b6c548;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;font-family:Nunito,sans-serif;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.18)">${n}</div>`,
+          className: '',
+          iconSize: [36, 36],
+        })
+      },
+    })
+
+    // Add markers for all branches
+    BRANCHES.forEach(b => {
+      if (!b.lat || !b.lng) return
+      const pinColor = ISLAND_COLORS[b.island]?.pin || '#b6c548'
+
+      const icon = L.icon({
+        iconUrl:    makePinUrl(pinColor, false),
+        iconSize:   [40, 52],
+        iconAnchor: [20, 52],
+        popupAnchor:[0, -55],
+      })
+
+      const marker = L.marker([b.lat, b.lng], { icon })
+
+      // Popup HTML
+      const orderBtn = b.orderUrl
+        ? `<a href="${b.orderUrl}" target="_blank" rel="noopener noreferrer"
+             style="display:inline-flex;align-items:center;gap:5px;background:#EF7ECB;color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;text-decoration:none;margin-top:2px">
+             🛵 Order Now
+           </a>`
+        : `<span style="font-size:11px;color:#8A5F3C;opacity:.7">🛵 Order link coming soon</span>`
+
+      marker.bindPopup(`
+        <div>
+          <div style="background:#b6c548;padding:12px 14px">
+            <div style="font-size:14px;font-weight:700;color:#fff;margin:0 0 2px">${b.name}</div>
+            <div style="font-size:11px;color:rgba(255,255,255,.85)">${b.island}</div>
+          </div>
+          <div style="padding:12px 14px;background:#fff">
+            <p style="font-size:12px;color:#8A5F3C;margin:0 0 10px;line-height:1.5">${b.address}</p>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <a href="${b.mapsUrl}" target="_blank" rel="noopener noreferrer"
+                style="display:inline-flex;align-items:center;gap:5px;background:#3a6b35;color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;text-decoration:none">
+                📍 Get Directions
+              </a>
+              ${orderBtn}
+            </div>
+          </div>
+        </div>
+      `, { className: 'avo-popup', maxWidth: 240 })
+
+      marker.on('click', () => {
+        // Reset previous active marker
+        if (activeMarkRef.current && activeMarkRef.current !== marker) {
+          const prev = activeMarkRef.current
+          const prevBranch = BRANCHES.find(x => markersRef.current[x.id] === prev)
+          const prevColor = ISLAND_COLORS[prevBranch?.island]?.pin || '#b6c548'
+          prev.setIcon(L.icon({ iconUrl: makePinUrl(prevColor, false), iconSize:[40,52], iconAnchor:[20,52], popupAnchor:[0,-55] }))
+        }
+        // Set active pin (larger, white border)
+        marker.setIcon(L.icon({ iconUrl: makePinUrl('#3a6b35', true), iconSize:[46,60], iconAnchor:[23,60], popupAnchor:[0,-63] }))
+        activeMarkRef.current = marker
+        setActiveId(b.id)
+      })
+
+      markersRef.current[b.id] = marker
+      clusterGroup.addLayer(marker)
+    })
+
+    map.addLayer(clusterGroup)
+
+    // Island legend
+    const legend = L.control({ position: 'bottomleft' })
+    legend.onAdd = () => {
+      const div = L.DomUtil.create('div')
+      div.style.cssText = 'background:#fff;padding:8px 12px;border-radius:10px;font-size:11px;font-family:Nunito,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.1);line-height:1.9'
+      div.innerHTML = Object.entries(ISLAND_COLORS).map(([name, col]) =>
+        `<div style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;background:${col.pin};display:inline-block;flex-shrink:0"></span><span style="color:#444">${name}</span></div>`
+      ).join('')
+      return div
+    }
+    legend.addTo(map)
+  }, [mapReady, showResults])
+
+  // ── Fly map to active branch when selection changes ────────────────────────
+  useEffect(() => {
+    if (!leafletRef.current || activeId === null) return
+    const branch = BRANCHES.find(b => b.id === activeId)
+    if (!branch?.lat) return
+    const L = window.L
+    leafletRef.current.flyTo([branch.lat, branch.lng], 15, { animate: true, duration: 0.8 })
+    const marker = markersRef.current[activeId]
+    if (marker) {
+      setTimeout(() => marker.openPopup(), 850)
+      // Highlight this marker
+      if (activeMarkRef.current && activeMarkRef.current !== marker) {
+        const prev = activeMarkRef.current
+        const prevBranch = BRANCHES.find(x => markersRef.current[x.id] === prev)
+        const prevColor = ISLAND_COLORS[prevBranch?.island]?.pin || '#b6c548'
+        prev.setIcon(L.icon({ iconUrl: makePinUrl(prevColor, false), iconSize:[40,52], iconAnchor:[20,52], popupAnchor:[0,-55] }))
+      }
+      marker.setIcon(L.icon({ iconUrl: makePinUrl('#3a6b35', true), iconSize:[46,60], iconAnchor:[23,60], popupAnchor:[0,-63] }))
+      activeMarkRef.current = marker
+    }
+  }, [activeId])
+
+  // ── GPS locate ─────────────────────────────────────────────────────────────
+  const handleLocate = () => {
+    if (!navigator.geolocation) { setLocError('Geolocation not supported by your browser.'); return }
+    setPhase('locating')
+    setLocError(null)
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        const { latitude: lat, longitude: lng } = pos.coords
+        setUserLoc({ lat, lng })
+        setPhase('results')
+        setSearch('')
+        // Find nearest using real haversine distance
+        const nearest = BRANCHES
+          .filter(b => b.lat && b.lng)
+          .sort((a, b) => haversine(lat, lng, a.lat, a.lng) - haversine(lat, lng, b.lat, b.lng))[0]
+        if (nearest) { setNearestId(nearest.id); setActiveId(nearest.id) }
+        setTimeout(() => searchRef.current?.focus(), 300)
+      },
+      err => {
+        setPhase('idle')
+        if (err.code === 1) setLocError('Location access denied. Please allow location in your browser settings.')
+        else if (err.code === 2) setLocError('Could not detect your position. Check your device GPS.')
+        else setLocError('Location request timed out. Please try again.')
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+    )
+  }
+
+  // ── Filter + sort branches ─────────────────────────────────────────────────
+  const { filtered, grouped, islands } = useMemo(() => {
+    const q = search.toLowerCase().trim()
+
+    let list = BRANCHES.filter(b =>
+      !q ||
+      b.name.toLowerCase().includes(q) ||
+      b.address.toLowerCase().includes(q) ||
+      b.region.toLowerCase().includes(q) ||
+      b.island.toLowerCase().includes(q)
+    ).map(b => ({
+      ...b,
+      distance: (userLoc && b.lat && b.lng)
+        ? haversine(userLoc.lat, userLoc.lng, b.lat, b.lng)
+        : null,
+    }))
+
+    // Sort nearest-first when GPS is active
+    if (userLoc) {
+      list.sort((a, b) => (a.distance ?? 9999) - (b.distance ?? 9999))
+    }
+
+    // Group by island then region
+    const byIsland = {}
+    list.forEach(b => {
+      if (!byIsland[b.island]) byIsland[b.island] = {}
+      if (!byIsland[b.island][b.region]) byIsland[b.island][b.region] = []
+      byIsland[b.island][b.region].push(b)
+    })
+
+    return {
+      filtered: list,
+      grouped:  byIsland,
+      islands:  Object.keys(byIsland),
+    }
+  }, [search, userLoc])
+
+  const activeBranch = BRANCHES.find(b => b.id === activeId)
+
+  // auto-select first result when search changes
+  useEffect(() => {
+    if (filtered.length > 0 && showResults) {
+      if (!filtered.find(b => b.id === activeId)) {
+        setActiveId(filtered[0].id)
+      }
+    }
+  }, [filtered, showResults])
+
+  const totalRegions = useMemo(() => new Set(BRANCHES.map(b => b.region)).size, [])
+
+  return (
+    <>
+      <SEO
+        title="Our Stores"
+        description={`Find ${BRANCHES.length} Avocadoria branches across the Philippines. Get directions and order online.`}
+        path="/our-stores"
+      />
+      <div className="page-enter" style={{ fontFamily: "'Nunito','Segoe UI',sans-serif" }}>
+
+        {/* ══════════════════════════════════════════════════════════
+            HERO — discovery state (shown until user searches/locates)
+        ══════════════════════════════════════════════════════════ */}
+        {!showResults && (
+          <section style={{
+            background: `linear-gradient(160deg, #e8f5c0 0%, ${C.pale} 55%, #d0e8a0 100%)`,
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '100px 24px 60px',
+            textAlign: 'center',
+          }}>
+
+            {/* Floating avocado pin illustration */}
+            <div style={{
+              marginBottom: '32px',
+              animation: 'pin-float 3s ease-in-out infinite',
+            }}>
+              <style>{`
+                @font-face {
+                  font-family:'BubbleboddyNeue';
+                  src:url('/fonts/bubbleboddyneueinline-extrabold.ttf') format('truetype');
+                  font-display:swap;
+                }
+                @keyframes pin-float {
+                  0%,100%{transform:translateY(0) rotate(-2deg)}
+                  50%{transform:translateY(-14px) rotate(2deg)}
+                }
+                @keyframes pulse-ring {
+                  0%{transform:scale(.8);opacity:.8}
+                  100%{transform:scale(1.8);opacity:0}
+                }
+                @keyframes fade-up {
+                  from{opacity:0;transform:translateY(20px)}
+                  to{opacity:1;transform:translateY(0)}
+                }
+              `}</style>
+              {CUSTOM_PIN
+                ? <img src={CUSTOM_PIN} alt="Avocadoria pin" style={{ width: '80px' }} />
+                : (
+                  <div style={{ position: 'relative', display: 'inline-block' }}>
+                    <AvoPin size={80} />
+                    <div style={{
+                      position: 'absolute', bottom: '-6px', left: '50%', transform: 'translateX(-50%)',
+                      width: '40px', height: '14px', borderRadius: '50%',
+                      background: 'rgba(58,107,53,.2)',
+                      animation: 'pulse-ring 2s ease-out infinite',
+                    }} />
+                  </div>
+                )
+              }
+            </div>
+
+            {/* Headline */}
+            <h1 style={{
+              fontFamily: "'BubbleboddyNeue','Nunito',sans-serif",
+              fontWeight: 'normal',
+              fontSize: 'clamp(2rem, 5vw, 3.2rem)',
+              color: C.dark,
+              margin: '0 0 10px',
+              lineHeight: '1.15',
+            }}>
+              Find Your Avocadoria
+            </h1>
+            <p style={{
+              fontSize: '16px', color: `${C.brown}cc`,
+              maxWidth: '400px', margin: '0 auto 36px',
+              lineHeight: '1.7',
+            }}>
+              {BRANCHES.length} branches across the Philippines.<br />
+              Find the nearest one and order fresh avocado desserts.
+            </p>
+
+            {/* Stats pills */}
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '40px' }}>
+              {[
+                { n: BRANCHES.length, l: 'Branches' },
+                { n: totalRegions, l: 'Regions' },
+                { n: 4, l: 'Island Groups' },
+              ].map(s => (
+                <div key={s.l} style={{
+                  background: 'rgba(255,255,255,.7)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(255,255,255,.9)',
+                  borderRadius: '999px',
+                  padding: '8px 20px',
+                }}>
+                  <span style={{ fontSize: '20px', fontWeight: '800', color: C.dark }}>{s.n}</span>
+                  <span style={{ fontSize: '12px', color: `${C.brown}99`, marginLeft: '6px', fontWeight: '600' }}>{s.l}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Primary action — GPS */}
+            <button
+              onClick={handleLocate}
+              disabled={phase === 'locating'}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '10px',
+                background: phase === 'locating' ? `${C.olive}80` : C.olive,
+                color: '#fff', border: 'none', borderRadius: '999px',
+                padding: '15px 36px', fontSize: '17px', fontWeight: '800',
+                cursor: phase === 'locating' ? 'not-allowed' : 'pointer',
+                fontFamily: "'Nunito',sans-serif",
+                boxShadow: `0 8px 28px rgba(182,197,72,.45)`,
+                transition: 'all .2s', marginBottom: '16px',
+              }}
+              onMouseEnter={e => { if (phase !== 'locating') e.currentTarget.style.background = C.dark }}
+              onMouseLeave={e => { if (phase !== 'locating') e.currentTarget.style.background = C.olive }}
+            >
+              {phase === 'locating' ? (
+                <>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+                    style={{ animation: 'spin 1s linear infinite' }} aria-hidden="true">
+                    <path d="M12 2a10 10 0 0 1 10 10" /><circle cx="12" cy="12" r="1" fill="currentColor" />
+                  </svg>
+                  <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+                  Detecting your location...
+                </>
+              ) : (
+                <>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3" />
+                    <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+                    <circle cx="12" cy="12" r="9" strokeOpacity=".3" />
+                  </svg>
+                  Find Nearest Store
+                </>
+              )}
+            </button>
+
+            {locError && (
+              <p style={{ fontSize: '13px', color: C.pink, maxWidth: '360px', margin: '0 auto 12px', lineHeight: '1.5' }}>
+                {locError}
+              </p>
+            )}
+
+            {/* Secondary — search */}
+            <div style={{ position: 'relative', width: '100%', maxWidth: '420px', margin: '0 auto' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
+                <div style={{ flex: 1, height: '1px', background: 'rgba(138,95,60,.2)' }} />
+                <span style={{ fontSize: '12px', color: `${C.brown}80`, fontWeight: '600' }}>or search manually</span>
+                <div style={{ flex: 1, height: '1px', background: 'rgba(138,95,60,.2)' }} />
+              </div>
+              <div style={{ position: 'relative' }}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.2"
+                  style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
+                  aria-hidden="true">
+                  <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+                </svg>
+                <input
+                  ref={searchRef}
+                  type="text" value={search} onChange={e => setSearch(e.target.value)}
+                  placeholder="Search by branch name, city, or region..."
+                  style={{
+                    width: '100%', padding: '13px 16px 13px 40px',
+                    border: `1.5px solid rgba(182,197,72,.4)`,
+                    borderRadius: '12px', background: 'rgba(255,255,255,.85)',
+                    fontFamily: "'Nunito',sans-serif", fontSize: '14px', color: C.brown,
+                    outline: 'none', boxSizing: 'border-box', transition: 'border-color .2s',
+                    backdropFilter: 'blur(6px)',
+                  }}
+                  onFocus={e => e.target.style.borderColor = C.olive}
+                  onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,.4)'}
+                  aria-label="Search branches"
+                />
+              </div>
+            </div>
+
+          </section>
+        )}
+
+        {/* ══════════════════════════════════════════════════════════
+            RESULTS — split: left list / right map
+            ── LAYOUT CONFIG ─────────────────────────────────────
+            Edit these values to adjust the layout at any time.
+        ══════════════════════════════════════════════════════════ */}
+        {showResults && (() => {
+          const LAYOUT = {
+            // ── Overall container ────────────────────────────────
+            navbarHeight:    150,    // px — must match your navbar height
+            containerMaxW:   1280,  // px — max width of the whole panel
+            containerPadX:   24,    // px — left/right page margin
+
+            // ── Left panel (branch list) ─────────────────────────
+            listWidth:       340,   // px — width of the branch list column
+            listMaxH:        600,   // px — max height of the scrollable list
+            listBg:          C.cream,
+
+            // ── Right panel (map) ────────────────────────────────
+            mapHeight:       480,   // px — height of the Google Maps iframe
+            mapBorderRadius: 16,    // px — rounded corners on the map
+            mapShadow:       '0 8px 32px rgba(58,107,53,.15)',
+
+            // ── Detail card (shown above map) ────────────────────
+            detailBg:        '#fff',
+            detailBorderR:   16,    // px — border radius of detail card
+
+            // ── Spacing ──────────────────────────────────────────
+            gapBetween:      24,    // px — gap between list and map columns
+            sectionPaddingT: 32,    // px — top padding below search bar
+            sectionPaddingB: 48,    // px — bottom padding of results section
+          }
+
+          return (
+          <div style={{
+            background: C.cream,
+            minHeight: `calc(100vh - ${LAYOUT.navbarHeight}px)`,
+            paddingTop: `${LAYOUT.navbarHeight}px`,
+          }}>
+
+            {/* ── Top search + back bar — full width, clear of navbar ── */}
+            <div style={{
+              background: '#fff',
+              borderBottom: `1px solid rgba(182,197,72,.2)`,
+              padding: '12px 24px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              position: 'sticky',
+              top: `${LAYOUT.navbarHeight}px`,
+              zIndex: 20,
+              boxShadow: '0 2px 12px rgba(58,107,53,.06)',
+            }}>
+              {/* Back button */}
+              <button
+                onClick={() => { setPhase('idle'); setSearch(''); setActiveId(null); setUserLoc(null); setNearestId(null) }}
+                style={{
+                  flexShrink: 0, background: 'none', border: `1.5px solid rgba(182,197,72,.4)`,
+                  borderRadius: '10px', cursor: 'pointer', color: C.olive,
+                  padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '6px',
+                  fontFamily: "'Nunito',sans-serif", fontSize: '13px', fontWeight: '700',
+                  transition: 'all .15s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = C.olive; e.currentTarget.style.color = '#fff' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = C.olive }}
+                aria-label="Go back"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                  <path d="M19 12H5M12 5l-7 7 7 7" />
+                </svg>
+                Back
+              </button>
+
+              {/* Search input */}
+              <div style={{ flex: 1, maxWidth: '520px', position: 'relative' }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.2"
+                  style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
+                  aria-hidden="true">
+                  <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
+                </svg>
+                <input
+                  ref={searchRef}
+                  type="text" value={search} onChange={e => setSearch(e.target.value)}
+                  placeholder={`Search ${BRANCHES.length} branches by name or city...`}
+                  style={{
+                    width: '100%', padding: '10px 36px 10px 36px',
+                    border: `1.5px solid rgba(182,197,72,.35)`, borderRadius: '10px',
+                    background: C.cream, fontFamily: "'Nunito',sans-serif",
+                    fontSize: '14px', color: C.brown, outline: 'none',
+                    boxSizing: 'border-box', transition: 'border-color .2s',
+                  }}
+                  onFocus={e => e.target.style.borderColor = C.olive}
+                  onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,.35)'}
+                  aria-label="Search branches"
+                />
+                {search && (
+                  <button onClick={() => setSearch('')}
+                    style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: `${C.brown}60`, fontSize: '15px' }}
+                    aria-label="Clear search">✕</button>
+                )}
+              </div>
+
+              {/* Result count */}
+              <span style={{ fontSize: '12px', color: `${C.brown}70`, fontWeight: '600', flexShrink: 0, whiteSpace: 'nowrap' }}>
+                {filtered.length} branch{filtered.length !== 1 ? 'es' : ''}
+                {userLoc ? ' · by distance' : ''}
+              </span>
+
+              {/* GPS button */}
+              <button onClick={handleLocate}
+                style={{
+                  flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '6px',
+                  background: userLoc ? `rgba(182,197,72,.12)` : C.olive,
+                  color: userLoc ? C.dark : '#fff',
+                  border: 'none', borderRadius: '10px', padding: '9px 16px',
+                  fontFamily: "'Nunito',sans-serif", fontSize: '12px', fontWeight: '700',
+                  cursor: 'pointer', transition: 'all .2s', whiteSpace: 'nowrap',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.opacity = '.85' }}
+                onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                  <circle cx="12" cy="12" r="3" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2" />
+                </svg>
+                {userLoc ? 'Location active' : 'Near me'}
+              </button>
+            </div>
+
+            {/* ── Main content — centered, max-width container ── */}
+            <div style={{
+              maxWidth: `${LAYOUT.containerMaxW}px`,
+              margin: '0 auto',
+              padding: `${LAYOUT.sectionPaddingT}px ${LAYOUT.containerPadX}px ${LAYOUT.sectionPaddingB}px`,
+              display: 'grid',
+              gridTemplateColumns: `${LAYOUT.listWidth}px 1fr`,
+              gap: `${LAYOUT.gapBetween}px`,
+              alignItems: 'start',
+            }}>
+
+              {/* ── LEFT: branch list ── */}
+              <div style={{
+                background: '#fff',
+                borderRadius: '16px',
+                border: `1px solid rgba(182,197,72,.2)`,
+                overflow: 'hidden',
+                boxShadow: '0 4px 20px rgba(58,107,53,.08)',
+                position: 'sticky',
+                top: `${LAYOUT.navbarHeight + 68}px`,
+              }}>
+                {filtered.length === 0 ? (
+                  <div style={{ padding: '48px 24px', textAlign: 'center' }}>
+                    <div style={{ fontSize: '36px', marginBottom: '12px' }}>🥑</div>
+                    <p style={{ fontSize: '13px', color: `${C.brown}80`, fontFamily: "'Nunito',sans-serif" }}>
+                      No branches found for "{search}"
+                    </p>
+                  </div>
+                ) : (
+                  <div style={{ maxHeight: `${LAYOUT.listMaxH}px`, overflowY: 'auto' }}>
+                    {islands.map(island => (
+                      <div key={island}>
+                        {/* Island group header */}
+                        <div style={{
+                          padding: '9px 16px 7px',
+                          background: ISLAND_COLORS[island]?.bg || 'rgba(182,197,72,.08)',
+                          borderBottom: `1px solid ${ISLAND_COLORS[island]?.border || 'rgba(182,197,72,.2)'}`,
+                          position: 'sticky', top: 0, zIndex: 2,
+                        }}>
+                          <span style={{
+                            fontSize: '11px', fontWeight: '800',
+                            color: ISLAND_COLORS[island]?.text || C.dark,
+                            textTransform: 'uppercase', letterSpacing: '.06em',
+                            fontFamily: "'Nunito',sans-serif",
+                          }}>
+                            {island} · {Object.values(grouped[island]).reduce((s, a) => s + a.length, 0)} branches
+                          </span>
+                        </div>
+
+                        {Object.entries(grouped[island]).map(([region, branches]) => (
+                          <div key={region}>
+                            {island !== 'Metro Manila' && (
+                              <div style={{
+                                padding: '5px 16px 4px 22px',
+                                fontSize: '10px', fontWeight: '700',
+                                color: `${C.brown}70`, letterSpacing: '.04em',
+                                textTransform: 'uppercase',
+                                background: `rgba(244,250,236,.8)`,
+                                borderBottom: '1px solid rgba(182,197,72,.08)',
+                                fontFamily: "'Nunito',sans-serif",
+                              }}>
+                                {region.replace(/^.*?—\s*/, '')} · {branches.length}
+                              </div>
+                            )}
+
+                            {branches.map(b => {
+                              const isActive  = b.id === activeId
+                              const isNearest = b.id === nearestId
+                              return (
+                                <div
+                                  key={b.id}
+                                  onClick={() => setActiveId(b.id)}
+                                  role="button" tabIndex={0}
+                                  onKeyDown={e => e.key === 'Enter' && setActiveId(b.id)}
+                                  style={{
+                                    display: 'flex', alignItems: 'center', gap: '10px',
+                                    padding: '11px 16px',
+                                    background: isActive ? `rgba(182,197,72,.1)` : 'transparent',
+                                    borderLeft: `3px solid ${isActive ? C.olive : 'transparent'}`,
+                                    borderBottom: '1px solid rgba(182,197,72,.07)',
+                                    cursor: 'pointer', transition: 'all .12s',
+                                  }}
+                                  onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = `rgba(182,197,72,.05)` }}
+                                  onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent' }}
+                                >
+                                  <div style={{ flexShrink: 0 }}>
+                                    {CUSTOM_PIN
+                                      ? <img src={CUSTOM_PIN} alt="" style={{ width: '22px' }} aria-hidden="true" />
+                                      : <AvoPin size={22} active={isActive} />
+                                    }
+                                  </div>
+                                  <div style={{ flex: 1, minWidth: 0 }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}>
+                                      <span style={{
+                                        fontSize: '13px', fontWeight: isActive ? '700' : '600',
+                                        color: isActive ? C.dark : C.brown,
+                                        fontFamily: "'Nunito',sans-serif", lineHeight: '1.35',
+                                      }}>
+                                        {b.name}
+                                      </span>
+                                      {isNearest && (
+                                        <span style={{ fontSize: '9px', background: C.olive, color: '#fff', padding: '2px 6px', borderRadius: '99px', fontWeight: '700', flexShrink: 0 }}>Nearest</span>
+                                      )}
+                                      {b.orderUrl && (
+                                        <span style={{ fontSize: '9px', background: C.pink, color: '#fff', padding: '2px 6px', borderRadius: '99px', fontWeight: '700', flexShrink: 0 }}>Delivery</span>
+                                      )}
+                                      {b.distance !== null && (
+                                        <span style={{ fontSize: '10px', color: C.olive, fontWeight: '600', flexShrink: 0 }}>
+                                          {b.distance < 1 ? `${Math.round(b.distance * 1000)}m` : `${b.distance.toFixed(1)}km`}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                    stroke={isActive ? C.olive : `${C.brown}35`} strokeWidth="2.5"
+                                    style={{ flexShrink: 0 }} aria-hidden="true">
+                                    <polyline points="9 18 15 12 9 6" />
+                                  </svg>
+                                </div>
+                              )
+                            })}
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* ── RIGHT: detail card + Leaflet map ── */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
+                {/* Detail card — shown when a branch is selected */}
+                {activeBranch && (
+                  <div style={{
+                    background: LAYOUT.detailBg,
+                    borderRadius: `${LAYOUT.detailBorderR}px`,
+                    border: `1px solid rgba(182,197,72,.2)`,
+                    padding: '20px 24px',
+                    boxShadow: '0 4px 20px rgba(58,107,53,.08)',
+                    display: 'flex', alignItems: 'flex-start',
+                    justifyContent: 'space-between', gap: '16px',
+                    flexWrap: 'wrap',
+                  }}>
+                    <div style={{ flex: 1, minWidth: '200px' }}>
+                      <span style={{
+                        display: 'inline-block', fontSize: '10px', fontWeight: '700',
+                        padding: '2px 10px', borderRadius: '99px', marginBottom: '8px',
+                        background: ISLAND_COLORS[activeBranch.island]?.bg || 'rgba(182,197,72,.12)',
+                        color: ISLAND_COLORS[activeBranch.island]?.text || C.dark,
+                        textTransform: 'uppercase', letterSpacing: '.05em',
+                        fontFamily: "'Nunito',sans-serif",
+                      }}>
+                        {activeBranch.island}
+                      </span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                        {CUSTOM_PIN
+                          ? <img src={CUSTOM_PIN} alt="" style={{ width: '26px' }} aria-hidden="true" />
+                          : <AvoPin size={26} active />
+                        }
+                        <h2 style={{
+                          fontFamily: "'BubbleboddyNeue','Nunito',sans-serif",
+                          fontSize: '20px', fontWeight: 'normal',
+                          color: C.dark, margin: 0, lineHeight: '1.2',
+                        }}>
+                          {activeBranch.name}
+                        </h2>
+                      </div>
+                      <p style={{ fontSize: '13px', color: `${C.brown}99`, margin: '0 0 14px', lineHeight: '1.5', fontFamily: "'Nunito',sans-serif" }}>
+                        📍 {activeBranch.address}
+                      </p>
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                        <a href={activeBranch.mapsUrl} target="_blank" rel="noopener noreferrer"
+                          style={{
+                            display: 'inline-flex', alignItems: 'center', gap: '5px',
+                            padding: '9px 18px', borderRadius: '999px',
+                            background: C.olive, color: '#fff',
+                            fontSize: '13px', fontWeight: '700',
+                            textDecoration: 'none', fontFamily: "'Nunito',sans-serif",
+                            boxShadow: `0 3px 12px rgba(182,197,72,.4)`, transition: 'all .2s',
+                          }}
+                          onMouseEnter={e => e.currentTarget.style.background = C.dark}
+                          onMouseLeave={e => e.currentTarget.style.background = C.olive}
+                        >
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                            <path d="M3 11l19-9-9 19-2-8-8-2z" />
+                          </svg>
+                          Get Directions
+                        </a>
+                        {activeBranch.orderUrl ? (
+                          <a href={activeBranch.orderUrl} target="_blank" rel="noopener noreferrer"
+                            style={{
+                              display: 'inline-flex', alignItems: 'center', gap: '5px',
+                              padding: '9px 18px', borderRadius: '999px',
+                              background: C.pink, color: '#fff',
+                              fontSize: '13px', fontWeight: '700',
+                              textDecoration: 'none', fontFamily: "'Nunito',sans-serif",
+                              boxShadow: `0 3px 12px rgba(239,126,203,.4)`, transition: 'all .2s',
+                            }}
+                            onMouseEnter={e => e.currentTarget.style.background = '#c9539f'}
+                            onMouseLeave={e => e.currentTarget.style.background = C.pink}
+                          >
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                              <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
+                              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                            </svg>
+                            Order Now
+                          </a>
+                        ) : (
+                          <span style={{
+                            display: 'inline-flex', alignItems: 'center', gap: '5px',
+                            padding: '9px 18px', borderRadius: '999px',
+                            background: 'rgba(182,197,72,.1)', color: `${C.brown}80`,
+                            fontSize: '13px', fontWeight: '600',
+                            border: `1px dashed rgba(182,197,72,.4)`,
+                            fontFamily: "'Nunito',sans-serif",
+                          }}>
+                            🛵 Order link coming soon
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Leaflet map — always rendered so the map DOM node is always available */}
+                <div style={{
+                  borderRadius: `${LAYOUT.mapBorderRadius}px`,
+                  overflow: 'hidden',
+                  boxShadow: LAYOUT.mapShadow,
+                  border: `1px solid rgba(182,197,72,.2)`,
+                  position: 'relative',
+                }}>
+                  {/* Empty state overlay before any branch selected */}
+                  {!activeBranch && (
+                    <div style={{
+                      position: 'absolute', inset: 0, zIndex: 10,
+                      background: 'rgba(244,250,236,.92)',
+                      display: 'flex', flexDirection: 'column',
+                      alignItems: 'center', justifyContent: 'center', gap: '12px',
+                      borderRadius: `${LAYOUT.mapBorderRadius}px`,
+                    }}>
+                      <AvoPin size={52} />
+                      <p style={{ fontSize: '14px', color: `${C.brown}70`, fontFamily: "'Nunito',sans-serif" }}>
+                        Select a branch to fly to its location
+                      </p>
+                    </div>
+                  )}
+                  <div ref={mapRef} style={{ width: '100%', height: `${LAYOUT.mapHeight}px` }} />
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          )
+        })()}
+
+        {/* Footer only shown in idle state */}
+        {!showResults && (
+          <>
+            <div style={{ lineHeight: 0 }}>
+              <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+                style={{ display: 'block', width: '100%', height: '60px' }}>
+                <path d="M0,60 L0,30 C360,0 720,55 1080,25 C1260,10 1380,45 1440,35 L1440,60 Z" fill="#3a6b35" />
+              </svg>
+            </div>
+            <section style={{ background: '#3a6b35', padding: '40px 32px 56px', textAlign: 'center' }}>
+              <h2 style={{ fontFamily: "'BubbleboddyNeue','Nunito',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.3rem,2.5vw,1.8rem)', color: '#c8e690', margin: '0 0 8px' }}>
+                New branches opening soon!
+              </h2>
+              <p style={{ color: 'rgba(255,255,255,.75)', fontSize: '14px', margin: '0 0 20px' }}>Follow us for updates.</p>
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                {[{ l: 'Facebook', h: 'https://facebook.com/avocadoria.ph' }, { l: 'Instagram', h: 'https://instagram.com/avocadoria.ph' }, { l: 'TikTok', h: 'https://tiktok.com/@avocadoria.ph' }].map(s => (
+                  <a key={s.l} href={s.h} target="_blank" rel="noopener noreferrer"
+                    style={{ display: 'inline-block', background: 'rgba(255,255,255,.15)', color: '#fff', borderRadius: '999px', padding: '8px 20px', fontSize: '13px', fontWeight: '700', textDecoration: 'none', border: '1px solid rgba(255,255,255,.2)', transition: 'all .2s' }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,.25)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,.15)'}
+                  >{s.l}</a>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
+
+      </div>
+    </>
+  )
+}

@@ -1,0 +1,220 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Custom Font Faces ─────────────────────────────────────────────────
+   Place licensed WOFF2 files in /public/fonts/ and uncomment these.
+   Until fonts arrive, the fallback stack in tailwind.config.js applies.
+──────────────────────────────────────────────────────────────────────── */
+/*
+@font-face {
+  font-family: 'Bubblebody Neue Inline';
+  src: url('/fonts/BubblebodyNeueInline.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Zing Rust Script';
+  src: url('/fonts/ZingRustScript.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Einstellung';
+  src: url('/fonts/NeueEinstellung-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Einstellung';
+  src: url('/fonts/NeueEinstellung-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+/* ─── Base Styles ───────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-avo-cream text-avo-brown font-sans;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Remove default list styles when inside nav */
+  nav ul, nav ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Focus ring — brand-coloured */
+  :focus-visible {
+    outline: 2px solid theme('colors.avo.olive');
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Smooth image rendering */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Headings use Zing Rust Script by default */
+  h1, h2, h3 {
+    @apply font-zing text-avo-olive;
+  }
+
+  h4, h5, h6 {
+    @apply font-neue text-avo-brown font-bold;
+  }
+}
+
+/* ─── Component Layer ───────────────────────────────────────────────── */
+@layer components {
+
+  /* Container */
+  .container-site {
+    @apply w-full max-w-content mx-auto px-container lg:px-8;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-avo-olive text-white font-neue font-bold
+           px-8 py-3 rounded-btn shadow-btn
+           transition-all duration-200
+           hover:bg-avo-brown hover:shadow-none
+           active:scale-95 focus-visible:outline-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-white text-avo-olive font-neue font-bold
+           border-2 border-avo-olive
+           px-8 py-3 rounded-btn
+           transition-all duration-200
+           hover:bg-avo-olive hover:text-white
+           active:scale-95;
+  }
+
+  .btn-pink {
+    @apply inline-flex items-center justify-center gap-2
+           bg-avo-pink text-white font-neue font-bold
+           px-8 py-3 rounded-btn shadow-btn-pk
+           transition-all duration-200
+           hover:opacity-90 active:scale-95;
+  }
+
+  /* Cards */
+  .card-product {
+    @apply bg-white rounded-card shadow-card overflow-hidden
+           transition-all duration-300
+           hover:shadow-card-lg hover:-translate-y-1;
+  }
+
+  .card-section {
+    @apply bg-avo-pale rounded-card p-6 md:p-8;
+  }
+
+  /* Section wrappers */
+  .section-padding {
+    @apply py-section;
+  }
+
+  .section-padding-sm {
+    @apply py-section-sm;
+  }
+
+  /* Wave divider — brand signature wavy separator */
+  .wave-divider {
+    @apply w-full overflow-hidden leading-none;
+    line-height: 0;
+  }
+
+  .wave-divider svg {
+    display: block;
+    width: 100%;
+  }
+
+  /* Nav link */
+  .nav-link {
+    @apply font-neue font-bold text-avo-brown
+           relative transition-colors duration-200
+           hover:text-avo-olive;
+  }
+
+  .nav-link.active {
+    @apply text-avo-olive;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-avo-olive
+           transition-all duration-200;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-full;
+  }
+
+  /* Tag/Badge */
+  .tag-olive {
+    @apply inline-block bg-avo-pale text-avo-brown
+           text-xs font-neue font-bold
+           px-3 py-1 rounded-btn;
+  }
+
+  .tag-pink {
+    @apply inline-block bg-avo-pink text-white
+           text-xs font-neue font-bold
+           px-3 py-1 rounded-btn;
+  }
+
+  /* Page transition wrapper */
+  .page-enter {
+    @apply animate-fade-up;
+  }
+}
+
+/* ─── Utilities ─────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 8px rgba(138, 95, 60, 0.25);
+  }
+
+  /* Hide scrollbar but keep scrollable */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Avocadoria background texture pattern */
+  .bg-texture {
+    background-image: radial-gradient(circle, rgba(182,197,72,0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+}
