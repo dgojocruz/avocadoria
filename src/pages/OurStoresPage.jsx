@@ -889,17 +889,11 @@ export default function OurStoresPage() {
             </div>
 
             {/* ── Main content — centered, max-width container ── */}
-            <div style={{
+            <div className="stores-layout" style={{
               maxWidth: `${LAYOUT.containerMaxW}px`,
               margin: '0 auto',
               padding: `${LAYOUT.sectionPaddingT}px ${LAYOUT.containerPadX}px ${LAYOUT.sectionPaddingB}px`,
-              display: 'grid',
-              gridTemplateColumns: `min(${LAYOUT.listWidth}px, 100%) 1fr`,
-              gap: `${LAYOUT.gapBetween}px`,
-              alignItems: 'start',
-            }}
-            className="stores-grid"
-            >
+            }}>
 
               {/* ── LEFT: branch list ── */}
               <div style={{

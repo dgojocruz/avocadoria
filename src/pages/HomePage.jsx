@@ -149,8 +149,7 @@ export default function HomePage() {
           src: url('/fonts/bubbleboddyneueinline-extrabold.ttf') format('truetype');
           font-weight: normal; font-style: normal; font-display: swap;
         }
-
-        /* ── Hero image animation — driven by HERO_IMAGE config ── */
+        /* Config-driven hero image animation */
         @keyframes hero-slide-in {
           0%   { opacity:0; transform: translateX(${HERO_IMAGE.slideFrom}px) rotate(${HERO_IMAGE.slideRotateStart}deg); }
           60%  { opacity:1; transform: translateX(${-HERO_IMAGE.slideFrom * 0.1}px) rotate(${-HERO_IMAGE.slideRotateStart * 0.25}deg); }
@@ -159,99 +158,15 @@ export default function HomePage() {
         }
         @keyframes hero-float {
           0%,100% { transform: translateY(0px) rotate(-${HERO_IMAGE.floatRotate}deg); }
-          50%      { transform: translateY(-${HERO_IMAGE.floatHeight}px) rotate(${HERO_IMAGE.floatRotate}deg); }
+          50%     { transform: translateY(-${HERO_IMAGE.floatHeight}px) rotate(${HERO_IMAGE.floatRotate}deg); }
         }
-        .hero-img-anim {
-          animation:
-            hero-slide-in ${HERO_IMAGE.slideDuration}s cubic-bezier(.22,1,.36,1) forwards,
-            hero-float    ${HERO_IMAGE.floatDuration}s ease-in-out ${HERO_IMAGE.floatDelay}s infinite;
-        }
-
-        @keyframes shimmer-sweep {
-          0%   { background-position: -250% center; }
-          100% { background-position:  250% center; }
-        }
-        @keyframes glow-pulse {
-          0%,100% {
-            text-shadow:
-              0 1px 0 rgba(255,255,255,.95), 0 2px 0 rgba(220,255,80,.7),
-              0 3px 0 rgba(40,80,0,.5), 0 5px 8px rgba(40,80,0,.35),
-              0 0 14px rgba(210,255,50,.5), 0 0 32px rgba(180,240,0,.28);
+        /* Desktop slide+float, mobile just float */
+        @media (min-width: 768px) {
+          .hero-product-img {
+            animation:
+              hero-slide-in ${HERO_IMAGE.slideDuration}s cubic-bezier(.22,1,.36,1) forwards,
+              hero-float ${HERO_IMAGE.floatDuration}s ease-in-out ${HERO_IMAGE.floatDelay}s infinite !important;
           }
-          50% {
-            text-shadow:
-              0 1px 0 rgba(255,255,255,.95), 0 2px 0 rgba(220,255,80,.7),
-              0 3px 0 rgba(40,80,0,.5), 0 5px 8px rgba(40,80,0,.35),
-              0 0 22px rgba(210,255,50,.9), 0 0 55px rgba(180,240,0,.55);
-          }
-        }
-        .hero-headline {
-          font-family: 'BubbleboddyNeue','Nunito',sans-serif;
-          font-weight: normal;
-          font-size: clamp(2.8rem,5.5vw,5rem);
-          line-height: 1.12;
-          margin: 0 0 36px;
-          letter-spacing: .01em;
-          display: block;
-          background: linear-gradient(105deg,
-            #4a7a00 0%,#7ab000 15%,#c8f000 28%,#ffffff 38%,
-            #eeff80 46%,#9acc00 55%,#4a7a00 65%,
-            #7ab000 75%,#c8f000 85%,#ffffff 92%,#4a7a00 100%);
-          background-size: 250% auto;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          animation: shimmer-sweep 3.5s linear infinite, glow-pulse 2.5s ease-in-out infinite;
-        }
-        .btn-white {
-          display:inline-flex;align-items:center;justify-content:center;
-          padding:13px 36px;border-radius:999px;
-          background:#fff;color:#3a6b35;
-          font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;
-          text-decoration:none;border:2px solid #fff;
-          box-shadow:0 2px 14px rgba(0,0,0,.10);min-width:140px;
-          transition:all .2s;
-        }
-        .btn-white:hover { background:rgba(255,255,255,.82); }
-        .btn-olive {
-          display:inline-flex;align-items:center;justify-content:center;
-          padding:13px 36px;border-radius:999px;
-          background:#b6c548;color:#fff;
-          font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;
-          text-decoration:none;border:2px solid #b6c548;
-          box-shadow:0 4px 18px rgba(182,197,72,.45);min-width:140px;
-          transition:all .2s;
-        }
-        .btn-olive:hover { background:#3a6b35;border-color:#3a6b35; }
-        .btn-outline-white {
-          display:inline-flex;align-items:center;justify-content:center;
-          padding:13px 36px;border-radius:999px;
-          background:transparent;color:#fff;
-          font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;
-          text-decoration:none;border:2px solid rgba(255,255,255,.7);
-          min-width:140px;transition:all .2s;
-        }
-        .btn-outline-white:hover { background:rgba(255,255,255,.12); }
-        .avofaves-btn {
-          display:inline-flex;align-items:center;justify-content:center;
-          padding:14px 40px;border-radius:999px;
-          background:rgba(255,255,255,.92);color:#3a6b35;
-          font-family:'BubbleboddyNeue','Nunito',sans-serif;
-          font-size:clamp(1rem,1.8vw,1.35rem);font-weight:bold;
-          text-decoration:none;border:2.5px solid rgba(255,255,255,.9);
-          box-shadow:0 6px 24px rgba(58,107,53,.18);
-          backdrop-filter:blur(4px);letter-spacing:.01em;
-          transition:all .2s;white-space:nowrap;
-        }
-        .avofaves-btn:hover { background:#b6c548;color:#fff;border-color:#b6c548; }
-        .section-title {
-          font-family:'BubbleboddyNeue','Nunito',sans-serif;
-          font-weight:normal;font-size:clamp(1.8rem,3.5vw,2.6rem);
-          margin:0 0 8px;letter-spacing:.01em;
-        }
-        .section-sub {
-          font-family:'Nunito',sans-serif;font-size:15px;
-          opacity:.75;margin:0 0 32px;
         }
       `}</style>
 
@@ -260,102 +175,31 @@ export default function HomePage() {
         {/* ══════════════════════════════════════════
             1. HERO
         ══════════════════════════════════════════ */}
-        <style>{`
-          /* ── Mobile hero layout ───────────────────────────────── */
-          .hero-wrap {
-            position: relative;
-            width: 100%;
-            min-height: 100vh;
-            overflow: hidden;
-            background: linear-gradient(180deg,#e8f5c0 0%,${C.hero} 60%,#cce890 100%);
-            display: flex;
-            flex-direction: column;
-          }
-
-          /* Desktop: image absolute right, text takes left half */
-          @media (min-width: 769px) {
-            .hero-inner {
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              min-height: 100vh;
-              padding: 100px 50% 60px 5%;
-            }
-            .hero-product-img {
-              position: absolute;
-              right: ${HERO_IMAGE.right};
-              bottom: ${HERO_IMAGE.bottom};
-              height: ${HERO_IMAGE.height};
-              width: auto;
-              object-fit: contain;
-              z-index: 2;
-            }
-          }
-
-          /* Mobile: stack — image on top, text below, no overlap */
-          @media (max-width: 768px) {
-            .hero-wrap { min-height: auto; padding-bottom: 40px; }
-            .hero-inner {
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-              padding: 90px 24px 32px;
-              position: relative;
-              z-index: 4;
-            }
-            .hero-product-img {
-              position: relative;
-              display: block;
-              width: 90%;
-              max-width: 340px;
-              height: auto;
-              margin: 0 auto 28px;
-              object-fit: contain;
-              z-index: 2;
-              animation: hero-float ${HERO_IMAGE.floatDuration}s ease-in-out infinite !important;
-            }
-            .hero-headline {
-              font-size: clamp(2.2rem, 10vw, 3.2rem) !important;
-            }
-            .btn-white, .btn-olive {
-              width: 100%;
-              justify-content: center;
-            }
-          }
-
-          /* Tablet */
-          @media (min-width: 769px) and (max-width: 1024px) {
-            .hero-product-img {
-              height: 65vh !important;
-            }
-            .hero-inner { padding-right: 48% !important; }
-          }
-        `}</style>
-
-        <section className="hero-wrap">
+        <section className="hero-wrap" style={{
+          background: `linear-gradient(180deg,#e8f5c0 0%,${C.hero} 60%,#cce890 100%)`,
+        }}>
           {/* Radial glow */}
           <div style={{
             position:'absolute',inset:0,zIndex:1,pointerEvents:'none',
             background:'radial-gradient(ellipse 60% 80% at 18% 50%,rgba(210,240,110,.55) 0%,transparent 68%)',
           }}/>
 
-          {/* Product image */}
+          {/* Product image — CSS class handles mobile vs desktop positioning */}
           <img
             src={HERO_IMAGE.src}
             alt="Avocadoria dessert cups"
-            className="hero-img-anim hero-product-img"
+            className="hero-product-img"
             style={{ zIndex: 2 }}
           />
 
-          {/* Gradient overlay — desktop only meaningful */}
+          {/* Gradient overlay */}
           <div style={{
-            position:'absolute', inset:0, zIndex:3, pointerEvents:'none',
+            position:'absolute',inset:0,zIndex:3,pointerEvents:'none',
             background: buildOverlay(OVERLAY),
           }}/>
 
           {/* Hero text */}
           <div className="hero-inner" style={{
-            position:'relative', zIndex:4,
             opacity: loaded ? 1 : 0,
             transform: loaded ? 'translateY(0)' : 'translateY(24px)',
             transition:'opacity .7s ease .2s, transform .7s ease .2s',
@@ -365,9 +209,9 @@ export default function HomePage() {
               Avocado-Based<br />
               Desserts
             </h1>
-            <div style={{ display:'flex', gap:'12px', flexWrap:'wrap', width:'100%' }}>
-              <Link to="/menu"       className="btn-white">Our Menu</Link>
-              <Link to="/our-stores" className="btn-olive">Our Stores</Link>
+            <div className="hero-buttons">
+              <Link to="/menu"       className="btn btn-white">Our Menu</Link>
+              <Link to="/our-stores" className="btn btn-olive">Our Stores</Link>
             </div>
           </div>
         </section>
