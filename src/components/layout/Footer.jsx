@@ -65,7 +65,7 @@ export default function Footer() {
 
           {/* Logo */}
           <Link to="/" aria-label="Avocadoria homepage">
-            <img src="/logo.png" alt="Avocadoria" style={{ height: '56px', width: 'auto' }} />
+            <img src="/logo.svg" alt="Avocadoria" style={{ height: '56px', width: 'auto', filter: 'drop-shadow(0px 1px 0px rgba(255,255,255,0.9)) drop-shadow(0px 2px 4px rgba(58,107,53,0.15))' }} />
           </Link>
 
           {/* Nav links — horizontal row */}
@@ -142,76 +142,7 @@ export default function Footer() {
               </a>
             ))}
           </div>
-
-          {/* Bottom row: Order Here + Live Chat */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-
-            {/* Order Here — GrabFood */}
-            <a
-              href="https://food.grab.com/ph/en/restaurant/avocadoria"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'flex', alignItems: 'center', gap: '6px',
-                background: '#b6c548',
-                color: '#fff',
-                borderRadius: '999px',
-                padding: '6px 14px 6px 8px',
-                fontFamily: 'Nunito, sans-serif',
-                fontSize: '12px', fontWeight: '700',
-                textDecoration: 'none',
-                transition: 'background 0.2s',
-              }}
-              onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
-              onMouseLeave={e => e.currentTarget.style.background = '#b6c548'}
-            >
-              {/* Cart icon */}
-              <span style={{
-                width: '26px', height: '26px', borderRadius: '50%',
-                background: 'rgba(255,255,255,0.25)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '14px', height: '14px' }} aria-hidden="true">
-                  <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                </svg>
-              </span>
-              Order Here
-            </a>
-
-            {/* Live Chat — Messenger */}
-            <a
-              href="https://m.me/avocadoria.ph"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'flex', alignItems: 'center', gap: '6px',
-                background: '#EF7ECB',
-                color: '#fff',
-                borderRadius: '999px',
-                padding: '6px 14px 6px 8px',
-                fontFamily: 'Nunito, sans-serif',
-                fontSize: '12px', fontWeight: '700',
-                textDecoration: 'none',
-                transition: 'background 0.2s',
-              }}
-              onMouseEnter={e => e.currentTarget.style.background = '#c9539f'}
-              onMouseLeave={e => e.currentTarget.style.background = '#EF7ECB'}
-            >
-              <span style={{
-                width: '26px', height: '26px', borderRadius: '50%',
-                background: 'rgba(255,255,255,0.25)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <svg viewBox="0 0 24 24" fill="white" style={{ width: '14px', height: '14px' }} aria-hidden="true">
-                  <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.78 1.28 5.266 3.3 6.968V21l3.013-1.66c.805.222 1.656.341 2.537.341 5.523 0 10-4.145 10-9.259C22 6.145 17.523 2 12 2zm.994 12.466L10.62 11.87l-4.72 2.596 5.198-5.517 2.433 2.596 4.666-2.596-5.203 5.517z"/>
-                </svg>
-              </span>
-              Live Chat
-            </a>
-
           </div>
-        </div>
       </div>
 
       {/* ── Bottom copyright bar ── */}

@@ -23,9 +23,9 @@ const STYLE = {
   backdropBlur: 'blur(10px)',
 
   // ── Icon buttons ────────────────────────────────────────────────────────
-  iconSize:                  '40px',
-  iconButtonSize:            '30px',
-  iconColor:                 'rgba(118, 197, 15, 0.65)',
+  iconSize:                  '50px',
+  iconButtonSize:            '70px',
+  iconColor:                 'rgba(168, 211, 9, 0.93)',
   iconColorHover:            '#b6c548',
   iconGap:                   '10px',
   iconButtonBackground:      'rgba(255,255,255,0.5)',

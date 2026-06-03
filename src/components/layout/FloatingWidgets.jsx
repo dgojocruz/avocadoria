@@ -1,32 +1,101 @@
+// ─── URLs ─────────────────────────────────────────────────────────────────────
 const GRABFOOD_URL = 'https://food.grab.com/ph/en/restaurant/avocadoria'
 const FB_PAGE_URL  = 'https://m.me/avocadoria.ph'
 
+// ─── Size config ──────────────────────────────────────────────────────────────
+// Increase ICON_WIDTH to make buttons bigger / smaller
+const ICON_WIDTH = 110  // px — try: 90 | 110 | 130 | 150
+
 export default function FloatingWidgets() {
   return (
-    <div className="floating-widgets" aria-label="Quick action buttons">
+    <>
+      <style>{`
+        .floating-widgets {
+          position: fixed;
+          right: 16px;
+          bottom: 24px;
+          z-index: 999;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 10px;
+          pointer-events: none;
+        }
 
-      {/* Order Here — GrabFood */}
-      <a href={GRABFOOD_URL} target="_blank" rel="noopener noreferrer"
-        className="floating-btn" aria-label="Order on GrabFood">
-        <span>Order Here</span>
-        <div className="floating-icon" style={{ background:'#00B14F' }}>
-          <svg viewBox="0 0 40 40" fill="white" style={{ width:'22px', height:'22px' }} aria-hidden="true">
-            <text x="4" y="28" fontSize="18" fontWeight="bold">GF</text>
-          </svg>
-        </div>
-      </a>
+        .floating-icon-btn {
+          display: block;
+          pointer-events: all;
+          cursor: pointer;
+          border-radius: 16px;
+          overflow: hidden;
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+          width: ${ICON_WIDTH}px;
+          /* preserve aspect ratio — icons are ~158×100px each */
+          height: auto;
+          line-height: 0;
+          text-decoration: none;
+        }
 
-      {/* Live Chat — Messenger */}
-      <a href={FB_PAGE_URL} target="_blank" rel="noopener noreferrer"
-        className="floating-btn" aria-label="Chat on Messenger">
-        <span>Live Chat</span>
-        <div className="floating-icon" style={{ background:'#0084FF' }}>
-          <svg viewBox="0 0 24 24" fill="white" style={{ width:'20px', height:'20px' }} aria-hidden="true">
-            <path d="M12 2C6.477 2 2 6.145 2 11.259c0 2.78 1.28 5.266 3.3 6.968V21l3.013-1.66c.805.222 1.656.341 2.537.341 5.523 0 10-4.145 10-9.259C22 6.145 17.523 2 12 2zm.994 12.466L10.62 11.87l-4.72 2.596 5.198-5.517 2.433 2.596 4.666-2.596-5.203 5.517z"/>
-          </svg>
-        </div>
-      </a>
+        .floating-icon-btn:hover {
+          transform: scale(1.07) translateY(-2px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.24);
+        }
 
-    </div>
+        .floating-icon-btn img {
+          width: 100%;
+          height: auto;
+          display: block;
+          border-radius: 16px;
+        }
+
+        /* Mobile: slightly smaller */
+        @media (max-width: 480px) {
+          .floating-icon-btn {
+            width: ${Math.round(ICON_WIDTH * 0.85)}px;
+          }
+          .floating-widgets {
+            right: 10px;
+            bottom: 16px;
+          }
+        }
+      `}</style>
+
+      <div className="floating-widgets" aria-label="Quick action buttons">
+
+        {/* Order Here — GrabFood + FoodPanda */}
+        <a
+          href={GRABFOOD_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="floating-icon-btn"
+          aria-label="Order on GrabFood"
+        >
+          <img
+            src="/icon_order_here.webp"
+            alt="Order Here — GrabFood & FoodPanda"
+            width={ICON_WIDTH}
+            height={Math.round(ICON_WIDTH * 0.80)}
+          />
+        </a>
+
+        {/* Live Chat — Messenger */}
+        <a
+          href={FB_PAGE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="floating-icon-btn"
+          aria-label="Chat on Facebook Messenger"
+        >
+          <img
+            src="/icon_live_chat.webp"
+            alt="Live Chat — Messenger"
+            width={ICON_WIDTH}
+            height={Math.round(ICON_WIDTH * 0.64)}
+          />
+        </a>
+
+      </div>
+    </>
   )
 }

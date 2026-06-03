@@ -15,7 +15,7 @@ const NAV_LINKS = [
 const NAV_STYLE = {
   colorDefault:     '#8A5F3C',
   colorActive:      '#b6c548',
-  fontSize:         'clamp(13px, 1.4vw, 17px)',
+  fontSize:         'clamp(24px, 1.4vw, 25px)',
   fontWeight:       '700',
   letterSpacing:    '0.02em',
   emboss:           '0px 1px 0px rgba(255,255,255,0.7), 0px -1px 0px rgba(0,0,0,0.08), 0px 2px 4px rgba(138,95,60,0.15)',
@@ -41,7 +41,7 @@ export default function Navbar() {
       {/* ── Logo ── */}
       <Link to="/" onClick={close} aria-label="Avocadoria homepage"
         style={{ display:'flex', alignItems:'center', textDecoration:'none', flexShrink:0 }}>
-        <img src="/logo.png" alt="Avocadoria" className="navbar-logo"
+        <img src="/logo.svg" alt="Avocadoria" className="navbar-logo"
           style={{
             filter: [
               'drop-shadow(0px 1px 0px rgba(255,255,255,0.9))',
