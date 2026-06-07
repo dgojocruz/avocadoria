@@ -660,72 +660,72 @@ export default function HomePage() {
         .avo-hero {
           position: relative;
           width: 100%;
-          min-height: 100svh;
+          height: 100svh;
+          max-height: 700px;
           overflow: hidden;
           background: #d9eaa0;
-          display: flex;
-          flex-direction: column;
+          display: block;
         }
 
-        /* Mobile: text sits at top, product below */
+        /* Mobile: text — bottom-left, above slope */
         .avo-hero__text {
-          position: relative;
+          position: absolute;
           z-index: 7;
-          padding: 100px 24px 20px 24px;  /* top clears navbar */
-          max-width: 100%;
-          width: 100%;
+          bottom: clamp(80px, 14%, 120px);
+          left: 0;
+          padding: 0 20px 0 20px;
+          max-width: 70%;
+          width: auto;
         }
 
-        /* Mobile: product carousel below text */
+        /* Mobile: product — small, right side, just above tagline */
         .avo-hero__product-wrap {
-          position: relative;
-          z-index: 5;
-          flex: 1;
+          position: absolute;
+          bottom: clamp(72px, 12%, 110px);
+          right: 8px;
+          z-index: 8;
           display: flex;
           align-items: flex-end;
-          justify-content: center;
-          padding-bottom: 80px; /* clear slope */
+          justify-content: flex-end;
+          padding-bottom: 0;
+          flex: unset;
         }
 
-        /* Mobile headline size */
+        /* Mobile headline */
         .avo-hero__headline {
-          font-size: clamp(1.8rem, 7vw, 2.4rem) !important;
-          margin-bottom: 16px !important;
+          font-size: clamp(1.5rem, 6vw, 2rem) !important;
+          margin-bottom: 10px !important;
         }
 
         /* Mobile buttons: stack */
         .avo-hero__buttons {
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 8px;
           width: 100%;
-          max-width: 280px;
+          max-width: 200px;
         }
         .avo-hero__buttons .btn {
           width: 100%;
           text-align: center;
           justify-content: center;
+          font-size: 13px !important;
+          padding: 8px 16px !important;
+          min-height: 38px !important;
         }
 
-        /* Mobile product image */
+        /* Mobile product image — small thumbnail */
         .avo-hero__product-img {
-          width: 55vw;
-          max-width: 220px;
+          width: 28vw;
+          max-width: 120px;
           height: auto;
           object-fit: contain;
           animation: hero-breathe 4.5s ease-in-out infinite;
         }
 
-        /* Mobile dots: bottom center */
+        /* Mobile dots — hidden on mobile to save space */
         .avo-hero__dots {
-          position: absolute;
-          bottom: 90px;
-          right: 16px;
-          z-index: 9;
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          align-items: center;
+          display: none;
         }
 
         /* ── DESKTOP (768px+) ── */
@@ -812,8 +812,8 @@ export default function HomePage() {
             position:'absolute', inset:0, zIndex:3, pointerEvents:'none',
             background:`linear-gradient(to right,
               rgba(255,255,255,${WASH.opacityLeft})    0%,
-              rgba(255,255,255,${WASH.opacityMidLeft}) 0%,
-              rgba(255,255,255,${WASH.opacityMid})     100%,
+              rgba(255,255,255,${WASH.opacityMidLeft}) 28%,
+              rgba(255,255,255,${WASH.opacityMid})     44%,
               rgba(255,255,255,${WASH.opacityRight})   ${WASH.clearAt},
               rgba(255,255,255,0) 100%)`,
           }}/>
@@ -959,7 +959,7 @@ export default function HomePage() {
                     style={{ textDecoration:'none' }}
                   >
                     <div style={{
-                      background:'rgb(255, 255, 255)',
+                      background:'rgba(255,255,255,0.85)',
                       border:'1.5px solid rgba(182,197,72,0.2)',
                       borderRadius:'16px', padding:'24px',
                       display:'flex', flexDirection:'column', gap:'10px',

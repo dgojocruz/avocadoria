@@ -72,12 +72,15 @@ a { touch-action: manipulation; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 var(--sp-md);
+  padding: 0 12px;
+}
+@media (min-width: 768px) {
+  .navbar { padding: 0 var(--sp-md); }
 }
 
 /* Logo scales with viewport */
 .navbar-logo {
-  height: clamp(70px, 20vw, 120px);
+  height: clamp(44px, 10vw, 100px);
   width: auto;
 }
 

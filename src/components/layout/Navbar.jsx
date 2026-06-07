@@ -201,7 +201,12 @@ export default function Navbar() {
   const close = () => { setIsOpen(false); setMobileAboutOpen(false) }
 
   return (
-    <header className="navbar" role="banner">
+    <header className="navbar" role="banner" style={{
+        background: 'rgba(217,226,158,0.85)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        borderBottom: '1px solid rgba(182,197,72,0.2)',
+      }}>
 
       {/* ── Logo ── */}
       <Link to="/" onClick={close} aria-label="Avocadoria homepage"
@@ -220,7 +225,7 @@ export default function Navbar() {
 
       {/* ── Desktop nav ── */}
       <nav className="hidden lg:flex lg:items-center" aria-label="Main navigation"
-        style={{ display:'flex', alignItems:'center', gap:'clamp(16px, 2.5vw, 32px)' }}>
+        style={{ alignItems:'center', gap:'clamp(16px, 2.5vw, 32px)' }}>
         {NAV_LINKS.map((item) =>
           item.dropdown ? (
             <DropdownLink
@@ -272,9 +277,9 @@ export default function Navbar() {
         style={{
           display:'flex', flexDirection:'column', justifyContent:'center',
           alignItems:'center', width:'44px', height:'44px', gap:'5px',
-          background:'rgba(255,255,255,0.75)', border:'none',
+          background:'rgba(255,255,255,0.9)', border:'1.5px solid rgba(182,197,72,0.3)',
           borderRadius:'10px', cursor:'pointer', backdropFilter:'blur(8px)',
-          padding: 0,
+          padding: 0, flexShrink: 0,
         }}>
         {[0,1,2].map(i => (
           <span key={i} style={{
@@ -293,12 +298,15 @@ export default function Navbar() {
         style={{
           position:'absolute', top:'100%', left:0, right:0,
           overflow:'hidden', maxHeight: isOpen ? '600px' : '0',
-          transition:'max-height 0.3s ease',
-          background:'rgba(244,250,236,0.97)', backdropFilter:'blur(10px)',
-          borderTop:'1px solid rgba(182,197,72,0.2)',
+          transition:'max-height 0.35s ease',
+          background:'rgba(244,250,236,0.98)',
+          backdropFilter:'blur(16px)',
+          WebkitBackdropFilter:'blur(16px)',
+          borderTop:'1px solid rgba(182,197,72,0.25)',
+          boxShadow:'0 8px 24px rgba(58,107,53,0.12)',
         }}>
-        <ul style={{ listStyle:'none', padding:'12px 16px', margin:0,
-          display:'flex', flexDirection:'column', gap:'4px' }}>
+        <ul style={{ listStyle:'none', padding:'8px 12px 16px', margin:0,
+          display:'flex', flexDirection:'column', gap:'2px' }}>
           {NAV_LINKS.map((item) => (
             <li key={item.to}>
               {item.dropdown ? (
