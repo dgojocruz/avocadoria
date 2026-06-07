@@ -46,7 +46,13 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer style={{ background: '#F4FAEC', borderTop: '1px solid rgba(182,197,72,0.25)' }}>
+    <footer style={{
+      backgroundImage: "url('/footer-bg.webp')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      borderTop: '1px solid rgba(182,197,72,0.25)',
+    }}>
 
       {/* ── Main footer row ── */}
       <div style={{

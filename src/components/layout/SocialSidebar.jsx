@@ -1,58 +1,56 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
-// ─────────────────────────────────────────────────────────────────────────────
-// SIDEBAR STYLE CONFIG — edit here to change the look anytime
-// ─────────────────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ── Jingle ────────────────────────────────────────────────────────────────────
+const JINGLE = {
+  src:    '/audio/avo-jingle.mp3',  // ← drop your mp3 in /public/audio/
+  volume: 0.6,                      // 0.0–1.0        try: 0.4–0.8
+  loop:   true,                     // loop the jingle
+  // Auto-play on page load? false = user must click play first (recommended)
+  autoPlay: false,
+}
+
+// ── Style ─────────────────────────────────────────────────────────────────────
 const STYLE = {
-  // ── Pill container ──────────────────────────────────────────────────────
   pillBackground:   'rgba(255, 255, 255, 0.72)',
   pillBorderRadius: '999px',
   pillPaddingX:     '10px',
   pillPaddingY:     '14px',
   pillBorder:       '1px solid rgba(255,255,255,0.9)',
-
-  // Emboss shadows — outer drop + outer highlight + inner highlight + inner shadow
-  // Tweak these 4 values to make it more/less pronounced
   pillShadow: [
     '4px 4px 10px rgba(182, 197, 72, 0.18)',
     '-2px -2px 6px rgba(255, 255, 255, 0.85)',
     'inset 2px 2px 4px rgba(255,255,255,0.75)',
     'inset -2px -2px 5px rgba(138, 95, 60, 0.12)',
   ].join(', '),
-
   backdropBlur: 'blur(10px)',
-
-  // ── Icon buttons ────────────────────────────────────────────────────────
   iconSize:                  '50px',
-  iconButtonSize:            '70px',
+  iconButtonSize:            '50px',
   iconColor:                 'rgba(168, 211, 9, 0.93)',
   iconColorHover:            '#b6c548',
   iconGap:                   '10px',
   iconButtonBackground:      'rgba(255,255,255,0.5)',
   iconButtonBackgroundHover: 'rgba(208, 232, 175, 0.6)',
   iconButtonBorderRadius:    '50%',
-
   iconButtonShadow: [
     '2px 2px 5px rgba(138, 95, 60, 0.15)',
     '-1px -1px 3px rgba(255,255,255,0.9)',
     'inset 1px 1px 2px rgba(255,255,255,0.8)',
     'inset -1px -1px 3px rgba(138, 95, 60, 0.10)',
   ].join(', '),
-
   iconButtonShadowActive: [
     'inset 2px 2px 4px rgba(138, 95, 60, 0.2)',
     'inset -1px -1px 2px rgba(255,255,255,0.6)',
   ].join(', '),
-
-  // ── Divider dot ─────────────────────────────────────────────────────────
   dividerColor: 'rgba(182, 197, 72, 0.35)',
   dividerSize:  '4px',
-
-  // ── Position ────────────────────────────────────────────────────────────
-  leftOffset: '16px',
+  leftOffset:   '16px',
 }
-// ─────────────────────────────────────────────────────────────────────────────
 
+// ── Social links ──────────────────────────────────────────────────────────────
 const SOCIAL = [
   {
     label: 'Facebook',
@@ -84,6 +82,10 @@ const SOCIAL = [
     ),
   },
 ]
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// INTERNALS
+// ═══════════════════════════════════════════════════════════════════════════════
 
 function IconBtn({ children, onClick, href, ariaLabel }) {
   const [hovered, setHovered] = useState(false)
@@ -120,13 +122,73 @@ function IconBtn({ children, onClick, href, ariaLabel }) {
     : <button onClick={onClick} {...handlers}>{children}</button>
 }
 
+// ── Sound wave bars animation (playing indicator) ─────────────────────────────
+function SoundBars({ playing }) {
+  return (
+    <div aria-hidden="true" style={{
+      display: 'flex', alignItems: 'flex-end',
+      gap: '2px', height: '18px', marginTop: '2px',
+    }}>
+      {[1, 2, 3, 4].map((i) => (
+        <div key={i} style={{
+          width: '3px',
+          borderRadius: '2px',
+          background: STYLE.iconColor,
+          height: playing ? `${[10, 18, 14, 8][i-1]}px` : '4px',
+          transition: 'height 0.15s ease',
+          animation: playing ? `soundbar-${i} ${0.5 + i * 0.1}s ease-in-out infinite alternate` : 'none',
+        }}/>
+      ))}
+      <style>{`
+        @keyframes soundbar-1 { from{height:4px} to{height:14px} }
+        @keyframes soundbar-2 { from{height:8px} to{height:20px} }
+        @keyframes soundbar-3 { from{height:6px} to{height:16px} }
+        @keyframes soundbar-4 { from{height:4px} to{height:10px} }
+      `}</style>
+    </div>
+  )
+}
+
+// ── Main component ────────────────────────────────────────────────────────────
 export default function SocialSidebar() {
-  const [soundOn, setSoundOn] = useState(false)
+  const [soundOn, setSoundOn] = useState(JINGLE.autoPlay)
+  const audioRef = useRef(null)
   const iconSz = { width: STYLE.iconSize, height: STYLE.iconSize }
+
+  // Create audio element once
+  useEffect(() => {
+    const audio = new Audio(JINGLE.src)
+    audio.loop   = JINGLE.loop
+    audio.volume = JINGLE.volume
+    audioRef.current = audio
+
+    // Auto-play if configured (browsers may block without user gesture)
+    if (JINGLE.autoPlay) {
+      audio.play().catch(() => setSoundOn(false))
+    }
+
+    return () => {
+      audio.pause()
+      audio.src = ''
+    }
+  }, [])
+
+  // Toggle play/pause when soundOn changes
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (soundOn) {
+      audio.play().catch(() => setSoundOn(false))
+    } else {
+      audio.pause()
+    }
+  }, [soundOn])
+
+  const handleToggle = () => setSoundOn(v => !v)
 
   return (
     <aside
-      aria-label="Social media links"
+      aria-label="Social media links and music"
       className="hidden md:flex"
       style={{
         position:  'fixed',
@@ -152,22 +214,28 @@ export default function SocialSidebar() {
         gap:                  STYLE.iconGap,
       }}>
 
-        {/* Sound toggle */}
-        <IconBtn onClick={() => setSoundOn(v => !v)} ariaLabel={soundOn ? 'Mute' : 'Play music'}>
-          {soundOn ? (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={iconSz}>
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-            </svg>
-          ) : (
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={iconSz}>
-              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-              <line x1="23" y1="9" x2="17" y2="15"/>
-              <line x1="17" y1="9" x2="23" y2="15"/>
-            </svg>
-          )}
-        </IconBtn>
+        {/* ── Sound toggle ── */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+          <IconBtn onClick={handleToggle} ariaLabel={soundOn ? 'Pause jingle' : 'Play jingle'}>
+            {soundOn ? (
+              // Playing — speaker on icon
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={iconSz}>
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+              </svg>
+            ) : (
+              // Muted — speaker off icon
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={iconSz}>
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                <line x1="23" y1="9" x2="17" y2="15"/>
+                <line x1="17" y1="9" x2="23" y2="15"/>
+              </svg>
+            )}
+          </IconBtn>
+          {/* Animated sound bars — only show when playing */}
+          <SoundBars playing={soundOn} />
+        </div>
 
         {/* Divider dot */}
         <div aria-hidden="true" style={{

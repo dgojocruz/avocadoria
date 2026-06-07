@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import SEO from '@/components/ui/SEO'
 import { Link } from 'react-router-dom'
+import { NEWS_POSTS } from '@/data/posts'
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // HERO CONFIG
@@ -17,7 +18,11 @@ const PRODUCTS = [
 // ── Layer 1: Background image ─────────────────────────────────────────────────
 const BG = {
   src:            '/avocadoria_bg.webp',
-  objectPosition: 'center center',
+  // Adjust objectPosition to reframe the image:
+  // 'center center' = default centered
+  // 'center bottom' = pull image down, show bottom portion
+  // '50% 70%'       = custom vertical shift (higher % = lower in image)
+  objectPosition: 'center bottom',  // ← pulls image down to fill hero
 }
 
 // ── Layer 2: Ambient ghost (large, dimmed, same product as layer 4) ───────────
@@ -41,17 +46,17 @@ const WASH = {
 
 // ── Layer 4: Sharp hero product ───────────────────────────────────────────────
 const PRODUCT = {
-  right:       '0%',
-  bottom:      '0%',
-  height:      '90vh',
-  mobileWidth: '75vw',
-  mobileMaxW:  '280px',
+  right:       '2%',    // from right edge          try: '0%'–'8%'
+  bottom:      '0%',    // sits on the slope        try: '0%'–'5%'
+  height:      '52vh',  // matching preview size    try: '48vh'–'60vh'
+  mobileWidth: '62vw',
+  mobileMaxW:  '240px',
 }
 
 // ── Layer 5: Slope image ──────────────────────────────────────────────────────
 const SLOPE = {
   src:    '/slope_background.svg',
-  height: '30%',
+  height: '20%',
 }
 
 // ── Text ──────────────────────────────────────────────────────────────────────
@@ -129,30 +134,28 @@ function ProductLayers() {
   }, [])
 
   const product = PRODUCTS[cur]
+  const fadeStyle = (opacity = 1) => ({
+    opacity:    visible ? opacity : 0,
+    transition: `opacity ${TIMING.transition}ms ease`,
+  })
 
   return (
     <>
-      {/* LAYER 2 — Ambient ghost */}
-      <img src={product.src} alt="" aria-hidden="true" style={{
-        position:'absolute', right:AMBIENT.right, bottom:0,
-        height:`${AMBIENT.heightVh}vh`, width:'auto', maxWidth:'none',
-        zIndex:2, objectFit:'contain', pointerEvents:'none', userSelect:'none',
-        filter:`blur(${AMBIENT.blur}) saturate(${AMBIENT.saturate}) brightness(${AMBIENT.brightness})`,
-        opacity: visible ? AMBIENT.opacity : 0,
-        transition:`opacity ${TIMING.transition}ms ease`,
-      }}/>
+      {/* LAYER 2 — Ambient ghost removed for cleaner transitions */}
 
-      {/* LAYER 4 — Sharp hero product */}
-      {/* <ProductLayers /> temporarily hidden — uncomment to restore */}
+      {/* LAYER 4 — Sharp product: on TOP of slope, uses responsive classes */}
+      <div className="avo-hero__product-wrap" style={{ zIndex:8, ...fadeStyle() }}>
+        <img
+          src={product.src}
+          alt={product.alt}
+          className="avo-hero__product-img"
+          style={{ pointerEvents:'none' }}
+        />
+      </div>
 
       {/* Dots */}
       {PRODUCTS.length > 1 && (
-        <div style={{
-          position:'absolute', right:'18px',
-          bottom:`calc(${SLOPE.height} + 14px)`,
-          zIndex:8, display:'flex', flexDirection:'column',
-          gap:'10px', alignItems:'center',
-        }}>
+        <div className="avo-hero__dots">
           {PRODUCTS.map((_, i) => (
             <button key={i} onClick={() => goTo(i)}
               aria-label={`Show product ${i + 1}`}
@@ -171,6 +174,442 @@ function ProductLayers() {
         </div>
       )}
     </>
+  )
+}
+
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// FRANCHISE TEASER CONFIG
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const FRANCHISE_CARTS = [
+  {
+    id:         'food-truck',
+    image:      '/franchise-food-truck.png',
+    name:       'Food Truck',
+    size:       '10 sqm',
+    tag:        'Most Mobile',
+    tagColor:   '#EF7ECB',
+    color:      '#b6c548',
+    highlights: [
+      'Perfect for events, bazaars & festivals',
+      'Pick-up + Order window layout',
+      'Fully branded with illuminated signage',
+      'Easy to relocate — maximum reach',
+    ],
+  },
+  {
+    id:         'island',
+    image:      '/franchise-island.png',
+    name:       'Island',
+    size:       '20 sqm',
+    tag:        'Best Value',
+    tagColor:   '#DFD438',
+    color:      '#3a6b35',
+    highlights: [
+      'Integrated seating area for dwell time',
+      'Largest format — premium mall presence',
+      'Dedicated prep + service zones',
+      'Scalable layout for high foot traffic',
+    ],
+  },
+  {
+    id:         'popup',
+    image:      '/franchise-popup.png',
+    name:       'Pop Up',
+    size:       '6 sqm',
+    tag:        'Entry Level',
+    tagColor:   '#b6c548',
+    color:      '#EF7ECB',
+    highlights: [
+      'Most affordable entry point',
+      'Illuminated Avocadoria branding wall',
+      'Built-in digital display screen',
+      'Compact & efficient — fits any space',
+    ],
+  },
+  {
+    id:         'kiosk',
+    image:      '/franchise-kiosk.png',
+    name:       'Kiosk',
+    size:       '6.25 sqm',
+    tag:        'Most Popular',
+    tagColor:   '#b6c548',
+    color:      '#8A5F3C',
+    highlights: [
+      'Iconic avocado drip counter design',
+      'Signature curved architecture',
+      'Open layout — fast Order → Pick-Up flow',
+      'Premium finish, strong brand visibility',
+    ],
+  },
+]
+
+const FRANCHISE_TIMING = {
+  intervalMs:   10000,  // 10s auto-advance     try: 8000–15000
+  transitionMs:   600,  // crossfade speed
+}
+
+// ── Franchise section background ──────────────────────────────────────────────
+// Copies the hero section feel — light green gradient matching homepage top
+// Change any value here to retheme the section
+const FRANCHISE_BG = {
+  // Type: 'image' | 'gradient' | 'solid' | 'transparent'
+  type: 'image',
+
+  // Background image path — drop file in /public/
+  image: '/franchise-bg.webp',
+
+  // Overlay — white wash on top of the image
+  // 0.0 = no overlay, 1.0 = full white  ← try: 0.30–0.55
+  overlayOpacity: 0.45,
+
+  // Padding top/bottom
+  paddingTop:    '72px',
+  paddingBottom: '56px',
+}
+
+// White stroke text-shadow (same as hero headline)
+const FT_STROKE = [
+  '-3px -3px 0 #fff', ' 3px -3px 0 #fff',
+  '-3px  3px 0 #fff', ' 3px  3px 0 #fff',
+  '-3px  0   0 #fff', ' 3px  0   0 #fff',
+  ' 0   -3px 0 #fff', ' 0    3px 0 #fff',
+  '-2px -2px 0 #fff', ' 2px -2px 0 #fff',
+  '-2px  2px 0 #fff', ' 2px  2px 0 #fff',
+].join(', ')
+
+function FranchiseTeaser() {
+  const [cur,     setCur]     = useState(0)
+  const [visible, setVisible] = useState(true)
+  const timerRef = useRef(null)
+
+  const goTo = (next) => {
+    if (next === cur) return
+    setVisible(false)
+    setTimeout(() => {
+      setCur(next)
+      setTimeout(() => setVisible(true), 40)
+    }, FRANCHISE_TIMING.transitionMs)
+  }
+
+  const prev = () => goTo((cur - 1 + FRANCHISE_CARTS.length) % FRANCHISE_CARTS.length)
+  const next = () => goTo((cur + 1) % FRANCHISE_CARTS.length)
+
+  // Auto-advance
+  useEffect(() => {
+    timerRef.current = setInterval(() => next(), FRANCHISE_TIMING.intervalMs)
+    return () => clearInterval(timerRef.current)
+  }, [cur])
+
+  const resetTimer = () => {
+    clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => next(), FRANCHISE_TIMING.intervalMs)
+  }
+
+  const cart = FRANCHISE_CARTS[cur]
+
+  const arrowBtn = (onClick, label, children) => (
+    <button
+      onClick={() => { onClick(); resetTimer() }}
+      aria-label={label}
+      style={{
+        width: '44px', height: '44px', borderRadius: '50%',
+        background: 'rgba(255,255,255,0.85)',
+        border: `2px solid ${cart.color}40`,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        cursor: 'pointer', fontSize: '22px', color: cart.color,
+        flexShrink: 0,
+        boxShadow: '0 2px 10px rgba(0,0,0,0.10)',
+        transition: 'all 0.2s',
+      }}
+      onMouseEnter={e => { e.currentTarget.style.background = cart.color; e.currentTarget.style.color = '#fff' }}
+      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.85)'; e.currentTarget.style.color = cart.color }}
+    >
+      {children}
+    </button>
+  )
+
+  return (
+    <section style={{
+      padding: `${FRANCHISE_BG.paddingTop} 24px ${FRANCHISE_BG.paddingBottom}`,
+      position: 'relative',
+      background: FRANCHISE_BG.type === 'image'
+        ? 'transparent'
+        : FRANCHISE_BG.type === 'gradient'
+        ? FRANCHISE_BG.gradient
+        : FRANCHISE_BG.type === 'solid'
+        ? FRANCHISE_BG.solid
+        : 'transparent',
+      backgroundImage: FRANCHISE_BG.type === 'image'
+        ? `url('${FRANCHISE_BG.image}')`
+        : 'none',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+    }}>
+      {/* Optional white overlay — softens the bg slightly */}
+      {FRANCHISE_BG.overlayOpacity > 0 && (
+        <div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0,
+          background: `rgba(255,255,255,${FRANCHISE_BG.overlayOpacity})`,
+        }}/>
+      )}
+      {/* Content sits above overlay */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+      <style>{`
+        @keyframes ft-fade-in {
+          from { opacity:0; transform: translateY(16px); }
+          to   { opacity:1; transform: translateY(0); }
+        }
+        .ft-card-enter { animation: ft-fade-in ${FRANCHISE_TIMING.transitionMs}ms ease forwards; }
+
+        /* Progress bar */
+        @keyframes ft-progress {
+          from { width: 0% }
+          to   { width: 100% }
+        }
+
+        .ft-btn-white {
+          display: inline-flex; align-items: center; justify-content: center;
+          padding: 13px 36px; border-radius: 999px;
+          background: rgba(255,255,255,0.92);
+          border: 2px solid rgba(182,197,72,0.5);
+          font-family: 'BubbleboddyNeue', 'Nunito', sans-serif;
+          font-size: clamp(14px, 1.4vw, 17px);
+          font-weight: 800; color: #3a6b35;
+          text-decoration: none; cursor: pointer;
+          box-shadow: 0 4px 18px rgba(58,107,53,0.15),
+                      inset 0 1px 0 rgba(255,255,255,0.8);
+          transition: all 0.2s;
+          text-shadow: ${FT_STROKE};
+        }
+        .ft-btn-white:hover {
+          background: #b6c548; color: #fff;
+          border-color: #b6c548;
+          text-shadow: none;
+        }
+
+        @media (max-width: 767px) {
+          .ft-card-grid { flex-direction: column !important; }
+          .ft-card-img  { width: 100% !important; max-height: 220px !important; }
+          .ft-card-info { padding: 20px !important; }
+        }
+      `}</style>
+
+      {/* ── Headline ── */}
+      <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+        {/* Badge */}
+        <span style={{
+          display: 'inline-block', marginBottom: '14px',
+          background: '#EF7ECB', color: '#fff',
+          fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+          fontSize: '12px', fontWeight: '800',
+          letterSpacing: '0.07em', textTransform: 'uppercase',
+          padding: '5px 18px', borderRadius: '999px',
+        }}>
+          Now Open for Franchising 🥑
+        </span>
+
+        {/* Headline — both lines same brand color + stroke */}
+        <h2 style={{
+          fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+          fontWeight: 800,
+          fontSize: 'clamp(2rem, 4.5vw, 3.6rem)',
+          lineHeight: 1.1,
+          margin: '0 0 12px',
+          color: '#b5c448',
+          textShadow: FT_STROKE,
+        }}>
+          Dreaming of your own<br />Avocadoria store?
+        </h2>
+
+        <p style={{
+          fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+          fontSize: 'clamp(13px, 1.3vw, 16px)',
+          color: '#5a8a1a',
+          margin: 0,
+          textShadow: '0 1px 0 rgba(255,255,255,0.8)',
+        }}>
+          Four flexible formats. One iconic brand.
+        </p>
+      </div>
+
+      {/* ── Carousel wrapper ── */}
+      <div style={{
+        maxWidth: '960px', margin: '0 auto',
+        display: 'flex', alignItems: 'center', gap: '16px',
+      }}>
+
+        {/* Left arrow */}
+        {arrowBtn(prev, 'Previous cart format', '‹')}
+
+        {/* Card */}
+        <div
+          key={cur}
+          className="ft-card-enter"
+          style={{
+            flex: 1,
+            background: 'rgba(255,255,255,0.88)',
+            borderRadius: '24px',
+            border: `2px solid ${cart.color}30`,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.9)',
+            backdropFilter: 'blur(12px)',
+            overflow: 'hidden',
+            opacity: visible ? 1 : 0,
+            transition: `opacity ${FRANCHISE_TIMING.transitionMs}ms ease`,
+          }}
+        >
+          <div className="ft-card-grid" style={{ display: 'flex' }}>
+
+            {/* Left: image */}
+            <div className="ft-card-img" style={{
+              width: '42%', minHeight: '320px',
+              background: `${cart.color}10`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: '24px',
+              borderRight: `1px solid ${cart.color}20`,
+              flexShrink: 0,
+            }}>
+              <img
+                src={cart.image}
+                alt={cart.name}
+                style={{
+                  width: '100%', maxHeight: '280px',
+                  objectFit: 'contain', display: 'block',
+                }}
+              />
+            </div>
+
+            {/* Right: info */}
+            <div className="ft-card-info" style={{ flex: 1, padding: '28px 28px 24px' }}>
+
+              {/* Tag */}
+              <span style={{
+                display: 'inline-block', marginBottom: '12px',
+                background: cart.tagColor, color: '#fff',
+                fontFamily: 'Nunito, sans-serif',
+                fontSize: '11px', fontWeight: '800',
+                letterSpacing: '0.06em', textTransform: 'uppercase',
+                padding: '4px 14px', borderRadius: '999px',
+              }}>
+                {cart.tag}
+              </span>
+
+              {/* Cart name */}
+              <h3 style={{
+                fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+                fontSize: 'clamp(1.6rem, 3vw, 2.4rem)',
+                fontWeight: 800, lineHeight: 1.1,
+                color: cart.color, margin: '0 0 4px',
+              }}>
+                {cart.name}
+              </h3>
+
+              {/* Size */}
+              <p style={{
+                fontFamily: 'Nunito, sans-serif',
+                fontSize: '13px', color: '#8A5F3C',
+                opacity: 0.7, margin: '0 0 18px',
+              }}>
+                Store Size: <strong>{cart.size}</strong>
+              </p>
+
+              {/* Divider */}
+              <div style={{ height: '1px', background: `${cart.color}30`, marginBottom: '16px' }}/>
+
+              {/* Highlights */}
+              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 22px', display: 'flex', flexDirection: 'column', gap: '9px' }}>
+                {cart.highlights.map((h, i) => (
+                  <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px',
+                    fontFamily: 'Nunito, sans-serif', fontSize: '13px', color: '#5a6a2a', lineHeight: 1.4 }}>
+                    <span style={{
+                      width: '18px', height: '18px', borderRadius: '50%',
+                      background: cart.color, color: '#fff',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '9px', fontWeight: '800', flexShrink: 0, marginTop: '1px',
+                    }}>✓</span>
+                    {h}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Inquire link */}
+              <Link
+                to="/franchise"
+                style={{
+                  fontFamily: 'Nunito, sans-serif',
+                  fontSize: '13px', fontWeight: '700',
+                  color: cart.color, textDecoration: 'none',
+                  display: 'inline-flex', alignItems: 'center', gap: '4px',
+                  opacity: 0.85, transition: 'opacity 0.2s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.opacity='1'}
+                onMouseLeave={e => e.currentTarget.style.opacity='0.85'}
+              >
+                Inquire About This Format →
+              </Link>
+
+            </div>
+          </div>
+        </div>
+
+        {/* Right arrow */}
+        {arrowBtn(next, 'Next cart format', '›')}
+      </div>
+
+      {/* ── Dots + progress ── */}
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', marginTop: '24px' }}>
+        {FRANCHISE_CARTS.map((c, i) => (
+          <button
+            key={c.id}
+            onClick={() => { goTo(i); resetTimer() }}
+            aria-label={`Show ${c.name}`}
+            style={{
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
+              background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px',
+            }}
+          >
+            {/* Label */}
+            <span style={{
+              fontFamily: 'Nunito, sans-serif',
+              fontSize: '11px', fontWeight: i===cur ? '800' : '600',
+              color: i===cur ? FRANCHISE_CARTS[i].color : 'rgba(90,120,30,0.5)',
+              transition: 'all 0.3s',
+            }}>
+              {c.name}
+            </span>
+            {/* Dot + progress track */}
+            <div style={{ position: 'relative', width: '40px', height: '4px', borderRadius: '2px', background: 'rgba(182,197,72,0.2)' }}>
+              {i === cur && (
+                <div key={`prog-${cur}`} style={{
+                  position: 'absolute', top: 0, left: 0, height: '100%',
+                  borderRadius: '2px', background: cart.color,
+                  animation: `ft-progress ${FRANCHISE_TIMING.intervalMs}ms linear forwards`,
+                }}/>
+              )}
+              {i !== cur && (
+                <div style={{
+                  position: 'absolute', top: '50%', left: '50%',
+                  transform: 'translate(-50%,-50%)',
+                  width: '6px', height: '6px', borderRadius: '50%',
+                  background: 'rgba(182,197,72,0.4)',
+                }}/>
+              )}
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {/* ── Explore Now button ── */}
+      <div style={{ textAlign: 'center', marginTop: '28px' }}>
+        <Link to="/franchise" className="ft-btn-white">
+          Explore Franchise Opportunities →
+        </Link>
+      </div>
+
+      </div>
+    </section>
   )
 }
 
@@ -209,27 +648,140 @@ export default function HomePage() {
       <style>{`
         @font-face {
           font-family: 'BubbleboddyNeue';
-          src: url('/fonts/bubbleboddy-neue-trial-extrabold.ttf') format('truetype');
-          font-weight: 800; font-style: normal; font-display: swap;
+          src: url('/fonts/bubbleboddyneueinline-extrabold.ttf') format('truetype');
+          font-weight: normal; font-style: normal; font-display: swap;
         }
         @keyframes hero-breathe {
           0%,100% { transform: translateY(0px) scale(1); }
-          50%      { transform: translateY(-10px) scale(1.018); }
+          50%      { transform: translateY(-8px) scale(1.015); }
         }
+
+        /* ── MOBILE FIRST ── */
         .avo-hero {
-          position: relative; width: 100%; min-height: 100vh;
-          overflow: hidden; background: #d4eca0;
+          position: relative;
+          width: 100%;
+          min-height: 100svh;
+          overflow: hidden;
+          background: #d9eaa0;
+          display: flex;
+          flex-direction: column;
         }
+
+        /* Mobile: text sits at top, product below */
         .avo-hero__text {
-          position: absolute;
-          left:   ${TEXT.left};
-          bottom: ${TEXT.bottom};
-          z-index: 7; max-width: 560px;
+          position: relative;
+          z-index: 7;
+          padding: 100px 24px 20px 24px;  /* top clears navbar */
+          max-width: 100%;
+          width: 100%;
         }
-        @media (max-width: 767px) {
-          .avo-hero { min-height: 100svh; }
+
+        /* Mobile: product carousel below text */
+        .avo-hero__product-wrap {
+          position: relative;
+          z-index: 5;
+          flex: 1;
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          padding-bottom: 80px; /* clear slope */
+        }
+
+        /* Mobile headline size */
+        .avo-hero__headline {
+          font-size: clamp(1.8rem, 7vw, 2.4rem) !important;
+          margin-bottom: 16px !important;
+        }
+
+        /* Mobile buttons: stack */
+        .avo-hero__buttons {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          width: 100%;
+          max-width: 280px;
+        }
+        .avo-hero__buttons .btn {
+          width: 100%;
+          text-align: center;
+          justify-content: center;
+        }
+
+        /* Mobile product image */
+        .avo-hero__product-img {
+          width: 55vw;
+          max-width: 220px;
+          height: auto;
+          object-fit: contain;
+          animation: hero-breathe 4.5s ease-in-out infinite;
+        }
+
+        /* Mobile dots: bottom center */
+        .avo-hero__dots {
+          position: absolute;
+          bottom: 90px;
+          right: 16px;
+          z-index: 9;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          align-items: center;
+        }
+
+        /* ── DESKTOP (768px+) ── */
+        @media (min-width: 768px) {
+          .avo-hero {
+            display: block;          /* back to absolute positioning */
+            height: 100vh;
+            min-height: 100vh;
+          }
+
           .avo-hero__text {
-            left: 20px; right: 20px; bottom: 22vh; max-width: 100%;
+            position: absolute;
+            left:   ${TEXT.left};
+            bottom: ${TEXT.bottom};
+            padding: 0;
+            max-width: 520px;
+            width: auto;
+          }
+
+          .avo-hero__headline {
+            font-size: clamp(2.4rem, 5vw, 4.2rem) !important;
+            margin-bottom: 28px !important;
+          }
+
+          .avo-hero__buttons {
+            flex-direction: row;
+            width: auto;
+            max-width: none;
+          }
+          .avo-hero__buttons .btn {
+            width: auto;
+          }
+
+          .avo-hero__product-wrap {
+            position: absolute;
+            right:  ${PRODUCT.right};
+            bottom: ${PRODUCT.bottom};
+            height: ${PRODUCT.height};
+            width: auto;
+            flex: unset;
+            align-items: unset;
+            justify-content: unset;
+            padding-bottom: 0;
+          }
+
+          .avo-hero__product-img {
+            width: auto;
+            height: 100%;
+            max-width: none;
+            animation: hero-breathe 4.5s ease-in-out infinite;
+          }
+
+          .avo-hero__dots {
+            right: 20px;
+            bottom: calc(${SLOPE.height} + 16px);
+            flex-direction: column;
           }
         }
       `}</style>
@@ -237,13 +789,19 @@ export default function HomePage() {
       <div className="page-enter">
 
         {/* ════════════ HERO ════════════ */}
-        <section className="avo-hero">
+        <section className="avo-hero" style={{ marginBottom: 0, paddingBottom: 0 }}>
 
-          {/* LAYER 1 — Static background */}
+          {/* LAYER 1 — Static background: covers full hero including slope area */}
           <img src={BG.src} alt="" aria-hidden="true" style={{
-            position:'absolute', inset:0, width:'100%', height:'100%',
-            objectFit:'cover', objectPosition:BG.objectPosition,
-            zIndex:1, pointerEvents:'none',
+            position:'absolute',
+            top:0, left:0,
+            width:'100%',
+            height:'100%',
+            objectFit:'cover',
+            objectPosition: BG.objectPosition,
+            zIndex:1,
+            pointerEvents:'none',
+            display:'block',
           }}/>
 
           {/* LAYERS 2 + 4 — Products */}
@@ -260,13 +818,28 @@ export default function HomePage() {
               rgba(255,255,255,0) 100%)`,
           }}/>
 
-          {/* LAYER 5 — Slope image */}
-          <img src={SLOPE.src} alt="" aria-hidden="true" style={{
-            position:'absolute', bottom:0, left:0, right:0,
+          {/* LAYER 5 — Slope: seamless inline SVG bleeding into Avo-Faves */}
+          <div style={{
+            position:'absolute', bottom:-2, left:0, right:0,
             width:'100%', height:SLOPE.height,
-            objectFit:'cover', objectPosition:'bottom',
-            zIndex:6, pointerEvents:'none',
-          }}/>
+            zIndex:6, pointerEvents:'none', lineHeight:0,
+            overflow:'hidden',
+            background:'transparent',
+          }}>
+            <svg
+              viewBox="0 0 1440 222"
+              xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none"
+              style={{ display:'block', width:'100%', height:'calc(100% + 4px)' }}
+            >
+              {/* Transparent background — Avo-Faves shows through underneath */}
+              {/* Only the wave shape itself is colored */}
+              <path
+                d="M0,222 L0,140 C120,90 240,60 400,80 C560,100 680,160 840,155 C1000,150 1120,95 1280,75 C1360,65 1400,68 1440,72 L1440,222 Z"
+                fill="#b6c548"
+              />
+            </svg>
+          </div>
 
           {/* LAYER 6 — Static text + buttons — NEVER changes */}
           <div className="avo-hero__text" style={{
@@ -274,27 +847,24 @@ export default function HomePage() {
             transform: loaded ? 'translateY(0)' : 'translateY(22px)',
             transition:'opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s',
           }}>
-
-            {/* Brand quote — slope color + white stroke */}
+            {/* Brand quote */}
             <p style={{
               fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
-              fontSize: 'clamp(12px, 1.2vw, 15px)',
+              fontSize: 'clamp(11px, 1.1vw, 14px)',
               fontWeight: 800,
               letterSpacing: '0.04em',
               color: '#b5c448',
-              margin: '0 0 8px 2px',
+              margin: '0 0 6px 2px',
               textShadow: STROKE_WHITE_SM,
             }}>
               &ldquo;Happiness in Avocado&rdquo;
             </p>
 
-            {/* Headline — slope color #b5c448 + white stroke */}
-            <h1 style={{
+            {/* Headline */}
+            <h1 className="avo-hero__headline" style={{
               fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
               fontWeight: 800,
-              fontSize: 'clamp(2.4rem, 5vw, 4.2rem)',
               lineHeight: 1.08,
-              margin: '0 0 28px',
               letterSpacing: '0.01em',
               color: '#b5c448',
               background: 'none',
@@ -307,7 +877,8 @@ export default function HomePage() {
               Desserts
             </h1>
 
-            <div style={{ display:'flex', flexDirection:'row', gap:'14px', flexWrap:'wrap' }}>
+            {/* Buttons */}
+            <div className="avo-hero__buttons">
               <Link to="/menu"       className="btn btn-white">Our Menu</Link>
               <Link to="/our-stores" className="btn btn-olive">Our Stores</Link>
             </div>
@@ -315,8 +886,7 @@ export default function HomePage() {
 
         </section>
 
-        <Wave fromColor={C.hero} toColor="#e8f0c8" height={60} />
-
+        {/* Hero slope transitions directly into Avo-Faves — no Wave needed */}
         {/* ════════════ AVO-FAVES ════════════ */}
         <section style={{ background:'#e8f0c8', padding:0, margin:0, lineHeight:0 }}>
           <div style={{ position:'relative', width:'100%', lineHeight:0 }}>
@@ -346,43 +916,127 @@ export default function HomePage() {
           </div>
         </section>
 
-        <Wave fromColor="#b6c548" toColor={C.franchise} height={64} flip />
+        {/* ════════════ FRANCHISE TEASER ════════════ */}
+        <FranchiseTeaser />
 
-        {/* ════════════ FRANCHISE ════════════ */}
-        <section style={{ background:C.franchise, padding:'72px 32px', textAlign:'center' }}>
-          <div style={{ maxWidth:'680px', margin:'0 auto' }}>
-            <h2 className="section-title" style={{ color:'#c8e690', marginBottom:'14px' }}>
-              Dreaming of your own<br />Avocadoria store?
-            </h2>
-            <p className="section-sub" style={{ color:'rgba(255,255,255,.85)' }}>
-              Be part of our growing family.<br />Let's spread happiness in avocado!
-            </p>
-            <Link to="/franchise" className="btn-white">Explore Now</Link>
-          </div>
-        </section>
+        <Wave fromColor="#e8f0c8" toColor={C.news} height={56} />
 
-        <Wave fromColor={C.franchise} toColor={C.news} height={72} />
-
-        {/* ════════════ NEWS ════════════ */}
+        {/* ════════════ WHAT'S NEW ════════════ */}
         <section style={{ background:C.news, padding:'64px 32px 80px' }}>
           <div style={{ maxWidth:'1200px', margin:'0 auto' }}>
-            <h2 className="section-title" style={{ color:'#b6c548' }}>News and Updates</h2>
-            <p className="section-sub" style={{ color:'rgba(138,95,60,.65)' }}>
-              Like and Follow for more updates!
-            </p>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))', gap:'20px' }}>
-              {[1,2,3].map(i => (
-                <div key={i} style={{
-                  background:'rgba(182,197,72,.08)', border:'1.5px solid rgba(182,197,72,.2)',
-                  borderRadius:'16px', padding:'32px', display:'flex', flexDirection:'column', gap:'10px',
-                }}>
-                  <div style={{ width:'100%',height:'140px',borderRadius:'10px',background:'rgba(182,197,72,.12)' }}/>
-                  <div style={{ width:'60%',height:'14px',borderRadius:'6px',background:'rgba(182,197,72,.18)' }}/>
-                  <div style={{ width:'90%',height:'10px',borderRadius:'6px',background:'rgba(182,197,72,.12)' }}/>
-                  <div style={{ width:'75%',height:'10px',borderRadius:'6px',background:'rgba(182,197,72,.10)' }}/>
-                </div>
-              ))}
+
+            {/* Header row */}
+            <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', flexWrap:'wrap', gap:'12px', marginBottom:'32px' }}>
+              <div>
+                <h2 className="section-title" style={{ color:'#b6c548', margin:'0 0 6px' }}>
+                  {"What's New"}
+                </h2>
+                <p className="section-sub" style={{ color:'rgba(138,95,60,.65)', margin:0 }}>
+                  Latest news and updates from Avocadoria
+                </p>
+              </div>
+              <Link to="/about#whats-new" style={{
+                fontFamily:'Nunito, sans-serif', fontSize:'13px', fontWeight:'700',
+                color:'#b6c548', textDecoration:'none', whiteSpace:'nowrap',
+                display:'flex', alignItems:'center', gap:'4px',
+                paddingBottom:'2px', borderBottom:'2px solid rgba(182,197,72,0.3)',
+                transition:'border-color 0.2s',
+              }}
+                onMouseEnter={e => e.currentTarget.style.borderColor='#b6c548'}
+                onMouseLeave={e => e.currentTarget.style.borderColor='rgba(182,197,72,0.3)'}
+              >
+                View all posts →
+              </Link>
             </div>
+
+            {/* Live post cards — pulls from posts.js, shows latest 3 */}
+            {NEWS_POSTS.length > 0 ? (
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))', gap:'20px' }}>
+                {NEWS_POSTS.slice(0, 3).map(post => (
+                  <Link
+                    key={post.id}
+                    to="/about#whats-new"
+                    style={{ textDecoration:'none' }}
+                  >
+                    <div style={{
+                      background:'rgba(255,255,255,0.85)',
+                      border:'1.5px solid rgba(182,197,72,0.2)',
+                      borderRadius:'16px', padding:'24px',
+                      display:'flex', flexDirection:'column', gap:'10px',
+                      height:'100%', boxSizing:'border-box',
+                      transition:'box-shadow 0.2s, border-color 0.2s',
+                    }}
+                      onMouseEnter={e => { e.currentTarget.style.boxShadow='0 6px 24px rgba(58,107,53,0.10)'; e.currentTarget.style.borderColor='rgba(182,197,72,0.5)' }}
+                      onMouseLeave={e => { e.currentTarget.style.boxShadow='none'; e.currentTarget.style.borderColor='rgba(182,197,72,0.2)' }}
+                    >
+                      {/* Image or placeholder */}
+                      <div style={{
+                        width:'100%', height:'140px', borderRadius:'10px',
+                        background:'rgba(182,197,72,0.10)',
+                        overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center',
+                      }}>
+                        {post.image
+                          ? <img src={post.image} alt={post.title} style={{ width:'100%', height:'100%', objectFit:'cover' }}/>
+                          : <span style={{ fontSize:'36px' }}>🥑</span>
+                        }
+                      </div>
+
+                      {/* Category + date */}
+                      <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap' }}>
+                        <span style={{
+                          background: post.featured ? '#b6c548' : 'rgba(182,197,72,0.15)',
+                          color: post.featured ? '#fff' : '#3a6b35',
+                          fontFamily:'Nunito,sans-serif', fontSize:'10px', fontWeight:'800',
+                          letterSpacing:'0.06em', textTransform:'uppercase',
+                          padding:'3px 10px', borderRadius:'999px',
+                        }}>
+                          {post.featured ? 'Featured' : post.category}
+                        </span>
+                        <span style={{ fontFamily:'Nunito,sans-serif', fontSize:'11px', color:'rgba(138,95,60,0.5)' }}>
+                          {new Date(post.date).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})}
+                        </span>
+                      </div>
+
+                      {/* Title */}
+                      <h3 style={{
+                        fontFamily:'Nunito,sans-serif', fontWeight:'800',
+                        fontSize:'clamp(14px,1.4vw,16px)', color:'#3a6b35',
+                        margin:0, lineHeight:1.35,
+                      }}>
+                        {post.title}
+                      </h3>
+
+                      {/* Excerpt */}
+                      <p style={{
+                        fontFamily:'Nunito,sans-serif', fontSize:'13px',
+                        color:'rgba(138,95,60,0.8)', lineHeight:1.6, margin:0,
+                        display:'-webkit-box', WebkitLineClamp:2,
+                        WebkitBoxOrient:'vertical', overflow:'hidden',
+                      }}>
+                        {post.excerpt}
+                      </p>
+
+                      {/* Read more */}
+                      <span style={{
+                        fontFamily:'Nunito,sans-serif', fontSize:'12px',
+                        fontWeight:'700', color:'#b6c548', marginTop:'auto',
+                      }}>
+                        Read more →
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              /* Empty state */
+              <div style={{ textAlign:'center', padding:'48px 0' }}>
+                <span style={{ fontSize:'40px' }}>🥑</span>
+                <p style={{ fontFamily:'Nunito,sans-serif', color:'rgba(138,95,60,0.5)', marginTop:'12px' }}>
+                  No posts yet — check back soon!
+                </p>
+              </div>
+            )}
+
           </div>
         </section>
 

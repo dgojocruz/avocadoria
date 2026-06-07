@@ -77,7 +77,7 @@ a { touch-action: manipulation; }
 
 /* Logo scales with viewport */
 .navbar-logo {
-  height: clamp(48px, 10vw, 88px);
+  height: clamp(70px, 20vw, 120px);
   width: auto;
 }
 
@@ -98,7 +98,7 @@ a { touch-action: manipulation; }
   transition: all 0.2s;
   white-space: nowrap;
 }
-.btn-olive  { background: var(--c-olive); color: #fff; border-color: var(--c-olive); }
+.btn-olive  { background: var(--c-olive); color: #7ee60e; border-color: var(--c-olive); }
 .btn-olive:hover  { background: var(--c-dark); border-color: var(--c-dark); }
 .btn-white  { background: #fff; color: var(--c-dark); border-color: #fff; }
 .btn-white:hover  { background: rgba(255,255,255,0.85); }
