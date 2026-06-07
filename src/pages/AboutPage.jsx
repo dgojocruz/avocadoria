@@ -782,17 +782,9 @@ export default function AboutPage() {
           WHAT'S NEW
       ══════════════════════════════════════════════════════════════ */}
       <div id="whats-new" className="about-section" style={{
-        position: 'relative', overflow: 'hidden',
+        background: '#d9e29e',
         padding: 'clamp(52px,8vw,88px) clamp(20px,5vw,72px)',
       }}>
-        {/* avobg SVG background */}
-        <img src="/avobg.svg" aria-hidden="true" style={{
-          position: 'absolute', inset: 0,
-          width: '100%', height: '100%',
-          objectFit: 'cover', objectPosition: 'center',
-          zIndex: 0,
-        }} />
-        <div style={{ position: 'relative', zIndex: 1 }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '36px' }}>
             <div>
@@ -908,8 +900,6 @@ export default function AboutPage() {
         }}>
           Happiness in Avocado — since 2019 🥑
         </p>
-      </div>
-
       </div>
 
     </>
