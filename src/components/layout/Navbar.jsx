@@ -25,7 +25,7 @@ const NAV_LINKS = [
 const NAV_STYLE = {
   colorDefault:     '#8A5F3C',
   colorActive:      '#b6c548',
-  fontSize:         'clamp(13px, 1.4vw, 15px)',
+  fontSize:         'clamp(24px, 1.4vw, 15px)',
   fontWeight:       '700',
   letterSpacing:    '0.02em',
   glowColor:        'rgba(182,197,72,0.55)',
@@ -202,10 +202,10 @@ export default function Navbar() {
 
   return (
     <header className="navbar" role="banner" style={{
-        background: 'rgba(217,226,158,0.85)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        borderBottom: '1px solid rgba(182,197,72,0.2)',
+        background: 'transparent',
+        backdropFilter: 'none',
+        WebkitBackdropFilter: 'none',
+        borderBottom: 'none',
       }}>
 
       {/* ── Logo ── */}

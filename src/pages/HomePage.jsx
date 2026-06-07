@@ -812,8 +812,8 @@ export default function HomePage() {
             position:'absolute', inset:0, zIndex:3, pointerEvents:'none',
             background:`linear-gradient(to right,
               rgba(255,255,255,${WASH.opacityLeft})    0%,
-              rgba(255,255,255,${WASH.opacityMidLeft}) 28%,
-              rgba(255,255,255,${WASH.opacityMid})     44%,
+              rgba(255,255,255,${WASH.opacityMidLeft}) 80%,
+              rgba(255,255,255,${WASH.opacityMid})     100%,
               rgba(255,255,255,${WASH.opacityRight})   ${WASH.clearAt},
               rgba(255,255,255,0) 100%)`,
           }}/>
