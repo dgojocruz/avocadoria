@@ -776,12 +776,23 @@ export default function AboutPage() {
       </div>
 
       {/* Wave out */}
-      <Wave fromColor="#3a6b35" toColor="#F4FAEC" height={56} />
+      <Wave fromColor="#3a6b35" toColor="#d9e29e" height={56} />
 
       {/* ══════════════════════════════════════════════════════════════
           WHAT'S NEW
       ══════════════════════════════════════════════════════════════ */}
-      <div id="whats-new" className="about-section" style={{ background: '#F4FAEC', padding: 'clamp(52px,8vw,88px) clamp(20px,5vw,72px)' }}>
+      <div id="whats-new" className="about-section" style={{
+        position: 'relative', overflow: 'hidden',
+        padding: 'clamp(52px,8vw,88px) clamp(20px,5vw,72px)',
+      }}>
+        {/* avobg SVG background */}
+        <img src="/avobg.svg" aria-hidden="true" style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover', objectPosition: 'center',
+          zIndex: 0,
+        }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '36px' }}>
             <div>
@@ -803,8 +814,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Wave into avo cares */}
-      <Wave fromColor="#F4FAEC" toColor="#d9e29e" height={48} />
+      <Wave fromColor="#d9e29e" toColor="#d9e29e" height={4} />
 
       {/* ══════════════════════════════════════════════════════════════
           AVO CARES
@@ -898,6 +908,8 @@ export default function AboutPage() {
         }}>
           Happiness in Avocado — since 2019 🥑
         </p>
+      </div>
+
       </div>
 
     </>

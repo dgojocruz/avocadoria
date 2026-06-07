@@ -959,7 +959,7 @@ export default function HomePage() {
                     style={{ textDecoration:'none' }}
                   >
                     <div style={{
-                      background:'rgba(255,255,255,0.85)',
+                      background:'rgb(255, 255, 255)',
                       border:'1.5px solid rgba(182,197,72,0.2)',
                       borderRadius:'16px', padding:'24px',
                       display:'flex', flexDirection:'column', gap:'10px',
