@@ -42,7 +42,7 @@ function ProductCard({ item }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        background:'#fff',
+        background:'#ffffff',
         borderRadius:'20px',
         border:`1.5px solid ${hov ? 'var(--c-olive)' : 'rgba(182,197,72,0.18)'}`,
         boxShadow: hov
@@ -148,11 +148,11 @@ function CategoryCard({ cat, index, onClick }) {
           }}>{cat.emoji}</div>
       }
 
-      {/* Overlay — white fade from bottom */}
+      {/* Overlay */}
       <div style={{
         position:'absolute', inset:0,
-        background:'linear-gradient(to top, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.4) 40%, transparent 70%)',
-        transition:'opacity 0.25s',
+        background:'linear-gradient(to top, rgba(20,50,10,0.72) 0%, transparent 55%)',
+        opacity: hov ? 1 : 0.82, transition:'opacity 0.25s',
       }}/>
 
       {/* Label bottom-left — Mesa style */}
@@ -164,17 +164,18 @@ function CategoryCard({ cat, index, onClick }) {
           <p style={{
             fontFamily:"'BubbleboddyNeue','Nunito',sans-serif",
             fontSize:'clamp(15px,2vw,20px)', fontWeight:'normal',
-            color:'var(--c-olive)', margin:'0 0 2px', lineHeight:1.15,
+            color:'#fff', margin:'0 0 2px', lineHeight:1.15,
+            textShadow:'0 2px 8px rgba(0,0,0,0.3)',
           }}>{cat.name}</p>
           <p style={{
             fontFamily:'Nunito,sans-serif', fontSize:'11px',
-            color:'var(--c-brown)', opacity:0.7, margin:0,
+            color:'rgba(255,255,255,0.78)', margin:0,
           }}>{cat.items.length} item{cat.items.length !== 1 ? 's' : ''}</p>
         </div>
         {/* Arrow circle */}
         <div style={{
           width:'36px', height:'36px', borderRadius:'50%', flexShrink:0,
-          background: hov ? 'var(--c-dark)' : 'var(--c-olive)',
+          background: hov ? 'var(--c-olive)' : 'rgba(255,255,255,0.22)',
           display:'flex', alignItems:'center', justifyContent:'center',
           color:'#fff', fontSize:'17px',
           transition:'background 0.2s',
@@ -190,7 +191,7 @@ function CategoryView({ cat, onBack }) {
   useEffect(() => { window.scrollTo({ top:0, behavior:'smooth' }) }, [cat.id])
 
   return (
-    <div className="page-enter" style={{ background:'#d9e29e', minHeight:'100vh' }}>
+    <div className="page-enter">
 
       {/* Hero banner */}
       <div style={{
@@ -261,7 +262,6 @@ function CategoryView({ cat, onBack }) {
       <div style={{
         maxWidth:'1200px', margin:'0 auto',
         padding:'28px clamp(20px,4vw,48px) 80px',
-        background:'#d9e29e',
       }}>
         {cat.items.length > 0
           ? (
@@ -320,11 +320,11 @@ export default function MenuPage() {
         }
       `}</style>
 
-      <div className="page-enter" style={{ background:'#d9e29e', minHeight:'100vh' }}>
+      <div className="page-enter">
 
-        {/* ── Header — avobg color applied to full page ── */}
+        {/* ── Header — matches About / Home hero style ── */}
         <div style={{
-          background:'#d9e29e',
+          background:'linear-gradient(160deg, var(--c-cream) 0%, var(--c-pale) 100%)',
           padding:'clamp(90px,10vw,110px) 32px clamp(28px,4vw,44px)',
           textAlign:'center',
         }}>
@@ -364,7 +364,6 @@ export default function MenuPage() {
         <div style={{
           maxWidth:'1280px', margin:'0 auto',
           padding:'clamp(24px,4vw,48px) clamp(20px,4vw,48px) 80px',
-          background:'#d9e29e',
         }}>
 
           {/* Featured — full width like Mesa */}
@@ -401,7 +400,7 @@ export default function MenuPage() {
             {/* Gradient */}
             <div style={{
               position:'absolute', inset:0,
-              background:'linear-gradient(to right, rgba(20,50,10,0.62) 0%, rgba(20,50,10,0.15) 55%, transparent 80%)',
+              background:'linear-gradient(to right, rgba(20, 50, 10, 0) 0%, rgba(20,50,10,0.15) 55%, transparent 80%)',
             }}/>
             {/* Label pill */}
             <div style={{ position:'absolute', bottom:'28px', left:'28px' }}>
@@ -411,7 +410,7 @@ export default function MenuPage() {
                 borderRadius:'999px',
                 padding:'12px 20px',
                 display:'inline-flex', alignItems:'center', gap:'14px',
-                boxShadow:'0 4px 20px rgba(0,0,0,0.12)',
+                boxShadow:'1px 0px rgba(0,0,0,0.12)',
               }}>
                 <div>
                   <p style={{

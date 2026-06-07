@@ -116,10 +116,10 @@ export default function Footer() {
 
         </div>
 
-        {/* Right — social circles + order/chat buttons */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '10px', flexShrink: 0 }}>
+        {/* Right — social + DPO badge */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '14px', flexShrink: 0 }}>
 
-          {/* Top row: label + social circles */}
+          {/* Social circles */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', fontWeight: '700', color: '#8A5F3C', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               Follow us
@@ -148,7 +148,53 @@ export default function Footer() {
               </a>
             ))}
           </div>
+
+          {/* DPO/DPS Registered Badge */}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: '10px',
+            background: 'rgba(255,255,255,0.72)',
+            backdropFilter: 'blur(8px)',
+            border: '1.5px solid rgba(30,60,160,0.15)',
+            borderRadius: '14px',
+            padding: '8px 14px 8px 10px',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+          }}>
+            {/* Certificate thumbnail */}
+            <img
+              src="/dpo-registered.png"
+              alt="NPC DPO/DPS Registered"
+              style={{
+                height: '52px',
+                width: 'auto',
+                objectFit: 'contain',
+                display: 'block',
+                borderRadius: '6px',
+              }}
+            />
+            {/* Text info */}
+            <div>
+              <p style={{
+                fontFamily: 'Nunito, sans-serif',
+                fontSize: '10px', fontWeight: '800',
+                color: '#1a3aa0',
+                letterSpacing: '0.06em', textTransform: 'uppercase',
+                margin: '0 0 2px',
+              }}>NPC Registered</p>
+              <p style={{
+                fontFamily: 'Nunito, sans-serif',
+                fontSize: '12px', fontWeight: '700',
+                color: '#1a3aa0', margin: '0 0 1px',
+                lineHeight: 1.2,
+              }}>DPO / DPS</p>
+              <p style={{
+                fontFamily: 'Nunito, sans-serif',
+                fontSize: '10px', color: 'rgba(30,60,160,0.6)',
+                margin: 0, lineHeight: 1.3,
+              }}>Valid until Sep 09, 2026</p>
+            </div>
           </div>
+
+        </div>
       </div>
 
       {/* ── Bottom copyright bar ── */}

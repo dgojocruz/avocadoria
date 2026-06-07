@@ -66,10 +66,9 @@ function DropdownLink({ item, hovered, setHovered }) {
 
   return (
     <div ref={ref} style={{
-      position:    'relative',
-      display:     'inline-flex',
-      alignItems:  'center',
-      alignSelf:   'center',
+      position: 'relative',
+      display:  'flex',
+      alignItems: 'center',
     }}
       onMouseEnter={() => { setHovered(item.to); setOpen(true) }}
       onMouseLeave={() => {
@@ -93,9 +92,8 @@ function DropdownLink({ item, hovered, setHovered }) {
           textDecoration:'none',
           position:      'relative',
           paddingBottom: '2px',
-          display:       'inline-flex',
+          display:       'flex',
           alignItems:    'center',
-          verticalAlign: 'middle',
           gap:           '3px',
           lineHeight:    1,
           transition:    'color 0.2s, text-shadow 0.25s',
@@ -221,8 +219,8 @@ export default function Navbar() {
       </Link>
 
       {/* ── Desktop nav ── */}
-      <nav className="hidden lg:flex" aria-label="Main navigation"
-        style={{ alignItems:'center', gap:'clamp(16px, 2.5vw, 32px)' }}>
+      <nav className="hidden lg:flex lg:items-center" aria-label="Main navigation"
+        style={{ display:'flex', alignItems:'center', gap:'clamp(16px, 2.5vw, 32px)' }}>
         {NAV_LINKS.map((item) =>
           item.dropdown ? (
             <DropdownLink
@@ -243,7 +241,9 @@ export default function Navbar() {
                 color:         (isActive || hovered === item.to) ? NAV_STYLE.colorActive : NAV_STYLE.colorDefault,
                 textDecoration:'none',
                 position:      'relative',
-                paddingBottom: '2px',
+                display:       'flex',
+                alignItems:    'center',
+                lineHeight:    1,
                 transition:    'color 0.2s, text-shadow 0.25s',
                 textShadow:    buildGlow((isActive || hovered === item.to) ? NAV_STYLE.glowHoverOpacity : NAV_STYLE.glowOpacity),
               })}>
