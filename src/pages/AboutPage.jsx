@@ -141,7 +141,7 @@ function Wave({ fromColor, toColor, height = 56, flip = false }) {
     ? `M0,${height} C360,0 1080,${height} 1440,${Math.round(height * 0.4)} L1440,0 L0,0 Z`
     : `M0,0 C360,${height} 1080,0 1440,${Math.round(height * 0.6)} L1440,${height} L0,${height} Z`
   return (
-    <div style={{ background: fromColor, lineHeight: 0 }}>
+    <div style={{ background: fromColor, lineHeight: 0, marginBottom: '-2px' }}>
       <svg viewBox={`0 0 1440 ${height}`} xmlns="http://www.w3.org/2000/svg"
         preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: `${height}px` }}>
         <path d={path} fill={toColor} />
@@ -806,7 +806,6 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <Wave fromColor="#d9e29e" toColor="#d9e29e" height={4} />
 
       {/* ══════════════════════════════════════════════════════════════
           AVO CARES
