@@ -184,64 +184,52 @@ function ProductLayers() {
 
 const FRANCHISE_CARTS = [
   {
-    id:         'food-truck',
-    image:      '/franchise-food-truck.png',
-    name:       'Food Truck',
-    size:       '10 sqm',
-    tag:        'Most Mobile',
-    tagColor:   '#EF7ECB',
-    color:      '#b6c548',
-    highlights: [
-      'Perfect for events, bazaars & festivals',
-      'Pick-up + Order window layout',
-      'Fully branded with illuminated signage',
-      'Easy to relocate — maximum reach',
-    ],
+    id:       'food-truck',
+    image:    '/ft-food-truck.png',
+    name:     'Food Truck',
+    tag:      'Most Mobile',
+    tagColor: '#EF7ECB',
+    color:    '#b6c548',
   },
   {
-    id:         'island',
-    image:      '/franchise-island.png',
-    name:       'Island',
-    size:       '20 sqm',
-    tag:        'Best Value',
-    tagColor:   '#DFD438',
-    color:      '#3a6b35',
-    highlights: [
-      'Integrated seating area for dwell time',
-      'Largest format — premium mall presence',
-      'Dedicated prep + service zones',
-      'Scalable layout for high foot traffic',
-    ],
+    id:       'kiosk',
+    image:    '/ft-kiosk.png',
+    name:     'Kiosk',
+    tag:      'Most Popular',
+    tagColor: '#b6c548',
+    color:    '#3a6b35',
   },
   {
-    id:         'popup',
-    image:      '/franchise-popup.png',
-    name:       'Pop Up',
-    size:       '6 sqm',
-    tag:        'Entry Level',
-    tagColor:   '#b6c548',
-    color:      '#EF7ECB',
-    highlights: [
-      'Most affordable entry point',
-      'Illuminated Avocadoria branding wall',
-      'Built-in digital display screen',
-      'Compact & efficient — fits any space',
-    ],
+    id:       'kiosk-1',
+    image:    '/ft-kiosk-1.png',
+    name:     'Kiosk Premium',
+    tag:      'Fan Favourite',
+    tagColor: '#DFD438',
+    color:    '#8A5F3C',
   },
   {
-    id:         'kiosk',
-    image:      '/franchise-kiosk.png',
-    name:       'Kiosk',
-    size:       '6.25 sqm',
-    tag:        'Most Popular',
-    tagColor:   '#b6c548',
-    color:      '#8A5F3C',
-    highlights: [
-      'Iconic avocado drip counter design',
-      'Signature curved architecture',
-      'Open layout — fast Order → Pick-Up flow',
-      'Premium finish, strong brand visibility',
-    ],
+    id:       'kiosk-2',
+    image:    '/ft-kiosk-2.png',
+    name:     'Kiosk Classic',
+    tag:      'Best Value',
+    tagColor: '#3a6b35',
+    color:    '#EF7ECB',
+  },
+  {
+    id:       'island',
+    image:    '/ft-island.png',
+    name:     'Island',
+    tag:      'Largest Format',
+    tagColor: '#b6c548',
+    color:    '#3a6b35',
+  },
+  {
+    id:       'island-1',
+    image:    '/ft-island-1.png',
+    name:     'Island Plus',
+    tag:      'With Seating',
+    tagColor: '#EF7ECB',
+    color:    '#b6c548',
   },
 ]
 
@@ -265,8 +253,8 @@ const FRANCHISE_BG = {
   overlayOpacity: 0.45,
 
   // Padding top/bottom
-  paddingTop:    '72px',
-  paddingBottom: '56px',
+  paddingTop:    '32px',
+  paddingBottom: '48px',
 }
 
 // White stroke text-shadow (same as hero headline)
@@ -334,28 +322,8 @@ function FranchiseTeaser() {
     <section style={{
       padding: `${FRANCHISE_BG.paddingTop} 24px ${FRANCHISE_BG.paddingBottom}`,
       position: 'relative',
-      background: FRANCHISE_BG.type === 'image'
-        ? 'transparent'
-        : FRANCHISE_BG.type === 'gradient'
-        ? FRANCHISE_BG.gradient
-        : FRANCHISE_BG.type === 'solid'
-        ? FRANCHISE_BG.solid
-        : 'transparent',
-      backgroundImage: FRANCHISE_BG.type === 'image'
-        ? `url('${FRANCHISE_BG.image}')`
-        : 'none',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
+      background: 'linear-gradient(135deg, #c8d96a 0%, #d9e29e 40%, #c0d458 100%)',
     }}>
-      {/* Optional white overlay — softens the bg slightly */}
-      {FRANCHISE_BG.overlayOpacity > 0 && (
-        <div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0,
-          background: `rgba(255,255,255,${FRANCHISE_BG.overlayOpacity})`,
-        }}/>
-      )}
-      {/* Content sits above overlay */}
       <div style={{ position: 'relative', zIndex: 1 }}>
       <style>{`
         @keyframes ft-fade-in {
@@ -398,15 +366,15 @@ function FranchiseTeaser() {
       `}</style>
 
       {/* ── Headline ── */}
-      <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
         {/* Badge */}
         <span style={{
-          display: 'inline-block', marginBottom: '14px',
+          display: 'inline-block', marginBottom: '10px',
           background: '#EF7ECB', color: '#fff',
           fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
-          fontSize: '12px', fontWeight: '800',
+          fontSize: '11px', fontWeight: '800',
           letterSpacing: '0.07em', textTransform: 'uppercase',
-          padding: '5px 18px', borderRadius: '999px',
+          padding: '4px 16px', borderRadius: '999px',
         }}>
           Now Open for Franchising 🥑
         </span>
@@ -431,126 +399,51 @@ function FranchiseTeaser() {
           margin: 0,
           textShadow: '0 1px 0 rgba(255,255,255,0.8)',
         }}>
-          Four flexible formats. One iconic brand.
+          Six flexible formats. One iconic brand.
         </p>
       </div>
 
-      {/* ── Carousel wrapper ── */}
-      <div style={{
-        maxWidth: '960px', margin: '0 auto',
-        display: 'flex', alignItems: 'center', gap: '16px',
-      }}>
+      {/* ── Carousel wrapper — 3 visible, sliding track ── */}
+      <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '12px' }}>
 
         {/* Left arrow */}
         {arrowBtn(prev, 'Previous cart format', '‹')}
 
-        {/* Card */}
-        <div
-          key={cur}
-          className="ft-card-enter"
-          style={{
-            flex: 1,
-            background: 'rgba(255,255,255,0.88)',
-            borderRadius: '24px',
-            border: `2px solid ${cart.color}30`,
-            boxShadow: '0 8px 32px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.9)',
-            backdropFilter: 'blur(12px)',
-            overflow: 'hidden',
-            opacity: visible ? 1 : 0,
-            transition: `opacity ${FRANCHISE_TIMING.transitionMs}ms ease`,
-          }}
-        >
-          <div className="ft-card-grid" style={{ display: 'flex' }}>
-
-            {/* Left: image */}
-            <div className="ft-card-img" style={{
-              width: '42%', minHeight: '320px',
-              background: `${cart.color}10`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              padding: '24px',
-              borderRight: `1px solid ${cart.color}20`,
-              flexShrink: 0,
-            }}>
-              <img
-                src={cart.image}
-                alt={cart.name}
+        {/* Sliding track */}
+        <div style={{ flex: 1, overflow: 'hidden' }}>
+          <div style={{
+            display: 'flex', gap: '16px',
+            transform: `translateX(calc(-${cur} * (100% / 3 + 16px / 3)))`,
+            transition: `transform ${FRANCHISE_TIMING.transitionMs}ms cubic-bezier(.4,0,.2,1)`,
+          }}>
+            {FRANCHISE_CARTS.map((c) => (
+              <div
+                key={c.id}
                 style={{
-                  width: '100%', maxHeight: '280px',
-                  objectFit: 'contain', display: 'block',
+                  flexShrink: 0,
+                  width: 'calc((100% - 32px) / 3)',
+                  position: 'relative',
+                  aspectRatio: '4/3',
+                  cursor: 'pointer',
+                  transition: 'transform 0.3s ease',
                 }}
-              />
-            </div>
-
-            {/* Right: info */}
-            <div className="ft-card-info" style={{ flex: 1, padding: '28px 28px 24px' }}>
-
-              {/* Tag */}
-              <span style={{
-                display: 'inline-block', marginBottom: '12px',
-                background: cart.tagColor, color: '#fff',
-                fontFamily: 'Nunito, sans-serif',
-                fontSize: '11px', fontWeight: '800',
-                letterSpacing: '0.06em', textTransform: 'uppercase',
-                padding: '4px 14px', borderRadius: '999px',
-              }}>
-                {cart.tag}
-              </span>
-
-              {/* Cart name */}
-              <h3 style={{
-                fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
-                fontSize: 'clamp(1.6rem, 3vw, 2.4rem)',
-                fontWeight: 800, lineHeight: 1.1,
-                color: cart.color, margin: '0 0 4px',
-              }}>
-                {cart.name}
-              </h3>
-
-              {/* Size */}
-              <p style={{
-                fontFamily: 'Nunito, sans-serif',
-                fontSize: '13px', color: '#8A5F3C',
-                opacity: 0.7, margin: '0 0 18px',
-              }}>
-                Store Size: <strong>{cart.size}</strong>
-              </p>
-
-              {/* Divider */}
-              <div style={{ height: '1px', background: `${cart.color}30`, marginBottom: '16px' }}/>
-
-              {/* Highlights */}
-              <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 22px', display: 'flex', flexDirection: 'column', gap: '9px' }}>
-                {cart.highlights.map((h, i) => (
-                  <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px',
-                    fontFamily: 'Nunito, sans-serif', fontSize: '13px', color: '#5a6a2a', lineHeight: 1.4 }}>
-                    <span style={{
-                      width: '18px', height: '18px', borderRadius: '50%',
-                      background: cart.color, color: '#fff',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '9px', fontWeight: '800', flexShrink: 0, marginTop: '1px',
-                    }}>✓</span>
-                    {h}
-                  </li>
-                ))}
-              </ul>
-
-              {/* Inquire link */}
-              <Link
-                to="/franchise"
-                style={{
-                  fontFamily: 'Nunito, sans-serif',
-                  fontSize: '13px', fontWeight: '700',
-                  color: cart.color, textDecoration: 'none',
-                  display: 'inline-flex', alignItems: 'center', gap: '4px',
-                  opacity: 0.85, transition: 'opacity 0.2s',
-                }}
-                onMouseEnter={e => e.currentTarget.style.opacity='1'}
-                onMouseLeave={e => e.currentTarget.style.opacity='0.85'}
+                onMouseEnter={e => e.currentTarget.style.transform='translateY(-8px)'}
+                onMouseLeave={e => e.currentTarget.style.transform='none'}
               >
-                Inquire About This Format →
-              </Link>
-
-            </div>
+                <img
+                  src={c.image}
+                  alt={c.name}
+                  style={{
+                    position: 'absolute', inset: 0,
+                    width: '140%', height: '100%',
+                    objectFit: 'contain',
+                    objectPosition: 'center center',
+                    filter: 'drop-shadow(0 12px 28px rgba(40,70,20,0.22))',
+                    left: '-20%',
+                  }}
+                />
+              </div>
+            ))}
           </div>
         </div>
 
@@ -558,8 +451,8 @@ function FranchiseTeaser() {
         {arrowBtn(next, 'Next cart format', '›')}
       </div>
 
-      {/* ── Dots + progress ── */}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', marginTop: '24px' }}>
+      {/* ── Dots hidden ── */}
+      <div style={{ display: 'none' }}>
         {FRANCHISE_CARTS.map((c, i) => (
           <button
             key={c.id}
@@ -812,8 +705,8 @@ export default function HomePage() {
             position:'absolute', inset:0, zIndex:3, pointerEvents:'none',
             background:`linear-gradient(to right,
               rgba(255,255,255,${WASH.opacityLeft})    0%,
-              rgba(255,255,255,${WASH.opacityMidLeft}) 80%,
-              rgba(255,255,255,${WASH.opacityMid})     100%,
+              rgba(255,255,255,${WASH.opacityMidLeft}) 28%,
+              rgba(255,255,255,${WASH.opacityMid})     44%,
               rgba(255,255,255,${WASH.opacityRight})   ${WASH.clearAt},
               rgba(255,255,255,0) 100%)`,
           }}/>
@@ -916,13 +809,21 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Wave: Avo Faves #e8f0c8 → franchise green — matches the slope gradient */}
+        <Wave fromColor="#e8f0c8" toColor="#c8d96a" height={60} />
+
         {/* ════════════ FRANCHISE TEASER ════════════ */}
         <FranchiseTeaser />
 
-        <Wave fromColor="#e8f0c8" toColor={C.news} height={56} />
+        <Wave fromColor="#e8f0c8" toColor="#d9e29e" height={56} />
 
         {/* ════════════ WHAT'S NEW ════════════ */}
-        <section style={{ background:C.news, padding:'64px 32px 80px' }}>
+        <section style={{ position:'relative', overflow:'hidden', padding:'64px 32px 80px' }}>
+          <img src="/avobg.svg" aria-hidden="true" style={{
+            position:'absolute', inset:0, width:'100%', height:'100%',
+            objectFit:'cover', zIndex:0,
+          }} />
+          <div style={{ position:'relative', zIndex:1 }}>
           <div style={{ maxWidth:'1200px', margin:'0 auto' }}>
 
             {/* Header row */}
@@ -1037,6 +938,7 @@ export default function HomePage() {
               </div>
             )}
 
+          </div>
           </div>
         </section>
 
