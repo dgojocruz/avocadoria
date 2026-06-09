@@ -17,8 +17,8 @@ const JINGLE = {
 const STYLE = {
   pillBackground:   'rgba(255, 255, 255, 0.72)',
   pillBorderRadius: '999px',
-  pillPaddingX:     '10px',
-  pillPaddingY:     '14px',
+  pillPaddingX:     '6px',
+  pillPaddingY:     '10px',
   pillBorder:       '1px solid rgba(255,255,255,0.9)',
   pillShadow: [
     '4px 4px 10px rgba(182, 197, 72, 0.18)',
@@ -27,11 +27,11 @@ const STYLE = {
     'inset -2px -2px 5px rgba(138, 95, 60, 0.12)',
   ].join(', '),
   backdropBlur: 'blur(10px)',
-  iconSize:                  '50px',
-  iconButtonSize:            '50px',
+  iconSize:                  '28px',
+  iconButtonSize:            '36px',
   iconColor:                 'rgba(168, 211, 9, 0.93)',
   iconColorHover:            '#b6c548',
-  iconGap:                   '10px',
+  iconGap:                   '6px',
   iconButtonBackground:      'rgba(255,255,255,0.5)',
   iconButtonBackgroundHover: 'rgba(208, 232, 175, 0.6)',
   iconButtonBorderRadius:    '50%',
@@ -47,7 +47,7 @@ const STYLE = {
   ].join(', '),
   dividerColor: 'rgba(182, 197, 72, 0.35)',
   dividerSize:  '4px',
-  leftOffset:   '16px',
+  leftOffset:   '4px',
 }
 
 // ── Social links ──────────────────────────────────────────────────────────────
@@ -187,20 +187,44 @@ export default function SocialSidebar() {
   const handleToggle = () => setSoundOn(v => !v)
 
   return (
+    <>
+    <style>{`
+      @media (max-width: 767px) {
+        .social-sidebar-aside {
+          top: 30% !important;
+          transform: translateY(-30%) !important;
+        }
+        .social-sidebar-pill {
+          padding: 6px 5px !important;
+          gap: 4px !important;
+        }
+        .social-sidebar-pill button,
+        .social-sidebar-pill a {
+          width: 28px !important;
+          height: 28px !important;
+        }
+        .social-sidebar-pill svg {
+          width: 16px !important;
+          height: 16px !important;
+        }
+        .social-sidebar-sound-bars { display: none !important; }
+      }
+    `}</style>
     <aside
       aria-label="Social media links and music"
-      className="hidden md:flex"
+      className="social-sidebar-aside"
       style={{
-        position:  'fixed',
-        left:      STYLE.leftOffset,
-        top:       '50%',
-        transform: 'translateY(-50%)',
-        zIndex:    40,
+        position:      'fixed',
+        left:          STYLE.leftOffset,
+        top:           '50%',
+        transform:     'translateY(-50%)',
+        zIndex:        40,
+        display:       'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        alignItems:    'center',
       }}
     >
-      <div style={{
+      <div className="social-sidebar-pill" style={{
         background:           STYLE.pillBackground,
         backdropFilter:       STYLE.backdropBlur,
         WebkitBackdropFilter: STYLE.backdropBlur,
@@ -234,7 +258,7 @@ export default function SocialSidebar() {
             )}
           </IconBtn>
           {/* Animated sound bars — only show when playing */}
-          <SoundBars playing={soundOn} />
+          <div className="social-sidebar-sound-bars"><SoundBars playing={soundOn} /></div>
         </div>
 
         {/* Divider dot */}
@@ -253,5 +277,6 @@ export default function SocialSidebar() {
 
       </div>
     </aside>
+    </>
   )
 }

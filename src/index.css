@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
    AVOCADORIA — MOBILE-FIRST GLOBAL STYLES
    Strategy: default styles = mobile · media queries add desktop complexity
@@ -15,7 +23,7 @@
 /* ── Reset & base ─────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { margin: 0; padding: 0; overflow-x: hidden; font-family: 'Nunito', sans-serif; }
+body { margin: 0; padding: 0; overflow-x: hidden; font-family: 'Poppins', 'Nunito', sans-serif; }
 
 /* Fluid images — rule #5 from guide */
 img, video, iframe, svg { max-width: 100%; height: auto; display: block; }
@@ -72,10 +80,10 @@ a { touch-action: manipulation; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 12px;
+  padding: 0 12px 0 60px;
 }
 @media (min-width: 768px) {
-  .navbar { padding: 0 var(--sp-md); }
+  .navbar { padding: 0 var(--sp-md) 0 60px; }
 }
 
 /* Logo scales with viewport */
@@ -399,7 +407,7 @@ a { touch-action: manipulation; }
   letter-spacing: .01em;
 }
 .section-sub {
-  font-family: 'Nunito',sans-serif;
+  font-family: 'Poppins', 'Nunito', sans-serif;
   font-size: var(--fs-sm);
   opacity: .75;
   margin: 0 0 var(--sp-md);

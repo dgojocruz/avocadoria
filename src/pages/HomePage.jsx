@@ -740,18 +740,7 @@ export default function HomePage() {
             transform: loaded ? 'translateY(0)' : 'translateY(22px)',
             transition:'opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s',
           }}>
-            {/* Brand quote */}
-            <p style={{
-              fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
-              fontSize: 'clamp(11px, 1.1vw, 14px)',
-              fontWeight: 800,
-              letterSpacing: '0.04em',
-              color: '#b5c448',
-              margin: '0 0 6px 2px',
-              textShadow: STROKE_WHITE_SM,
-            }}>
-              &ldquo;Happiness in Avocado&rdquo;
-            </p>
+
 
             {/* Headline */}
             <h1 className="avo-hero__headline" style={{

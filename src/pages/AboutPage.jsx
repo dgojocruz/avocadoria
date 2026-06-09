@@ -56,25 +56,84 @@ const STORY_SECTIONS = [
 
 const RECOGNITIONS = [
   {
-    id: 'award-001', icon: '🏆', featured: true,
-    title:    'Best Dessert Brand — Food & Beverage PH Awards 2024',
-    issuer:   'Food & Beverage Philippines',
-    date:     '2024-11-15', category: 'Award',
-    excerpt:  'Recognized as the Best Dessert Brand at the 2024 F&B PH Awards.',
+    id: 'award-ey',
+    image: '/awards/award-p3-0.png',
+    year: '2024', category: 'Entrepreneurship',
+    title: 'EY Young Entrepreneur of the Year Award',
+    issuer: 'Ernst & Young Philippines',
+    featured: true,
   },
   {
-    id: 'award-002', icon: '📰', featured: false,
-    title:    'Top 10 Filipino Food Brands to Watch — 2024',
-    issuer:   'BusinessWorld Philippines',
-    date:     '2024-08-01', category: 'Feature',
-    excerpt:  'Named one of the Top 10 Filipino Food Brands to Watch in 2024.',
+    id: 'award-asia-marketeer',
+    image: '/awards/award-p2-0.png',
+    year: '2025', category: 'Marketing',
+    title: "Asia's Top Outstanding Woman Marketeer of the Year",
+    issuer: 'Asia Marketing Federation',
+    featured: false,
   },
   {
-    id: 'award-003', icon: '⭐', featured: false,
-    title:    'Franchise Excellence Award — Franchise Asia Philippines 2023',
-    issuer:   'Franchise Asia Philippines',
-    date:     '2023-09-10', category: 'Award',
-    excerpt:  'Honored for outstanding franchise growth and support systems.',
+    id: 'award-agora',
+    image: '/awards/award-p2-1.png',
+    year: '2025', category: 'Entrepreneurship',
+    title: 'Outstanding Achievement in Entrepreneurship — Small Scale',
+    issuer: 'Agora Awards · Philippine Marketing Association',
+    featured: false,
+  },
+  {
+    id: 'award-gawad',
+    image: '/awards/award-p2-2.jpeg',
+    year: '2026', category: 'Innovation',
+    title: 'Gawad Yamang Isip Awards — Top Madrid Protocol Filer',
+    issuer: 'Intellectual Property Office of the Philippines',
+    featured: false,
+  },
+  {
+    id: 'award-sterling',
+    image: '/awards/award-p1-2.png',
+    year: '2023', category: 'Brand',
+    title: 'Asian Sterling Awards — Hall of Fame, Most Outstanding Avocado Dessert Brand',
+    issuer: 'Asian Sterling Awards',
+    featured: false,
+  },
+  {
+    id: 'award-francorp100',
+    image: '/awards/award-p1-0.png',
+    year: '2022', category: 'Franchise',
+    title: 'Francorp 100 Club',
+    issuer: 'Francorp Philippines',
+    featured: false,
+  },
+  {
+    id: 'award-premier',
+    image: '/awards/award-p1-1.png',
+    year: '2022', category: 'Franchise',
+    title: 'Premier Avocado Dessert Specialty Franchise',
+    issuer: 'Francorp Philippines — 25th Anniversary',
+    featured: false,
+  },
+  {
+    id: 'award-ymma',
+    image: '/awards/award-p1-3.png',
+    year: '2024', category: 'Marketing',
+    title: 'YMMA 2024 — Entrepreneurial Marketing Award',
+    issuer: 'Young Market Masters Awards · Mansmith',
+    featured: false,
+  },
+  {
+    id: 'award-gonegosyo',
+    image: '/awards/award-p1-5.jpeg',
+    year: '2023', category: 'Leadership',
+    title: "GoNegosyo Women's Month — Inspiring Filipina Entrepreneur",
+    issuer: 'Go Negosyo',
+    featured: false,
+  },
+  {
+    id: 'award-elite',
+    image: '/awards/award-p1-4.png',
+    year: '2021', category: 'Business',
+    title: 'Elite Business & Leadership Awards',
+    issuer: 'Elite Business & Leadership Awards',
+    featured: false,
   },
 ]
 
@@ -201,6 +260,171 @@ function SectionLabel({ text, color = 'var(--c-pink)' }) {
       letterSpacing: '0.08em', textTransform: 'uppercase',
       padding: '5px 18px', borderRadius: '999px',
     }}>{text}</span>
+  )
+}
+
+
+// ─── Recognitions Carousel ────────────────────────────────────────────────────
+function RecognitionsCarousel({ items }) {
+  const [cur, setCur] = useState(0)
+  const trackRef = useRef(null)
+  const timerRef = useRef(null)
+  const perView = typeof window !== 'undefined' && window.innerWidth < 640 ? 1 : 2
+  const maxIdx = Math.max(0, items.length - perView)
+
+  const goTo = (i) => {
+    const idx = Math.max(0, Math.min(i, maxIdx))
+    setCur(idx)
+    clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => setCur(p => p >= maxIdx ? 0 : p + 1), 4000)
+  }
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => setCur(p => p >= maxIdx ? 0 : p + 1), 4000)
+    return () => clearInterval(timerRef.current)
+  }, [maxIdx])
+
+  useEffect(() => {
+    if (!trackRef.current) return
+    const slide = trackRef.current.children[0]
+    if (!slide) return
+    const w = slide.offsetWidth + 12
+    trackRef.current.style.transform = `translateX(-${cur * w}px)`
+  }, [cur])
+
+  const catColor = (cat) => {
+    const map = {
+      'Entrepreneurship': 'var(--c-dark)',
+      'Marketing':        'var(--c-pink)',
+      'Franchise':        'var(--c-olive)',
+      'Brand':            '#DFD438',
+      'Leadership':       '#8A5F3C',
+      'Innovation':       'var(--c-dark)',
+      'Business':         'var(--c-olive)',
+    }
+    return map[cat] || 'var(--c-olive)'
+  }
+
+  return (
+    <div>
+      <style>{`
+        .rec-track-outer { overflow: hidden; }
+        .rec-track {
+          display: flex; gap: 12px;
+          transition: transform 0.5s cubic-bezier(.4,0,.2,1);
+        }
+        .rec-slide {
+          flex-shrink: 0;
+          width: calc(50% - 6px);
+          background: rgba(255,255,255,0.10);
+          border: 1px solid rgba(182,197,72,0.25);
+          border-radius: 16px;
+          overflow: hidden;
+          transition: border-color 0.2s;
+        }
+        .rec-slide:hover { border-color: rgba(182,197,72,0.55); }
+        .rec-slide-img {
+          width: 100%; height: clamp(130px,22vw,190px);
+          object-fit: cover; object-position: center top;
+          display: block;
+        }
+        .rec-slide-body {
+          padding: clamp(10px,2vw,16px);
+          display: flex; flex-direction: column; gap: 5px;
+        }
+        .rec-slide-badge {
+          display: inline-block; width: fit-content;
+          font-family: 'Poppins','Nunito',sans-serif;
+          font-size: 9px; font-weight: 600;
+          letter-spacing: 0.07em; text-transform: uppercase;
+          padding: 2px 9px; border-radius: 999px;
+          color: #fff;
+        }
+        .rec-slide-title {
+          font-family: 'BubbleboddyNeue','Nunito',sans-serif;
+          font-size: clamp(12px,1.4vw,15px);
+          font-weight: normal; color: #fff;
+          margin: 0; line-height: 1.25;
+        }
+        .rec-slide-org {
+          font-family: 'Poppins','Nunito',sans-serif;
+          font-size: clamp(10px,1vw,12px);
+          color: rgba(255,255,255,0.55); margin: 0;
+        }
+        .rec-nav {
+          display: flex; align-items: center;
+          justify-content: center; gap: 12px;
+          margin-top: 16px;
+        }
+        .rec-arrow {
+          width: 38px; height: 38px; border-radius: 50%;
+          background: rgba(255,255,255,0.12);
+          border: 1px solid rgba(182,197,72,0.3);
+          display: flex; align-items: center; justify-content: center;
+          cursor: pointer; color: #fff; font-size: 18px;
+          transition: all 0.2s; flex-shrink: 0;
+          min-height: unset; min-width: unset;
+        }
+        .rec-arrow:hover { background: var(--c-olive); border-color: var(--c-olive); }
+        .rec-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: rgba(255,255,255,0.25);
+          border: none; cursor: pointer; padding: 0;
+          transition: all 0.2s;
+        }
+        .rec-dot.active { background: var(--c-olive); width: 18px; border-radius: 3px; }
+        @media (max-width: 600px) {
+          .rec-slide { width: calc(100% - 0px); }
+        }
+      `}</style>
+
+      <div className="rec-track-outer">
+        <div className="rec-track" ref={trackRef}>
+          {items.map((rec) => (
+            <div key={rec.id} className="rec-slide">
+              <img
+                src={rec.image} alt={rec.title}
+                className="rec-slide-img"
+                onError={e => {
+                  e.target.style.display = 'none'
+                  e.target.nextSibling.style.display = 'flex'
+                }}
+              />
+              <div style={{
+                display: 'none', width: '100%',
+                height: 'clamp(130px,22vw,190px)',
+                background: 'rgba(58,107,53,0.3)',
+                alignItems: 'center', justifyContent: 'center',
+                fontSize: '36px',
+              }}>🏆</div>
+              <div className="rec-slide-body">
+                <span
+                  className="rec-slide-badge"
+                  style={{ background: catColor(rec.category) }}
+                >{rec.category} · {rec.year}</span>
+                <h3 className="rec-slide-title">{rec.title}</h3>
+                <p className="rec-slide-org">{rec.issuer}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="rec-nav">
+        <button className="rec-arrow" onClick={() => goTo(cur - 1)} aria-label="Previous award">‹</button>
+        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+          {Array.from({ length: maxIdx + 1 }, (_, i) => (
+            <button
+              key={i}
+              className={`rec-dot${i === cur ? ' active' : ''}`}
+              onClick={() => goTo(i)}
+              aria-label={`Go to award ${i + 1}`}
+            />
+          ))}
+        </div>
+        <button className="rec-arrow" onClick={() => goTo(cur + 1)} aria-label="Next award">›</button>
+      </div>
+    </div>
   )
 }
 
@@ -709,69 +933,90 @@ export default function AboutPage() {
       <Wave fromColor="#d9e29e" toColor="#3a6b35" height={56} />
 
       {/* ══════════════════════════════════════════════════════════════
-          RECOGNITIONS — dark olive bg with franchisebg overlay
+          RECOGNITIONS — floating image carousel
       ══════════════════════════════════════════════════════════════ */}
       <div id="recognitions" className="about-section" style={{ position: 'relative', overflow: 'hidden' }}>
-        {/* franchisebg as section bg */}
         <img src="/franchisebg.svg" aria-hidden="true" style={{
           position: 'absolute', inset: 0, width: '100%', height: '100%',
           objectFit: 'cover', zIndex: 0, opacity: 0.35,
         }} />
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 1,
-          background: 'rgba(28,56,20,0.60)',
-        }} />
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'rgba(28,56,20,0.72)' }} />
 
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: '900px', margin: '0 auto', padding: 'clamp(52px,8vw,88px) clamp(20px,5vw,72px)' }}>
-          <div style={{ textAlign: 'center', marginBottom: '44px' }}>
-            <SectionLabel text="Recognitions 🏆" color="var(--c-olive)" />
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: '1000px', margin: '0 auto', padding: 'clamp(48px,7vw,80px) clamp(16px,4vw,48px)' }}>
+
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: 'clamp(28px,4vw,44px)' }}>
+            <SectionLabel text="Awards & Recognitions 🏆" color="var(--c-olive)" />
             <h2 style={{
               fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
-              fontSize: 'clamp(1.8rem, 4vw, 3rem)',
+              fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
               fontWeight: 'normal', color: '#fff',
-              textShadow: '0 3px 16px rgba(0,0,0,0.4)',
-              margin: '0 0 12px', lineHeight: 1.1,
-            }}>Awards & Milestones</h2>
+              textShadow: STROKE,
+              margin: '0 0 10px', lineHeight: 1.1,
+            }}>A Legacy of Excellence</h2>
             <p style={{
-              fontFamily: 'Nunito, sans-serif', fontSize: 'clamp(14px, 1.5vw, 16px)',
-              color: 'rgba(255,255,255,0.7)', margin: 0, lineHeight: 1.65,
-            }}>The moments that mark our journey.</p>
+              fontFamily: "'Poppins', 'Nunito', sans-serif",
+              fontSize: 'clamp(13px, 1.4vw, 15px)',
+              color: 'rgba(255,255,255,0.75)', margin: '0 auto', lineHeight: 1.65,
+              maxWidth: '480px',
+            }}>
+              Chef Czarina Sevilla · 9 awards across 5 years of entrepreneurial excellence.
+            </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {RECOGNITIONS.map((rec) => (
-              <div key={rec.id} className="about-recognition-row">
-                <div style={{
-                  width: '56px', height: '56px', borderRadius: '16px', flexShrink: 0,
-                  background: rec.featured ? 'var(--c-olive)' : 'rgba(182,197,72,0.18)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px',
-                }}>{rec.icon}</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '6px', alignItems: 'center' }}>
-                    <span style={{
-                      background: rec.featured ? 'var(--c-olive)' : 'rgba(182,197,72,0.15)',
-                      color: rec.featured ? '#fff' : 'var(--c-dark)',
-                      fontFamily: 'Nunito, sans-serif', fontSize: '10px', fontWeight: '800',
-                      letterSpacing: '0.06em', textTransform: 'uppercase',
-                      padding: '3px 10px', borderRadius: '999px',
-                    }}>{rec.category}</span>
-                    <span style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.55)' }}>
-                      {fmt(rec.date)} · {rec.issuer}
-                    </span>
-                  </div>
-                  <h3 style={{
-                    fontFamily: 'Nunito, sans-serif', fontWeight: '800',
-                    fontSize: 'clamp(14px, 1.4vw, 17px)', color: 'var(--c-dark)',
-                    margin: '0 0 6px', lineHeight: 1.3,
-                  }}>{rec.title}</h3>
-                  <p style={{
-                    fontFamily: 'Nunito, sans-serif', fontSize: '13px',
-                    color: 'rgba(138,95,60,0.8)', lineHeight: 1.6, margin: 0,
-                  }}>{rec.excerpt}</p>
-                </div>
+          {/* Featured award */}
+          <div style={{
+            background: 'rgba(255,255,255,0.08)',
+            border: '1.5px solid rgba(182,197,72,0.4)',
+            borderRadius: '20px', overflow: 'hidden',
+            marginBottom: 'clamp(20px,3vw,32px)',
+          }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'clamp(120px,35%,220px) 1fr',
+              minHeight: '160px',
+            }}>
+              {/* Featured image */}
+              <div style={{ overflow: 'hidden', flexShrink: 0 }}>
+                <img
+                  src={RECOGNITIONS[0].image}
+                  alt={RECOGNITIONS[0].title}
+                  style={{
+                    width: '100%', height: '100%',
+                    objectFit: 'cover', objectPosition: 'center top',
+                    display: 'block',
+                  }}
+                  onError={e => e.target.style.display='none'}
+                />
               </div>
-            ))}
+              {/* Featured text */}
+              <div style={{ padding: 'clamp(16px,3vw,28px)', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '8px' }}>
+                <span style={{
+                  display: 'inline-block', width: 'fit-content',
+                  background: 'var(--c-olive)', color: '#fff',
+                  fontFamily: "'Poppins','Nunito',sans-serif",
+                  fontSize: '10px', fontWeight: '600',
+                  letterSpacing: '0.08em', textTransform: 'uppercase',
+                  padding: '3px 12px', borderRadius: '999px',
+                }}>EY · {RECOGNITIONS[0].year} · Featured</span>
+                <h3 style={{
+                  fontFamily: "'BubbleboddyNeue','Nunito',sans-serif",
+                  fontSize: 'clamp(1rem,2.2vw,1.4rem)',
+                  fontWeight: 'normal', color: '#fff',
+                  margin: 0, lineHeight: 1.25,
+                }}>{RECOGNITIONS[0].title}</h3>
+                <p style={{
+                  fontFamily: "'Poppins','Nunito',sans-serif",
+                  fontSize: 'clamp(11px,1.2vw,13px)',
+                  color: 'rgba(255,255,255,0.65)', margin: 0,
+                }}>{RECOGNITIONS[0].issuer}</p>
+              </div>
+            </div>
           </div>
+
+          {/* Carousel */}
+          <RecognitionsCarousel items={RECOGNITIONS.slice(1)} />
+
         </div>
       </div>
 
