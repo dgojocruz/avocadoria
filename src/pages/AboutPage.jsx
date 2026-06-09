@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import SEO from '@/components/ui/SEO'
+import { NEWS_POSTS } from '@/data/posts'
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // DATA — fill in your real content here
@@ -25,7 +26,6 @@ const STORY_SECTIONS = [
     badge:   'How It All Began',
     title:   'A Simple Love for Avocado',
     body:    'Founded in 2019, Avocadoria was built on a simple belief — desserts can be both indulgent and nourishing. Led by Chef Czarina Sevilla, the brand pioneered an avocado-based dessert concept designed for modern, health-conscious consumers worldwide.',
-    icon:    '🌱',
     color:   'var(--c-olive)',
   },
   {
@@ -33,7 +33,6 @@ const STORY_SECTIONS = [
     badge:   'Our Mission',
     title:   'Happiness in Every Cup',
     body:    'We are on a mission to bring happiness through avocado — one cup at a time. Every product we serve is crafted with real avocado, no artificial flavors, and a whole lot of love. We believe indulgence and health can coexist, and that every Filipino deserves a treat that is both delicious and nourishing.',
-    icon:    '💚',
     color:   'var(--c-dark)',
   },
   {
@@ -41,7 +40,6 @@ const STORY_SECTIONS = [
     badge:   'Our Vision',
     title:   'The No. 1 Avocado Brand in Asia',
     body:    'We dream big — to become the most recognized avocado dessert brand not just in the Philippines, but across Asia. We are building a brand rooted in authenticity, community, and the joy of sharing something truly delicious with the people you love.',
-    icon:    '🌏',
     color:   'var(--c-pink)',
   },
   {
@@ -49,7 +47,6 @@ const STORY_SECTIONS = [
     badge:   'Locally Sourced',
     title:   'Supporting Filipino Farmers',
     body:    'We proudly partner with local avocado farmers across the Philippines. Every cup you enjoy directly supports Filipino farming communities and helps grow a sustainable, local supply chain. From Benguet to Davao, real farmers grow the real avocados behind every Avocadoria product.',
-    icon:    '🤝',
     color:   '#DFD438',
   },
 ]
@@ -137,40 +134,18 @@ const RECOGNITIONS = [
   },
 ]
 
-const NEWS_POSTS = [
-  {
-    id: 'news-001', featured: true,
-    title:    'Avocadoria Opens in SM Mall of Asia!',
-    date:     '2025-05-20', category: 'Store Opening',
-    excerpt:  'We are thrilled to announce our newest branch at SM Mall of Asia — bringing happiness to the Bay Area!',
-    image:    null,
-  },
-  {
-    id: 'news-002', featured: false,
-    title:    'New Product Alert: Biscoff Lover is here!',
-    date:     '2025-04-10', category: 'New Product',
-    excerpt:  'Meet our newest creation — layers of creamy avocado, Biscoff drizzle, and our signature crumble base.',
-    image:    null,
-  },
-  {
-    id: 'news-003', featured: false,
-    title:    'Avocadoria Hits 50 Branches!',
-    date:     '2025-02-01', category: 'Milestone',
-    excerpt:  'We just opened our 50th branch! Thank you to every customer, franchisee, and avocado farmer who made this possible.',
-    image:    null,
-  },
-]
+// NEWS_POSTS imported from @/data/posts
 
 const AVO_CARES = [
   {
-    id: 'cares-001', icon: '🌱', featured: true,
+    id: 'cares-001',  featured: true,
     title:    'Rooted in Growth — Planting 1,000 Avocado Trees',
     date:     '2025-03-15', category: 'Environment',
     excerpt:  'Avocadoria partnered with local farmers to plant 1,000 avocado trees across Benguet — investing in the future of Filipino agriculture and the planet.',
     image:    '/avo-cares-planting.webp',
   },
   {
-    id: 'cares-002', icon: '🌿', featured: false,
+    id: 'cares-002', featured: false,
     title:    'Every Cup Grows a Tree',
     date:     '2025-03-15', category: 'Environment',
     excerpt:  '"Rooted in Growth" — our commitment to sustainability. Every tree planted is a promise to our farmers, our community, and the next generation of avocado lovers.',
@@ -235,7 +210,6 @@ function StatCard({ stat, trigger }) {
   const val = useCountUp(stat.num, 1600, trigger)
   return (
     <div className="about-stat-card">
-      <div style={{ fontSize: '32px', marginBottom: '8px' }}>{stat.icon}</div>
       <div style={{
         fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
         fontSize: 'clamp(2rem, 4vw, 3rem)',
@@ -243,9 +217,9 @@ function StatCard({ stat, trigger }) {
         textShadow: STROKE,
       }}>{val || stat.num}</div>
       <div style={{
-        fontFamily: 'Nunito, sans-serif',
-        fontSize: '12px', color: 'rgba(255,255,255,0.8)',
-        marginTop: '6px', letterSpacing: '0.04em', textTransform: 'uppercase',
+        fontFamily: 'Poppins, Nunito, sans-serif',
+        fontSize: '11px', color: 'var(--c-dark)',
+        marginTop: '6px', letterSpacing: '0.06em', textTransform: 'uppercase',
       }}>{stat.label}</div>
     </div>
   )
@@ -316,21 +290,30 @@ function RecognitionsCarousel({ items }) {
         .rec-slide {
           flex-shrink: 0;
           width: calc(50% - 6px);
-          background: rgba(255,255,255,0.10);
-          border: 1px solid rgba(182,197,72,0.25);
+          background: #fff;
+          border: 1.5px solid rgba(58,107,53,0.12);
           border-radius: 16px;
           overflow: hidden;
-          transition: border-color 0.2s;
+          transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+          box-shadow: 0 4px 16px rgba(58,107,53,0.10);
         }
-        .rec-slide:hover { border-color: rgba(182,197,72,0.55); }
+        .rec-slide:hover {
+          border-color: var(--c-olive);
+          box-shadow: 0 12px 36px rgba(58,107,53,0.18);
+          transform: translateY(-5px);
+        }
         .rec-slide-img {
-          width: 100%; height: clamp(130px,22vw,190px);
-          object-fit: cover; object-position: center top;
+          width: 100%; height: clamp(220px,32vw,320px);
+          object-fit: contain;
+          object-position: center center;
           display: block;
+          background: #1a3a12;
+          padding: 8px;
+          box-sizing: border-box;
         }
         .rec-slide-body {
-          padding: clamp(10px,2vw,16px);
-          display: flex; flex-direction: column; gap: 5px;
+          padding: clamp(12px,2vw,18px);
+          display: flex; flex-direction: column; gap: 6px;
         }
         .rec-slide-badge {
           display: inline-block; width: fit-content;
@@ -343,13 +326,13 @@ function RecognitionsCarousel({ items }) {
         .rec-slide-title {
           font-family: 'BubbleboddyNeue','Nunito',sans-serif;
           font-size: clamp(12px,1.4vw,15px);
-          font-weight: normal; color: #fff;
+          font-weight: normal; color: var(--c-dark);
           margin: 0; line-height: 1.25;
         }
         .rec-slide-org {
           font-family: 'Poppins','Nunito',sans-serif;
           font-size: clamp(10px,1vw,12px);
-          color: rgba(255,255,255,0.55); margin: 0;
+          color: var(--c-brown); margin: 0;
         }
         .rec-nav {
           display: flex; align-items: center;
@@ -358,17 +341,17 @@ function RecognitionsCarousel({ items }) {
         }
         .rec-arrow {
           width: 38px; height: 38px; border-radius: 50%;
-          background: rgba(255,255,255,0.12);
-          border: 1px solid rgba(182,197,72,0.3);
+          background: rgba(255,255,255,0.85);
+          border: 1.5px solid rgba(58,107,53,0.2);
           display: flex; align-items: center; justify-content: center;
-          cursor: pointer; color: #fff; font-size: 18px;
+          cursor: pointer; color: var(--c-dark); font-size: 18px;
           transition: all 0.2s; flex-shrink: 0;
           min-height: unset; min-width: unset;
         }
-        .rec-arrow:hover { background: var(--c-olive); border-color: var(--c-olive); }
+        .rec-arrow:hover { background: var(--c-olive); border-color: var(--c-olive); color: #fff; }
         .rec-dot {
           width: 6px; height: 6px; border-radius: 50%;
-          background: rgba(255,255,255,0.25);
+          background: rgba(58,107,53,0.2);
           border: none; cursor: pointer; padding: 0;
           transition: all 0.2s;
         }
@@ -464,7 +447,7 @@ function NewsCard({ post }) {
             letterSpacing: '0.06em', textTransform: 'uppercase',
             padding: '3px 10px', borderRadius: '999px',
           }}>{post.featured ? 'Featured' : post.category}</span>
-          <span style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.5)' }}>
+          <span style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.7)' }}>
             {fmt(post.date)}
           </span>
         </div>
@@ -475,7 +458,7 @@ function NewsCard({ post }) {
         }}>{post.title}</h3>
         <p style={{
           fontFamily: 'Nunito, sans-serif', fontSize: '13px',
-          color: 'rgba(138,95,60,0.8)', lineHeight: 1.65, margin: 0, flex: 1,
+          color: 'var(--c-brown)', lineHeight: 1.65, margin: 0, flex: 1,
         }}>{post.excerpt}</p>
       </div>
     </div>
@@ -917,8 +900,8 @@ export default function AboutPage() {
                     }}>{sec.title}</h3>
                     <p style={{
                       fontFamily: 'Nunito, sans-serif',
-                      fontSize: '13px', lineHeight: 1.8,
-                      color: 'rgba(138,95,60,0.85)', margin: 0,
+                      fontSize: '14px', lineHeight: 1.8,
+                      color: 'var(--c-brown)', margin: 0,
                     }}>{sec.body}</p>
                   </div>
                 </div>
@@ -935,12 +918,8 @@ export default function AboutPage() {
       {/* ══════════════════════════════════════════════════════════════
           RECOGNITIONS — floating image carousel
       ══════════════════════════════════════════════════════════════ */}
-      <div id="recognitions" className="about-section" style={{ position: 'relative', overflow: 'hidden' }}>
-        <img src="/franchisebg.svg" aria-hidden="true" style={{
-          position: 'absolute', inset: 0, width: '100%', height: '100%',
-          objectFit: 'cover', zIndex: 0, opacity: 0.35,
-        }} />
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'rgba(28,56,20,0.72)' }} />
+      <div id="recognitions" className="about-section" style={{ background: '#d9e29e', overflow: 'hidden' }}>
+        <div style={{ display: 'none' }} />
 
         <div style={{ position: 'relative', zIndex: 2, maxWidth: '1000px', margin: '0 auto', padding: 'clamp(48px,7vw,80px) clamp(16px,4vw,48px)' }}>
 
@@ -950,14 +929,15 @@ export default function AboutPage() {
             <h2 style={{
               fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
               fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
-              fontWeight: 'normal', color: '#fff',
+              fontWeight: 'normal', color: 'var(--c-olive)',
               textShadow: STROKE,
               margin: '0 0 10px', lineHeight: 1.1,
             }}>A Legacy of Excellence</h2>
             <p style={{
               fontFamily: "'Poppins', 'Nunito', sans-serif",
               fontSize: 'clamp(13px, 1.4vw, 15px)',
-              color: 'rgba(255,255,255,0.75)', margin: '0 auto', lineHeight: 1.65,
+              color: 'var(--c-dark)', opacity: 0.75,
+              margin: '0 auto', lineHeight: 1.65,
               maxWidth: '480px',
             }}>
               Chef Czarina Sevilla · 9 awards across 5 years of entrepreneurial excellence.
@@ -966,24 +946,29 @@ export default function AboutPage() {
 
           {/* Featured award */}
           <div style={{
-            background: 'rgba(255,255,255,0.08)',
-            border: '1.5px solid rgba(182,197,72,0.4)',
+            background: 'rgba(255,255,255,0.88)',
+            border: '1.5px solid rgba(58,107,53,0.2)',
             borderRadius: '20px', overflow: 'hidden',
             marginBottom: 'clamp(20px,3vw,32px)',
+            boxShadow: '0 4px 24px rgba(58,107,53,0.10)',
           }}>
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'clamp(120px,35%,220px) 1fr',
-              minHeight: '160px',
+              gridTemplateColumns: 'clamp(180px,38%,280px) 1fr',
+              minHeight: '260px',
             }}>
               {/* Featured image */}
-              <div style={{ overflow: 'hidden', flexShrink: 0 }}>
+              <div style={{
+                overflow: 'hidden', flexShrink: 0,
+                background: '#1a3a12',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
                 <img
                   src={RECOGNITIONS[0].image}
                   alt={RECOGNITIONS[0].title}
                   style={{
                     width: '100%', height: '100%',
-                    objectFit: 'cover', objectPosition: 'center top',
+                    objectFit: 'contain', objectPosition: 'center',
                     display: 'block',
                   }}
                   onError={e => e.target.style.display='none'}
@@ -1002,13 +987,13 @@ export default function AboutPage() {
                 <h3 style={{
                   fontFamily: "'BubbleboddyNeue','Nunito',sans-serif",
                   fontSize: 'clamp(1rem,2.2vw,1.4rem)',
-                  fontWeight: 'normal', color: '#fff',
+                  fontWeight: 'normal', color: 'var(--c-dark)',
                   margin: 0, lineHeight: 1.25,
                 }}>{RECOGNITIONS[0].title}</h3>
                 <p style={{
                   fontFamily: "'Poppins','Nunito',sans-serif",
                   fontSize: 'clamp(11px,1.2vw,13px)',
-                  color: 'rgba(255,255,255,0.65)', margin: 0,
+                  color: 'var(--c-brown)', opacity: 0.8, margin: 0,
                 }}>{RECOGNITIONS[0].issuer}</p>
               </div>
             </div>
@@ -1040,13 +1025,13 @@ export default function AboutPage() {
                 fontWeight: 'normal', color: 'var(--c-dark)',
                 margin: '0 0 6px', lineHeight: 1.1,
               }}>Latest from Avocadoria</h2>
-              <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '14px', color: 'rgba(138,95,60,0.65)', margin: 0 }}>
+              <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '14px', color: 'var(--c-brown)', margin: 0 }}>
                 New branches, products, and announcements.
               </p>
             </div>
           </div>
           <div className="about-news-grid">
-            {NEWS_POSTS.map(post => <NewsCard key={post.id} post={post} />)}
+            {NEWS_POSTS.slice(0, 6).map(post => <NewsCard key={post.id} post={post} />)}
           </div>
         </div>
       </div>
@@ -1113,7 +1098,7 @@ export default function AboutPage() {
                       letterSpacing: '0.06em', textTransform: 'uppercase',
                       padding: '3px 10px', borderRadius: '999px',
                     }}>{item.category}</span>
-                    <span style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.5)' }}>
+                    <span style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.7)' }}>
                       {fmt(item.date)}
                     </span>
                   </div>
@@ -1124,7 +1109,7 @@ export default function AboutPage() {
                   }}>{item.title}</h3>
                   <p style={{
                     fontFamily: 'Nunito, sans-serif', fontSize: '13px',
-                    color: 'rgba(138,95,60,0.8)', lineHeight: 1.7, margin: 0,
+                    color: 'var(--c-brown)', lineHeight: 1.7, margin: 0,
                   }}>{item.excerpt}</p>
                 </div>
               </div>

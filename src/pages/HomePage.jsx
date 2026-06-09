@@ -507,6 +507,216 @@ function FranchiseTeaser() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// ─── Recognitions Teaser ─────────────────────────────────────────────────────
+const REC_AWARDS = [
+  { img: '/awards/award-p3-0.png',  orient: 'portrait',  fit: 'cover',   pos: 'center 20%', bg: '#1a2a10', year: '2024', label: 'EY Young Entrepreneur of the Year',             issuer: 'Ernst & Young Philippines' },
+  { img: '/awards/award-p2-0.png',  orient: 'portrait',  fit: 'cover',   pos: 'center top', bg: '#1a3a20', year: '2025', label: "Asia's Top Outstanding Woman Marketeer",        issuer: 'Asia Marketing Federation' },
+  { img: '/awards/award-p2-2.jpeg', orient: 'portrait',  fit: 'cover',   pos: 'center 30%', bg: '#0a1a40', year: '2026', label: 'Gawad Yamang Isip — Top Madrid Protocol Filer', issuer: 'IP Office of the Philippines' },
+  { img: '/awards/award-p1-2.png',  orient: 'landscape', fit: 'contain', pos: 'center',     bg: '#1a1205', year: '2023', label: 'Asian Sterling Awards Hall of Fame',            issuer: 'Most Outstanding Avocado Dessert Brand' },
+  { img: '/awards/award-p1-0.png',  orient: 'portrait',  fit: 'cover',   pos: 'center top', bg: '#1a1a2a', year: '2022', label: 'Francorp 100 Club',                             issuer: 'Francorp Philippines' },
+  { img: '/awards/award-p2-1.png',  orient: 'landscape', fit: 'cover',   pos: 'center 30%', bg: '#0a1a10', year: '2025', label: 'Outstanding Achievement in Entrepreneurship',   issuer: 'Agora Awards · PMA' },
+  { img: '/awards/award-p1-3.png',  orient: 'landscape', fit: 'cover',   pos: 'center 40%', bg: '#1a0a2a', year: '2024', label: 'YMMA Entrepreneurial Marketing Award',          issuer: 'Young Market Masters Awards' },
+  { img: '/awards/award-p1-5.jpeg', orient: 'landscape', fit: 'cover',   pos: 'center 35%', bg: '#0a1a30', year: '2023', label: "GoNegosyo Women's Month — Inspiring Filipina",  issuer: 'Go Negosyo' },
+  { img: '/awards/award-p1-4.png',  orient: 'landscape', fit: 'cover',   pos: 'center 30%', bg: '#0a0a1a', year: '2021', label: 'Elite Business & Leadership Awards',            issuer: 'Elite Business Awards' },
+]
+
+function RecognitionsTeaser() {
+  const [cur, setCur] = useState(0)
+  const [prev, setPrev] = useState(null)
+  const [fading, setFading] = useState(false)
+  const timerRef = useRef(null)
+
+  const go = (i) => {
+    const next = (i + REC_AWARDS.length) % REC_AWARDS.length
+    if (next === cur) return
+    setPrev(cur)
+    setFading(true)
+    setTimeout(() => {
+      setCur(next)
+      setPrev(null)
+      setFading(false)
+    }, 600)
+    clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => go(cur + 1), 3000)
+  }
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      setCur(p => {
+        setPrev(p)
+        setFading(true)
+        setTimeout(() => { setPrev(null); setFading(false) }, 600)
+        return (p + 1) % REC_AWARDS.length
+      })
+    }, 3000)
+    return () => clearInterval(timerRef.current)
+  }, [])
+
+  const a = REC_AWARDS[cur]
+  const p = prev !== null ? REC_AWARDS[prev] : null
+
+  return (
+    <section style={{ background: '#d9e29e', padding: 'clamp(48px,7vw,72px) clamp(16px,4vw,48px)' }}>
+      <style>{`
+        @keyframes rt-fade-in {
+          from { opacity: 0; transform: scale(1.03); }
+          to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes rt-fade-out {
+          from { opacity: 1; transform: scale(1); }
+          to   { opacity: 0; transform: scale(0.97); }
+        }
+        .rt-slide-in  { animation: rt-fade-in  0.6s ease forwards; }
+        .rt-slide-out { animation: rt-fade-out 0.6s ease forwards; }
+        .rt-progress {
+          height: 2px;
+          background: var(--c-olive);
+          border-radius: 999px;
+          animation: rt-bar 3s linear infinite;
+        }
+        @keyframes rt-bar { from { width: 0% } to { width: 100% } }
+        .rt-dot-btn {
+          width: 7px; height: 7px; border-radius: 50%;
+          background: rgba(58,107,53,0.25);
+          border: none; cursor: pointer; padding: 0;
+          transition: all 0.25s;
+        }
+        .rt-dot-btn.active { background: var(--c-olive); width: 22px; border-radius: 3px; }
+        .rt-nav-btn {
+          width: 40px; height: 40px; border-radius: 50%;
+          background: rgba(255,255,255,0.85);
+          border: 1.5px solid rgba(58,107,53,0.18);
+          display: flex; align-items: center; justify-content: center;
+          cursor: pointer; color: var(--c-dark); font-size: 20px;
+          transition: all 0.2s;
+          min-height: unset; min-width: unset;
+        }
+        .rt-nav-btn:hover { background: var(--c-olive); color: #fff; border-color: var(--c-olive); }
+      `}</style>
+
+      {/* Header */}
+      <div style={{ textAlign: 'center', marginBottom: 'clamp(24px,4vw,36px)' }}>
+        <span style={{
+          display: 'inline-block', marginBottom: '12px',
+          background: 'var(--c-olive)', color: '#fff',
+          fontFamily: "'Poppins','Nunito',sans-serif",
+          fontSize: '11px', fontWeight: '600',
+          letterSpacing: '0.08em', textTransform: 'uppercase',
+          padding: '5px 18px', borderRadius: '999px',
+        }}>Awards & Recognitions 🏆</span>
+        <h2 style={{
+          fontFamily: "'BubbleboddyNeue','Nunito',sans-serif",
+          fontSize: 'clamp(1.6rem,4vw,2.8rem)',
+          fontWeight: 'normal', color: 'var(--c-olive)',
+          textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+          margin: '0 0 8px', lineHeight: 1.1,
+        }}>A Legacy of Excellence</h2>
+        <p style={{
+          fontFamily: "'Poppins','Nunito',sans-serif",
+          fontSize: 'clamp(13px,1.3vw,15px)',
+          color: 'var(--c-dark)', opacity: 0.7, margin: 0,
+        }}>Chef Czarina Sevilla · 9 awards · 5 years of entrepreneurial excellence</p>
+      </div>
+
+      {/* Slideshow */}
+      <div style={{
+        maxWidth: '880px', margin: '0 auto',
+        display: a.orient === 'portrait' ? 'grid' : 'flex',
+        gridTemplateColumns: a.orient === 'portrait' ? '3fr 2fr' : undefined,
+        flexDirection: a.orient === 'landscape' ? 'column' : undefined,
+        gap: 'clamp(16px,2vw,24px)',
+        alignItems: a.orient === 'portrait' ? 'center' : undefined,
+      }}>
+
+        {/* Left — photo */}
+        <div style={{
+          position: 'relative', width: '100%',
+          aspectRatio: a.orient === 'portrait' ? '3/4' : '16/9', borderRadius: '20px',
+          overflow: 'hidden',
+          boxShadow: '0 20px 60px rgba(58,107,53,0.22)',
+          background: a.bg,
+        }}>
+          {/* Prev photo fading out */}
+          {p && (
+            <img key={`prev-${prev}`} src={p.img} alt={p.label}
+              className="rt-slide-out"
+              style={{
+                position: 'absolute', inset: 0,
+                width: '100%', height: '100%',
+                objectFit: p.fit, objectPosition: p.pos,
+              }}
+            />
+          )}
+          {/* Current photo fading in */}
+          <img key={`cur-${cur}`} src={a.img} alt={a.label}
+            className="rt-slide-in"
+            style={{
+              position: 'absolute', inset: 0,
+              width: '100%', height: '100%',
+              objectFit: a.fit, objectPosition: a.pos,
+            }}
+            onError={e => e.target.style.display='none'}
+          />
+          {/* Counter badge */}
+          <div style={{
+            position: 'absolute', top: '14px', left: '14px',
+            background: 'rgba(0,0,0,0.45)',
+            backdropFilter: 'blur(6px)',
+            borderRadius: '999px', padding: '4px 12px',
+            fontFamily: "'Poppins','Nunito',sans-serif",
+            fontSize: '11px', color: '#fff', fontWeight: '500',
+          }}>{cur + 1} / {REC_AWARDS.length}</div>
+        </div>
+
+        {/* Right — text info */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2vw,22px)' }}>
+          {/* Year + category */}
+          <span style={{
+            display: 'inline-block', width: 'fit-content',
+            background: 'var(--c-olive)', color: '#fff',
+            fontFamily: "'Poppins','Nunito',sans-serif",
+            fontSize: '11px', fontWeight: '600',
+            letterSpacing: '0.07em', textTransform: 'uppercase',
+            padding: '4px 14px', borderRadius: '999px',
+          }}>{a.year}</span>
+
+          {/* Award title */}
+          <h3 style={{
+            fontFamily: "'BubbleboddyNeue','Nunito',sans-serif",
+            fontSize: 'clamp(1.2rem,2.8vw,2rem)',
+            fontWeight: 'normal', color: 'var(--c-dark)',
+            margin: 0, lineHeight: 1.2,
+          }}>{a.label}</h3>
+
+          {/* Issuer */}
+          <p style={{
+            fontFamily: "'Poppins','Nunito',sans-serif",
+            fontSize: 'clamp(12px,1.2vw,14px)',
+            color: 'var(--c-brown)', margin: 0, lineHeight: 1.5,
+          }}>{a.issuer}</p>
+
+          {/* Progress bar */}
+          <div style={{
+            height: '2px', background: 'rgba(58,107,53,0.15)',
+            borderRadius: '999px', overflow: 'hidden',
+          }}>
+            <div key={cur} className="rt-progress" />
+          </div>
+
+
+
+          {/* CTA */}
+          <Link to="/about#recognitions" className="btn btn-olive"
+            style={{ fontSize: '14px', padding: '11px 28px', width: 'fit-content' }}>
+            View All Recognitions →
+          </Link>
+        </div>
+      </div>
+
+    </section>
+  )
+}
+
 export default function HomePage() {
   const [loaded, setLoaded] = useState(false)
   useEffect(() => { setLoaded(true) }, [])
@@ -842,77 +1052,97 @@ export default function HomePage() {
             {/* Live post cards — pulls from posts.js, shows latest 3 */}
             {NEWS_POSTS.length > 0 ? (
               <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))', gap:'20px' }}>
-                {NEWS_POSTS.slice(0, 3).map(post => (
+                {NEWS_POSTS.slice(0, 4).map(post => (
                   <Link
                     key={post.id}
                     to="/about#whats-new"
                     style={{ textDecoration:'none' }}
                   >
                     <div style={{
-                      background:'rgba(255,255,255,0.85)',
-                      border:'1.5px solid rgba(182,197,72,0.2)',
-                      borderRadius:'16px', padding:'24px',
-                      display:'flex', flexDirection:'column', gap:'10px',
+                      background:'#fff',
+                      border:'1.5px solid rgba(182,197,72,0.18)',
+                      borderRadius:'20px',
+                      display:'flex', flexDirection:'column',
                       height:'100%', boxSizing:'border-box',
-                      transition:'box-shadow 0.2s, border-color 0.2s',
+                      overflow:'hidden',
+                      boxShadow:'0 2px 12px rgba(58,107,53,0.07)',
+                      transition:'box-shadow 0.25s, border-color 0.25s, transform 0.25s',
                     }}
-                      onMouseEnter={e => { e.currentTarget.style.boxShadow='0 6px 24px rgba(58,107,53,0.10)'; e.currentTarget.style.borderColor='rgba(182,197,72,0.5)' }}
-                      onMouseLeave={e => { e.currentTarget.style.boxShadow='none'; e.currentTarget.style.borderColor='rgba(182,197,72,0.2)' }}
+                      onMouseEnter={e => { e.currentTarget.style.boxShadow='0 12px 36px rgba(58,107,53,0.15)'; e.currentTarget.style.borderColor='var(--c-olive)'; e.currentTarget.style.transform='translateY(-4px)' }}
+                      onMouseLeave={e => { e.currentTarget.style.boxShadow='0 2px 12px rgba(58,107,53,0.07)'; e.currentTarget.style.borderColor='rgba(182,197,72,0.18)'; e.currentTarget.style.transform='none' }}
                     >
-                      {/* Image or placeholder */}
+                      {/* Image — tall and prominent */}
                       <div style={{
-                        width:'100%', height:'140px', borderRadius:'10px',
-                        background:'rgba(182,197,72,0.10)',
-                        overflow:'hidden', display:'flex', alignItems:'center', justifyContent:'center',
+                        width:'100%', height:'clamp(180px,22vw,240px)',
+                        background:'#f4f9e8',
+                        overflow:'hidden', flexShrink:0, position:'relative',
                       }}>
                         {post.image
-                          ? <img src={post.image} alt={post.title} style={{ width:'100%', height:'100%', objectFit:'cover' }}/>
-                          : <span style={{ fontSize:'36px' }}>🥑</span>
+                          ? <img src={post.image} alt={post.title} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'center top', transition:'transform 0.4s ease' }}
+                              onMouseEnter={e => e.target.style.transform='scale(1.05)'}
+                              onMouseLeave={e => e.target.style.transform='scale(1)'}
+                            />
+                          : <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'48px' }}>🥑</div>
                         }
+                        {/* Tag badge overlay */}
+                        {post.tag && (
+                          <span style={{
+                            position:'absolute', top:'10px', right:'10px',
+                            background: post.featured ? 'var(--c-pink)' : 'var(--c-olive)',
+                            color:'#fff',
+                            fontFamily:"'Poppins','Nunito',sans-serif",
+                            fontSize:'10px', fontWeight:'600',
+                            letterSpacing:'0.06em', textTransform:'uppercase',
+                            padding:'3px 10px', borderRadius:'999px',
+                          }}>{post.tag}</span>
+                        )}
                       </div>
 
-                      {/* Category + date */}
-                      <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap' }}>
-                        <span style={{
-                          background: post.featured ? '#b6c548' : 'rgba(182,197,72,0.15)',
-                          color: post.featured ? '#fff' : '#3a6b35',
-                          fontFamily:'Nunito,sans-serif', fontSize:'10px', fontWeight:'800',
-                          letterSpacing:'0.06em', textTransform:'uppercase',
-                          padding:'3px 10px', borderRadius:'999px',
+                      {/* Content */}
+                      <div style={{ padding:'16px 18px 20px', display:'flex', flexDirection:'column', gap:'8px', flex:1 }}>
+                        {/* Category + date */}
+                        <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap' }}>
+                          <span style={{
+                            background: post.featured ? 'var(--c-olive)' : 'rgba(182,197,72,0.15)',
+                            color: post.featured ? '#fff' : 'var(--c-dark)',
+                            fontFamily:"'Poppins','Nunito',sans-serif",
+                            fontSize:'10px', fontWeight:'600',
+                            letterSpacing:'0.06em', textTransform:'uppercase',
+                            padding:'3px 10px', borderRadius:'999px',
+                          }}>
+                            {post.featured ? 'Featured' : post.category}
+                          </span>
+                          <span style={{ fontFamily:"'Poppins','Nunito',sans-serif", fontSize:'11px', color:'rgba(138,95,60,0.55)' }}>
+                            {new Date(post.date).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})}
+                          </span>
+                        </div>
+
+                        {/* Title */}
+                        <h3 style={{
+                          fontFamily:"'BubbleboddyNeue','Nunito',sans-serif", fontWeight:'normal',
+                          fontSize:'clamp(14px,1.4vw,16px)', color:'var(--c-dark)',
+                          margin:0, lineHeight:1.3,
                         }}>
-                          {post.featured ? 'Featured' : post.category}
-                        </span>
-                        <span style={{ fontFamily:'Nunito,sans-serif', fontSize:'11px', color:'rgba(138,95,60,0.5)' }}>
-                          {new Date(post.date).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})}
+                          {post.title}
+                        </h3>
+
+                        {/* Excerpt */}
+                        <p style={{
+                          fontFamily:"'Poppins','Nunito',sans-serif", fontSize:'12px',
+                          color:'var(--c-brown)', lineHeight:1.6, margin:0, flex:1,
+                          display:'-webkit-box', WebkitLineClamp:2,
+                          WebkitBoxOrient:'vertical', overflow:'hidden',
+                        }}>
+                          {post.excerpt}
+                        </p>
+
+                        <span style={{
+                          fontFamily:"'Poppins','Nunito',sans-serif", fontSize:'12px',
+                          fontWeight:'600', color:'var(--c-olive)', marginTop:'4px',
+                        }}>
+                          See more →
                         </span>
                       </div>
-
-                      {/* Title */}
-                      <h3 style={{
-                        fontFamily:'Nunito,sans-serif', fontWeight:'800',
-                        fontSize:'clamp(14px,1.4vw,16px)', color:'#3a6b35',
-                        margin:0, lineHeight:1.35,
-                      }}>
-                        {post.title}
-                      </h3>
-
-                      {/* Excerpt */}
-                      <p style={{
-                        fontFamily:'Nunito,sans-serif', fontSize:'13px',
-                        color:'rgba(138,95,60,0.8)', lineHeight:1.6, margin:0,
-                        display:'-webkit-box', WebkitLineClamp:2,
-                        WebkitBoxOrient:'vertical', overflow:'hidden',
-                      }}>
-                        {post.excerpt}
-                      </p>
-
-                      {/* Read more */}
-                      <span style={{
-                        fontFamily:'Nunito,sans-serif', fontSize:'12px',
-                        fontWeight:'700', color:'#b6c548', marginTop:'auto',
-                      }}>
-                        Read more →
-                      </span>
                     </div>
                   </Link>
                 ))}
@@ -930,6 +1160,10 @@ export default function HomePage() {
           </div>
           </div>
         </section>
+
+      {/* ════════════ RECOGNITIONS TEASER ════════════ */}
+        <RecognitionsTeaser />
+        <Wave fromColor="#d9e29e" toColor="#b6c548" height={48} />
 
       </div>
     </>
