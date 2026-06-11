@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 @font-face {
+  font-family: 'BubbleboddyNeue';
+  src: url('/fonts/bubbleboddy-neue-extrabold.ttf') format('truetype'),
+       url('/fonts/bubbleboddy-neue-extrabold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Poppins';
   src: url('/fonts/poppins-regular.ttf') format('truetype');
   font-weight: 400;

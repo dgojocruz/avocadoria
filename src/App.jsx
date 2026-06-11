@@ -8,7 +8,7 @@ import ScrollToTop from '@/components/ui/ScrollToTop'
 // Increase this number (milliseconds) to show the loader longer.
 // Decrease it to show the loader for less time.
 // Set to 0 to disable — loader only shows while the page is downloading.
-const MIN_LOADER_MS = 1500
+const MIN_LOADER_MS = 600
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 const lazyMin = (importFn) => lazy(() =>

@@ -434,7 +434,7 @@ function NewsCard({ post }) {
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
         {post.image
-          ? <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          ? <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }}  loading="lazy" decoding="async"/>
           : <span style={{ fontSize: '48px' }}>🥑</span>
         }
       </div>
@@ -702,7 +702,7 @@ export default function AboutPage() {
             objectFit: 'cover', objectPosition: 'center',
             zIndex: 0,
           }}
-        />
+         loading="lazy" decoding="async"/>
 
         {/* Light overlay — keeps text readable on bright bg */}
         <div style={{
@@ -806,7 +806,7 @@ export default function AboutPage() {
                     src="/chef-czarina.webp"
                     alt="Chef Czarina Sevilla — Founder of Avocadoria"
                     className="about-founder-photo"
-                  />
+                   loading="lazy" decoding="async"/>
                 </div>
                 <div className="about-founder-badge">
                   <span style={{

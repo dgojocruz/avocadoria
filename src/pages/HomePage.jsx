@@ -7,22 +7,36 @@ import { NEWS_POSTS } from '@/data/posts'
 // HERO CONFIG
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// ── Products (swap in sync, layers 2 + 4) ────────────────────────────────────
+// ── Products (swap in sync — BG + product panel use same index) ──────────────
 // Add more objects here — files go in /public/
 const PRODUCTS = [
-  { src: '/lover.webp',                 alt: 'Avo Lover dessert cup'     },
-  { src: '/biscoff_lover.webp',         alt: 'Biscoff Lover dessert cup' },
-  { src: '/naked_light_ice_cream.webp', alt: 'Naked Light Ice Cream'     },
+  {
+    bg:     '/Avo_Lover.png',      // BG Layer 1 — full scene photo with Ken Burns zoom
+    src:    '/lover_nobg.png',     // Product carousel Layer 4 — transparent cutout floating
+    alt:    'Avo Lover dessert cup',
+    origin: '50% 60%',             // zoom anchor point on BG photo
+  },
+  {
+    bg:     '/Naked___Inipit.png',
+    src:    '/naked_nobg.png',
+    alt:    'Naked Ice Cream & Inipit',
+    origin: '55% 55%',
+  },
+  {
+    bg:     '/Shakes.png',
+    src:    '/shake_nobg.png',
+    alt:    'Avocadoria Shakes',
+    origin: '50% 50%',
+  },
 ]
 
 // ── Layer 1: Background image ─────────────────────────────────────────────────
+// BG now cycles through PRODUCTS — same index as the product panel (Layer 4)
 const BG = {
-  src:            '/avocadoria_bg.webp',
-  // Adjust objectPosition to reframe the image:
-  // 'center center' = default centered
-  // 'center bottom' = pull image down, show bottom portion
-  // '50% 70%'       = custom vertical shift (higher % = lower in image)
-  objectPosition: 'center bottom',  // ← pulls image down to fill hero
+  objectPosition: 'center 70%',   // push image down — increase % to go lower
+  bgColor:        '#d9e29e',        // static bg shown behind — matches hero brand green
+  bgScale:        1.0,              // resting scale — keep at 1.0+ so edges never show
+  zoomScale:      1.25,             // zoom START scale — stays above 1.0 so always cropped
 }
 
 // ── Layer 2: Ambient ghost (large, dimmed, same product as layer 4) ───────────
@@ -37,16 +51,16 @@ const AMBIENT = {
 
 // ── Layer 3: White wash (left side only) ──────────────────────────────────────
 const WASH = {
-  opacityLeft:    0.88,
-  opacityMidLeft: 0.62,
-  opacityMid:     0.18,
-  opacityRight:   0.0,
-  clearAt:        '60%',
+  opacityLeft:    0.75,
+  opacityMidLeft: 0.75,
+  opacityMid:     0.75,
+  opacityRight:   0.60,
+  clearAt:        '65%',
 }
 
 // ── Layer 4: Sharp hero product ───────────────────────────────────────────────
 const PRODUCT = {
-  right:       '2%',    // from right edge          try: '0%'–'8%'
+  right:       '8%',    // from right edge          try: '0%'–'8%'
   bottom:      '0%',    // sits on the slope        try: '0%'–'5%'
   height:      '52vh',  // matching preview size    try: '48vh'–'60vh'
   mobileWidth: '62vw',
@@ -56,7 +70,7 @@ const PRODUCT = {
 // ── Layer 5: Slope image ──────────────────────────────────────────────────────
 const SLOPE = {
   src:    '/slope_background.svg',
-  height: '20%',
+  height: '30%',
 }
 
 // ── Text ──────────────────────────────────────────────────────────────────────
@@ -67,8 +81,8 @@ const TEXT = {
 
 // ── Timing ────────────────────────────────────────────────────────────────────
 const TIMING = {
-  duration:   5500,
-  transition:  800,
+  duration:   8000,   // ms each slide stays on screen (also controls zoom speed)
+  transition:  500,   // ms crossfade between slides
 }
 
 // ── Dots ──────────────────────────────────────────────────────────────────────
@@ -107,8 +121,9 @@ const AVO_BTN = {
   posBottom:'18%', posLeft:'37%',
 }
 
-// ── Product layers (2 + 4) — only these swap ──────────────────────────────────
-function ProductLayers() {
+// ── Shared hero state — BG + product panel stay in sync ──────────────────────
+// usHeroSlide returns { cur, visible, goTo } consumed by both BgLayer + ProductLayers
+function useHeroSlide() {
   const [cur,     setCur]     = useState(0)
   const [visible, setVisible] = useState(true)
   const timerRef = useRef(null)
@@ -133,18 +148,55 @@ function ProductLayers() {
     return () => clearInterval(timerRef.current)
   }, [])
 
+  return { cur, visible, goTo }
+}
+
+// ── Layer 1: BG slideshow with slow Ken Burns zoom ────────────────────────────
+function BgLayer({ cur, visible }) {
+  return (
+    <div style={{ position:'absolute', inset:0, zIndex:1, overflow:'hidden', pointerEvents:'none', background: BG.bgColor }}>
+      {PRODUCTS.map((p, i) => (
+        <img
+          key={p.bg}
+          src={p.bg}
+          alt=""
+          aria-hidden="true"
+          style={{
+            position:       'absolute',
+            inset:          0,
+            width:          '100%',
+            height:         '100%',
+            objectFit:      'cover',
+            objectPosition: BG.objectPosition,
+            display:        'block',
+            // fade in/out
+            opacity:        (i === cur && visible) ? 1 : 0,
+            transition:     `opacity ${TIMING.transition}ms ease`,
+            // slow Ken Burns zoom — only the active slide animates
+            transform:      (i === cur && visible) ? `scale(${BG.bgScale})` : `scale(${BG.bgScale * BG.zoomScale})`,
+            transformOrigin: p.origin || 'center center',
+            transitionProperty: 'opacity, transform',
+            transitionDuration: `${TIMING.transition}ms, ${TIMING.duration + TIMING.transition}ms`,
+            transitionTimingFunction: 'ease, ease-out',
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+// ── Layers 4 + dots — product panel (same image as BG, right side) ────────────
+function ProductLayers({ cur, visible, goTo }) {
   const product = PRODUCTS[cur]
-  const fadeStyle = (opacity = 1) => ({
-    opacity:    visible ? opacity : 0,
+  const fadeStyle = {
+    opacity:    visible ? 1 : 0,
     transition: `opacity ${TIMING.transition}ms ease`,
-  })
+  }
 
   return (
     <>
-      {/* LAYER 2 — Ambient ghost removed for cleaner transitions */}
-
-      {/* LAYER 4 — Sharp product: on TOP of slope, uses responsive classes */}
-      <div className="avo-hero__product-wrap" style={{ zIndex:8, ...fadeStyle() }}>
+      {/* LAYER 4 — Product panel: same image as BG, right side */}
+      <div className="avo-hero__product-wrap" style={{ zIndex:8, ...fadeStyle }}>
         <img
           src={product.src}
           alt={product.alt}
@@ -720,6 +772,7 @@ function RecognitionsTeaser() {
 export default function HomePage() {
   const [loaded, setLoaded] = useState(false)
   useEffect(() => { setLoaded(true) }, [])
+  const { cur, visible, goTo } = useHeroSlide()
 
   const C = { hero:'#b6c548', franchise:'#3a6b35', news:'#F4FAEC' }
 
@@ -824,6 +877,7 @@ export default function HomePage() {
           height: auto;
           object-fit: contain;
           animation: hero-breathe 4.5s ease-in-out infinite;
+          filter: drop-shadow(0px 20px 30px rgba(0,0,0,0.35)) drop-shadow(0px 6px 12px rgba(0,0,0,0.2));
         }
 
         /* Mobile dots — hidden on mobile to save space */
@@ -879,6 +933,7 @@ export default function HomePage() {
             height: 100%;
             max-width: none;
             animation: hero-breathe 4.5s ease-in-out infinite;
+            filter: drop-shadow(0px 30px 40px rgba(0,0,0,0.4)) drop-shadow(0px 8px 16px rgba(0,0,0,0.25));
           }
 
           .avo-hero__dots {
@@ -894,21 +949,11 @@ export default function HomePage() {
         {/* ════════════ HERO ════════════ */}
         <section className="avo-hero" style={{ marginBottom: 0, paddingBottom: 0 }}>
 
-          {/* LAYER 1 — Static background: covers full hero including slope area */}
-          <img src={BG.src} alt="" aria-hidden="true" style={{
-            position:'absolute',
-            top:0, left:0,
-            width:'100%',
-            height:'100%',
-            objectFit:'cover',
-            objectPosition: BG.objectPosition,
-            zIndex:1,
-            pointerEvents:'none',
-            display:'block',
-          }}/>
+          {/* LAYER 1 — BG slideshow with slow Ken Burns zoom, synced to product panel */}
+          <BgLayer cur={cur} visible={visible} />
 
-          {/* LAYERS 2 + 4 — Products */}
-          <ProductLayers />
+          {/* LAYERS 4 + dots — product panel, same index as BG */}
+          <ProductLayers cur={cur} visible={visible} goTo={goTo} />
 
           {/* LAYER 3 — White wash left only */}
           <div style={{
