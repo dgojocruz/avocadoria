@@ -14,29 +14,29 @@ const PRODUCTS = [
     bg:     '/Avo_Lover.png',      // BG Layer 1 — full scene photo with Ken Burns zoom
     src:    '/lover_nobg.png',     // Product carousel Layer 4 — transparent cutout floating
     alt:    'Avo Lover dessert cup',
-    origin: '50% 60%',             // zoom anchor point on BG photo
+    origin: '30% 60%',             // zoom anchor point on BG photo
   },
   {
     bg:     '/Naked___Inipit.png',
     src:    '/naked_nobg.png',
     alt:    'Naked Ice Cream & Inipit',
-    origin: '55% 55%',
+    origin: '30% 60%',
   },
   {
     bg:     '/Shakes.png',
     src:    '/shake_nobg.png',
     alt:    'Avocadoria Shakes',
-    origin: '50% 50%',
+    origin: '30% 60%',
   },
 ]
 
 // ── Layer 1: Background image ─────────────────────────────────────────────────
 // BG now cycles through PRODUCTS — same index as the product panel (Layer 4)
 const BG = {
-  objectPosition: 'center 70%',   // push image down — increase % to go lower
+  objectPosition: 'center 45%',   // push image down — increase % to go lower
   bgColor:        '#d9e29e',        // static bg shown behind — matches hero brand green
   bgScale:        1.0,              // resting scale — keep at 1.0+ so edges never show
-  zoomScale:      1.25,             // zoom START scale — stays above 1.0 so always cropped
+  zoomScale:      1.5,              // zoom START scale — stays above 1.0 so always cropped
 }
 
 // ── Layer 2: Ambient ghost (large, dimmed, same product as layer 4) ───────────
@@ -60,9 +60,9 @@ const WASH = {
 
 // ── Layer 4: Sharp hero product ───────────────────────────────────────────────
 const PRODUCT = {
-  right:       '8%',    // from right edge          try: '0%'–'8%'
+  right:       '5%',    // from right edge          try: '0%'–'8%'
   bottom:      '0%',    // sits on the slope        try: '0%'–'5%'
-  height:      '52vh',  // matching preview size    try: '48vh'–'60vh'
+  height:      '44vh',  // matching preview size    try: '48vh'–'60vh'
   mobileWidth: '62vw',
   mobileMaxW:  '240px',
 }
@@ -112,7 +112,7 @@ function Wave({ fromColor, toColor, height = 70, flip = false }) {
 }
 
 const AVO_BTN = {
-  label:'Discover Avo Faves', fontFamily:"'BubbleboddyNeue','Nunito',sans-serif",
+  label:'Discover Avo Faves', fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
   paddingX:'40px', paddingY:'14px',
   background:'rgba(255,255,255,0.92)', color:'#3a6b35',
   borderColor:'rgba(255,255,255,0.9)', borderWidth:'2.5px', borderRadius:'999px',
@@ -319,241 +319,165 @@ const FT_STROKE = [
   '-2px  2px 0 #fff', ' 2px  2px 0 #fff',
 ].join(', ')
 
+// ── Franchise overlay tint ─────────────────────────────────────────────────
+// Change OVERLAY_COLOR to any green shade, adjust OVERLAY_OPACITY (0 = none, 1 = solid)
+// ── Matched exactly to avofaves.png top strip (#e3e4c3) ──────────────────
+// paper base #f3f1ed + this overlay = avofaves green tone
+// ── Pixel-matched to avofaves.png top strip (#e1e2c1) ────────────────────
+const FRANCHISE_OVERLAY = {
+  color:   '#e1f169',
+  opacity: 0.2,   // 0.25 = lighter · 0.30 = avofaves match · 0.35 = darker
+}
+
 function FranchiseTeaser() {
-  const [cur,     setCur]     = useState(0)
-  const [visible, setVisible] = useState(true)
+  const N = FRANCHISE_CARTS.length
+  const [active, setActive] = useState(0)
   const timerRef = useRef(null)
 
-  const goTo = (next) => {
-    if (next === cur) return
-    setVisible(false)
-    setTimeout(() => {
-      setCur(next)
-      setTimeout(() => setVisible(true), 40)
-    }, FRANCHISE_TIMING.transitionMs)
-  }
-
-  const prev = () => goTo((cur - 1 + FRANCHISE_CARTS.length) % FRANCHISE_CARTS.length)
-  const next = () => goTo((cur + 1) % FRANCHISE_CARTS.length)
-
-  // Auto-advance
-  useEffect(() => {
-    timerRef.current = setInterval(() => next(), FRANCHISE_TIMING.intervalMs)
-    return () => clearInterval(timerRef.current)
-  }, [cur])
-
-  const resetTimer = () => {
+  const startTimer = () => {
     clearInterval(timerRef.current)
-    timerRef.current = setInterval(() => next(), FRANCHISE_TIMING.intervalMs)
+    timerRef.current = setInterval(() => {
+      setActive(p => (p + 1) % N)
+    }, FRANCHISE_TIMING.intervalMs)
   }
 
-  const cart = FRANCHISE_CARTS[cur]
+  useEffect(() => { startTimer(); return () => clearInterval(timerRef.current) }, [])
 
-  const arrowBtn = (onClick, label, children) => (
-    <button
-      onClick={() => { onClick(); resetTimer() }}
-      aria-label={label}
-      style={{
-        width: '44px', height: '44px', borderRadius: '50%',
-        background: 'rgba(255,255,255,0.85)',
-        border: `2px solid ${cart.color}40`,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        cursor: 'pointer', fontSize: '22px', color: cart.color,
-        flexShrink: 0,
-        boxShadow: '0 2px 10px rgba(0,0,0,0.10)',
-        transition: 'all 0.2s',
-      }}
-      onMouseEnter={e => { e.currentTarget.style.background = cart.color; e.currentTarget.style.color = '#fff' }}
-      onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.85)'; e.currentTarget.style.color = cart.color }}
-    >
-      {children}
-    </button>
-  )
+  const goTo = (i) => { setActive(i); startTimer() }
+
+  // Each cart gets a position on the circle
+  // active cart = bottom-center (angle 90deg), others spread around
+  const getStyle = (i) => {
+    const total   = N
+    const offset  = i - active
+    // normalise offset to [-N/2, N/2]
+    const norm    = ((offset % total) + total) % total
+    const wrapped = norm > total / 2 ? norm - total : norm
+    // angle: active = 270deg (bottom), spread evenly
+    const angleStep = 360 / total
+    const angle   = 270 + wrapped * angleStep  // degrees
+    const rad     = angle * Math.PI / 180
+
+    // Ellipse radii — wide, shallow so all carts stay visible
+    const rx = 38   // % of container width
+    const ry = 26   // % of container height
+
+    const cx = 50 + rx * Math.cos(rad)   // %
+    const cy = 58 + ry * Math.sin(rad)   // % — increase to move orbit lower
+
+    const isActive = i === active
+    // cards behind the center line appear smaller
+    const depth = Math.sin(rad)  // -1 (top) to +1 (bottom)
+    const scale = isActive ? 1.3  : 0.44 + 0.18 * ((depth + 1) / 2)
+    const zIdx  = isActive ? 10 : Math.round(5 + 4 * ((depth + 1) / 2))
+    const opacity = isActive ? 1 : 0.72 + 0.28 * ((depth + 1) / 2)
+
+    return { cx, cy, scale, zIdx, opacity, isActive }
+  }
 
   return (
     <section style={{
       padding: `${FRANCHISE_BG.paddingTop} 24px ${FRANCHISE_BG.paddingBottom}`,
       position: 'relative',
-      background: 'linear-gradient(135deg, #c8d96a 0%, #d9e29e 40%, #c0d458 100%)',
+      backgroundImage: "url('/website_layer_1.png')",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundColor: '#F3F2EE',
+      overflow: 'hidden',
     }}>
-      <div style={{ position: 'relative', zIndex: 1 }}>
+      {/* ── Green tint overlay — adjust FRANCHISE_OVERLAY at top of component ── */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none',
+        backgroundColor: FRANCHISE_OVERLAY.color,
+        opacity: FRANCHISE_OVERLAY.opacity,
+      }} />
       <style>{`
-        @keyframes ft-fade-in {
-          from { opacity:0; transform: translateY(16px); }
-          to   { opacity:1; transform: translateY(0); }
-        }
-        .ft-card-enter { animation: ft-fade-in ${FRANCHISE_TIMING.transitionMs}ms ease forwards; }
-
-        /* Progress bar */
-        @keyframes ft-progress {
-          from { width: 0% }
-          to   { width: 100% }
-        }
-
         .ft-btn-white {
           display: inline-flex; align-items: center; justify-content: center;
           padding: 13px 36px; border-radius: 999px;
           background: rgba(255,255,255,0.92);
           border: 2px solid rgba(182,197,72,0.5);
-          font-family: 'BubbleboddyNeue', 'Nunito', sans-serif;
+          font-family: 'BubbleboddyNeue-ExtraBold','Poppins',sans-serif;
           font-size: clamp(14px, 1.4vw, 17px);
           font-weight: 800; color: #3a6b35;
           text-decoration: none; cursor: pointer;
-          box-shadow: 0 4px 18px rgba(58,107,53,0.15),
-                      inset 0 1px 0 rgba(255,255,255,0.8);
-          transition: all 0.2s;
-          text-shadow: ${FT_STROKE};
+          box-shadow: 0 4px 18px rgba(58,107,53,0.15);
+          transition: all 0.25s;
         }
         .ft-btn-white:hover {
           background: #b6c548; color: #fff;
           border-color: #b6c548;
-          text-shadow: none;
         }
-
+        .ft-ring-cart {
+          position: absolute;
+          transform-origin: center center;
+          transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+          cursor: pointer;
+        }
+        .ft-ring-cart img {
+          width: 100%; height: 100%;
+          object-fit: contain;
+          filter: drop-shadow(0 12px 24px rgba(40,70,20,0.28));
+          transition: filter 0.4s ease, transform 0.7s cubic-bezier(0.4,0,0.2,1);
+          pointer-events: none;
+          transform: scale(1);
+        }
+        .ft-ring-cart.is-active img {
+          filter: drop-shadow(0 20px 40px rgba(40,70,20,0.40));
+          transform: scale(1.18);
+        }
         @media (max-width: 767px) {
-          .ft-card-grid { flex-direction: column !important; }
-          .ft-card-img  { width: 100% !important; max-height: 220px !important; }
-          .ft-card-info { padding: 20px !important; }
+          .ft-orbit { height: 520px !important; }
         }
       `}</style>
 
-      {/* ── Headline ── */}
-      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-        {/* Badge */}
-        <span style={{
-          display: 'inline-block', marginBottom: '10px',
-          background: '#EF7ECB', color: '#fff',
-          fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
-          fontSize: '11px', fontWeight: '800',
-          letterSpacing: '0.07em', textTransform: 'uppercase',
-          padding: '4px 16px', borderRadius: '999px',
-        }}>
-          Now Open for Franchising 🥑
-        </span>
-
-        {/* Headline — both lines same brand color + stroke */}
-        <h2 style={{
-          fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
-          fontWeight: 800,
-          fontSize: 'clamp(2rem, 4.5vw, 3.6rem)',
-          lineHeight: 1.1,
-          margin: '0 0 12px',
-          color: '#b5c448',
-          textShadow: FT_STROKE,
-        }}>
-          Dreaming of your own<br />Avocadoria store?
-        </h2>
-
-        <p style={{
-          fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
-          fontSize: 'clamp(13px, 1.3vw, 16px)',
-          color: '#5a8a1a',
-          margin: 0,
-          textShadow: '0 1px 0 rgba(255,255,255,0.8)',
-        }}>
-          Six flexible formats. One iconic brand.
-        </p>
-      </div>
-
-      {/* ── Carousel wrapper — 3 visible, sliding track ── */}
-      <div style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '12px' }}>
-
-        {/* Left arrow */}
-        {arrowBtn(prev, 'Previous cart format', '‹')}
-
-        {/* Sliding track */}
-        <div style={{ flex: 1, overflow: 'hidden' }}>
-          <div style={{
-            display: 'flex', gap: '16px',
-            transform: `translateX(calc(-${cur} * (100% / 3 + 16px / 3)))`,
-            transition: `transform ${FRANCHISE_TIMING.transitionMs}ms cubic-bezier(.4,0,.2,1)`,
-          }}>
-            {FRANCHISE_CARTS.map((c) => (
-              <div
-                key={c.id}
-                style={{
-                  flexShrink: 0,
-                  width: 'calc((100% - 32px) / 3)',
-                  position: 'relative',
-                  aspectRatio: '4/3',
-                  cursor: 'pointer',
-                  transition: 'transform 0.3s ease',
-                }}
-                onMouseEnter={e => e.currentTarget.style.transform='translateY(-8px)'}
-                onMouseLeave={e => e.currentTarget.style.transform='none'}
-              >
-                <img
-                  src={c.image}
-                  alt={c.name}
-                  style={{
-                    position: 'absolute', inset: 0,
-                    width: '140%', height: '100%',
-                    objectFit: 'contain',
-                    objectPosition: 'center center',
-                    filter: 'drop-shadow(0 12px 28px rgba(40,70,20,0.22))',
-                    left: '-20%',
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right arrow */}
-        {arrowBtn(next, 'Next cart format', '›')}
-      </div>
-
-      {/* ── Dots hidden ── */}
-      <div style={{ display: 'none' }}>
-        {FRANCHISE_CARTS.map((c, i) => (
-          <button
-            key={c.id}
-            onClick={() => { goTo(i); resetTimer() }}
-            aria-label={`Show ${c.name}`}
-            style={{
-              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
-              background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px',
-            }}
-          >
-            {/* Label */}
-            <span style={{
-              fontFamily: 'Nunito, sans-serif',
-              fontSize: '11px', fontWeight: i===cur ? '800' : '600',
-              color: i===cur ? FRANCHISE_CARTS[i].color : 'rgba(90,120,30,0.5)',
-              transition: 'all 0.3s',
-            }}>
-              {c.name}
-            </span>
-            {/* Dot + progress track */}
-            <div style={{ position: 'relative', width: '40px', height: '4px', borderRadius: '2px', background: 'rgba(182,197,72,0.2)' }}>
-              {i === cur && (
-                <div key={`prog-${cur}`} style={{
-                  position: 'absolute', top: 0, left: 0, height: '100%',
-                  borderRadius: '2px', background: cart.color,
-                  animation: `ft-progress ${FRANCHISE_TIMING.intervalMs}ms linear forwards`,
-                }}/>
-              )}
-              {i !== cur && (
-                <div style={{
-                  position: 'absolute', top: '50%', left: '50%',
-                  transform: 'translate(-50%,-50%)',
-                  width: '6px', height: '6px', borderRadius: '50%',
-                  background: 'rgba(182,197,72,0.4)',
-                }}/>
-              )}
-            </div>
-          </button>
-        ))}
-      </div>
-
-      {/* ── Explore Now button ── */}
-      <div style={{ textAlign: 'center', marginTop: '28px' }}>
+      {/* ── Explore button — top ── */}
+      <div style={{ textAlign: 'center', marginBottom: '28px', position: 'relative', zIndex: 1 }}>
         <Link to="/franchise" className="ft-btn-white">
           Explore Franchise Opportunities →
         </Link>
       </div>
 
+      {/* ── Orbit stage ── */}
+      <div
+        className="ft-orbit"
+        style={{
+          position: 'relative',
+          width: '100%',
+          maxWidth: '1400px',
+          height: '700px',
+          margin: '0 auto',
+          zIndex: 1,
+        }}
+      >
+        {FRANCHISE_CARTS.map((c, i) => {
+          const { cx, cy, scale, zIdx, opacity, isActive } = getStyle(i)
+          // card size relative to container
+          const cardW = 380   // px base width
+          const cardH = 380   // px base height
+          return (
+            <div
+              key={c.id}
+              className={`ft-ring-cart${isActive ? ' is-active' : ''}`}
+              onClick={() => goTo(i)}
+              style={{
+                left:      `calc(${cx}% - ${cardW / 2}px)`,
+                top:       `calc(${cy}% - ${cardH / 2}px)`,
+                width:     `${cardW}px`,
+                height:    `${cardH}px`,
+                transform: `scale(${scale})`,
+                zIndex:    zIdx,
+                opacity,
+              }}
+            >
+              <img src={c.image} alt={c.name} />
+            </div>
+          )
+        })}
       </div>
+
+
     </section>
   )
 }
@@ -608,7 +532,17 @@ function RecognitionsTeaser() {
   const p = prev !== null ? REC_AWARDS[prev] : null
 
   return (
-    <section style={{ background: '#d9e29e', padding: 'clamp(48px,7vw,72px) clamp(16px,4vw,48px)' }}>
+    <section style={{
+      position: 'relative', overflow: 'hidden',
+      padding: 'clamp(48px,7vw,72px) clamp(16px,4vw,48px)',
+      backgroundImage: "url('/website_layer_1.png')",
+      backgroundSize: 'cover', backgroundPosition: 'center',
+      backgroundColor: '#F3F2EE',
+    }}>
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none',
+        backgroundColor: '#b6c548', opacity: 0.25,
+      }} />
       <style>{`
         @keyframes rt-fade-in {
           from { opacity: 0; transform: scale(1.03); }
@@ -651,20 +585,20 @@ function RecognitionsTeaser() {
         <span style={{
           display: 'inline-block', marginBottom: '12px',
           background: 'var(--c-olive)', color: '#fff',
-          fontFamily: "'Poppins','Nunito',sans-serif",
+          fontFamily: "'Poppins',sans-serif",
           fontSize: '11px', fontWeight: '600',
           letterSpacing: '0.08em', textTransform: 'uppercase',
           padding: '5px 18px', borderRadius: '999px',
         }}>Awards & Recognitions 🏆</span>
         <h2 style={{
-          fontFamily: "'BubbleboddyNeue','Nunito',sans-serif",
+          fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize: 'clamp(1.6rem,4vw,2.8rem)',
           fontWeight: 'normal', color: 'var(--c-olive)',
           textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
           margin: '0 0 8px', lineHeight: 1.1,
         }}>A Legacy of Excellence</h2>
         <p style={{
-          fontFamily: "'Poppins','Nunito',sans-serif",
+          fontFamily: "'Poppins',sans-serif",
           fontSize: 'clamp(13px,1.3vw,15px)',
           color: 'var(--c-dark)', opacity: 0.7, margin: 0,
         }}>Chef Czarina Sevilla · 9 awards · 5 years of entrepreneurial excellence</p>
@@ -715,7 +649,7 @@ function RecognitionsTeaser() {
             background: 'rgba(0,0,0,0.45)',
             backdropFilter: 'blur(6px)',
             borderRadius: '999px', padding: '4px 12px',
-            fontFamily: "'Poppins','Nunito',sans-serif",
+            fontFamily: "'Poppins',sans-serif",
             fontSize: '11px', color: '#fff', fontWeight: '500',
           }}>{cur + 1} / {REC_AWARDS.length}</div>
         </div>
@@ -726,7 +660,7 @@ function RecognitionsTeaser() {
           <span style={{
             display: 'inline-block', width: 'fit-content',
             background: 'var(--c-olive)', color: '#fff',
-            fontFamily: "'Poppins','Nunito',sans-serif",
+            fontFamily: "'Poppins',sans-serif",
             fontSize: '11px', fontWeight: '600',
             letterSpacing: '0.07em', textTransform: 'uppercase',
             padding: '4px 14px', borderRadius: '999px',
@@ -734,7 +668,7 @@ function RecognitionsTeaser() {
 
           {/* Award title */}
           <h3 style={{
-            fontFamily: "'BubbleboddyNeue','Nunito',sans-serif",
+            fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
             fontSize: 'clamp(1.2rem,2.8vw,2rem)',
             fontWeight: 'normal', color: 'var(--c-dark)',
             margin: 0, lineHeight: 1.2,
@@ -742,7 +676,7 @@ function RecognitionsTeaser() {
 
           {/* Issuer */}
           <p style={{
-            fontFamily: "'Poppins','Nunito',sans-serif",
+            fontFamily: "'Poppins',sans-serif",
             fontSize: 'clamp(12px,1.2vw,14px)',
             color: 'var(--c-brown)', margin: 0, lineHeight: 1.5,
           }}>{a.issuer}</p>
@@ -803,8 +737,8 @@ export default function HomePage() {
 
       <style>{`
         @font-face {
-          font-family: 'BubbleboddyNeue';
-          src: url('/fonts/bubbleboddyneueinline-extrabold.ttf') format('truetype');
+          font-family: 'BubbleboddyNeue-ExtraBold';
+          src: url('/fonts/bubbleboddy-neue-extrabold.ttf') format('truetype');
           font-weight: normal; font-style: normal; font-display: swap;
         }
         @keyframes hero-breathe {
@@ -999,7 +933,7 @@ export default function HomePage() {
 
             {/* Headline */}
             <h1 className="avo-hero__headline" style={{
-              fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontWeight: 800,
               lineHeight: 1.08,
               letterSpacing: '0.01em',
@@ -1062,10 +996,15 @@ export default function HomePage() {
         <Wave fromColor="#e8f0c8" toColor="#d9e29e" height={56} />
 
         {/* ════════════ WHAT'S NEW ════════════ */}
-        <section style={{ position:'relative', overflow:'hidden', padding:'64px 32px 80px' }}>
-          <img src="/avobg.svg" aria-hidden="true" style={{
-            position:'absolute', inset:0, width:'100%', height:'100%',
-            objectFit:'cover', zIndex:0,
+        <section style={{
+            position:'relative', overflow:'hidden', padding:'64px 32px 80px',
+            backgroundImage: "url('/website_layer_1.png')",
+            backgroundSize: 'cover', backgroundPosition: 'center',
+            backgroundColor: '#F3F2EE',
+          }}>
+          <div style={{
+            position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none',
+            backgroundColor: '#b6c548', opacity: 0.25,
           }} />
           <div style={{ position:'relative', zIndex:1 }}>
           <div style={{ maxWidth:'1200px', margin:'0 auto' }}>
@@ -1081,7 +1020,7 @@ export default function HomePage() {
                 </p>
               </div>
               <Link to="/about#whats-new" style={{
-                fontFamily:'Nunito, sans-serif', fontSize:'13px', fontWeight:'700',
+                fontFamily:'Poppins, sans-serif', fontSize:'13px', fontWeight:'700',
                 color:'#b6c548', textDecoration:'none', whiteSpace:'nowrap',
                 display:'flex', alignItems:'center', gap:'4px',
                 paddingBottom:'2px', borderBottom:'2px solid rgba(182,197,72,0.3)',
@@ -1135,7 +1074,7 @@ export default function HomePage() {
                             position:'absolute', top:'10px', right:'10px',
                             background: post.featured ? 'var(--c-pink)' : 'var(--c-olive)',
                             color:'#fff',
-                            fontFamily:"'Poppins','Nunito',sans-serif",
+                            fontFamily:"'Poppins',sans-serif",
                             fontSize:'10px', fontWeight:'600',
                             letterSpacing:'0.06em', textTransform:'uppercase',
                             padding:'3px 10px', borderRadius:'999px',
@@ -1150,21 +1089,21 @@ export default function HomePage() {
                           <span style={{
                             background: post.featured ? 'var(--c-olive)' : 'rgba(182,197,72,0.15)',
                             color: post.featured ? '#fff' : 'var(--c-dark)',
-                            fontFamily:"'Poppins','Nunito',sans-serif",
+                            fontFamily:"'Poppins',sans-serif",
                             fontSize:'10px', fontWeight:'600',
                             letterSpacing:'0.06em', textTransform:'uppercase',
                             padding:'3px 10px', borderRadius:'999px',
                           }}>
                             {post.featured ? 'Featured' : post.category}
                           </span>
-                          <span style={{ fontFamily:"'Poppins','Nunito',sans-serif", fontSize:'11px', color:'rgba(138,95,60,0.55)' }}>
+                          <span style={{ fontFamily:"'Poppins',sans-serif", fontSize:'11px', color:'rgba(138,95,60,0.55)' }}>
                             {new Date(post.date).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})}
                           </span>
                         </div>
 
                         {/* Title */}
                         <h3 style={{
-                          fontFamily:"'BubbleboddyNeue','Nunito',sans-serif", fontWeight:'normal',
+                          fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal',
                           fontSize:'clamp(14px,1.4vw,16px)', color:'var(--c-dark)',
                           margin:0, lineHeight:1.3,
                         }}>
@@ -1173,7 +1112,7 @@ export default function HomePage() {
 
                         {/* Excerpt */}
                         <p style={{
-                          fontFamily:"'Poppins','Nunito',sans-serif", fontSize:'12px',
+                          fontFamily:"'Poppins',sans-serif", fontSize:'12px',
                           color:'var(--c-brown)', lineHeight:1.6, margin:0, flex:1,
                           display:'-webkit-box', WebkitLineClamp:2,
                           WebkitBoxOrient:'vertical', overflow:'hidden',
@@ -1182,7 +1121,7 @@ export default function HomePage() {
                         </p>
 
                         <span style={{
-                          fontFamily:"'Poppins','Nunito',sans-serif", fontSize:'12px',
+                          fontFamily:"'Poppins',sans-serif", fontSize:'12px',
                           fontWeight:'600', color:'var(--c-olive)', marginTop:'4px',
                         }}>
                           See more →
@@ -1196,7 +1135,7 @@ export default function HomePage() {
               /* Empty state */
               <div style={{ textAlign:'center', padding:'48px 0' }}>
                 <span style={{ fontSize:'40px' }}>🥑</span>
-                <p style={{ fontFamily:'Nunito,sans-serif', color:'rgba(138,95,60,0.5)', marginTop:'12px' }}>
+                <p style={{ fontFamily:'Poppins,sans-serif', color:'rgba(138,95,60,0.5)', marginTop:'12px' }}>
                   No posts yet — check back soon!
                 </p>
               </div>

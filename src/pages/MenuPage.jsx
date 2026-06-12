@@ -25,7 +25,7 @@ function TagBadge({ tag }) {
     <span style={{
       display:'inline-block',
       background:s.bg, color:s.text,
-      fontFamily:'Nunito,sans-serif',
+      fontFamily:'Poppins,sans-serif',
       fontSize:'10px', fontWeight:'800',
       letterSpacing:'0.05em', textTransform:'uppercase',
       padding:'3px 10px', borderRadius:'999px',
@@ -81,7 +81,7 @@ function ProductCard({ item }) {
           <span style={{
             position:'absolute', top:'10px', right:'10px',
             background:'var(--c-pink)', color:'#fff',
-            fontFamily:'Nunito,sans-serif', fontSize:'10px',
+            fontFamily:'Poppins,sans-serif', fontSize:'10px',
             fontWeight:'800', letterSpacing:'0.06em',
             textTransform:'uppercase', padding:'4px 12px',
             borderRadius:'999px', lineHeight:1.4,
@@ -100,12 +100,12 @@ function ProductCard({ item }) {
           </div>
         )}
         <h3 style={{
-          fontFamily:"'BubbleboddyNeue','Nunito',sans-serif",
+          fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize:'var(--fs-md)', fontWeight:'normal',
           color:'var(--c-dark)', margin:0, lineHeight:1.2,
         }}>{item.name}</h3>
         <p style={{
-          fontFamily:'Nunito,sans-serif',
+          fontFamily:'Poppins,sans-serif',
           fontSize:'var(--fs-sm)', lineHeight:1.65,
           color:'var(--c-brown)', opacity:0.85,
           margin:0, flex:1,
@@ -125,7 +125,7 @@ function CategoryCard({ cat, index, onClick }) {
       onMouseLeave={() => setHov(false)}
       style={{
         borderRadius:'20px', overflow:'hidden',
-        cursor:'pointer', position:'relative', aspectRatio:'4/3',
+        cursor:'pointer', position:'relative', aspectRatio:'16/9',
         boxShadow: hov
           ? '0 16px 48px rgba(58,107,53,0.22)'
           : '0 4px 20px rgba(58,107,53,0.10)',
@@ -136,7 +136,8 @@ function CategoryCard({ cat, index, onClick }) {
       {cat.cover
         ? <img src={cat.cover} alt={cat.name} style={{
             position:'absolute', inset:0,
-            width:'100%', height:'100%', objectFit:'cover',
+            width:'100%', height:'100%',
+            objectFit:'cover', objectPosition:'center 18%',
             transition:'transform 0.5s ease',
             transform: hov ? 'scale(1.06)' : 'scale(1)',
           }} onError={e => e.target.style.display='none'}/>
@@ -162,13 +163,13 @@ function CategoryCard({ cat, index, onClick }) {
       }}>
         <div>
           <p style={{
-            fontFamily:"'BubbleboddyNeue','Nunito',sans-serif",
+            fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
             fontSize:'clamp(15px,2vw,20px)', fontWeight:'normal',
             color:'#fff', margin:'0 0 2px', lineHeight:1.15,
             textShadow:'0 2px 8px rgba(0,0,0,0.3)',
           }}>{cat.name}</p>
           <p style={{
-            fontFamily:'Nunito,sans-serif', fontSize:'11px',
+            fontFamily:'Poppins,sans-serif', fontSize:'11px',
             color:'rgba(255,255,255,0.78)', margin:0,
           }}>{cat.items.length} item{cat.items.length !== 1 ? 's' : ''}</p>
         </div>
@@ -222,7 +223,7 @@ function CategoryView({ cat, onBack }) {
           left:'clamp(20px,5vw,60px)',
         }}>
           <h1 style={{
-            fontFamily:"'BubbleboddyNeue','Nunito',sans-serif",
+            fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
             fontSize:'var(--fs-4xl)', fontWeight:'normal',
             color:'#fff', margin:'0 0 6px', lineHeight:1.1,
             textShadow:'0 2px 14px rgba(0,0,0,0.35)',
@@ -230,7 +231,7 @@ function CategoryView({ cat, onBack }) {
             {cat.emoji} {cat.name}
           </h1>
           <p style={{
-            fontFamily:'Nunito,sans-serif',
+            fontFamily:'Poppins,sans-serif',
             fontSize:'var(--fs-sm)',
             color:'rgba(255,255,255,0.85)', margin:0,
           }}>{cat.tagline}</p>
@@ -251,7 +252,7 @@ function CategoryView({ cat, onBack }) {
           ← Back to Menu
         </button>
         <span style={{
-          fontFamily:'Nunito,sans-serif', fontSize:'13px',
+          fontFamily:'Poppins,sans-serif', fontSize:'13px',
           color:'var(--c-brown)', opacity:0.5,
         }}>
           / {cat.name}
@@ -314,7 +315,7 @@ export default function MenuPage() {
 
       <style>{`
         @font-face {
-          font-family: 'BubbleboddyNeue';
+          font-family: 'BubbleboddyNeue-ExtraBold';
           src: url('/fonts/bubbleboddyneueinline-extrabold.ttf') format('truetype');
           font-weight: normal; font-style: normal; font-display: swap;
         }
@@ -324,15 +325,19 @@ export default function MenuPage() {
 
         {/* ── Header — matches About / Home hero style ── */}
         <div style={{
-          background:'linear-gradient(160deg, var(--c-cream) 0%, var(--c-pale) 100%)',
+          position:'relative', overflow:'hidden',
+          backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
           padding:'clamp(90px,10vw,110px) 32px clamp(28px,4vw,44px)',
           textAlign:'center',
         }}>
+        <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
+          {/* Inner content sits above overlay */}
+          <div style={{ position:'relative', zIndex:1 }}>
           {/* Pink badge */}
           <span style={{
             display:'inline-block', marginBottom:'14px',
             background:'var(--c-pink)', color:'#fff',
-            fontFamily:'Nunito,sans-serif', fontSize:'11px',
+            fontFamily:'Poppins,sans-serif', fontSize:'11px',
             fontWeight:'800', letterSpacing:'0.08em',
             textTransform:'uppercase',
             padding:'5px 18px', borderRadius:'999px',
@@ -358,10 +363,17 @@ export default function MenuPage() {
           }}>
             Real avocado. Real happiness. Made fresh daily.
           </p>
+          </div>{/* end zIndex:1 wrapper */}
         </div>
 
         {/* ── Category grid ── */}
         <div style={{
+          position:'relative', overflow:'hidden',
+          backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
+        }}>
+        <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
+        <div style={{
+          position:'relative', zIndex:1,
           maxWidth:'1280px', margin:'0 auto',
           padding:'clamp(24px,4vw,48px) clamp(20px,4vw,48px) 80px',
         }}>
@@ -387,16 +399,21 @@ export default function MenuPage() {
           >
             {featured.cover
               ? <img src={featured.cover} alt={featured.name} style={{
-                  width:'100%', height:'100%', objectFit:'cover',
+                  width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 18%',
                   transition:'transform 0.5s ease',
-                }} onError={e => e.target.style.display='none'}/>
-              : <div style={{
-                  width:'100%', height:'100%',
-                  background: FALLBACKS[0],
-                  display:'flex', alignItems:'center', justifyContent:'center',
-                  fontSize:'100px',
-                }}>{featured.emoji}</div>
+                }} onError={e => {
+                  e.target.style.display='none'
+                  e.target.nextSibling && (e.target.nextSibling.style.display='flex')
+                }}/>
+              : null
             }
+            <div style={{
+              position:'absolute', inset:0,
+              background: FALLBACKS[0],
+              display: featured.cover ? 'none' : 'flex',
+              alignItems:'center', justifyContent:'center',
+              fontSize:'100px',
+            }}>{featured.emoji}</div>
             {/* Gradient */}
             <div style={{
               position:'absolute', inset:0,
@@ -414,13 +431,13 @@ export default function MenuPage() {
               }}>
                 <div>
                   <p style={{
-                    fontFamily:"'BubbleboddyNeue','Nunito',sans-serif",
+                    fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                     fontSize:'clamp(1.2rem,2.8vw,2rem)',
                     fontWeight:'normal', color:'var(--c-olive)',
                     margin:'0 0 2px', lineHeight:1.1,
                   }}>{featured.name}</p>
                   <p style={{
-                    fontFamily:'Nunito,sans-serif', fontSize:'12px',
+                    fontFamily:'Poppins,sans-serif', fontSize:'12px',
                     color:'var(--c-brown)', opacity:0.75, margin:0,
                   }}>{featured.tagline}</p>
                 </div>
@@ -451,8 +468,9 @@ export default function MenuPage() {
             ))}
           </div>
 
-        </div>
-      </div>
+        </div>{/* inner maxWidth */}
+        </div>{/* category texture wrapper */}
+      </div>{/* page-enter */}
     </>
   )
 }

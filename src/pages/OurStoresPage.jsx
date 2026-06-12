@@ -345,9 +345,9 @@ export default function OurStoresPage() {
       const style = document.createElement('style')
       style.textContent = `
         .avo-cluster { background: rgba(182,197,72,.25); border-radius: 50%; }
-        .avo-cluster div { background: #b6c548; color: #fff; font-weight: 700; font-family: Nunito,sans-serif; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .avo-cluster div { background: #b6c548; color: #fff; font-weight: 700; font-family: Poppins,sans-serif; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
         .avo-popup .leaflet-popup-content-wrapper { border-radius: 14px !important; padding: 0 !important; overflow: hidden; box-shadow: 0 8px 28px rgba(0,0,0,.15) !important; }
-        .avo-popup .leaflet-popup-content { margin: 0 !important; width: 240px !important; font-family: Nunito,sans-serif; }
+        .avo-popup .leaflet-popup-content { margin: 0 !important; width: 240px !important; font-family: Poppins,sans-serif; }
         .leaflet-popup-tip-container { display: none; }
       `
       document.head.appendChild(style)
@@ -397,7 +397,7 @@ export default function OurStoresPage() {
       iconCreateFunction(cluster) {
         const n = cluster.getChildCount()
         return L.divIcon({
-          html: `<div style="width:36px;height:36px;background:#b6c548;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;font-family:Nunito,sans-serif;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.18)">${n}</div>`,
+          html: `<div style="width:36px;height:36px;background:#b6c548;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;font-family:Poppins,sans-serif;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.18)">${n}</div>`,
           className: '',
           iconSize: [36, 36],
         })
@@ -469,7 +469,7 @@ export default function OurStoresPage() {
     const legend = L.control({ position: 'bottomleft' })
     legend.onAdd = () => {
       const div = L.DomUtil.create('div')
-      div.style.cssText = 'background:#fff;padding:8px 12px;border-radius:10px;font-size:11px;font-family:Nunito,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.1);line-height:1.9'
+      div.style.cssText = 'background:#fff;padding:8px 12px;border-radius:10px;font-size:11px;font-family:Poppins,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.1);line-height:1.9'
       div.innerHTML = Object.entries(ISLAND_COLORS).map(([name, col]) =>
         `<div style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;background:${col.pin};display:inline-block;flex-shrink:0"></span><span style="color:#444">${name}</span></div>`
       ).join('')
@@ -585,14 +585,14 @@ export default function OurStoresPage() {
         description={`Find ${BRANCHES.length} Avocadoria branches across the Philippines. Get directions and order online.`}
         path="/our-stores"
       />
-      <div className="page-enter" style={{ fontFamily: "'Nunito','Segoe UI',sans-serif" }}>
+      <div className="page-enter" style={{ fontFamily: "'Poppins','Segoe UI',sans-serif" }}>
 
         {/* ══════════════════════════════════════════════════════════
             HERO — discovery state (shown until user searches/locates)
         ══════════════════════════════════════════════════════════ */}
         {!showResults && (
           <section style={{
-            background: `linear-gradient(160deg, #e8f5c0 0%, ${C.pale} 55%, #d0e8a0 100%)`,
+            position: 'relative', overflow: 'hidden', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
             minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
@@ -602,14 +602,16 @@ export default function OurStoresPage() {
             textAlign: 'center',
           }}>
 
+            <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
             {/* Floating avocado pin illustration */}
             <div style={{
+              position: 'relative', zIndex: 1,
               marginBottom: '32px',
               animation: 'pin-float 3s ease-in-out infinite',
             }}>
               <style>{`
                 @font-face {
-                  font-family:'BubbleboddyNeue';
+                  font-family:'BubbleboddyNeue-ExtraBold';
                   src:url('/fonts/bubbleboddyneueinline-extrabold.ttf') format('truetype');
                   font-display:swap;
                 }
@@ -644,7 +646,8 @@ export default function OurStoresPage() {
 
             {/* Headline */}
             <h1 style={{
-              fontFamily: "'BubbleboddyNeue','Nunito',sans-serif",
+              position: 'relative', zIndex: 1,
+              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontWeight: 'normal',
               fontSize: 'clamp(2rem, 5vw, 3.2rem)',
               color: C.dark,
@@ -692,7 +695,7 @@ export default function OurStoresPage() {
                 color: '#fff', border: 'none', borderRadius: '999px',
                 padding: '15px 36px', fontSize: '17px', fontWeight: '800',
                 cursor: phase === 'locating' ? 'not-allowed' : 'pointer',
-                fontFamily: "'Nunito',sans-serif",
+                fontFamily: "'Poppins',sans-serif",
                 boxShadow: `0 8px 28px rgba(182,197,72,.45)`,
                 transition: 'all .2s', marginBottom: '16px',
               }}
@@ -747,7 +750,7 @@ export default function OurStoresPage() {
                     width: '100%', padding: '13px 16px 13px 40px',
                     border: `1.5px solid rgba(182,197,72,.4)`,
                     borderRadius: '12px', background: 'rgba(255,255,255,.85)',
-                    fontFamily: "'Nunito',sans-serif", fontSize: '14px', color: C.brown,
+                    fontFamily: "'Poppins',sans-serif", fontSize: '14px', color: C.brown,
                     outline: 'none', boxSizing: 'border-box', transition: 'border-color .2s',
                     backdropFilter: 'blur(6px)',
                   }}
@@ -795,14 +798,16 @@ export default function OurStoresPage() {
 
           return (
           <div style={{
-            background: C.cream,
+            position: 'relative', overflow: 'hidden', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
             minHeight: `calc(100vh - ${LAYOUT.navbarHeight}px)`,
             paddingTop: `${LAYOUT.navbarHeight}px`,
           }}>
 
+            <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
+            <div style={{ position:'relative', zIndex:1 }}>
             {/* ── Top search + back bar — full width, clear of navbar ── */}
             <div style={{
-              background: '#fff',
+              background: 'rgba(255,255,255,0.95)',
               borderBottom: `1px solid rgba(182,197,72,.2)`,
               padding: '12px 24px',
               display: 'flex',
@@ -820,7 +825,7 @@ export default function OurStoresPage() {
                   flexShrink: 0, background: 'none', border: `1.5px solid rgba(182,197,72,.4)`,
                   borderRadius: '10px', cursor: 'pointer', color: C.olive,
                   padding: '8px 12px', display: 'flex', alignItems: 'center', gap: '6px',
-                  fontFamily: "'Nunito',sans-serif", fontSize: '13px', fontWeight: '700',
+                  fontFamily: "'Poppins',sans-serif", fontSize: '13px', fontWeight: '700',
                   transition: 'all .15s',
                 }}
                 onMouseEnter={e => { e.currentTarget.style.background = C.olive; e.currentTarget.style.color = '#fff' }}
@@ -847,7 +852,7 @@ export default function OurStoresPage() {
                   style={{
                     width: '100%', padding: '10px 36px 10px 36px',
                     border: `1.5px solid rgba(182,197,72,.35)`, borderRadius: '10px',
-                    background: C.cream, fontFamily: "'Nunito',sans-serif",
+                    background: C.cream, fontFamily: "'Poppins',sans-serif",
                     fontSize: '14px', color: C.brown, outline: 'none',
                     boxSizing: 'border-box', transition: 'border-color .2s',
                   }}
@@ -875,7 +880,7 @@ export default function OurStoresPage() {
                   background: userLoc ? `rgba(182,197,72,.12)` : C.olive,
                   color: userLoc ? C.dark : '#fff',
                   border: 'none', borderRadius: '10px', padding: '9px 16px',
-                  fontFamily: "'Nunito',sans-serif", fontSize: '12px', fontWeight: '700',
+                  fontFamily: "'Poppins',sans-serif", fontSize: '12px', fontWeight: '700',
                   cursor: 'pointer', transition: 'all .2s', whiteSpace: 'nowrap',
                 }}
                 onMouseEnter={e => { e.currentTarget.style.opacity = '.85' }}
@@ -908,7 +913,7 @@ export default function OurStoresPage() {
                 {filtered.length === 0 ? (
                   <div style={{ padding: '48px 24px', textAlign: 'center' }}>
                     <div style={{ fontSize: '36px', marginBottom: '12px' }}>🥑</div>
-                    <p style={{ fontSize: '13px', color: `${C.brown}80`, fontFamily: "'Nunito',sans-serif" }}>
+                    <p style={{ fontSize: '13px', color: `${C.brown}80`, fontFamily: "'Poppins',sans-serif" }}>
                       No branches found for "{search}"
                     </p>
                   </div>
@@ -927,7 +932,7 @@ export default function OurStoresPage() {
                             fontSize: '11px', fontWeight: '800',
                             color: ISLAND_COLORS[island]?.text || C.dark,
                             textTransform: 'uppercase', letterSpacing: '.06em',
-                            fontFamily: "'Nunito',sans-serif",
+                            fontFamily: "'Poppins',sans-serif",
                           }}>
                             {island} · {Object.values(grouped[island]).reduce((s, a) => s + a.length, 0)} branches
                           </span>
@@ -943,7 +948,7 @@ export default function OurStoresPage() {
                                 textTransform: 'uppercase',
                                 background: `rgba(244,250,236,.8)`,
                                 borderBottom: '1px solid rgba(182,197,72,.08)',
-                                fontFamily: "'Nunito',sans-serif",
+                                fontFamily: "'Poppins',sans-serif",
                               }}>
                                 {region.replace(/^.*?—\s*/, '')} · {branches.length}
                               </div>
@@ -980,7 +985,7 @@ export default function OurStoresPage() {
                                       <span style={{
                                         fontSize: '13px', fontWeight: isActive ? '700' : '600',
                                         color: isActive ? C.dark : C.brown,
-                                        fontFamily: "'Nunito',sans-serif", lineHeight: '1.35',
+                                        fontFamily: "'Poppins',sans-serif", lineHeight: '1.35',
                                       }}>
                                         {b.name}
                                       </span>
@@ -1035,7 +1040,7 @@ export default function OurStoresPage() {
                         background: ISLAND_COLORS[activeBranch.island]?.bg || 'rgba(182,197,72,.12)',
                         color: ISLAND_COLORS[activeBranch.island]?.text || C.dark,
                         textTransform: 'uppercase', letterSpacing: '.05em',
-                        fontFamily: "'Nunito',sans-serif",
+                        fontFamily: "'Poppins',sans-serif",
                       }}>
                         {activeBranch.island}
                       </span>
@@ -1045,14 +1050,14 @@ export default function OurStoresPage() {
                           : <AvoPin size={26} active />
                         }
                         <h2 style={{
-                          fontFamily: "'BubbleboddyNeue','Nunito',sans-serif",
+                          fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                           fontSize: '20px', fontWeight: 'normal',
                           color: C.dark, margin: 0, lineHeight: '1.2',
                         }}>
                           {activeBranch.name}
                         </h2>
                       </div>
-                      <p style={{ fontSize: '13px', color: `${C.brown}99`, margin: '0 0 14px', lineHeight: '1.5', fontFamily: "'Nunito',sans-serif" }}>
+                      <p style={{ fontSize: '13px', color: `${C.brown}99`, margin: '0 0 14px', lineHeight: '1.5', fontFamily: "'Poppins',sans-serif" }}>
                         📍 {activeBranch.address}
                       </p>
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
@@ -1062,7 +1067,7 @@ export default function OurStoresPage() {
                             padding: '9px 18px', borderRadius: '999px',
                             background: C.olive, color: '#fff',
                             fontSize: '13px', fontWeight: '700',
-                            textDecoration: 'none', fontFamily: "'Nunito',sans-serif",
+                            textDecoration: 'none', fontFamily: "'Poppins',sans-serif",
                             boxShadow: `0 3px 12px rgba(182,197,72,.4)`, transition: 'all .2s',
                           }}
                           onMouseEnter={e => e.currentTarget.style.background = C.dark}
@@ -1080,7 +1085,7 @@ export default function OurStoresPage() {
                               padding: '9px 18px', borderRadius: '999px',
                               background: C.pink, color: '#fff',
                               fontSize: '13px', fontWeight: '700',
-                              textDecoration: 'none', fontFamily: "'Nunito',sans-serif",
+                              textDecoration: 'none', fontFamily: "'Poppins',sans-serif",
                               boxShadow: `0 3px 12px rgba(239,126,203,.4)`, transition: 'all .2s',
                             }}
                             onMouseEnter={e => e.currentTarget.style.background = '#c9539f'}
@@ -1099,7 +1104,7 @@ export default function OurStoresPage() {
                             background: 'rgba(182,197,72,.1)', color: `${C.brown}80`,
                             fontSize: '13px', fontWeight: '600',
                             border: `1px dashed rgba(182,197,72,.4)`,
-                            fontFamily: "'Nunito',sans-serif",
+                            fontFamily: "'Poppins',sans-serif",
                           }}>
                             🛵 Order link coming soon
                           </span>
@@ -1127,7 +1132,7 @@ export default function OurStoresPage() {
                       borderRadius: `${LAYOUT.mapBorderRadius}px`,
                     }}>
                       <AvoPin size={52} />
-                      <p style={{ fontSize: '14px', color: `${C.brown}70`, fontFamily: "'Nunito',sans-serif" }}>
+                      <p style={{ fontSize: '14px', color: `${C.brown}70`, fontFamily: "'Poppins',sans-serif" }}>
                         Select a branch to fly to its location
                       </p>
                     </div>
@@ -1138,36 +1143,13 @@ export default function OurStoresPage() {
               </div>
 
             </div>
+            </div>{/* end zIndex:1 */}
           </div>
           )
         })()}
 
         {/* Footer only shown in idle state */}
-        {!showResults && (
-          <>
-            <div style={{ lineHeight: 0 }}>
-              <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-                style={{ display: 'block', width: '100%', height: '60px' }}>
-                <path d="M0,60 L0,30 C360,0 720,55 1080,25 C1260,10 1380,45 1440,35 L1440,60 Z" fill="#3a6b35" />
-              </svg>
-            </div>
-            <section style={{ background: '#3a6b35', padding: '40px 32px 56px', textAlign: 'center' }}>
-              <h2 style={{ fontFamily: "'BubbleboddyNeue','Nunito',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.3rem,2.5vw,1.8rem)', color: '#c8e690', margin: '0 0 8px' }}>
-                New branches opening soon!
-              </h2>
-              <p style={{ color: 'rgba(255,255,255,.75)', fontSize: '14px', margin: '0 0 20px' }}>Follow us for updates.</p>
-              <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                {[{ l: 'Facebook', h: 'https://facebook.com/avocadoria.ph' }, { l: 'Instagram', h: 'https://instagram.com/avocadoria.ph' }, { l: 'TikTok', h: 'https://tiktok.com/@avocadoria.ph' }].map(s => (
-                  <a key={s.l} href={s.h} target="_blank" rel="noopener noreferrer"
-                    style={{ display: 'inline-block', background: 'rgba(255,255,255,.15)', color: '#fff', borderRadius: '999px', padding: '8px 20px', fontSize: '13px', fontWeight: '700', textDecoration: 'none', border: '1px solid rgba(255,255,255,.2)', transition: 'all .2s' }}
-                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,.25)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,.15)'}
-                  >{s.l}</a>
-                ))}
-              </div>
-            </section>
-          </>
-        )}
+
 
       </div>
     </>

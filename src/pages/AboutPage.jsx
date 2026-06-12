@@ -211,13 +211,13 @@ function StatCard({ stat, trigger }) {
   return (
     <div className="about-stat-card">
       <div style={{
-        fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+        fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
         fontSize: 'clamp(2rem, 4vw, 3rem)',
         color: 'var(--c-olive)', lineHeight: 1,
         textShadow: STROKE,
       }}>{val || stat.num}</div>
       <div style={{
-        fontFamily: 'Poppins, Nunito, sans-serif',
+        fontFamily: 'Poppins,sans-serif',
         fontSize: '11px', color: 'var(--c-dark)',
         marginTop: '6px', letterSpacing: '0.06em', textTransform: 'uppercase',
       }}>{stat.label}</div>
@@ -230,7 +230,7 @@ function SectionLabel({ text, color = 'var(--c-pink)' }) {
     <span style={{
       display: 'inline-block', marginBottom: '12px',
       background: color, color: '#fff',
-      fontFamily: 'Nunito, sans-serif', fontSize: '11px', fontWeight: '800',
+      fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '800',
       letterSpacing: '0.08em', textTransform: 'uppercase',
       padding: '5px 18px', borderRadius: '999px',
     }}>{text}</span>
@@ -317,20 +317,20 @@ function RecognitionsCarousel({ items }) {
         }
         .rec-slide-badge {
           display: inline-block; width: fit-content;
-          font-family: 'Poppins','Nunito',sans-serif;
+          font-family: 'Poppins',sans-serif;
           font-size: 9px; font-weight: 600;
           letter-spacing: 0.07em; text-transform: uppercase;
           padding: 2px 9px; border-radius: 999px;
           color: #fff;
         }
         .rec-slide-title {
-          font-family: 'BubbleboddyNeue','Nunito',sans-serif;
+          font-family: 'BubbleboddyNeue-ExtraBold','Poppins',sans-serif;
           font-size: clamp(12px,1.4vw,15px);
           font-weight: normal; color: var(--c-dark);
           margin: 0; line-height: 1.25;
         }
         .rec-slide-org {
-          font-family: 'Poppins','Nunito',sans-serif;
+          font-family: 'Poppins',sans-serif;
           font-size: clamp(10px,1vw,12px);
           color: var(--c-brown); margin: 0;
         }
@@ -443,21 +443,21 @@ function NewsCard({ post }) {
           <span style={{
             background: post.featured ? 'var(--c-olive)' : 'rgba(182,197,72,0.15)',
             color: post.featured ? '#fff' : 'var(--c-dark)',
-            fontFamily: 'Nunito, sans-serif', fontSize: '10px', fontWeight: '800',
+            fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '800',
             letterSpacing: '0.06em', textTransform: 'uppercase',
             padding: '3px 10px', borderRadius: '999px',
           }}>{post.featured ? 'Featured' : post.category}</span>
-          <span style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.7)' }}>
+          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.7)' }}>
             {fmt(post.date)}
           </span>
         </div>
         <h3 style={{
-          fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+          fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize: 'clamp(14px, 1.5vw, 17px)', fontWeight: 'normal',
           color: 'var(--c-dark)', margin: 0, lineHeight: 1.3,
         }}>{post.title}</h3>
         <p style={{
-          fontFamily: 'Nunito, sans-serif', fontSize: '13px',
+          fontFamily: 'Poppins,sans-serif', fontSize: '13px',
           color: 'var(--c-brown)', lineHeight: 1.65, margin: 0, flex: 1,
         }}>{post.excerpt}</p>
       </div>
@@ -503,7 +503,7 @@ export default function AboutPage() {
 
       <style>{`
         @font-face {
-          font-family: 'BubbleboddyNeue';
+          font-family: 'BubbleboddyNeue-ExtraBold';
           src: url('/fonts/bubbleboddyneueinline-extrabold.ttf') format('truetype');
           font-weight: normal; font-style: normal; font-display: swap;
         }
@@ -650,7 +650,7 @@ export default function AboutPage() {
         }
 
         .about-founder-para {
-          font-family: 'Nunito', sans-serif;
+          font-family: 'Poppins',sans-serif;
           font-size: clamp(15px, 1.6vw, 19px);
           color: var(--c-dark);
           line-height: 1.75;
@@ -692,22 +692,17 @@ export default function AboutPage() {
         padding: 'clamp(100px, 14vw, 140px) 32px clamp(60px, 8vw, 100px)',
         textAlign: 'center',
       }}>
-        {/* franchisebg.svg as full background */}
-        <img
-          src="/franchisebg.svg"
-          aria-hidden="true"
-          style={{
-            position: 'absolute', inset: 0,
-            width: '100%', height: '100%',
-            objectFit: 'cover', objectPosition: 'center',
-            zIndex: 0,
-          }}
-         loading="lazy" decoding="async"/>
-
-        {/* Light overlay — keeps text readable on bright bg */}
+        {/* Paper texture background — matches all other sections */}
+        <div style={{
+          position: 'absolute', inset: 0, zIndex: 0,
+          backgroundImage: "url('/website_layer_1.png')",
+          backgroundSize: 'cover', backgroundPosition: 'center',
+          backgroundColor: '#F3F2EE',
+        }} />
+        {/* Same green overlay as all sections — #b6c548 at 0.25 */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 1,
-          background: 'rgba(217,226,158,0.45)',
+          backgroundColor: '#b6c548', opacity: 0.25, pointerEvents: 'none',
         }} />
 
         {/* Content */}
@@ -718,7 +713,7 @@ export default function AboutPage() {
             <span style={{
               display: 'inline-block', marginBottom: '20px',
               background: 'var(--c-pink)', color: '#fff',
-              fontFamily: 'Nunito, sans-serif', fontSize: '11px', fontWeight: '800',
+              fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '800',
               letterSpacing: '0.08em', textTransform: 'uppercase',
               padding: '5px 20px', borderRadius: '999px',
             }}>
@@ -727,7 +722,7 @@ export default function AboutPage() {
 
             {/* Tagline quote */}
             <p style={{
-              fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontSize: 'clamp(13px, 1.4vw, 16px)',
               color: 'var(--c-dark)',
               margin: '0 0 10px', letterSpacing: '0.03em',
@@ -736,7 +731,7 @@ export default function AboutPage() {
 
             {/* Main headline */}
             <h1 style={{
-              fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontWeight: 800,
               fontSize: 'clamp(2.4rem, 7vw, 4.8rem)',
               color: 'var(--c-olive)',
@@ -751,7 +746,7 @@ export default function AboutPage() {
 
           <div className="about-hero-sub">
             <p style={{
-              fontFamily: 'Nunito, sans-serif',
+              fontFamily: 'Poppins,sans-serif',
               fontSize: 'clamp(14px, 1.6vw, 18px)',
               color: 'var(--c-dark)',
               maxWidth: '560px', margin: '0 auto 40px',
@@ -780,12 +775,13 @@ export default function AboutPage() {
       {/* ══════════════════════════════════════════════════════════════
           OUR STORY — founder photo left, story text right (mirrors slide)
       ══════════════════════════════════════════════════════════════ */}
-      <div id="our-story" className="about-section" style={{ background: '#d9e29e', padding: 'clamp(52px,7vw,88px) clamp(20px,5vw,72px)' }}>
-        <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
+      <div id="our-story" className="about-section" style={{ position:'relative', overflow:'hidden', padding: 'clamp(52px,7vw,88px) clamp(20px,5vw,72px)', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+        <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
+        <div style={{ position:'relative', zIndex:1, maxWidth: '1160px', margin: '0 auto' }}>
 
           {/* ── "Our Story" heading — top-left, bold, dark green, matches slide ── */}
           <h2 style={{
-            fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+            fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
             fontSize: 'clamp(2rem, 5vw, 3.6rem)',
             fontWeight: 800,
             color: 'var(--c-dark)',
@@ -810,7 +806,7 @@ export default function AboutPage() {
                 </div>
                 <div className="about-founder-badge">
                   <span style={{
-                    fontFamily: 'Nunito, sans-serif',
+                    fontFamily: 'Poppins,sans-serif',
                     fontSize: '11px', fontWeight: '800',
                     color: '#fff', letterSpacing: '0.06em',
                     textTransform: 'uppercase',
@@ -847,13 +843,13 @@ export default function AboutPage() {
                 }}>👩‍🍳</div>
                 <div>
                   <p style={{
-                    fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+                    fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                     fontSize: 'clamp(15px, 1.6vw, 19px)',
                     fontWeight: 'normal', color: 'var(--c-dark)',
                     margin: 0, lineHeight: 1.2,
                   }}>Chef Czarina Sevilla</p>
                   <p style={{
-                    fontFamily: 'Nunito, sans-serif',
+                    fontFamily: 'Poppins,sans-serif',
                     fontSize: '12px', color: 'rgba(58,107,53,0.6)',
                     margin: '3px 0 0', letterSpacing: '0.05em',
                     textTransform: 'uppercase',
@@ -887,19 +883,19 @@ export default function AboutPage() {
                       }}>{sec.icon}</div>
                       <span style={{
                         background: `${sec.color}18`, color: sec.color,
-                        fontFamily: 'Nunito, sans-serif', fontSize: '10px', fontWeight: '800',
+                        fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '800',
                         letterSpacing: '0.07em', textTransform: 'uppercase',
                         padding: '3px 12px', borderRadius: '999px',
                       }}>{sec.badge}</span>
                     </div>
                     <h3 style={{
-                      fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+                      fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                       fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
                       fontWeight: 'normal', color: 'var(--c-dark)',
                       margin: '0 0 10px', lineHeight: 1.2,
                     }}>{sec.title}</h3>
                     <p style={{
-                      fontFamily: 'Nunito, sans-serif',
+                      fontFamily: 'Poppins,sans-serif',
                       fontSize: '14px', lineHeight: 1.8,
                       color: 'var(--c-brown)', margin: 0,
                     }}>{sec.body}</p>
@@ -918,7 +914,8 @@ export default function AboutPage() {
       {/* ══════════════════════════════════════════════════════════════
           RECOGNITIONS — floating image carousel
       ══════════════════════════════════════════════════════════════ */}
-      <div id="recognitions" className="about-section" style={{ background: '#d9e29e', overflow: 'hidden' }}>
+      <div id="recognitions" className="about-section" style={{ position:'relative', overflow:'hidden', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+        <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
         <div style={{ display: 'none' }} />
 
         <div style={{ position: 'relative', zIndex: 2, maxWidth: '1000px', margin: '0 auto', padding: 'clamp(48px,7vw,80px) clamp(16px,4vw,48px)' }}>
@@ -927,14 +924,14 @@ export default function AboutPage() {
           <div style={{ textAlign: 'center', marginBottom: 'clamp(28px,4vw,44px)' }}>
             <SectionLabel text="Awards & Recognitions 🏆" color="var(--c-olive)" />
             <h2 style={{
-              fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
               fontWeight: 'normal', color: 'var(--c-olive)',
               textShadow: STROKE,
               margin: '0 0 10px', lineHeight: 1.1,
             }}>A Legacy of Excellence</h2>
             <p style={{
-              fontFamily: "'Poppins', 'Nunito', sans-serif",
+              fontFamily: "'Poppins',sans-serif",
               fontSize: 'clamp(13px, 1.4vw, 15px)',
               color: 'var(--c-dark)', opacity: 0.75,
               margin: '0 auto', lineHeight: 1.65,
@@ -979,19 +976,19 @@ export default function AboutPage() {
                 <span style={{
                   display: 'inline-block', width: 'fit-content',
                   background: 'var(--c-olive)', color: '#fff',
-                  fontFamily: "'Poppins','Nunito',sans-serif",
+                  fontFamily: "'Poppins',sans-serif",
                   fontSize: '10px', fontWeight: '600',
                   letterSpacing: '0.08em', textTransform: 'uppercase',
                   padding: '3px 12px', borderRadius: '999px',
                 }}>EY · {RECOGNITIONS[0].year} · Featured</span>
                 <h3 style={{
-                  fontFamily: "'BubbleboddyNeue','Nunito',sans-serif",
+                  fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                   fontSize: 'clamp(1rem,2.2vw,1.4rem)',
                   fontWeight: 'normal', color: 'var(--c-dark)',
                   margin: 0, lineHeight: 1.25,
                 }}>{RECOGNITIONS[0].title}</h3>
                 <p style={{
-                  fontFamily: "'Poppins','Nunito',sans-serif",
+                  fontFamily: "'Poppins',sans-serif",
                   fontSize: 'clamp(11px,1.2vw,13px)',
                   color: 'var(--c-brown)', opacity: 0.8, margin: 0,
                 }}>{RECOGNITIONS[0].issuer}</p>
@@ -1012,20 +1009,22 @@ export default function AboutPage() {
           WHAT'S NEW
       ══════════════════════════════════════════════════════════════ */}
       <div id="whats-new" className="about-section" style={{
-        background: '#d9e29e',
+        position:'relative', overflow:'hidden',
         padding: 'clamp(52px,8vw,88px) clamp(20px,5vw,72px)',
+        backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
       }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+        <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
+        <div style={{ position:'relative', zIndex:1, maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '36px' }}>
             <div>
               <SectionLabel text="What's New" color="var(--c-pink)" />
               <h2 style={{
-                fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+                fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                 fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
                 fontWeight: 'normal', color: 'var(--c-dark)',
                 margin: '0 0 6px', lineHeight: 1.1,
               }}>Latest from Avocadoria</h2>
-              <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '14px', color: 'var(--c-brown)', margin: 0 }}>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'var(--c-brown)', margin: 0 }}>
                 New branches, products, and announcements.
               </p>
             </div>
@@ -1040,18 +1039,19 @@ export default function AboutPage() {
       {/* ══════════════════════════════════════════════════════════════
           AVO CARES
       ══════════════════════════════════════════════════════════════ */}
-      <div id="avo-cares" className="about-section" style={{ background: '#d9e29e', padding: 'clamp(52px,8vw,88px) clamp(20px,5vw,72px)' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+      <div id="avo-cares" className="about-section" style={{ position:'relative', overflow:'hidden', padding: 'clamp(52px,8vw,88px) clamp(20px,5vw,72px)', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+        <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
+        <div style={{ position:'relative', zIndex:1, maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '44px' }}>
             <SectionLabel text="Avo Cares 🌱" color="var(--c-dark)" />
             <h2 style={{
-              fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontSize: 'clamp(1.8rem, 4vw, 3rem)',
               fontWeight: 'normal', color: 'var(--c-olive)',
               textShadow: STROKE, margin: '0 0 12px', lineHeight: 1.1,
             }}>Spreading Happiness Beyond Our Cups</h2>
             <p style={{
-              fontFamily: 'Nunito, sans-serif', fontSize: 'clamp(14px, 1.5vw, 17px)',
+              fontFamily: 'Poppins,sans-serif', fontSize: 'clamp(14px, 1.5vw, 17px)',
               color: 'rgba(58,107,53,0.75)', maxWidth: '520px', margin: '0 auto', lineHeight: 1.65,
             }}>
               Community, environment, and supporting local farmers.
@@ -1094,21 +1094,21 @@ export default function AboutPage() {
                     <span style={{
                       background: item.featured ? 'var(--c-olive)' : 'rgba(182,197,72,0.15)',
                       color: item.featured ? '#fff' : 'var(--c-dark)',
-                      fontFamily: 'Nunito, sans-serif', fontSize: '10px', fontWeight: '800',
+                      fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '800',
                       letterSpacing: '0.06em', textTransform: 'uppercase',
                       padding: '3px 10px', borderRadius: '999px',
                     }}>{item.category}</span>
-                    <span style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.7)' }}>
+                    <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.7)' }}>
                       {fmt(item.date)}
                     </span>
                   </div>
                   <h3 style={{
-                    fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+                    fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                     fontSize: 'clamp(14px, 1.5vw, 18px)', fontWeight: 'normal',
                     color: 'var(--c-dark)', margin: 0, lineHeight: 1.3,
                   }}>{item.title}</h3>
                   <p style={{
-                    fontFamily: 'Nunito, sans-serif', fontSize: '13px',
+                    fontFamily: 'Poppins,sans-serif', fontSize: '13px',
                     color: 'var(--c-brown)', lineHeight: 1.7, margin: 0,
                   }}>{item.excerpt}</p>
                 </div>
@@ -1120,9 +1120,10 @@ export default function AboutPage() {
 
       {/* Bottom wave + tagline strip */}
       <Wave fromColor="#d9e29e" toColor="#b6c548" height={50} />
-      <div style={{ background: '#b6c548', padding: '28px 32px', textAlign: 'center' }}>
+      <div style={{ position:'relative', overflow:'hidden', padding: '28px 32px', textAlign: 'center', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+        <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.55 }} />
         <p style={{
-          fontFamily: "'BubbleboddyNeue', 'Nunito', sans-serif",
+          fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize: 'clamp(13px, 1.5vw, 16px)',
           color: 'rgba(255,255,255,0.9)', margin: 0,
           textShadow: '0 1px 4px rgba(0,0,0,0.2)',

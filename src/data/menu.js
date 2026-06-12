@@ -21,7 +21,7 @@ export const CATEGORIES = [
     name:     'Best Sellers',
     emoji:    '⭐',
     tagline:  'Our most-loved avocado creations — tried and tested by thousands.',
-    cover:    '/menu/Best Sellers/cover-best-sellers.webp',
+    cover:    '/menu/Best Sellers/cover-best-sellers.png',
     featured: true,
     items: [
       {
@@ -122,7 +122,7 @@ export const CATEGORIES = [
     name:     'Avocado Shakes',
     emoji:    '🥤',
     tagline:  'Thick, creamy, and packed with real avocado — the perfect refreshment.',
-    cover:    '/menu/Avocado Shakes/avo-shake.webp',
+    cover:    '/menu/Avocado Shakes/Avo_Lover.png',
     featured: false,
     items: [
       {
@@ -252,7 +252,7 @@ export const CATEGORIES = [
     name:     'Coffee',
     emoji:    '☕',
     tagline:  'Premium coffee blends to pair perfectly with your avocado treat.',
-    cover:    '/menu/covers/coffee.webp',
+    cover:    '/menu/coffee/HOT_COFFEE.png',
     featured: false,
     items: [
       {
@@ -268,6 +268,22 @@ export const CATEGORIES = [
         name:  'Americano',
         desc:  'Classic espresso with hot water — bold, clean and refreshing.',
         image: '/menu/coffee/americano.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'hot-coffee',
+        name:  'Hot Coffee',
+        desc:  'Freshly brewed hot coffee served in the iconic Avocadoria cup — warm, rich and satisfying.',
+        image: '/menu/coffee/HOT_COFFEE.png',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'iced-coffee',
+        name:  'Iced Coffee',
+        desc:  'Chilled coffee over ice served in the iconic Avocadoria cup — cool, bold and refreshing.',
+        image: '/menu/coffee/ICE_COFFEE.png',
         tags:  [],
         new:   false,
       },

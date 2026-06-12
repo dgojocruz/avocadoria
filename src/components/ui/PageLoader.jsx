@@ -133,7 +133,7 @@ export default function PageLoader() {
       {/* ── Brand name ── */}
       {config.brandName && (
         <div style={{
-          fontFamily:   'Nunito, sans-serif',
+          fontFamily:   'Poppins,sans-serif',
           fontSize:     config.brandNameSize,
           fontWeight:   '700',
           color:        config.brandNameColor,
@@ -146,7 +146,7 @@ export default function PageLoader() {
       {/* ── Loading text ── */}
       {config.loadingText && (
         <div style={{
-          fontFamily: 'Nunito, sans-serif',
+          fontFamily: 'Poppins,sans-serif',
           fontSize:   '13px',
           color:      config.brandNameColor,
           opacity:    0.6,
