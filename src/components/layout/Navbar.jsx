@@ -84,7 +84,7 @@ function DropdownLink({ item, hovered, setHovered }) {
         to={item.to}
         end
         style={{
-          fontFamily:    'Nunito, sans-serif',
+          fontFamily:    'Poppins,sans-serif',
           fontSize:      NAV_STYLE.fontSize,
           fontWeight:    NAV_STYLE.fontWeight,
           letterSpacing: NAV_STYLE.letterSpacing,
@@ -168,7 +168,7 @@ function DropdownLink({ item, hovered, setHovered }) {
               display:        'block',
               padding:        '9px 14px',
               borderRadius:   '8px',
-              fontFamily:     'Nunito, sans-serif',
+              fontFamily:     'Poppins,sans-serif',
               fontSize:       '13px',
               fontWeight:     '700',
               color:          '#8A5F3C',
@@ -239,7 +239,7 @@ export default function Navbar() {
               onMouseEnter={() => setHovered(item.to)}
               onMouseLeave={() => setHovered(null)}
               style={({ isActive }) => ({
-                fontFamily:    'Nunito, sans-serif',
+                fontFamily:    'Poppins,sans-serif',
                 fontSize:      NAV_STYLE.fontSize,
                 fontWeight:    NAV_STYLE.fontWeight,
                 letterSpacing: NAV_STYLE.letterSpacing,
@@ -318,7 +318,7 @@ export default function Navbar() {
                       display:'flex', alignItems:'center', justifyContent:'space-between',
                       width:'100%', minHeight:'48px', padding:'8px 16px',
                       borderRadius:'12px', border:'none', cursor:'pointer',
-                      fontFamily:'Nunito, sans-serif', fontSize:'16px', fontWeight:'700',
+                      fontFamily:'Poppins,sans-serif', fontSize:'16px', fontWeight:'700',
                       color:'#8A5F3C', background:'transparent', textAlign:'left',
                       transition:'all 0.15s',
                     }}
@@ -342,7 +342,7 @@ export default function Navbar() {
                           display:'flex', alignItems:'center',
                           minHeight:'44px', padding:'6px 16px 6px 32px',
                           borderRadius:'10px',
-                          fontFamily:'Nunito, sans-serif',
+                          fontFamily:'Poppins,sans-serif',
                           fontSize:'14px', fontWeight:'700',
                           color:'#8A5F3C', textDecoration:'none',
                           transition:'all 0.15s',
@@ -361,7 +361,7 @@ export default function Navbar() {
                     display:'flex', alignItems:'center',
                     minHeight:'48px', padding:'8px 16px',
                     borderRadius:'12px',
-                    fontFamily:'Nunito, sans-serif',
+                    fontFamily:'Poppins,sans-serif',
                     fontSize:'16px', fontWeight:'700',
                     color: isActive ? '#fff' : '#8A5F3C',
                     background: isActive ? '#b6c548' : 'transparent',

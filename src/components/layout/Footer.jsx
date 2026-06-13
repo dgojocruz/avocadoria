@@ -77,7 +77,7 @@ export default function Footer() {
         .footer-dropdown-item {
           display: block;
           padding: 9px 20px;
-          font-family: Nunito, sans-serif;
+          font-family: Poppins,sans-serif;
           font-size: 13px;
           font-weight: 600;
           color: #8A5F3C;
@@ -141,7 +141,7 @@ export default function Footer() {
               background: 'rgba(255,255,255,0.85)',
               border: '1.5px solid rgba(182,197,72,0.3)',
               borderRadius: '999px',
-              fontFamily: 'Nunito, sans-serif',
+              fontFamily: 'Poppins,sans-serif',
               fontSize: '13px', fontWeight: '700',
               color: '#8A5F3C', cursor: 'pointer',
               backdropFilter: 'blur(8px)',
@@ -182,7 +182,7 @@ export default function Footer() {
         {/* Address */}
         <address style={{
           fontStyle: 'normal',
-          fontFamily: 'Nunito, sans-serif',
+          fontFamily: 'Poppins,sans-serif',
           fontSize: '12px',
           color: 'rgba(138,95,60,0.7)',
           lineHeight: 1.7,
@@ -201,7 +201,7 @@ export default function Footer() {
         {/* Social links */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <span style={{
-            fontFamily: 'Nunito, sans-serif', fontSize: '11px',
+            fontFamily: 'Poppins,sans-serif', fontSize: '11px',
             fontWeight: '700', color: '#8A5F3C',
             letterSpacing: '0.05em', textTransform: 'uppercase',
           }}>Follow us</span>
@@ -226,13 +226,13 @@ export default function Footer() {
           <img src="/dpo-registered.png" alt="NPC DPO/DPS Registered"
             style={{ height: '48px', width: 'auto', objectFit: 'contain', borderRadius: '6px' }} />
           <div style={{ textAlign: 'left' }}>
-            <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '10px', fontWeight: '800',
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '800',
               color: '#1a3aa0', letterSpacing: '0.06em', textTransform: 'uppercase', margin: '0 0 2px' }}>
               NPC Registered
             </p>
-            <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '12px', fontWeight: '700',
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700',
               color: '#1a3aa0', margin: '0 0 1px', lineHeight: 1.2 }}>DPO / DPS</p>
-            <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '10px',
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '10px',
               color: 'rgba(30,60,160,0.6)', margin: 0, lineHeight: 1.3 }}>
               Valid until Sep 09, 2026
             </p>
@@ -248,7 +248,7 @@ export default function Footer() {
         textAlign: 'center',
       }}>
         <div style={{ height: '1px', background: 'rgba(182,197,72,0.2)', marginBottom: '12px' }} />
-        <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px',
+        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px',
           color: 'rgba(138,95,60,0.5)', margin: 0 }}>
           Copyright © {year} Avocadoria. All Rights Reserved.
         </p>

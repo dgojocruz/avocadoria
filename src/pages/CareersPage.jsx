@@ -159,7 +159,7 @@ function ApplyModal({ job, onClose }) {
     width: '100%', padding: '11px 14px',
     border: '1.5px solid rgba(182,197,72,0.35)',
     borderRadius: '10px', background: '#fff',
-    fontFamily: 'Nunito, sans-serif', fontSize: '14px', color: '#8A5F3C',
+    fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C',
     outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s',
   }
   const focus = (e) => e.target.style.borderColor = '#b6c548'
@@ -182,19 +182,20 @@ function ApplyModal({ job, onClose }) {
           /* ── Success screen ── */
           <div style={{ padding: '48px 32px', textAlign: 'center' }}>
             <div style={{ fontSize: '64px', marginBottom: '16px' }}>🥑</div>
-            <h3 style={{ fontFamily: 'Nunito, sans-serif', fontSize: '22px', fontWeight: '800', color: '#b6c548', margin: '0 0 10px' }}>
+            <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: '800', color: '#b6c548',
+                textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 10px' }}>
               Application Sent!
             </h3>
-            <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '14px', color: '#8A5F3C', lineHeight: '1.7', margin: '0 0 8px' }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C', lineHeight: '1.7', margin: '0 0 8px' }}>
               Your application for <strong>{job.role}</strong> at <strong>{job.branch}</strong> has been sent to our team.
             </p>
-            <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '13px', color: 'rgba(138,95,60,0.6)', margin: '0 0 28px' }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: 'rgba(138,95,60,0.6)', margin: '0 0 28px' }}>
               We'll review your CV and get back to you within 5–7 business days.
             </p>
             <button onClick={onClose} style={{
               background: '#b6c548', color: '#fff', border: 'none',
               borderRadius: '999px', padding: '12px 32px',
-              fontFamily: 'Nunito, sans-serif', fontSize: '15px', fontWeight: '700', cursor: 'pointer',
+              fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '700', cursor: 'pointer',
             }}>Close</button>
           </div>
         ) : (
@@ -207,13 +208,14 @@ function ApplyModal({ job, onClose }) {
               display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
             }}>
               <div>
-                <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.75)', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 4px' }}>
+                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.75)', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 4px' }}>
                   Applying for
                 </p>
-                <h3 style={{ fontFamily: 'Nunito, sans-serif', fontSize: '20px', fontWeight: '800', color: '#fff', margin: '0 0 4px' }}>
+                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '20px', fontWeight: '800', color: '#fff',
+                textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 4px' }}>
                   {job.role}
                 </h3>
-                <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.8)', margin: 0 }}>
+                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.8)', margin: 0 }}>
                   📍 {job.branch} · {job.location}
                 </p>
               </div>
@@ -229,24 +231,24 @@ function ApplyModal({ job, onClose }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
 
                 <div>
-                  <label style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Full Name *</label>
+                  <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Full Name *</label>
                   <input required value={form.name} onChange={set('name')} placeholder="Juan dela Cruz" style={inp} onFocus={focus} onBlur={blur} />
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                   <div>
-                    <label style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Address *</label>
+                    <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Address *</label>
                     <input required type="email" value={form.email} onChange={set('email')} placeholder="juan@email.com" style={inp} onFocus={focus} onBlur={blur} />
                   </div>
                   <div>
-                    <label style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Number *</label>
+                    <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Number *</label>
                     <input required value={form.phone} onChange={set('phone')} placeholder="+63 9XX XXX XXXX" style={inp} onFocus={focus} onBlur={blur} />
                   </div>
                 </div>
 
                 {/* CV Upload */}
                 <div>
-                  <label style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>CV / Resume * <span style={{ color: 'rgba(138,95,60,0.5)', fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>(PDF or Word, max 5MB)</span></label>
+                  <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>CV / Resume * <span style={{ color: 'rgba(138,95,60,0.5)', fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>(PDF or Word, max 5MB)</span></label>
                   <div
                     onClick={() => fileRef.current.click()}
                     onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
@@ -266,32 +268,32 @@ function ApplyModal({ job, onClose }) {
                     {cvFile ? (
                       <div>
                         <div style={{ fontSize: '28px', marginBottom: '6px' }}>✅</div>
-                        <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '13px', fontWeight: '700', color: '#3a6b35', margin: '0 0 2px' }}>{cvFile.name}</p>
-                        <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.5)', margin: 0 }}>{(cvFile.size / 1024).toFixed(0)} KB · Click to replace</p>
+                        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#3a6b35', margin: '0 0 2px' }}>{cvFile.name}</p>
+                        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.5)', margin: 0 }}>{(cvFile.size / 1024).toFixed(0)} KB · Click to replace</p>
                       </div>
                     ) : (
                       <div>
                         <div style={{ fontSize: '28px', marginBottom: '6px' }}>📎</div>
-                        <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '13px', fontWeight: '700', color: '#8A5F3C', margin: '0 0 2px' }}>Drop your CV here or click to browse</p>
-                        <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.5)', margin: 0 }}>PDF, DOC, DOCX accepted</p>
+                        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#8A5F3C', margin: '0 0 2px' }}>Drop your CV here or click to browse</p>
+                        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.5)', margin: 0 }}>PDF, DOC, DOCX accepted</p>
                       </div>
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <label style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Short Introduction <span style={{ color: 'rgba(138,95,60,0.5)', fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>(optional)</span></label>
+                  <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Short Introduction <span style={{ color: 'rgba(138,95,60,0.5)', fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>(optional)</span></label>
                   <textarea value={form.message} onChange={set('message')} rows={3} placeholder="Tell us a little about yourself and why you'd like to join Avocadoria..." style={{ ...inp, resize: 'vertical' }} onFocus={focus} onBlur={blur} />
                 </div>
 
-                <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.6)', margin: 0 }}>
+                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.6)', margin: 0 }}>
                   Your application will be sent to <strong style={{ color: '#3a6b35' }}>{job.email}</strong>
                 </p>
 
                 <button type="submit" disabled={loading} style={{
                   background: loading ? 'rgba(182,197,72,0.5)' : '#b6c548',
                   color: '#fff', border: 'none', borderRadius: '999px',
-                  padding: '13px', fontFamily: 'Nunito, sans-serif',
+                  padding: '13px', fontFamily: 'Poppins,sans-serif',
                   fontSize: '15px', fontWeight: '800', cursor: loading ? 'not-allowed' : 'pointer',
                   transition: 'background 0.2s', width: '100%',
                 }}
@@ -331,12 +333,12 @@ function JobCard({ job, onApply }) {
           ) : (
             <div style={{ width: '100%', height: '100%', background: 'linear-gradient(160deg,#D0E8AF,#b6c548)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', textAlign: 'center' }}>
               <div style={{ fontSize: '48px', marginBottom: '16px' }}>🥑</div>
-              <h3 style={{ fontFamily: 'Nunito, sans-serif', fontSize: '28px', fontWeight: '800', color: '#3a6b35' }}>{job.role}</h3>
-              <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '16px', color: '#8A5F3C' }}>{job.branch}</p>
+              <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '28px', fontWeight: '800', color: '#3a6b35' }}>{job.role}</h3>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', color: '#8A5F3C' }}>{job.branch}</p>
             </div>
           )}
           {/* Flip hint */}
-          <div style={{ position: 'absolute', bottom: '12px', right: '14px', background: 'rgba(255,255,255,0.85)', borderRadius: '999px', padding: '5px 12px', fontFamily: 'Nunito, sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', backdropFilter: 'blur(6px)' }}>
+          <div style={{ position: 'absolute', bottom: '12px', right: '14px', background: 'rgba(255,255,255,0.85)', borderRadius: '999px', padding: '5px 12px', fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', backdropFilter: 'blur(6px)' }}>
             Tap to see details →
           </div>
         </div>
@@ -347,20 +349,21 @@ function JobCard({ job, onApply }) {
 
             {/* Header */}
             <div style={{ marginBottom: '16px' }}>
-              <span style={{ display: 'inline-block', background: '#EF7ECB', color: '#fff', fontSize: '10px', fontWeight: '700', padding: '3px 10px', borderRadius: '999px', fontFamily: 'Nunito, sans-serif', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>
+              <span style={{ display: 'inline-block', background: '#EF7ECB', color: '#fff', fontSize: '10px', fontWeight: '700', padding: '3px 10px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>
                 {job.type}
               </span>
-              <h3 style={{ fontFamily: 'Nunito, sans-serif', fontSize: '22px', fontWeight: '800', color: '#3a6b35', margin: '0 0 4px' }}>{job.role}</h3>
-              <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '13px', color: '#b6c548', fontWeight: '700', margin: 0 }}>📍 {job.branch}</p>
-              <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.6)', margin: '2px 0 0' }}>{job.location}</p>
+              <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: '800', color: '#3a6b35',
+                textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 4px' }}>{job.role}</h3>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#b6c548', fontWeight: '700', margin: 0 }}>📍 {job.branch}</p>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.6)', margin: '2px 0 0' }}>{job.location}</p>
             </div>
 
             {/* Qualifications */}
             <div style={{ flex: 1, overflowY: 'auto' }}>
-              <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 10px' }}>Qualifications</p>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 10px' }}>Qualifications</p>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '7px' }}>
                 {job.qualifications.map((q, i) => (
-                  <li key={i} style={{ display: 'flex', gap: '8px', fontFamily: 'Nunito, sans-serif', fontSize: '13px', color: '#8A5F3C', alignItems: 'flex-start' }}>
+                  <li key={i} style={{ display: 'flex', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', alignItems: 'flex-start' }}>
                     <span style={{ color: '#b6c548', fontWeight: '800', flexShrink: 0, marginTop: '1px' }}>•</span>
                     {q}
                   </li>
@@ -373,7 +376,7 @@ function JobCard({ job, onApply }) {
               onClick={e => { e.stopPropagation(); onApply(job) }}
               style={{
                 marginTop: '16px', background: '#EF7ECB', color: '#fff', border: 'none',
-                borderRadius: '999px', padding: '12px', fontFamily: 'Nunito, sans-serif',
+                borderRadius: '999px', padding: '12px', fontFamily: 'Poppins,sans-serif',
                 fontSize: '15px', fontWeight: '800', cursor: 'pointer',
                 transition: 'background 0.2s', width: '100%',
                 boxShadow: '0 4px 14px rgba(239,126,203,0.4)',
@@ -410,14 +413,14 @@ export default function CareersPage() {
           background: 'linear-gradient(160deg, #F4FAEC 0%, #D0E8AF 100%)',
           padding: '80px 32px 60px', textAlign: 'center',
         }}>
-          <span style={{ display: 'inline-block', background: '#b6c548', color: '#fff', fontSize: '11px', fontWeight: '700', padding: '4px 14px', borderRadius: '999px', fontFamily: 'Nunito, sans-serif', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '20px' }}>
+          <span style={{ display: 'inline-block', background: '#b6c548', color: '#fff', fontSize: '11px', fontWeight: '700', padding: '4px 14px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '20px' }}>
             {activeJobs.length} Opening{activeJobs.length !== 1 ? 's' : ''} Available
           </span>
-          <h1 style={{ fontFamily: 'Nunito, sans-serif', fontWeight: '800', fontSize: 'clamp(2rem, 5vw, 3.2rem)', color: '#3a6b35', lineHeight: '1.15', margin: '0 0 16px' }}>
+          <h1 style={{ fontFamily: 'Poppins,sans-serif', fontWeight: '800', fontSize: 'clamp(2rem, 5vw, 3.2rem)', color: '#3a6b35', lineHeight: '1.15', margin: '0 0 16px' }}>
             Join the Avocadoria<br />
             <span style={{ color: '#b6c548' }}>Family 🥑</span>
           </h1>
-          <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '16px', color: '#8A5F3C', lineHeight: '1.7', maxWidth: '560px', margin: '0 auto', opacity: 0.85 }}>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', color: '#8A5F3C', lineHeight: '1.7', maxWidth: '560px', margin: '0 auto', opacity: 0.85 }}>
             Be part of a joyful, growing team that's spreading happiness in avocado across the Philippines. We're looking for passionate, energetic crew members to join us!
           </p>
         </section>
@@ -426,10 +429,10 @@ export default function CareersPage() {
         <section style={{ background: '#fff', padding: '64px 32px' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-              <h2 style={{ fontFamily: 'Nunito, sans-serif', fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: '800', color: '#3a6b35', margin: '0 0 8px' }}>
+              <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: '800', color: '#3a6b35', margin: '0 0 8px' }}>
                 Current Openings
               </h2>
-              <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '14px', color: 'rgba(138,95,60,0.6)', margin: 0 }}>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'rgba(138,95,60,0.6)', margin: 0 }}>
                 Tap a card to see qualifications · Click Apply Now to send your CV
               </p>
             </div>
@@ -438,8 +441,9 @@ export default function CareersPage() {
               /* No openings state */
               <div style={{ textAlign: 'center', padding: '64px 24px' }}>
                 <div style={{ fontSize: '64px', marginBottom: '16px' }}>🥑</div>
-                <h3 style={{ fontFamily: 'Nunito, sans-serif', fontSize: '22px', fontWeight: '800', color: '#b6c548', margin: '0 0 8px' }}>No openings right now</h3>
-                <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '14px', color: 'rgba(138,95,60,0.7)', maxWidth: '380px', margin: '0 auto' }}>
+                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: '800', color: '#b6c548',
+                textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 8px' }}>No openings right now</h3>
+                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'rgba(138,95,60,0.7)', maxWidth: '380px', margin: '0 auto' }}>
                   Check back soon or send your resume to <a href="mailto:official@avocadoria.com.ph" style={{ color: '#b6c548' }}>official@avocadoria.com.ph</a> — we'd love to keep your profile on file.
                 </p>
               </div>
@@ -456,7 +460,7 @@ export default function CareersPage() {
         {/* ── WHY JOIN US ── */}
         <section style={{ background: 'linear-gradient(135deg, #3a6b35, #b6c548)', padding: '64px 32px' }}>
           <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-            <h2 style={{ fontFamily: 'Nunito, sans-serif', fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: '800', color: '#fff', margin: '0 0 40px' }}>Why Work With Us?</h2>
+            <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: '800', color: '#fff', margin: '0 0 40px' }}>Why Work With Us?</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '20px' }}>
               {[
                 { icon: '🌱', title: 'Growth',      desc: 'Learn and grow with a fast-expanding brand' },
@@ -467,8 +471,8 @@ export default function CareersPage() {
               ].map((w, i) => (
                 <div key={i} style={{ background: 'rgba(255,255,255,0.12)', borderRadius: '16px', padding: '24px 16px', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)' }}>
                   <div style={{ fontSize: '32px', marginBottom: '10px' }}>{w.icon}</div>
-                  <div style={{ fontFamily: 'Nunito, sans-serif', fontSize: '15px', fontWeight: '800', color: '#fff', marginBottom: '6px' }}>{w.title}</div>
-                  <div style={{ fontFamily: 'Nunito, sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.8)', lineHeight: '1.5' }}>{w.desc}</div>
+                  <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '800', color: '#fff', marginBottom: '6px' }}>{w.title}</div>
+                  <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(255,255,255,0.8)', lineHeight: '1.5' }}>{w.desc}</div>
                 </div>
               ))}
             </div>
@@ -479,13 +483,13 @@ export default function CareersPage() {
         <section style={{ background: '#F4FAEC', padding: '64px 32px', textAlign: 'center' }}>
           <div style={{ maxWidth: '560px', margin: '0 auto' }}>
             <div style={{ fontSize: '48px', marginBottom: '16px' }}>📩</div>
-            <h2 style={{ fontFamily: 'Nunito, sans-serif', fontSize: '22px', fontWeight: '800', color: '#3a6b35', margin: '0 0 10px' }}>Don't see your branch?</h2>
-            <p style={{ fontFamily: 'Nunito, sans-serif', fontSize: '14px', color: 'rgba(138,95,60,0.75)', lineHeight: '1.7', margin: '0 0 24px' }}>
+            <h2 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '22px', fontWeight: '800', color: '#3a6b35', margin: '0 0 10px' }}>Don't see your branch?</h2>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'rgba(138,95,60,0.75)', lineHeight: '1.7', margin: '0 0 24px' }}>
               Send your CV to our general recruitment inbox and we'll keep your profile on file for future openings.
             </p>
             <a
               href="mailto:official@avocadoria.com.ph?subject=General Application - Store Crew"
-              style={{ display: 'inline-block', background: '#b6c548', color: '#fff', padding: '13px 32px', borderRadius: '999px', fontFamily: 'Nunito, sans-serif', fontSize: '15px', fontWeight: '800', textDecoration: 'none', transition: 'background 0.2s' }}
+              style={{ display: 'inline-block', background: '#b6c548', color: '#fff', padding: '13px 32px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '800', textDecoration: 'none', transition: 'background 0.2s' }}
               onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
               onMouseLeave={e => e.currentTarget.style.background = '#b6c548'}
             >

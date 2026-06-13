@@ -255,27 +255,13 @@ export const CATEGORIES = [
     cover:    '/menu/coffee/HOT_COFFEE.png',
     featured: false,
     items: [
-      {
-        id:    'avo-latte',
-        name:  'Avo Latte',
-        desc:  'Espresso meets creamy avocado milk — a unique and satisfying combination.',
-        image: '/menu/coffee/avo-latte.webp',
-        tags:  ['Signature'],
-        new:   true,
-      },
-      {
-        id:    'americano',
-        name:  'Americano',
-        desc:  'Classic espresso with hot water — bold, clean and refreshing.',
-        image: '/menu/coffee/americano.webp',
-        tags:  [],
-        new:   false,
-      },
+
+
       {
         id:    'hot-coffee',
         name:  'Hot Coffee',
         desc:  'Freshly brewed hot coffee served in the iconic Avocadoria cup — warm, rich and satisfying.',
-        image: '/menu/coffee/HOT_COFFEE.png',
+        image: '/menu/coffee/Coffee_Hot.jpg',
         tags:  [],
         new:   false,
       },
@@ -283,7 +269,7 @@ export const CATEGORIES = [
         id:    'iced-coffee',
         name:  'Iced Coffee',
         desc:  'Chilled coffee over ice served in the iconic Avocadoria cup — cool, bold and refreshing.',
-        image: '/menu/coffee/ICE_COFFEE.png',
+        image: '/menu/coffee/Coffee_Iced.jpg',
         tags:  [],
         new:   false,
       },

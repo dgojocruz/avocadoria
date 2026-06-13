@@ -42,7 +42,7 @@ export default function NewsPage() {
             <p className="post-date">{formatDate(featured.date)}</p>
             <h3 className="post-title">{featured.title}</h3>
             <p className="post-excerpt">{featured.excerpt}</p>
-            <span style={{ fontFamily:'Nunito,sans-serif', fontSize:'13px', fontWeight:'700', color:'#b6c548', marginTop:'12px', display:'inline-block' }}>
+            <span style={{ fontFamily:'Poppins,sans-serif', fontSize:'13px', fontWeight:'700', color:'#b6c548', marginTop:'12px', display:'inline-block' }}>
               Read more →
             </span>
           </div>
@@ -70,7 +70,7 @@ function PostDetail({ post, onBack }) {
   return (
     <div>
       <button onClick={onBack} style={{
-        fontFamily:'Nunito,sans-serif', fontSize:'13px', fontWeight:'700',
+        fontFamily:'Poppins,sans-serif', fontSize:'13px', fontWeight:'700',
         color:'#b6c548', background:'none', border:'none', cursor:'pointer',
         padding:'0 0 24px', display:'flex', alignItems:'center', gap:'6px',
       }}>
@@ -78,11 +78,12 @@ function PostDetail({ post, onBack }) {
       </button>
       <span className="post-badge">{post.category}</span>
       <p className="post-date">{new Date(post.date).toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'})}</p>
-      <h2 style={{ fontFamily:"'BubbleboddyNeue','Nunito',sans-serif", fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35', margin:'0 0 20px', lineHeight:1.2 }}>
+      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin:'0 0 20px', lineHeight:1.2 }}>
         {post.title}
       </h2>
       {post.image && <img src={post.image} alt={post.title} style={{ width:'100%', borderRadius:'16px', marginBottom:'24px', objectFit:'cover', maxHeight:'360px' }}/>}
-      <p style={{ fontFamily:'Nunito,sans-serif', fontSize:'16px', color:'rgba(138,95,60,0.9)', lineHeight:1.8 }}>
+      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'16px', color:'rgba(138,95,60,0.9)', lineHeight:1.8 }}>
         {post.content}
       </p>
     </div>
@@ -92,10 +93,11 @@ function PostDetail({ post, onBack }) {
 function SectionHeader({ title, sub }) {
   return (
     <div style={{ marginBottom:'32px' }}>
-      <h2 style={{ fontFamily:"'BubbleboddyNeue','Nunito',sans-serif", fontSize:'clamp(1.6rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35', margin:'0 0 6px' }}>
+      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin:'0 0 6px' }}>
         {title}
       </h2>
-      <p style={{ fontFamily:'Nunito,sans-serif', fontSize:'14px', color:'rgba(138,95,60,0.65)', margin:0 }}>{sub}</p>
+      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'14px', color:'rgba(138,95,60,0.65)', margin:0 }}>{sub}</p>
       <div style={{ width:'48px', height:'4px', borderRadius:'2px', background:'#b6c548', marginTop:'12px' }}/>
     </div>
   )
@@ -105,7 +107,7 @@ function EmptyState({ label }) {
   return (
     <div style={{ textAlign:'center', padding:'48px 0' }}>
       <span style={{ fontSize:'40px' }}>🥑</span>
-      <p style={{ fontFamily:'Nunito,sans-serif', color:'rgba(138,95,60,0.5)', marginTop:'12px' }}>
+      <p style={{ fontFamily:'Poppins,sans-serif', color:'rgba(138,95,60,0.5)', marginTop:'12px' }}>
         No {label} yet — check back soon!
       </p>
     </div>

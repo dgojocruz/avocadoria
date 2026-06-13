@@ -612,7 +612,7 @@ export default function OurStoresPage() {
               <style>{`
                 @font-face {
                   font-family:'BubbleboddyNeue-ExtraBold';
-                  src:url('/fonts/bubbleboddyneueinline-extrabold.ttf') format('truetype');
+                  src:url('/fonts/bubbleboddy-neue-extrabold.ttf') format('truetype');
                   font-display:swap;
                 }
                 @keyframes pin-float {
@@ -651,6 +651,7 @@ export default function OurStoresPage() {
               fontWeight: 'normal',
               fontSize: 'clamp(2rem, 5vw, 3.2rem)',
               color: C.dark,
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
               margin: '0 0 10px',
               lineHeight: '1.15',
             }}>
@@ -1052,7 +1053,7 @@ export default function OurStoresPage() {
                         <h2 style={{
                           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                           fontSize: '20px', fontWeight: 'normal',
-                          color: C.dark, margin: 0, lineHeight: '1.2',
+                          color: C.dark, textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: 0, lineHeight: '1.2',
                         }}>
                           {activeBranch.name}
                         </h2>

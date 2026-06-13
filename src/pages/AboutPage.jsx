@@ -454,7 +454,8 @@ function NewsCard({ post }) {
         <h3 style={{
           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize: 'clamp(14px, 1.5vw, 17px)', fontWeight: 'normal',
-          color: 'var(--c-dark)', margin: 0, lineHeight: 1.3,
+          color: 'var(--c-dark)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: 0, lineHeight: 1.3,
         }}>{post.title}</h3>
         <p style={{
           fontFamily: 'Poppins,sans-serif', fontSize: '13px',
@@ -504,7 +505,7 @@ export default function AboutPage() {
       <style>{`
         @font-face {
           font-family: 'BubbleboddyNeue-ExtraBold';
-          src: url('/fonts/bubbleboddyneueinline-extrabold.ttf') format('truetype');
+          src: url('/fonts/bubbleboddy-neue-extrabold.ttf') format('truetype');
           font-weight: normal; font-style: normal; font-display: swap;
         }
 
@@ -785,6 +786,7 @@ export default function AboutPage() {
             fontSize: 'clamp(2rem, 5vw, 3.6rem)',
             fontWeight: 800,
             color: 'var(--c-dark)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
             margin: '0 0 clamp(32px, 5vw, 52px)',
             lineHeight: 1.05,
             letterSpacing: '-0.01em',
@@ -892,6 +894,7 @@ export default function AboutPage() {
                       fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                       fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
                       fontWeight: 'normal', color: 'var(--c-dark)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
                       margin: '0 0 10px', lineHeight: 1.2,
                     }}>{sec.title}</h3>
                     <p style={{
@@ -985,6 +988,7 @@ export default function AboutPage() {
                   fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                   fontSize: 'clamp(1rem,2.2vw,1.4rem)',
                   fontWeight: 'normal', color: 'var(--c-dark)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
                   margin: 0, lineHeight: 1.25,
                 }}>{RECOGNITIONS[0].title}</h3>
                 <p style={{
@@ -1022,6 +1026,7 @@ export default function AboutPage() {
                 fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                 fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
                 fontWeight: 'normal', color: 'var(--c-dark)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
                 margin: '0 0 6px', lineHeight: 1.1,
               }}>Latest from Avocadoria</h2>
               <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'var(--c-brown)', margin: 0 }}>
@@ -1105,7 +1110,8 @@ export default function AboutPage() {
                   <h3 style={{
                     fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                     fontSize: 'clamp(14px, 1.5vw, 18px)', fontWeight: 'normal',
-                    color: 'var(--c-dark)', margin: 0, lineHeight: 1.3,
+                    color: 'var(--c-dark)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: 0, lineHeight: 1.3,
                   }}>{item.title}</h3>
                   <p style={{
                     fontFamily: 'Poppins,sans-serif', fontSize: '13px',

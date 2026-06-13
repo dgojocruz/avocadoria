@@ -25,7 +25,8 @@ export default function AvoCaresPage() {
         <div style={{ position:'relative', zIndex:1, maxWidth:'900px', margin:'0 auto', padding:'clamp(52px,7vw,88px) clamp(20px,5vw,72px)' }}>
 
       <div style={{ marginBottom:'36px' }}>
-        <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35', margin:'0 0 6px' }}>
+        <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin:'0 0 6px' }}>
           Avo Cares
         </h2>
         <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'14px', color:'rgba(138,95,60,0.65)', margin:0 }}>
@@ -100,7 +101,8 @@ function PostDetail({ post, onBack }) {
         <span className="post-badge featured">{post.category}</span>
         <span className="post-date" style={{ margin:0 }}>{new Date(post.date).toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'})}</span>
       </div>
-      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35', margin:'0 0 20px', lineHeight:1.2 }}>
+      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin:'0 0 20px', lineHeight:1.2 }}>
         {post.title}
       </h2>
       {post.image && <img src={post.image} alt={post.title} style={{ width:'100%', borderRadius:'16px', marginBottom:'24px', objectFit:'cover', maxHeight:'360px' }}/>}

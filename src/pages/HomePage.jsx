@@ -671,6 +671,7 @@ function RecognitionsTeaser() {
             fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
             fontSize: 'clamp(1.2rem,2.8vw,2rem)',
             fontWeight: 'normal', color: 'var(--c-dark)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
             margin: 0, lineHeight: 1.2,
           }}>{a.label}</h3>
 
@@ -1012,7 +1013,7 @@ export default function HomePage() {
             {/* Header row */}
             <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', flexWrap:'wrap', gap:'12px', marginBottom:'32px' }}>
               <div>
-                <h2 className="section-title" style={{ color:'#b6c548', margin:'0 0 6px' }}>
+                <h2 className="section-title" style={{ color:'#b6c548', margin:'0 0 6px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff' }}>
                   {"What's New"}
                 </h2>
                 <p className="section-sub" style={{ color:'rgba(138,95,60,.65)', margin:0 }}>
@@ -1105,6 +1106,7 @@ export default function HomePage() {
                         <h3 style={{
                           fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal',
                           fontSize:'clamp(14px,1.4vw,16px)', color:'var(--c-dark)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
                           margin:0, lineHeight:1.3,
                         }}>
                           {post.title}

@@ -17,7 +17,8 @@ export default function OurStoryPage() {
         <h2 style={{
           fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize:'clamp(1.8rem,3.5vw,2.8rem)',
-          fontWeight:'normal', color:'#3a6b35', margin:'0 0 10px',
+          fontWeight:'normal', color:'#3a6b35',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin:'0 0 10px',
         }}>
           {OUR_STORY.headline}
         </h2>
@@ -53,8 +54,9 @@ export default function OurStoryPage() {
                 background:'#b6c548', marginBottom:'14px',
               }}/>
               <h3 style={{
-                fontFamily:'Poppins,sans-serif', fontSize:'clamp(1.2rem,2vw,1.6rem)',
-                fontWeight:'800', color:'#3a6b35', margin:'0 0 12px',
+                fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.2rem,2vw,1.6rem)',
+                fontWeight:'800', color:'#3a6b35',
+                textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin:'0 0 12px',
               }}>
                 {sec.title}
               </h3>

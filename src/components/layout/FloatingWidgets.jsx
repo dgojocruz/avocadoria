@@ -24,8 +24,8 @@ const SIZE = {
 // ── Fonts ─────────────────────────────────────────────────────────────────────
 const FONTS = {
   // Any font loaded in your project — must match @font-face name exactly
-  label:    "'Nunito', sans-serif",         // sub-label ("Order via", "Message us")
-  main:     "'BubbleboddyNeue', 'Nunito', sans-serif", // main button text
+  label:    "'Poppins',sans-serif",         // sub-label ("Order via", "Message us")
+  main:     "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", // main button text
   labelSize: 10,   // px sub-label font size            try: 9–12
   mainSize:  14,   // px main text font size            try: 12–16
 }

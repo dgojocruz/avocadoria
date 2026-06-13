@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'BubbleboddyNeue';
+  font-family: 'BubbleboddyNeue-ExtraBold';
   src: url('/fonts/bubbleboddy-neue-extrabold.ttf') format('truetype'),
        url('/fonts/bubbleboddy-neue-extrabold.otf') format('opentype');
   font-weight: 800;
@@ -32,7 +32,7 @@
 /* ── Reset & base ─────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { margin: 0; padding: 0; overflow-x: hidden; font-family: 'Poppins', 'Nunito', sans-serif; }
+body { margin: 0; padding: 0; overflow-x: hidden; font-family: 'Poppins',sans-serif; }
 
 /* Fluid images — rule #5 from guide */
 img, video, iframe, svg { max-width: 100%; height: auto; display: block; }
@@ -109,7 +109,7 @@ a { touch-action: manipulation; }
   min-height: 44px;
   padding: 10px 24px;
   border-radius: 999px;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Poppins',sans-serif;
   font-size: var(--fs-base);
   font-weight: 700;
   text-decoration: none;
@@ -308,7 +308,7 @@ a { touch-action: manipulation; }
   border-radius: 999px;
   border: 1px solid var(--c-pale);
   box-shadow: 0 2px 12px rgba(0,0,0,.1);
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Poppins',sans-serif;
   font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--c-brown);
@@ -390,7 +390,7 @@ a { touch-action: manipulation; }
 
 /* ── Hero headline ────────────────────────────────────────────────────────── */
 .hero-headline {
-  font-family: 'BubbleboddyNeue','Nunito',sans-serif;
+  font-family: 'BubbleboddyNeue-ExtraBold','Poppins',sans-serif;
   font-weight: normal;
   font-size: var(--fs-4xl);
   line-height: 1.12;
@@ -409,14 +409,14 @@ a { touch-action: manipulation; }
 
 /* Section titles */
 .section-title {
-  font-family: 'BubbleboddyNeue','Nunito',sans-serif;
+  font-family: 'BubbleboddyNeue-ExtraBold','Poppins',sans-serif;
   font-weight: normal;
   font-size: var(--fs-2xl);
   margin: 0 0 8px;
   letter-spacing: .01em;
 }
 .section-sub {
-  font-family: 'Poppins', 'Nunito', sans-serif;
+  font-family: 'Poppins',sans-serif;
   font-size: var(--fs-sm);
   opacity: .75;
   margin: 0 0 var(--sp-md);

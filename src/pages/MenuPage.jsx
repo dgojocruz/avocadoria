@@ -42,12 +42,13 @@ function ProductCard({ item }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        background:'#ffffff',
+        background: 'transparent',
+        backdropFilter: 'none',
         borderRadius:'20px',
-        border:`1.5px solid ${hov ? 'var(--c-olive)' : 'rgba(182,197,72,0.18)'}`,
+        border:`1.5px solid ${hov ? 'var(--c-olive)' : 'rgba(255,255,255,0.5)'}`,
         boxShadow: hov
-          ? '0 12px 32px rgba(58,107,53,0.13)'
-          : '0 2px 10px rgba(58,107,53,0.05)',
+          ? '0 12px 32px rgba(58,107,53,0.18)'
+          : '0 2px 12px rgba(58,107,53,0.08)',
         overflow:'hidden',
         transition:'all 0.25s ease',
         transform: hov ? 'translateY(-4px)' : 'translateY(0)',
@@ -57,13 +58,14 @@ function ProductCard({ item }) {
       {/* Image */}
       <div style={{
         width:'100%', aspectRatio:'1/1',
-        background:'linear-gradient(135deg,rgba(182,197,72,0.10),rgba(182,197,72,0.04))',
+        background:'transparent',
         position:'relative', overflow:'hidden',
         display:'flex', alignItems:'center', justifyContent:'center',
+        padding:'8px',
       }}>
         {item.image
           ? <img src={item.image} alt={item.name} style={{
-              width:'100%', height:'100%', objectFit:'cover',
+              width:'100%', height:'100%', objectFit:'contain',
               transition:'transform 0.4s ease',
               transform: hov ? 'scale(1.07)' : 'scale(1)',
             }} onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex' }}/>
@@ -93,6 +95,7 @@ function ProductCard({ item }) {
       <div style={{
         padding:'16px 18px 20px',
         flex:1, display:'flex', flexDirection:'column', gap:'8px',
+        background:'transparent',
       }}>
         {item.tags?.length > 0 && (
           <div style={{ display:'flex', gap:'5px', flexWrap:'wrap' }}>
@@ -102,12 +105,13 @@ function ProductCard({ item }) {
         <h3 style={{
           fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize:'var(--fs-md)', fontWeight:'normal',
-          color:'var(--c-dark)', margin:0, lineHeight:1.2,
+          color:'#2a4a10',
+          textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin:0, lineHeight:1.2,
         }}>{item.name}</h3>
         <p style={{
           fontFamily:'Poppins,sans-serif',
           fontSize:'var(--fs-sm)', lineHeight:1.65,
-          color:'var(--c-brown)', opacity:0.85,
+          color:'#5a3a1a', opacity:1,
           margin:0, flex:1,
         }}>{item.desc}</p>
       </div>
@@ -192,56 +196,49 @@ function CategoryView({ cat, onBack }) {
   useEffect(() => { window.scrollTo({ top:0, behavior:'smooth' }) }, [cat.id])
 
   return (
-    <div className="page-enter">
+    <div className="page-enter" style={{ position:'relative', minHeight:'100vh', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+              <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
 
-      {/* Hero banner */}
+      {/* Hero banner — paper texture matching rest of site */}
       <div style={{
         position:'relative', width:'100%',
-        height:'clamp(180px,28vw,340px)', overflow:'hidden',
-        background: FALLBACKS[0],
+        padding:'clamp(110px,12vw,140px) clamp(20px,5vw,60px) clamp(40px,4vw,56px)',
+        backgroundImage: "url('/website_layer_1.png')",
+        backgroundSize: 'cover', backgroundPosition: 'center',
+        backgroundColor: '#F3F2EE',
+        position: 'relative',
       }}>
-        {cat.cover
-          ? <img src={cat.cover} alt={cat.name} style={{
-              width:'100%', height:'100%', objectFit:'cover',
-            }} onError={e => e.target.style.display='none'}/>
-          : <div style={{
-              width:'100%', height:'100%',
-              background: FALLBACKS[0],
-              display:'flex', alignItems:'center', justifyContent:'center',
-              fontSize:'80px',
-            }}>{cat.emoji}</div>
-        }
-        {/* Gradient overlay */}
-        <div style={{
-          position:'absolute', inset:0,
-          background:'linear-gradient(to right, rgba(20,50,10,0.68) 0%, rgba(20,50,10,0.18) 55%, transparent 80%)',
-        }}/>
+        {/* Same green overlay as all sections */}
+        <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
+
         {/* Text */}
         <div style={{
-          position:'absolute',
+          position:'absolute', zIndex:2,
           bottom:'clamp(20px,4vw,36px)',
           left:'clamp(20px,5vw,60px)',
         }}>
           <h1 style={{
             fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
             fontSize:'var(--fs-4xl)', fontWeight:'normal',
-            color:'#fff', margin:'0 0 6px', lineHeight:1.1,
-            textShadow:'0 2px 14px rgba(0,0,0,0.35)',
+            color:'#3a6b35', margin:'0 0 6px', lineHeight:1.1,
+            textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
           }}>
             {cat.emoji} {cat.name}
           </h1>
           <p style={{
             fontFamily:'Poppins,sans-serif',
             fontSize:'var(--fs-sm)',
-            color:'rgba(255,255,255,0.85)', margin:0,
+            color:'rgba(58,107,53,0.8)', margin:0,
           }}>{cat.tagline}</p>
         </div>
       </div>
 
       {/* Breadcrumb + back */}
       <div style={{
-        maxWidth:'1200px', margin:'0 auto',
-        padding:'18px clamp(20px,4vw,48px) 0',
+        position:'relative', zIndex:2,
+        background:'rgba(255,255,255,0.55)', backdropFilter:'blur(6px)',
+        borderBottom:'1.5px solid rgba(182,197,72,0.25)',
+        padding:'12px clamp(20px,4vw,48px)',
         display:'flex', alignItems:'center', gap:'10px',
       }}>
         <button
@@ -253,7 +250,7 @@ function CategoryView({ cat, onBack }) {
         </button>
         <span style={{
           fontFamily:'Poppins,sans-serif', fontSize:'13px',
-          color:'var(--c-brown)', opacity:0.5,
+          color:'#3a6b35', opacity:1, fontWeight:'600',
         }}>
           / {cat.name}
         </span>
@@ -321,7 +318,8 @@ export default function MenuPage() {
         }
       `}</style>
 
-      <div className="page-enter">
+      <div className="page-enter" style={{ position:'relative', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+        <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
 
         {/* ── Header — matches About / Home hero style ── */}
         <div style={{
