@@ -302,7 +302,6 @@ function InquiryForm() {
 
   if (sent) return (
     <div style={{ textAlign: 'center', padding: '48px 24px' }}>
-      <div style={{ fontSize: '56px', marginBottom: '16px' }}>🥑</div>
       <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '26px', color: '#b6c548', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', marginBottom: '8px' }}>
         Thank you for your interest!
       </h3>
@@ -377,7 +376,7 @@ function InquiryForm() {
         onMouseEnter={e => { if (!loading) e.currentTarget.style.background = '#3a6b35' }}
         onMouseLeave={e => { if (!loading) e.currentTarget.style.background = '#b6c548' }}
       >
-        {loading ? 'Sending...' : 'Submit Franchise Inquiry 🥑'}
+        {loading ? 'Sending...' : 'Submit Franchise Inquiry'}
       </button>
     </form>
   )
@@ -461,11 +460,11 @@ export default function FranchisePage() {
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px' }}>
               {[
-                { icon: '🏆', title: 'No. 1 Brand',    desc: 'Philippines\' leading avocado-based dessert brand' },
-                { icon: '🥑', title: '7+ Years',       desc: 'Proven track record and loyal customer base' },
-                { icon: '🤝', title: 'Full Support',   desc: 'Training, operations, and marketing support' },
-                { icon: '📈', title: 'Growing Market', desc: 'Health-conscious food market is booming in PH' },
-                { icon: '🌱', title: 'Local Roots',    desc: 'Proudly supports local avocado farmers' },
+                { title: 'No. 1 Brand',    desc: 'Philippines\' leading avocado-based dessert brand' },
+                { title: '7+ Years',       desc: 'Proven track record and loyal customer base' },
+                { title: 'Full Support',   desc: 'Training, operations, and marketing support' },
+                { title: 'Growing Market', desc: 'Health-conscious food market is booming in PH' },
+                { title: 'Local Roots',    desc: 'Proudly supports local avocado farmers' },
               ].map((w, i) => (
                 <div key={i} style={{
                   background: 'rgba(255,255,255,0.82)', borderRadius: '16px',
@@ -473,8 +472,7 @@ export default function FranchisePage() {
                   border: '1.5px solid rgba(182,197,72,0.3)',
                   boxShadow: '0 4px 20px rgba(58,107,53,0.08)',
                 }}>
-                  <div style={{ fontSize: '36px', marginBottom: '12px' }}>{w.icon}</div>
-                  <div style={{ fontFamily: 'Poppins,sans-serif', fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '14px', color: '#3a6b35', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', marginBottom: '6px' }}>{w.title}</div>
+                  <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>{w.title}</div>
                   <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', lineHeight: '1.6' }}>{w.desc}</div>
                 </div>
               ))}
@@ -499,17 +497,17 @@ export default function FranchisePage() {
                 <div key={i} style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', position: 'relative', paddingBottom: i < STEPS.length - 1 ? '36px' : '0' }}>
                   {/* Connector line */}
                   {i < STEPS.length - 1 && (
-                    <div style={{ position: 'absolute', left: '28px', top: '56px', width: '2px', height: 'calc(100% - 20px)', background: 'rgba(182,197,72,0.45)', zIndex: 0 }} />
+                    <div style={{ position: 'absolute', left: '24px', top: '52px', width: '2px', height: 'calc(100% - 20px)', background: 'rgba(182,197,72,0.45)', zIndex: 0 }} />
                   )}
                   {/* Step number circle */}
-                  <div style={{ flexShrink: 0, width: '56px', height: '56px', borderRadius: '50%', background: '#b6c548', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', position: 'relative', zIndex: 1, boxShadow: '0 4px 14px rgba(182,197,72,0.35)' }}>
-                    {step.icon}
+                  <div style={{ flexShrink: 0, width: '48px', height: '48px', borderRadius: '50%', background: '#b6c548', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 1, boxShadow: '0 4px 14px rgba(182,197,72,0.35)' }}>
+                    <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', color: '#fff', letterSpacing: '0.02em' }}>{step.num}</span>
                   </div>
                   {/* Content */}
                   <div style={{ paddingTop: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
                       <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em' }}>STEP {step.num}</span>
-                      <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '15px', color: '#3a6b35', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: 0 }}>{step.title}</h3>
+                      <h3 style={{ fontFamily: 'Poppins,sans-serif', fontWeight: '700', fontSize: '15px', color: '#3a6b35', margin: 0 }}>{step.title}</h3>
                     </div>
                     <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.8)', lineHeight: '1.65', margin: 0 }}>{step.desc}</p>
                   </div>
@@ -535,22 +533,21 @@ export default function FranchisePage() {
             {/* Contact options */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '36px' }}>
               {[
-                { icon: '📧', label: 'Email',    value: 'official@avocadoria.com.ph', href: 'mailto:official@avocadoria.com.ph' },
-                { icon: '📞', label: 'Call / SMS', value: '+63 945 971 6599',        href: 'tel:+639459716599' },
-                { icon: '💬', label: 'Messenger', value: 'Message us on FB',         href: 'https://m.me/avocadoria.ph' },
+                { label: 'Email',      value: 'official@avocadoria.com.ph', href: 'mailto:official@avocadoria.com.ph' },
+                { label: 'Call / SMS', value: '+63 945 971 6599',           href: 'tel:+639459716599' },
+                { label: 'Messenger',  value: 'Message us on FB',           href: 'https://m.me/avocadoria.ph' },
               ].map((c, i) => (
                 <a key={i} href={c.href} target="_blank" rel="noopener noreferrer" style={{
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
-                  background: 'rgba(255,255,255,0.7)', borderRadius: '14px', padding: '16px 12px',
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
+                  background: 'rgba(255,255,255,0.7)', borderRadius: '14px', padding: '18px 12px',
                   textDecoration: 'none', border: '1.5px solid rgba(182,197,72,0.3)',
                   transition: 'all 0.2s',
                 }}
                   onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#b6c548' }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.7)'; e.currentTarget.style.borderColor = 'rgba(182,197,72,0.3)' }}
                 >
-                  <span style={{ fontSize: '22px' }}>{c.icon}</span>
-                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{c.label}</span>
-                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#8A5F3C', textAlign: 'center' }}>{c.value}</span>
+                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '700', color: '#b6c548', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{c.label}</span>
+                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#8A5F3C', textAlign: 'center', lineHeight: 1.4 }}>{c.value}</span>
                 </a>
               ))}
             </div>

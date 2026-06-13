@@ -51,11 +51,11 @@ const AMBIENT = {
 
 // ── Layer 3: White wash (left side only) ──────────────────────────────────────
 const WASH = {
-  opacityLeft:    0.75,
-  opacityMidLeft: 0.75,
-  opacityMid:     0.75,
-  opacityRight:   0.60,
-  clearAt:        '65%',
+  opacityLeft:    0.40,
+  opacityMidLeft: 0.40,
+  opacityMid:     0.40,
+  opacityRight:   0.40,
+  clearAt:        '100%',
 }
 
 // ── Layer 4: Sharp hero product ───────────────────────────────────────────────
