@@ -299,11 +299,11 @@ export default function Navbar() {
           position:'absolute', top:'100%', left:0, right:0,
           overflow:'hidden', maxHeight: isOpen ? '600px' : '0',
           transition:'max-height 0.35s ease',
-          background:'rgba(244,250,236,0.98)',
-          backdropFilter:'blur(16px)',
-          WebkitBackdropFilter:'blur(16px)',
-          borderTop:'1px solid rgba(182,197,72,0.25)',
-          boxShadow:'0 8px 24px rgba(58,107,53,0.12)',
+          background:'rgba(255,255,255,0.25)',
+          backdropFilter:'blur(20px)',
+          WebkitBackdropFilter:'blur(20px)',
+          borderTop:'1px solid rgba(255,255,255,0.4)',
+          boxShadow:'0 8px 32px rgba(58,107,53,0.15)',
         }}>
         <ul style={{ listStyle:'none', padding:'8px 12px 16px', margin:0,
           display:'flex', flexDirection:'column', gap:'2px' }}>
@@ -319,7 +319,7 @@ export default function Navbar() {
                       width:'100%', minHeight:'48px', padding:'8px 16px',
                       borderRadius:'12px', border:'none', cursor:'pointer',
                       fontFamily:'Poppins,sans-serif', fontSize:'16px', fontWeight:'700',
-                      color:'#8A5F3C', background:'transparent', textAlign:'left',
+                      color:'#3a6b35', background:'transparent', textAlign:'left',
                       transition:'all 0.15s',
                     }}
                   >
@@ -344,10 +344,10 @@ export default function Navbar() {
                           borderRadius:'10px',
                           fontFamily:'Poppins,sans-serif',
                           fontSize:'14px', fontWeight:'700',
-                          color:'#8A5F3C', textDecoration:'none',
+                          color:'#3a6b35', textDecoration:'none',
                           transition:'all 0.15s',
                         }}
-                        onMouseEnter={e => e.currentTarget.style.background='rgba(182,197,72,0.1)'}
+                        onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.35)'}
                         onMouseLeave={e => e.currentTarget.style.background='transparent'}
                       >
                         — {sub.label}
@@ -363,7 +363,7 @@ export default function Navbar() {
                     borderRadius:'12px',
                     fontFamily:'Poppins,sans-serif',
                     fontSize:'16px', fontWeight:'700',
-                    color: isActive ? '#fff' : '#8A5F3C',
+                    color: isActive ? '#fff' : '#3a6b35',
                     background: isActive ? '#b6c548' : 'transparent',
                     textDecoration:'none', transition:'all 0.15s',
                   })}>

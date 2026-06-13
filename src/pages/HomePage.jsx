@@ -428,7 +428,22 @@ function FranchiseTeaser() {
           transform: scale(1.18);
         }
         @media (max-width: 767px) {
-          .ft-orbit { height: 520px !important; }
+          .ft-orbit {
+            height: 300px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+          }
+          .ft-ring-cart { display: none !important; }
+          .ft-ring-cart.is-active {
+            display: block !important;
+            position: relative !important;
+            left: auto !important; top: auto !important;
+            transform: scale(1) !important;
+            width: 260px !important; height: 260px !important;
+            margin: 0 auto !important; opacity: 1 !important;
+          }
+          .ft-ring-cart.is-active img { transform: scale(1) !important; }
         }
       `}</style>
 
