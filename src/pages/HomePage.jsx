@@ -12,19 +12,19 @@ import { NEWS_POSTS } from '@/data/posts'
 const PRODUCTS = [
   {
     bg:     '/Avo_Lover.png',      // BG Layer 1 — full scene photo with Ken Burns zoom
-    src:    '/lover_nobg.png',     // Product carousel Layer 4 — transparent cutout floating
+    src:    '/lover_nobg.webp',     // Product carousel Layer 4 — transparent cutout floating
     alt:    'Avo Lover dessert cup',
     origin: '30% 60%',             // zoom anchor point on BG photo
   },
   {
     bg:     '/Naked___Inipit.png',
-    src:    '/naked_nobg.png',
+    src:    '/naked_nobg.webp',
     alt:    'Naked Ice Cream & Inipit',
     origin: '30% 60%',
   },
   {
     bg:     '/Shakes.png',
-    src:    '/shake_nobg.png',
+    src:    '/shake_nobg.webp',
     alt:    'Avocadoria Shakes',
     origin: '30% 60%',
   },
@@ -179,7 +179,8 @@ function BgLayer({ cur, visible }) {
             transitionDuration: `${TIMING.transition}ms, ${TIMING.duration + TIMING.transition}ms`,
             transitionTimingFunction: 'ease, ease-out',
           }}
-        />
+                    loading="lazy" decoding="async"
+                  />
       ))}
     </div>
   )
@@ -202,7 +203,8 @@ function ProductLayers({ cur, visible, goTo }) {
           alt={product.alt}
           className="avo-hero__product-img"
           style={{ pointerEvents:'none' }}
-        />
+                    loading="lazy" decoding="async"
+                  />
       </div>
 
       {/* Dots */}
@@ -494,7 +496,9 @@ function FranchiseTeaser() {
                 opacity,
               }}
             >
-              <img src={c.image} alt={c.name} />
+              <img src={c.image} alt={c.name}
+                    loading="lazy" decoding="async"
+                  />
             </div>
           )
         })}
@@ -646,7 +650,8 @@ function RecognitionsTeaser() {
                 width: '100%', height: '100%',
                 objectFit: p.fit, objectPosition: p.pos,
               }}
-            />
+                    loading="lazy" decoding="async"
+                  />
           )}
           {/* Current photo fading in */}
           <img key={`cur-${cur}`} src={a.img} alt={a.label}
@@ -983,7 +988,8 @@ export default function HomePage() {
             <img src="/avofaves.png"
               alt="Avo-Faves — Avocado Lover, Naked Light Ice Cream, Avocado Shake"
               style={{ width:'100%', display:'block', objectFit:'cover' }}
-            />
+                    loading="lazy" decoding="async"
+                  />
             <div style={{
               position:'absolute', bottom:AVO_BTN.posBottom, left:AVO_BTN.posLeft,
               transform:'translateX(-50%)', zIndex:5,

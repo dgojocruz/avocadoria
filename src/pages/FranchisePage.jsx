@@ -119,20 +119,18 @@ function CartSlideshow() {
         @keyframes slide-in-left  { from { opacity:0; transform:translateX(-40px) } to { opacity:1; transform:translateX(0) } }
         .cart-enter { animation: slide-in-right 0.6s cubic-bezier(.22,1,.36,1) forwards }
         .cart-info-enter { animation: slide-in-left 0.5s cubic-bezier(.22,1,.36,1) forwards }
+        .cart-showcase { display: grid; grid-template-columns: 8fr 2fr; gap: 48px; align-items: center; max-width: 1400px; margin: 0 auto; padding: 0 16px; }
+        .cart-form-row { display: grid; grid-template-columns: 7fr 3fr; gap: 16px; }
+        .cart-contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 36px; }
+        @media (max-width: 767px) {
+          .cart-showcase { grid-template-columns: 1fr; gap: 24px; }
+          .cart-form-row { grid-template-columns: 1fr; }
+          .cart-contact-grid { grid-template-columns: 1fr; }
+        }
       `}</style>
 
       {/* ── Main showcase ── */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '8fr 2fr',
-        gap: '48px',
-        alignItems: 'center',
-        minHeight: 'unset',
-        maxWidth: '1400px',
-        margin: '0 auto',
-        padding: '0 16px',
-      }}
-      >
+      <div className="cart-showcase">
         {/* Left — image */}
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <img
@@ -148,7 +146,8 @@ function CartSlideshow() {
               display: 'block',
               filter: 'drop-shadow(0 24px 48px rgba(58,107,53,0.18))',
             }}
-          />
+                    loading="lazy" decoding="async"
+                  />
         </div>
 
         {/* Right — info */}
@@ -260,7 +259,7 @@ function InquiryForm() {
 
   return (
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '7fr 3fr', gap: '16px' }}>
+      <div className="cart-form-row">
         <div>
           <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Full Name *</label>
           <input required value={form.name} onChange={set('name')} placeholder="Juan dela Cruz" style={inputStyle}
@@ -276,7 +275,7 @@ function InquiryForm() {
           />
         </div>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '7fr 3fr', gap: '16px' }}>
+      <div className="cart-form-row">
         <div>
           <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Number *</label>
           <input required value={form.phone} onChange={set('phone')} placeholder="+63 9XX XXX XXXX" style={inputStyle}
@@ -477,7 +476,7 @@ export default function FranchisePage() {
             </div>
 
             {/* Contact options */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '36px' }}>
+            <div className="cart-contact-grid">
               {[
                 { label: 'Email',      value: 'franchise@avocadoria.com.ph', href: 'mailto:franchise@avocadoria.com.ph' },
                 { label: 'Call / SMS', value: '+63 945 971 6599',           href: 'tel:+639459716599' },

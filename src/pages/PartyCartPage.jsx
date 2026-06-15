@@ -236,7 +236,8 @@ function PackageCard({ pkg, onBook }) {
           src={pkg.image}
           alt={pkg.name}
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
-        />
+                    loading="lazy" decoding="async"
+                  />
         {/* Tag badge */}
         <div style={{ position: 'absolute', top: '14px', left: '14px', background: pkg.color, color: '#fff', fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', padding: '4px 12px', borderRadius: '999px' }}>
           {pkg.tag}
@@ -346,15 +347,15 @@ export default function PartyCartPage() {
       <section style={{ ...TEXTURE, paddingTop: 'clamp(80px,12vw,120px)', paddingBottom: 0, textAlign: 'center' }}>
         <div style={OVERLAY} />
         <div style={{ ...INNER, padding: '0 var(--sp-md)' }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: '32px',
-            alignItems: 'center',
-            maxWidth: '1100px',
-            margin: '0 auto',
-            textAlign: 'left',
-          }}>
+          <style>{`
+            .pc-hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; max-width: 1100px; margin: 0 auto; text-align: left; }
+            @media (max-width: 767px) {
+              .pc-hero-grid { grid-template-columns: 1fr; text-align: center; }
+              .pc-hero-grid .pc-img { order: -1; }
+              .pc-hero-grid p { margin-left: auto; margin-right: auto; }
+            }
+          `}</style>
+          <div className="pc-hero-grid">
             {/* Left — text */}
             <div>
               <h1 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(2rem,8vw,3.5rem)', color: '#3a6b35', margin: '0 0 14px', textShadow: '-2px -2px 0 rgba(255,255,255,0.95), 2px -2px 0 rgba(255,255,255,0.95), -2px 2px 0 rgba(255,255,255,0.95), 2px 2px 0 rgba(255,255,255,0.95), -3px -3px 0 rgba(220,255,80,0.7), 3px 3px 0 rgba(220,255,80,0.7)', lineHeight: 1.1 }}>
@@ -374,7 +375,7 @@ export default function PartyCartPage() {
               </button>
             </div>
             {/* Right — Party Cart image */}
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
+            <div className="pc-img" style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
               <img
                 src="/party-cart-hero.png"
                 alt="Avocadoria Party Cart"
@@ -387,6 +388,7 @@ export default function PartyCartPage() {
                   transform: 'scale(1.12)',
                   transformOrigin: 'bottom center',
                 }}
+                loading="lazy" decoding="async"
               />
             </div>
           </div>

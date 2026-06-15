@@ -33,7 +33,9 @@ export default function NewsPage() {
             minHeight:'200px', display:'flex', alignItems:'center', justifyContent:'center',
           }}>
             {featured.image
-              ? <img src={featured.image} alt={featured.title} style={{ width:'100%', borderRadius:'12px', objectFit:'cover', maxHeight:'220px' }}/>
+              ? <img src={featured.image} alt={featured.title} style={{ width:'100%', borderRadius:'12px', objectFit:'cover', maxHeight:'220px' }}
+                    loading="lazy" decoding="async"
+                  />
               : <div style={{ width:'100%', minHeight:'200px', background:'rgba(182,197,72,0.10)', borderRadius:'12px' }} />
             }
           </div>
@@ -81,7 +83,9 @@ function PostDetail({ post, onBack }) {
       <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,4vw,2.8rem)', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 20px', lineHeight:1.1 }}>
         {post.title}
       </h2>
-      {post.image && <img src={post.image} alt={post.title} style={{ width:'100%', borderRadius:'16px', marginBottom:'24px', objectFit:'cover', maxHeight:'360px' }}/>}
+      {post.image && <img src={post.image} alt={post.title} style={{ width:'100%', borderRadius:'16px', marginBottom:'24px', objectFit:'cover', maxHeight:'360px' }}
+                    loading="lazy" decoding="async"
+                  />}
       <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'16px', color:'rgba(138,95,60,0.9)', lineHeight:1.8 }}>
         {post.content}
       </p>

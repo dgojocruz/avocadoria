@@ -328,7 +328,9 @@ function JobCard({ job, onApply }) {
         {/* Front — poster image */}
         <div className="card-face" style={{ boxShadow: '0 8px 32px rgba(138,95,60,0.15)' }}>
           {job.image ? (
-            <img src={job.image} alt={`${job.role} - ${job.branch}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <img src={job.image} alt={`${job.role} - ${job.branch}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    loading="lazy" decoding="async"
+                  />
           ) : (
             <div style={{ width: '100%', height: '100%', background: 'linear-gradient(160deg,#D0E8AF,#b6c548)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', textAlign: 'center' }}>
               <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '28px', fontWeight: '800', color: '#3a6b35' }}>{job.role}</h3>

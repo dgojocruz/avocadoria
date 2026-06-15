@@ -609,7 +609,9 @@ export default function OurStoresPage() {
               marginBottom: '32px',
               animation: 'pin-float 3s ease-in-out infinite',
             }}>
-              <img src="/avopin-icon.png" alt="Avocadoria" style={{ width: '120px', height: 'auto', objectFit: 'contain' }} />
+              <img src="/avopin-icon.png" alt="Avocadoria" style={{ width: '120px', height: 'auto', objectFit: 'contain' }}
+                    loading="lazy" decoding="async"
+                  />
             </div>
 
             {/* Headline */}

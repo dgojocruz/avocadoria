@@ -47,7 +47,9 @@ export default function OurStoryPage() {
           }}>
             {sec.image && i % 2 === 0 && (
               <img src={sec.image} alt={sec.title}
-                style={{ width:'100%', borderRadius:'16px', objectFit:'cover', maxHeight:'280px' }}/>
+                style={{ width:'100%', borderRadius:'16px', objectFit:'cover', maxHeight:'280px' }}
+                    loading="lazy" decoding="async"
+                  />
             )}
             <div>
               <div style={{
@@ -72,20 +74,17 @@ export default function OurStoryPage() {
             </div>
             {sec.image && i % 2 === 1 && (
               <img src={sec.image} alt={sec.title}
-                style={{ width:'100%', borderRadius:'16px', objectFit:'cover', maxHeight:'280px' }}/>
+                style={{ width:'100%', borderRadius:'16px', objectFit:'cover', maxHeight:'280px' }}
+                    loading="lazy" decoding="async"
+                  />
             )}
           </div>
         ))}
       </div>
 
       {/* Stats strip */}
-      <div style={{
-        display:'grid', gridTemplateColumns:'repeat(3,1fr)',
-        gap:'16px', marginTop:'56px',
-        background:'rgba(255,255,255,0.7)',
-        borderRadius:'20px', padding:'32px',
-        border:'1.5px solid rgba(182,197,72,0.2)',
-      }}>
+      <style>{`.story-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:56px; background:rgba(255,255,255,0.7); border-radius:20px; padding:32px; border:1.5px solid rgba(182,197,72,0.2); } @media(max-width:767px){ .story-stats{ grid-template-columns:1fr; text-align:center; } }`}</style>
+      <div className="story-stats">
         {[
           { num:'7+',    label:'Years of happiness' },
           { num:'100K+', label:'Cups served'        },
