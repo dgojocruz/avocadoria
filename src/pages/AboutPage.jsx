@@ -13,10 +13,10 @@ const BRAND = {
   headline:   'The Story of Avocadoria',
   sub:        'From a single kitchen to the Philippines\' No. 1 avocado dessert brand — this is how it all began.',
   stats: [
-    { num: '2019',  label: 'Year Founded',         icon: '🌱' },
-    { num: '7+',    label: 'Years of Happiness',    icon: '🥑' },
-    { num: '50+',   label: 'Branches Nationwide',   icon: '📍' },
-    { num: '100K+', label: 'Happy Cups Served',     icon: '☕' },
+    { num: '2019',  label: 'Year Founded'       },
+    { num: '7+',    label: 'Years of Happiness' },
+    { num: '250+',   label: 'Branches Nationwide', color: 'var(--c-pink)' },
+    { num: '100K+', label: 'Happy Cups Served'  },
   ],
 }
 
@@ -213,7 +213,7 @@ function StatCard({ stat, trigger }) {
       <div style={{
         fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
         fontSize: 'clamp(2rem, 4vw, 3rem)',
-        color: 'var(--c-olive)', lineHeight: 1,
+        color: stat.color || 'var(--c-olive)', lineHeight: 1,
         textShadow: STROKE,
       }}>{val || stat.num}</div>
       <div style={{
@@ -378,8 +378,7 @@ function RecognitionsCarousel({ items }) {
                 height: 'clamp(130px,22vw,190px)',
                 background: 'rgba(58,107,53,0.3)',
                 alignItems: 'center', justifyContent: 'center',
-                fontSize: '36px',
-              }}>🏆</div>
+              }}></div>
               <div className="rec-slide-body">
                 <span
                   className="rec-slide-badge"
@@ -435,7 +434,7 @@ function NewsCard({ post }) {
       }}>
         {post.image
           ? <img src={post.image} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }}  loading="lazy" decoding="async"/>
-          : <span style={{ fontSize: '48px' }}>🥑</span>
+          : <div style={{ width: '100%', height: '100%', background: 'rgba(182,197,72,0.15)' }} />
         }
       </div>
       <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -718,7 +717,7 @@ export default function AboutPage() {
               letterSpacing: '0.08em', textTransform: 'uppercase',
               padding: '5px 20px', borderRadius: '999px',
             }}>
-              Est. 2019 · Philippines No. 1 🥑
+              Est. 2019 · Philippines No. 1
             </span>
 
             {/* Tagline quote */}
@@ -733,13 +732,12 @@ export default function AboutPage() {
             {/* Main headline */}
             <h1 style={{
               fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-              fontWeight: 800,
-              fontSize: 'clamp(2.4rem, 7vw, 4.8rem)',
+              fontWeight: 'normal',
+              fontSize: 'clamp(2.2rem,5vw,3.8rem)',
               color: 'var(--c-olive)',
-              textShadow: 'none',
-              margin: '0 0 18px', lineHeight: 1.05,
-              background: 'none',
-              WebkitTextFillColor: 'var(--c-olive)',
+              textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+              margin: '0 0 8px', lineHeight: 1.1,
+              whiteSpace: 'nowrap',
             }}>
               {BRAND.headline}
             </h1>
@@ -771,7 +769,7 @@ export default function AboutPage() {
       </div>
 
       {/* Wave out of hero */}
-      <Wave fromColor="#3a6b35" toColor="#d9e29e" height={60} />
+      <Wave fromColor="#d9e29e" toColor="#b6c548" height={60} />
 
       {/* ══════════════════════════════════════════════════════════════
           OUR STORY — founder photo left, story text right (mirrors slide)
@@ -783,13 +781,10 @@ export default function AboutPage() {
           {/* ── "Our Story" heading — top-left, bold, dark green, matches slide ── */}
           <h2 style={{
             fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-            fontSize: 'clamp(2rem, 5vw, 3.6rem)',
-            fontWeight: 800,
-            color: 'var(--c-dark)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
-            margin: '0 0 clamp(32px, 5vw, 52px)',
-            lineHeight: 1.05,
-            letterSpacing: '-0.01em',
+            fontSize: 'clamp(1.6rem,4vw,2.8rem)',
+            fontWeight: 'normal', color: 'var(--c-olive)',
+            textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+            margin: '0 0 8px', lineHeight: 1.1,
           }}>Our Story</h2>
 
           {/* ── Two-column layout: photo left, text right ── */}
@@ -812,12 +807,12 @@ export default function AboutPage() {
                     fontSize: '11px', fontWeight: '800',
                     color: '#fff', letterSpacing: '0.06em',
                     textTransform: 'uppercase',
-                  }}>Est. 2019 🥑</span>
+                  }}>Est. 2019</span>
                 </div>
               </div>
             </div>
 
-            {/* RIGHT — Story paragraphs, exactly matching slide content */}
+            {/* RIGHT — Story paragraphs */}
             <div className="about-founder-text-col">
               <p className="about-founder-para">
                 Founded in 2019, Avocadoria was built on a simple belief: desserts can be both indulgent and nourishing.
@@ -836,13 +831,6 @@ export default function AboutPage() {
                 borderTop: '2px solid rgba(58,107,53,0.15)',
                 display: 'flex', alignItems: 'center', gap: '14px',
               }}>
-                <div style={{
-                  width: '48px', height: '48px', borderRadius: '50%',
-                  background: 'var(--c-olive)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '22px', flexShrink: 0,
-                  minHeight: 'unset', minWidth: 'unset',
-                }}>👩‍🍳</div>
                 <div>
                   <p style={{
                     fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
@@ -860,8 +848,6 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-
-          {/* ── Mission / Vision / Values cards below — compact 3-col ── */}
           <div style={{ marginTop: 'clamp(48px, 7vw, 72px)' }}>
             <div style={{
               display: 'grid',
@@ -912,7 +898,7 @@ export default function AboutPage() {
       </div>
 
       {/* Wave into dark section */}
-      <Wave fromColor="#d9e29e" toColor="#3a6b35" height={56} />
+      <Wave fromColor="#b6c548" toColor="#d9e29e" height={56} />
 
       {/* ══════════════════════════════════════════════════════════════
           RECOGNITIONS — floating image carousel
@@ -925,7 +911,7 @@ export default function AboutPage() {
 
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: 'clamp(28px,4vw,44px)' }}>
-            <SectionLabel text="Awards & Recognitions 🏆" color="var(--c-olive)" />
+            <SectionLabel text="Awards & Recognitions" color="var(--c-olive)" />
             <h2 style={{
               fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
@@ -1007,7 +993,7 @@ export default function AboutPage() {
       </div>
 
       {/* Wave out */}
-      <Wave fromColor="#3a6b35" toColor="#d9e29e" height={56} />
+      <Wave fromColor="#d9e29e" toColor="#b6c548" height={56} />
 
       {/* ══════════════════════════════════════════════════════════════
           WHAT'S NEW
@@ -1024,10 +1010,10 @@ export default function AboutPage() {
               <SectionLabel text="What's New" color="var(--c-pink)" />
               <h2 style={{
                 fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-                fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
-                fontWeight: 'normal', color: 'var(--c-dark)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
-                margin: '0 0 6px', lineHeight: 1.1,
+                fontSize: 'clamp(1.6rem,4vw,2.8rem)',
+                fontWeight: 'normal', color: 'var(--c-olive)',
+                textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+                margin: '0 0 8px', lineHeight: 1.1,
               }}>Latest from Avocadoria</h2>
               <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'var(--c-brown)', margin: 0 }}>
                 New branches, products, and announcements.
@@ -1048,12 +1034,13 @@ export default function AboutPage() {
         <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
         <div style={{ position:'relative', zIndex:1, maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '44px' }}>
-            <SectionLabel text="Avo Cares 🌱" color="var(--c-dark)" />
+            <SectionLabel text="Avo Cares" color="var(--c-dark)" />
             <h2 style={{
               fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-              fontSize: 'clamp(1.8rem, 4vw, 3rem)',
+              fontSize: 'clamp(1.6rem,4vw,2.8rem)',
               fontWeight: 'normal', color: 'var(--c-olive)',
-              textShadow: STROKE, margin: '0 0 12px', lineHeight: 1.1,
+              textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+              margin: '0 0 8px', lineHeight: 1.1,
             }}>Spreading Happiness Beyond Our Cups</h2>
             <p style={{
               fontFamily: 'Poppins,sans-serif', fontSize: 'clamp(14px, 1.5vw, 17px)',
@@ -1125,7 +1112,7 @@ export default function AboutPage() {
       </div>
 
       {/* Bottom wave + tagline strip */}
-      <Wave fromColor="#d9e29e" toColor="#b6c548" height={50} />
+      <Wave fromColor="#b6c548" toColor="#d9e29e" height={50} />
       <div style={{ position:'relative', overflow:'hidden', padding: '28px 32px', textAlign: 'center', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
         <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.55 }} />
         <p style={{
@@ -1134,7 +1121,7 @@ export default function AboutPage() {
           color: 'rgba(255,255,255,0.9)', margin: 0,
           textShadow: '0 1px 4px rgba(0,0,0,0.2)',
         }}>
-          Happiness in Avocado — since 2019 🥑
+          Happiness in Avocado — since 2019
         </p>
       </div>
 

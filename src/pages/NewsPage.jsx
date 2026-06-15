@@ -34,7 +34,7 @@ export default function NewsPage() {
           }}>
             {featured.image
               ? <img src={featured.image} alt={featured.title} style={{ width:'100%', borderRadius:'12px', objectFit:'cover', maxHeight:'220px' }}/>
-              : <span style={{ fontSize:'48px' }}>🥑</span>
+              : <div style={{ width:'100%', minHeight:'200px', background:'rgba(182,197,72,0.10)', borderRadius:'12px' }} />
             }
           </div>
           <div>
@@ -78,8 +78,7 @@ function PostDetail({ post, onBack }) {
       </button>
       <span className="post-badge">{post.category}</span>
       <p className="post-date">{new Date(post.date).toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'})}</p>
-      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin:'0 0 20px', lineHeight:1.2 }}>
+      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,4vw,2.8rem)', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 20px', lineHeight:1.1 }}>
         {post.title}
       </h2>
       {post.image && <img src={post.image} alt={post.title} style={{ width:'100%', borderRadius:'16px', marginBottom:'24px', objectFit:'cover', maxHeight:'360px' }}/>}
@@ -93,8 +92,7 @@ function PostDetail({ post, onBack }) {
 function SectionHeader({ title, sub }) {
   return (
     <div style={{ marginBottom:'32px' }}>
-      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin:'0 0 6px' }}>
+      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,4vw,2.8rem)', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 8px', lineHeight:1.1 }}>
         {title}
       </h2>
       <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'14px', color:'rgba(138,95,60,0.65)', margin:0 }}>{sub}</p>
@@ -106,7 +104,6 @@ function SectionHeader({ title, sub }) {
 function EmptyState({ label }) {
   return (
     <div style={{ textAlign:'center', padding:'48px 0' }}>
-      <span style={{ fontSize:'40px' }}>🥑</span>
       <p style={{ fontFamily:'Poppins,sans-serif', color:'rgba(138,95,60,0.5)', marginTop:'12px' }}>
         No {label} yet — check back soon!
       </p>

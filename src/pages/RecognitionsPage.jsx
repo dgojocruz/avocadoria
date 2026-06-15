@@ -7,10 +7,10 @@ function formatDate(d) {
 }
 
 const CATEGORY_ICONS = {
-  'Award':   '🏆',
-  'Feature': '📰',
-  'Media':   '📺',
-  'Default': '⭐',
+  'Award':   null,
+  'Feature': null,
+  'Media':   null,
+  'Default': null,
 }
 
 export default function RecognitionsPage() {
@@ -29,8 +29,7 @@ export default function RecognitionsPage() {
         <div style={{ position:'relative', zIndex:1, maxWidth:'900px', margin:'0 auto', padding:'clamp(52px,7vw,88px) clamp(20px,5vw,72px)' }}>
 
       <div style={{ marginBottom:'36px' }}>
-        <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin:'0 0 6px' }}>
+        <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,4vw,2.8rem)', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 8px', lineHeight:1.1 }}>
           Recognitions
         </h2>
         <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'14px', color:'rgba(138,95,60,0.65)', margin:0 }}>
@@ -44,14 +43,14 @@ export default function RecognitionsPage() {
           <div key={rec.id} className="post-card"
             onClick={() => setSelected(rec)}
             style={{ display:'flex', gap:'20px', alignItems:'flex-start' }}>
-            {/* Icon */}
+            {/* Category indicator */}
             <div style={{
               width:'52px', height:'52px', borderRadius:'14px',
               background: rec.featured ? '#b6c548' : 'rgba(182,197,72,0.12)',
               display:'flex', alignItems:'center', justifyContent:'center',
-              fontSize:'24px', flexShrink:0,
+              flexShrink:0,
             }}>
-              {CATEGORY_ICONS[rec.category] || CATEGORY_ICONS.Default}
+              <div style={{ width:'10px', height:'10px', borderRadius:'50%', background: rec.featured ? '#fff' : '#b6c548' }} />
             </div>
             {/* Info */}
             <div style={{ flex:1 }}>
@@ -69,7 +68,6 @@ export default function RecognitionsPage() {
         ))}
         {RECOGNITIONS.length === 0 && (
           <div style={{ textAlign:'center', padding:'48px 0' }}>
-            <span style={{ fontSize:'40px' }}>🏆</span>
             <p style={{ fontFamily:'Poppins,sans-serif', color:'rgba(138,95,60,0.5)', marginTop:'12px' }}>
               No recognitions listed yet — check back soon!
             </p>
@@ -90,9 +88,6 @@ function PostDetail({ post, onBack }) {
         ← Back
       </button>
       <div style={{ display:'flex', alignItems:'center', gap:'14px', marginBottom:'20px' }}>
-        <div style={{ width:'56px', height:'56px', borderRadius:'16px', background:'#b6c548', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'28px', flexShrink:0 }}>
-          {icon}
-        </div>
         <div>
           <span className="post-badge featured">{post.category}</span>
           <p className="post-date" style={{ margin:'4px 0 0' }}>
@@ -100,8 +95,7 @@ function PostDetail({ post, onBack }) {
           </p>
         </div>
       </div>
-      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.5rem,3vw,2.2rem)', fontWeight:'normal', color:'#3a6b35',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin:'0 0 20px', lineHeight:1.2 }}>
+      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,4vw,2.8rem)', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 20px', lineHeight:1.1 }}>
         {post.title}
       </h2>
       {post.image && <img src={post.image} alt={post.title} style={{ width:'100%', borderRadius:'16px', marginBottom:'24px', objectFit:'cover', maxHeight:'360px' }}/>}

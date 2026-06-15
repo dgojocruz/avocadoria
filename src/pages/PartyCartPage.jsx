@@ -346,28 +346,51 @@ export default function PartyCartPage() {
       <section style={{ ...TEXTURE, paddingTop: 'clamp(80px,12vw,120px)', paddingBottom: 0, textAlign: 'center' }}>
         <div style={OVERLAY} />
         <div style={{ ...INNER, padding: '0 var(--sp-md)' }}>
-          <div style={{ display: 'inline-block', background: 'rgba(255,255,255,0.85)', color: '#3a6b35', borderRadius: '999px', padding: '5px 18px', fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '20px', border: '1.5px solid rgba(182,197,72,0.4)' }}>
-            Party Cart
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '32px',
+            alignItems: 'center',
+            maxWidth: '1100px',
+            margin: '0 auto',
+            textAlign: 'left',
+          }}>
+            {/* Left — text */}
+            <div>
+              <h1 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(2rem,8vw,3.5rem)', color: '#3a6b35', margin: '0 0 14px', textShadow: '-2px -2px 0 rgba(255,255,255,0.95), 2px -2px 0 rgba(255,255,255,0.95), -2px 2px 0 rgba(255,255,255,0.95), 2px 2px 0 rgba(255,255,255,0.95), -3px -3px 0 rgba(220,255,80,0.7), 3px 3px 0 rgba(220,255,80,0.7)', lineHeight: 1.1 }}>
+                Bring the Party<br />
+                <em style={{ color: '#b6c548', fontStyle: 'normal' }}>to You!</em>
+              </h1>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: 'clamp(13px,3vw,15px)', color: '#8A5F3C', maxWidth: '500px', margin: '0 0 32px', lineHeight: 1.7 }}>
+                Make your next celebration unforgettable with an Avocadoria Party Cart. We set up, serve, and bring the good vibes — you just enjoy the moment.
+              </p>
+              <button
+                onClick={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
+                style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 32px', fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', cursor: 'pointer', boxShadow: '0 4px 18px rgba(182,197,72,0.4)', transition: 'all 0.15s', minHeight: '48px', marginBottom: '48px', letterSpacing: '0.02em' }}
+                onMouseEnter={e => e.currentTarget.style.background='#3a6b35'}
+                onMouseLeave={e => e.currentTarget.style.background='#b6c548'}
+              >
+                See Our Packages
+              </button>
+            </div>
+            {/* Right — Party Cart image */}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end' }}>
+              <img
+                src="/party-cart-hero.png"
+                alt="Avocadoria Party Cart"
+                style={{
+                  width: '120%',
+                  maxWidth: '620px',
+                  height: 'auto',
+                  objectFit: 'contain',
+                  filter: 'none',
+                  transform: 'scale(1.12)',
+                  transformOrigin: 'bottom center',
+                }}
+              />
+            </div>
           </div>
-          <h1 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(2rem,8vw,3.5rem)', color: '#3a6b35', margin: '0 0 14px', textShadow: '-2px -2px 0 rgba(255,255,255,0.95), 2px -2px 0 rgba(255,255,255,0.95), -2px 2px 0 rgba(255,255,255,0.95), 2px 2px 0 rgba(255,255,255,0.95), -3px -3px 0 rgba(220,255,80,0.7), 3px 3px 0 rgba(220,255,80,0.7)', lineHeight: 1.1 }}>
-            Bring the Party<br />
-            <em style={{ color: '#b6c548', fontStyle: 'normal' }}>to You!</em>
-          </h1>
-          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: 'clamp(13px,3vw,15px)', color: '#8A5F3C', maxWidth: '500px', margin: '0 auto 32px', lineHeight: 1.7 }}>
-            Make your next celebration unforgettable with an Avocadoria Party Cart. We set up, serve, and bring the good vibes — you just enjoy the moment.
-          </p>
-          <button
-            onClick={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
-            style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 32px', fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', cursor: 'pointer', boxShadow: '0 4px 18px rgba(182,197,72,0.4)', transition: 'all 0.15s', minHeight: '48px', marginBottom: '48px', letterSpacing: '0.02em' }}
-            onMouseEnter={e => e.currentTarget.style.background='#3a6b35'}
-            onMouseLeave={e => e.currentTarget.style.background='#b6c548'}
-          >
-            See Our Packages
-          </button>
         </div>
-        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', width: '100%', height: 'auto', marginBottom: '-2px', position: 'relative', zIndex: 1 }}>
-          <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60 Z" fill="#F3F2EE" />
-        </svg>
       </section>
 
       {/* ── How It Works ── */}

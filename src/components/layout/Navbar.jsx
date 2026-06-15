@@ -17,7 +17,13 @@ const NAV_LINKS = [
   },
   { label: 'Menu',       to: '/menu'       },
   { label: 'Franchise',  to: '/franchise'  },
-  { label: 'Party Cart', to: '/party-cart' },
+  {
+    label: 'Events',
+    to:    '/events',
+    dropdown: [
+      { label: 'Party Cart', to: '/party-cart' },
+    ],
+  },
   { label: 'Careers',    to: '/careers'    },
 ]
 
@@ -57,8 +63,8 @@ function DropdownLink({ item, hovered, setHovered }) {
   const scrollToSection = (hash) => {
     setOpen(false)
     setHovered(null)
-    // If already on /about, just scroll; otherwise navigate then scroll
-    if (location.pathname === '/about') {
+    // Only scroll if there's a hash and we're already on that page
+    if (hash && location.pathname === item.to) {
       const el = document.querySelector(hash)
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
@@ -197,8 +203,8 @@ function DropdownLink({ item, hovered, setHovered }) {
 export default function Navbar() {
   const [isOpen,  setIsOpen]  = useState(false)
   const [hovered, setHovered] = useState(null)
-  const [mobileAboutOpen, setMobileAboutOpen] = useState(false)
-  const close = () => { setIsOpen(false); setMobileAboutOpen(false) }
+  const [mobileOpenItem, setMobileOpenItem] = useState(null)
+  const close = () => { setIsOpen(false); setMobileOpenItem(null) }
 
   return (
     <header className="navbar" role="banner" style={{
@@ -311,9 +317,9 @@ export default function Navbar() {
             <li key={item.to}>
               {item.dropdown ? (
                 <>
-                  {/* About — expandable on mobile */}
+                  {/* Expandable dropdown on mobile */}
                   <button
-                    onClick={() => setMobileAboutOpen(v => !v)}
+                    onClick={() => setMobileOpenItem(v => v === item.to ? null : item.to)}
                     style={{
                       display:'flex', alignItems:'center', justifyContent:'space-between',
                       width:'100%', minHeight:'48px', padding:'8px 16px',
@@ -325,7 +331,7 @@ export default function Navbar() {
                   >
                     {item.label}
                     <svg width="12" height="12" viewBox="0 0 10 10" fill="none"
-                      style={{ transition:'transform 0.2s', transform: mobileAboutOpen ? 'rotate(180deg)' : 'none' }}>
+                      style={{ transition:'transform 0.2s', transform: mobileOpenItem === item.to ? 'rotate(180deg)' : 'none' }}>
                       <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.5"
                         strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
@@ -333,7 +339,7 @@ export default function Navbar() {
                   {/* Sub-items */}
                   <div style={{
                     overflow:'hidden',
-                    maxHeight: mobileAboutOpen ? '300px' : '0',
+                    maxHeight: mobileOpenItem === item.to ? '300px' : '0',
                     transition:'max-height 0.25s ease',
                   }}>
                     {item.dropdown.map(sub => (

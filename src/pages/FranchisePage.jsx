@@ -38,22 +38,6 @@ const CARTS = [
     investment:  'Contact us for pricing',
   },
   {
-    id:          'popup',
-    image:       '/franchise-popup.png',
-    name:        'Pop Up',
-    size:        '6 sqm',
-    color:       '#EF7ECB',
-    tag:         'Entry Level',
-    tagColor:    '#b6c548',
-    highlights:  [
-      'Most affordable entry point',
-      'Illuminated Avocadoria branding wall',
-      'Built-in digital display screen',
-      'Compact & efficient — fits any space',
-    ],
-    investment:  'Contact us for pricing',
-  },
-  {
     id:          'kiosk',
     image:       '/franchise-kiosk.png',
     name:        'Kiosk',
@@ -140,11 +124,11 @@ function CartSlideshow() {
       {/* ── Main showcase ── */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: '7fr 3fr',
+        gridTemplateColumns: '8fr 2fr',
         gap: '48px',
         alignItems: 'center',
         minHeight: 'unset',
-        maxWidth: '1200px',
+        maxWidth: '1400px',
         margin: '0 auto',
         padding: '0 16px',
       }}
@@ -169,20 +153,6 @@ function CartSlideshow() {
 
         {/* Right — info */}
         <div key={`info-${current}`} className="cart-info-enter">
-          {/* Tag */}
-          <span style={{
-            display: 'inline-block',
-            background: cart.tagColor,
-            color: '#fff',
-            fontSize: '11px', fontWeight: '700',
-            padding: '4px 12px', borderRadius: '999px',
-            fontFamily: 'Poppins,sans-serif',
-            letterSpacing: '0.05em', textTransform: 'uppercase',
-            marginBottom: '16px',
-          }}>
-            {cart.tag}
-          </span>
-
           {/* Name + size */}
           <h2 style={{
             fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
@@ -230,37 +200,14 @@ function CartSlideshow() {
         </div>
       </div>
 
-      {/* ── Dot + thumbnail selector ── */}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '12px', marginTop: '40px', flexWrap: 'wrap' }}>
+      {/* ── Dot + thumbnail selector — hidden ── */}
+      <div style={{ display: 'none' }}>
         {CARTS.map((c, i) => (
           <button
             key={c.id}
             onClick={() => { clearInterval(timerRef.current); goTo(i) }}
-            style={{
-              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px',
-              background: i === current ? '#F4FAEC' : 'transparent',
-              border: `2px solid ${i === current ? c.color : 'rgba(182,197,72,0.25)'}`,
-              borderRadius: '12px', padding: '8px 16px',
-              cursor: 'pointer', transition: 'all 0.2s',
-              fontFamily: 'Poppins,sans-serif',
-            }}
           >
-            <span style={{ fontSize: '13px', fontWeight: '700', color: i === current ? c.color : '#8A5F3C' }}>
-              {c.name}
-            </span>
-            <span style={{ fontSize: '11px', color: 'rgba(138,95,60,0.6)' }}>{c.size}</span>
-            {/* Progress bar on active */}
-            {i === current && (
-              <div style={{ width: '100%', height: '3px', background: 'rgba(182,197,72,0.2)', borderRadius: '99px', overflow: 'hidden' }}>
-                <div
-                  key={`prog-${current}`}
-                  style={{
-                    height: '100%', background: c.color, borderRadius: '99px',
-                    animation: `prog-fill ${CART_INTERVAL}ms linear forwards`,
-                  }}
-                />
-              </div>
-            )}
+            {c.name}
           </button>
         ))}
       </div>
@@ -402,27 +349,17 @@ export default function FranchisePage() {
         }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth: '700px', margin: '0 auto' }}>
-            <span style={{
-              display: 'inline-block', background: '#EF7ECB', color: '#fff',
-              fontSize: '12px', fontWeight: '700', padding: '5px 16px',
-              borderRadius: '999px', fontFamily: 'Poppins,sans-serif',
-              letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '20px',
-            }}>Now Open for Franchising</span>
             <h1 style={{
-              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal',
-              fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
-              color: '#3a6b35', lineHeight: '1.1', margin: '0 0 20px',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
+              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+              fontWeight: 'normal',
+              fontSize: 'clamp(1.6rem,4vw,2.8rem)',
+              color: 'var(--c-olive)',
+              textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+              margin: '0 0 8px', lineHeight: 1.1,
             }}>
-              Dreaming of your own<br />
-              <span style={{ color: '#b6c548' }}>Avocadoria</span> store?
+              Join the <span style={{ color: '#b6c548' }}>Avocadoria</span> Franchise Family
             </h1>
-            <p style={{
-              fontFamily: 'Poppins,sans-serif', fontSize: '14px',
-              color: '#8A5F3C', lineHeight: '1.7', margin: '0 0 32px', opacity: 0.85,
-            }}>
-              Be part of our growing family. We offer four flexible store formats designed for every location and investment level — all powered by the Philippines' No. 1 avocado dessert brand.
-            </p>
+
             <a href="#franchise-inquiry" style={{
               display: 'inline-block', background: '#b6c548', color: '#fff',
               padding: '14px 36px', borderRadius: '999px',
@@ -441,7 +378,7 @@ export default function FranchisePage() {
         <section style={{ position:'relative', overflow:'hidden', padding:'72px 0', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
       <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, textAlign: 'center', marginBottom: '48px' }}>
-            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', color: '#3a6b35', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 8px' }}>
+            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 8px', lineHeight: 1.1 }}>
               Choose Your Format
             </h2>
             <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: 'rgba(138,95,60,0.7)', margin: 0 }}>
@@ -455,7 +392,7 @@ export default function FranchisePage() {
         <section style={{ position:'relative', overflow:'hidden', padding:'72px 32px', textAlign:'center', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
       <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth: '1100px', margin: '0 auto' }}>
-            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', color: '#3a6b35', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 48px' }}>
+            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 48px', lineHeight: 1.1 }}>
               Why Franchise Avocadoria?
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px' }}>
@@ -467,13 +404,22 @@ export default function FranchisePage() {
                 { title: 'Local Roots',    desc: 'Proudly supports local avocado farmers' },
               ].map((w, i) => (
                 <div key={i} style={{
-                  background: 'rgba(255,255,255,0.82)', borderRadius: '16px',
-                  padding: '28px 20px', backdropFilter: 'blur(6px)',
-                  border: '1.5px solid rgba(182,197,72,0.3)',
-                  boxShadow: '0 4px 20px rgba(58,107,53,0.08)',
+                  background: 'rgba(255,255,255,0.08)',
+                  borderRadius: '16px',
+                  padding: '28px 20px',
+                  backdropFilter: 'blur(2px)',
                 }}>
-                  <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>{w.title}</div>
-                  <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', lineHeight: '1.6' }}>{w.desc}</div>
+                  <div style={{
+                    fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '800',
+                    color: '#3a6b35', letterSpacing: '0.08em', textTransform: 'uppercase',
+                    marginBottom: '10px',
+                    textShadow: '-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff',
+                  }}>{w.title}</div>
+                  <div style={{
+                    fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700',
+                    color: '#8A5F3C', lineHeight: '1.6',
+                    textShadow: '0 1px 0 rgba(255,255,255,0.9)',
+                  }}>{w.desc}</div>
                 </div>
               ))}
             </div>
@@ -485,7 +431,7 @@ export default function FranchisePage() {
       <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth: '900px', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '52px' }}>
-              <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', color: '#3a6b35', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 8px' }}>
+              <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 8px', lineHeight: 1.1 }}>
                 How to Get Started
               </h2>
               <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: 'rgba(138,95,60,0.7)' }}>
@@ -522,7 +468,7 @@ export default function FranchisePage() {
       <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth: '760px', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-              <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', color: '#3a6b35', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 8px' }}>
+              <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 8px', lineHeight: 1.1 }}>
                 Ready to Join the Family?
               </h2>
               <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', opacity: 0.85 }}>
@@ -533,7 +479,7 @@ export default function FranchisePage() {
             {/* Contact options */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: '36px' }}>
               {[
-                { label: 'Email',      value: 'official@avocadoria.com.ph', href: 'mailto:official@avocadoria.com.ph' },
+                { label: 'Email',      value: 'franchise@avocadoria.com.ph', href: 'mailto:franchise@avocadoria.com.ph' },
                 { label: 'Call / SMS', value: '+63 945 971 6599',           href: 'tel:+639459716599' },
                 { label: 'Messenger',  value: 'Message us on FB',           href: 'https://m.me/avocadoria.ph' },
               ].map((c, i) => (

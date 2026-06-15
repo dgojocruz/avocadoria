@@ -603,45 +603,13 @@ export default function OurStoresPage() {
           }}>
 
             <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
-            {/* Floating avocado pin illustration */}
+            {/* Floating brand icon */}
             <div style={{
               position: 'relative', zIndex: 1,
               marginBottom: '32px',
               animation: 'pin-float 3s ease-in-out infinite',
             }}>
-              <style>{`
-                @font-face {
-                  font-family:'BubbleboddyNeue-ExtraBold';
-                  src:url('/fonts/bubbleboddy-neue-extrabold.ttf') format('truetype');
-                  font-display:swap;
-                }
-                @keyframes pin-float {
-                  0%,100%{transform:translateY(0) rotate(-2deg)}
-                  50%{transform:translateY(-14px) rotate(2deg)}
-                }
-                @keyframes pulse-ring {
-                  0%{transform:scale(.8);opacity:.8}
-                  100%{transform:scale(1.8);opacity:0}
-                }
-                @keyframes fade-up {
-                  from{opacity:0;transform:translateY(20px)}
-                  to{opacity:1;transform:translateY(0)}
-                }
-              `}</style>
-              {CUSTOM_PIN
-                ? <img src={CUSTOM_PIN} alt="Avocadoria pin" style={{ width: '80px' }} />
-                : (
-                  <div style={{ position: 'relative', display: 'inline-block' }}>
-                    <AvoPin size={80} />
-                    <div style={{
-                      position: 'absolute', bottom: '-6px', left: '50%', transform: 'translateX(-50%)',
-                      width: '40px', height: '14px', borderRadius: '50%',
-                      background: 'rgba(58,107,53,.2)',
-                      animation: 'pulse-ring 2s ease-out infinite',
-                    }} />
-                  </div>
-                )
-              }
+              <img src="/avopin-icon.png" alt="Avocadoria" style={{ width: '120px', height: 'auto', objectFit: 'contain' }} />
             </div>
 
             {/* Headline */}
@@ -649,11 +617,11 @@ export default function OurStoresPage() {
               position: 'relative', zIndex: 1,
               fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontWeight: 'normal',
-              fontSize: 'clamp(2rem, 5vw, 3.2rem)',
-              color: C.dark,
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
-              margin: '0 0 10px',
-              lineHeight: '1.15',
+              fontSize: 'clamp(1.6rem,4vw,2.8rem)',
+              color: 'var(--c-olive)',
+              textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+              margin: '0 0 8px',
+              lineHeight: 1.1,
             }}>
               Find Your Avocadoria
             </h1>

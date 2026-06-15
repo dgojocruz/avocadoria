@@ -37,6 +37,7 @@ export default function App() {
             <Route path="about"      element={<AboutPage />} />
             <Route path="menu"       element={<MenuPage />} />
             <Route path="franchise"  element={<FranchisePage />} />
+            <Route path="events"     element={<PartyCartPage />} />
             <Route path="party-cart" element={<PartyCartPage />} />
             <Route path="careers"    element={<CareersPage />} />
             <Route path="*"          element={<NotFoundPage />} />

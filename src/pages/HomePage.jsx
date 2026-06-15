@@ -260,14 +260,6 @@ const FRANCHISE_CARTS = [
     color:    '#8A5F3C',
   },
   {
-    id:       'kiosk-2',
-    image:    '/ft-kiosk-2.png',
-    name:     'Kiosk Classic',
-    tag:      'Best Value',
-    tagColor: '#3a6b35',
-    color:    '#EF7ECB',
-  },
-  {
     id:       'island',
     image:    '/ft-island.png',
     name:     'Island',
@@ -359,8 +351,8 @@ function FranchiseTeaser() {
     const rad     = angle * Math.PI / 180
 
     // Ellipse radii — wide, shallow so all carts stay visible
-    const rx = 38   // % of container width
-    const ry = 26   // % of container height
+    const rx = 42   // % of container width
+    const ry = 30   // % of container height
 
     const cx = 50 + rx * Math.cos(rad)   // %
     const cy = 58 + ry * Math.sin(rad)   // % — increase to move orbit lower
@@ -368,7 +360,7 @@ function FranchiseTeaser() {
     const isActive = i === active
     // cards behind the center line appear smaller
     const depth = Math.sin(rad)  // -1 (top) to +1 (bottom)
-    const scale = isActive ? 1.3  : 0.44 + 0.18 * ((depth + 1) / 2)
+    const scale = isActive ? 1.45  : 0.44 + 0.18 * ((depth + 1) / 2)
     const zIdx  = isActive ? 10 : Math.round(5 + 4 * ((depth + 1) / 2))
     const opacity = isActive ? 1 : 0.72 + 0.28 * ((depth + 1) / 2)
 
@@ -440,15 +432,31 @@ function FranchiseTeaser() {
             position: relative !important;
             left: auto !important; top: auto !important;
             transform: scale(1) !important;
-            width: 260px !important; height: 260px !important;
+            width: 320px !important; height: 320px !important;
             margin: 0 auto !important; opacity: 1 !important;
           }
           .ft-ring-cart.is-active img { transform: scale(1) !important; }
         }
       `}</style>
 
-      {/* ── Explore button — top ── */}
+      {/* ── Branded tagline + CTA ── */}
       <div style={{ textAlign: 'center', marginBottom: '28px', position: 'relative', zIndex: 1 }}>
+        <h2 style={{
+          fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+          fontSize: 'clamp(1.6rem,4vw,2.8rem)',
+          fontWeight: 'normal', color: 'var(--c-olive)',
+          textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+          margin: '0 0 8px', lineHeight: 1.1,
+        }}>
+          Dreaming of your own <span style={{ color: '#b6c548' }}>Avocadoria</span> store?
+        </h2>
+        <p style={{
+          fontFamily: "'Poppins',sans-serif",
+          fontSize: 'clamp(13px,1.3vw,15px)',
+          color: 'var(--c-dark)', opacity: 0.7, margin: '0 0 24px',
+        }}>
+          Be part of our growing family. Let's spread happiness in avocado!
+        </p>
         <Link to="/franchise" className="ft-btn-white">
           Explore Franchise Opportunities →
         </Link>
@@ -460,8 +468,8 @@ function FranchiseTeaser() {
         style={{
           position: 'relative',
           width: '100%',
-          maxWidth: '1400px',
-          height: '700px',
+          maxWidth: '1600px',
+          height: '860px',
           margin: '0 auto',
           zIndex: 1,
         }}
@@ -469,8 +477,8 @@ function FranchiseTeaser() {
         {FRANCHISE_CARTS.map((c, i) => {
           const { cx, cy, scale, zIdx, opacity, isActive } = getStyle(i)
           // card size relative to container
-          const cardW = 380   // px base width
-          const cardH = 380   // px base height
+          const cardW = 480   // px base width
+          const cardH = 480   // px base height
           return (
             <div
               key={c.id}
@@ -597,14 +605,6 @@ function RecognitionsTeaser() {
 
       {/* Header */}
       <div style={{ textAlign: 'center', marginBottom: 'clamp(24px,4vw,36px)' }}>
-        <span style={{
-          display: 'inline-block', marginBottom: '12px',
-          background: 'var(--c-olive)', color: '#fff',
-          fontFamily: "'Poppins',sans-serif",
-          fontSize: '11px', fontWeight: '600',
-          letterSpacing: '0.08em', textTransform: 'uppercase',
-          padding: '5px 18px', borderRadius: '999px',
-        }}>Awards & Recognitions 🏆</span>
         <h2 style={{
           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize: 'clamp(1.6rem,4vw,2.8rem)',
@@ -973,6 +973,9 @@ export default function HomePage() {
 
         </section>
 
+        {/* Wave: Hero → Avo-Faves */}
+        <Wave fromColor="#b6c548" toColor="#d9e29e" height={60} />
+
         {/* Hero slope transitions directly into Avo-Faves — no Wave needed */}
         {/* ════════════ AVO-FAVES ════════════ */}
         <section style={{ background:'#e8f0c8', padding:0, margin:0, lineHeight:0 }}>
@@ -1003,13 +1006,15 @@ export default function HomePage() {
           </div>
         </section>
 
+
+
         {/* Wave: Avo Faves #e8f0c8 → franchise green — matches the slope gradient */}
-        <Wave fromColor="#e8f0c8" toColor="#c8d96a" height={60} />
+        <Wave fromColor="#d9e29e" toColor="#b6c548" height={60} />
 
         {/* ════════════ FRANCHISE TEASER ════════════ */}
         <FranchiseTeaser />
 
-        <Wave fromColor="#e8f0c8" toColor="#d9e29e" height={56} />
+        <Wave fromColor="#b6c548" toColor="#d9e29e" height={56} />
 
         {/* ════════════ WHAT'S NEW ════════════ */}
         <section style={{
