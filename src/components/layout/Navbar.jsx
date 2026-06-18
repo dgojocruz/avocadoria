@@ -31,7 +31,7 @@ const NAV_LINKS = [
 const NAV_STYLE = {
   colorDefault:     '#8A5F3C',
   colorActive:      '#b6c548',
-  fontSize:         'clamp(24px, 1.4vw, 15px)',
+  fontSize:         'clamp(11px, 1.1vw, 15px)',
   fontWeight:       '700',
   letterSpacing:    '0.02em',
   glowColor:        'rgba(182,197,72,0.55)',
@@ -231,7 +231,7 @@ export default function Navbar() {
 
       {/* ── Desktop nav ── */}
       <nav className="hidden lg:flex lg:items-center" aria-label="Main navigation"
-        style={{ alignItems:'center', gap:'clamp(16px, 2.5vw, 32px)' }}>
+        style={{ alignItems:'center', gap:'clamp(10px, 1.8vw, 28px)', flexWrap:'nowrap' }}>
         {NAV_LINKS.map((item) =>
           item.dropdown ? (
             <DropdownLink

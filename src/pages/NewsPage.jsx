@@ -31,22 +31,46 @@ export default function NewsPage() {
           <div style={{
             background:'rgba(182,197,72,0.10)', borderRadius:'12px',
             minHeight:'200px', display:'flex', alignItems:'center', justifyContent:'center',
+            overflow:'hidden', position:'relative',
           }}>
-            {featured.image
-              ? <img src={featured.image} alt={featured.title} style={{ width:'100%', borderRadius:'12px', objectFit:'cover', maxHeight:'220px' }}
+            {featured.videoEmbed ? (
+              <div style={{ width:'100%', position:'relative', paddingTop:'56.25%', pointerEvents:'none' }}>
+                <iframe
+                  src={featured.videoEmbed}
+                  style={{ position:'absolute', inset:0, width:'100%', height:'100%', border:'none', borderRadius:'12px' }}
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  allowFullScreen
+                  scrolling="no"
+                  title={featured.title}
+                />
+              </div>
+            ) : featured.image ? (
+              <img src={featured.image} alt={featured.title} style={{ width:'100%', borderRadius:'12px', objectFit:'cover', maxHeight:'220px' }}
                     loading="lazy" decoding="async"
                   />
-              : <div style={{ width:'100%', minHeight:'200px', background:'rgba(182,197,72,0.10)', borderRadius:'12px' }} />
-            }
+            ) : (
+              <div style={{ width:'100%', minHeight:'200px', background:'rgba(182,197,72,0.10)', borderRadius:'12px' }} />
+            )}
           </div>
           <div>
             <span className="post-badge featured">Featured</span>
             <p className="post-date">{formatDate(featured.date)}</p>
             <h3 className="post-title">{featured.title}</h3>
             <p className="post-excerpt">{featured.excerpt}</p>
-            <span style={{ fontFamily:'Poppins,sans-serif', fontSize:'13px', fontWeight:'700', color:'#b6c548', marginTop:'12px', display:'inline-block' }}>
-              Read more →
-            </span>
+            <div style={{ display:'flex', alignItems:'center', gap:'10px', marginTop:'12px', flexWrap:'wrap' }}>
+              <span style={{ fontFamily:'Poppins,sans-serif', fontSize:'13px', fontWeight:'700', color:'#b6c548' }}>
+                Read more →
+              </span>
+              {featured.facebookLink && (
+                <a href={featured.facebookLink} target="_blank" rel="noopener noreferrer"
+                  onClick={e => e.stopPropagation()}
+                  style={{ display:'inline-flex', alignItems:'center', gap:'6px', padding:'6px 14px', background:'#1877F2', color:'#fff', borderRadius:'999px', textDecoration:'none', fontFamily:'Poppins,sans-serif', fontSize:'11px', fontWeight:'700' }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073C24 5.446 18.627 0 12 0S0 5.446 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+                  Watch on Facebook
+                </a>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -54,7 +78,17 @@ export default function NewsPage() {
       {/* Grid */}
       <div className="post-card-grid">
         {rest.map(post => (
-          <div key={post.id} className="post-card" onClick={() => setSelected(post)}>
+          <div key={post.id} className="post-card" onClick={() => setSelected(post)} style={{ position:'relative' }}>
+            {/* Facebook badge */}
+            {post.facebookLink && (
+              <a href={post.facebookLink} target="_blank" rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                style={{ position:'absolute', top:'12px', right:'12px', width:'28px', height:'28px', borderRadius:'50%', background:'#1877F2', display:'flex', alignItems:'center', justifyContent:'center', textDecoration:'none', boxShadow:'0 2px 8px rgba(24,119,242,0.4)', zIndex:2 }}
+                title="Watch on Facebook"
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073C24 5.446 18.627 0 12 0S0 5.446 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+              </a>
+            )}
             <span className="post-badge">{post.category}</span>
             <p className="post-date">{formatDate(post.date)}</p>
             <h3 className="post-title">{post.title}</h3>
@@ -83,13 +117,50 @@ function PostDetail({ post, onBack }) {
       <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,4vw,2.8rem)', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 20px', lineHeight:1.1 }}>
         {post.title}
       </h2>
-      {post.image && <img src={post.image} alt={post.title} style={{ width:'100%', borderRadius:'16px', marginBottom:'24px', objectFit:'cover', maxHeight:'360px' }}
+
+      {/* Video embed */}
+      {post.videoEmbed && (
+        <div style={{ marginBottom:'28px' }}>
+          <div style={{ position:'relative', paddingTop:'56.25%', borderRadius:'16px', overflow:'hidden', background:'#000', boxShadow:'0 8px 28px rgba(0,0,0,0.12)' }}>
+            <iframe
+              src={post.videoEmbed}
+              style={{ position:'absolute', inset:0, width:'100%', height:'100%', border:'none' }}
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              allowFullScreen
+              scrolling="no"
+              title={post.title}
+            />
+          </div>
+          {post.videoLink && (
+            <a href={post.videoLink} target="_blank" rel="noopener noreferrer"
+              style={{ display:'inline-flex', alignItems:'center', gap:'6px', marginTop:'10px', fontFamily:'Poppins,sans-serif', fontSize:'12px', fontWeight:'700', color:'#1877F2', textDecoration:'none' }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073C24 5.446 18.627 0 12 0S0 5.446 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+              Watch on Facebook
+            </a>
+          )}
+        </div>
+      )}
+
+      {/* Image (only if no video) */}
+      {!post.videoEmbed && post.image && (
+        <img src={post.image} alt={post.title} style={{ width:'100%', borderRadius:'16px', marginBottom:'24px', objectFit:'cover', maxHeight:'360px' }}
                     loading="lazy" decoding="async"
-                  />}
+                  />
+      )}
+
       <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'16px', color:'rgba(138,95,60,0.9)', lineHeight:1.8 }}>
         {post.content}
       </p>
-    </div>
+
+      {/* Facebook link */}
+      {post.facebookLink && (
+        <a href={post.facebookLink} target="_blank" rel="noopener noreferrer"
+          style={{ display:'inline-flex', alignItems:'center', gap:'8px', marginTop:'24px', padding:'12px 24px', background:'#1877F2', color:'#fff', borderRadius:'999px', textDecoration:'none', fontFamily:'Poppins,sans-serif', fontSize:'13px', fontWeight:'700', boxShadow:'0 4px 16px rgba(24,119,242,0.3)' }}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073C24 5.446 18.627 0 12 0S0 5.446 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+          Watch on Facebook
+        </a>
+      )}
   )
 }
 

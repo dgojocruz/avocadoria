@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import SEO from '@/components/ui/SEO'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { NEWS_POSTS } from '@/data/posts'
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -726,6 +726,7 @@ function RecognitionsTeaser() {
 
 export default function HomePage() {
   const [loaded, setLoaded] = useState(false)
+  const navigate = useNavigate()
   useEffect(() => { setLoaded(true) }, [])
   const { cur, visible, goTo } = useHeroSlide()
 
@@ -1064,10 +1065,10 @@ export default function HomePage() {
             {NEWS_POSTS.length > 0 ? (
               <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))', gap:'20px' }}>
                 {NEWS_POSTS.slice(0, 4).map(post => (
-                  <Link
+                  <div
                     key={post.id}
-                    to="/about#whats-new"
-                    style={{ textDecoration:'none' }}
+                    onClick={() => navigate('/about#whats-new')}
+                    style={{ textDecoration:'none', cursor:'pointer' }}
                   >
                     <div style={{
                       background:'#fff',
@@ -1093,9 +1094,44 @@ export default function HomePage() {
                               onMouseEnter={e => e.target.style.transform='scale(1.05)'}
                               onMouseLeave={e => e.target.style.transform='scale(1)'}
                             />
-                          : <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'48px' }}>🥑</div>
+                          : <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'10px', background:'linear-gradient(135deg,#3a6b35 0%,#b6c548 60%,#d9e29e 100%)', padding:'20px', boxSizing:'border-box' }}>
+                              <img src="/icons/avopin.png" alt="" style={{ width:'52px', opacity:0.9 }} onError={e => e.target.style.display='none'} />
+                              <span style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'13px', color:'#fff', textAlign:'center', textShadow:'0 1px 6px rgba(0,0,0,0.2)', lineHeight:1.3, fontWeight:'normal' }}>
+                                {post.category}
+                              </span>
+                            </div>
                         }
-                        {/* Tag badge overlay */}
+                        {/* Play badge for video posts */}
+                        {post.videoLink && (
+                          <div style={{
+                            position:'absolute', inset:0,
+                            display:'flex', alignItems:'center', justifyContent:'center',
+                            background:'rgba(0,0,0,0.15)',
+                          }}>
+                            <div style={{
+                              width:'52px', height:'52px', borderRadius:'50%',
+                              background:'rgba(255,255,255,0.9)',
+                              display:'flex', alignItems:'center', justifyContent:'center',
+                              boxShadow:'0 4px 16px rgba(0,0,0,0.2)',
+                            }}>
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <polygon points="7,4 21,12 7,20" fill="#1877F2"/>
+                              </svg>
+                            </div>
+                          </div>
+                        )}
+                        {/* Facebook badge overlay on image */}
+                        {post.facebookLink && (
+                          <a href={post.facebookLink} target="_blank" rel="noopener noreferrer"
+                            onClick={e => e.stopPropagation()}
+                            style={{ position:'absolute', bottom:'10px', right:'10px', display:'inline-flex', alignItems:'center', gap:'5px', padding:'5px 12px', background:'#1877F2', color:'#fff', borderRadius:'999px', textDecoration:'none', fontFamily:"'Poppins',sans-serif", fontSize:'10px', fontWeight:'700', boxShadow:'0 2px 8px rgba(24,119,242,0.45)', zIndex:3 }}
+                            title="Watch on Facebook"
+                          >
+                            <svg width="11" height="11" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073C24 5.446 18.627 0 12 0S0 5.446 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+                            Watch on Facebook
+                          </a>
+                        )}
+                        {/* Tag badge */}
                         {post.tag && (
                           <span style={{
                             position:'absolute', top:'10px', right:'10px',
@@ -1148,6 +1184,7 @@ export default function HomePage() {
                           {post.excerpt}
                         </p>
 
+                        {/* Watch Video button — only for video posts */}
                         <span style={{
                           fontFamily:"'Poppins',sans-serif", fontSize:'12px',
                           fontWeight:'600', color:'var(--c-olive)', marginTop:'4px',
@@ -1156,7 +1193,7 @@ export default function HomePage() {
                         </span>
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ))}
               </div>
             ) : (

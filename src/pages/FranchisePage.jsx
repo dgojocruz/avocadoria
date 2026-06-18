@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import SEO from '@/components/ui/SEO'
 
 // ─── Cart slideshow config — edit here ───────────────────────────────────────
@@ -58,31 +59,31 @@ const CARTS = [
 const STEPS = [
   {
     num:   '01',
-    icon:  '📋',
-    title: 'Submit Inquiry',
+    title: 'Inquiry / Initial Contact',
     desc:  'Fill out the franchise inquiry form below or reach out via email. Tell us about yourself and your preferred location.',
   },
   {
     num:   '02',
-    icon:  '📞',
-    title: 'Initial Call',
-    desc:  "Our franchise team will contact you within 3–5 business days to discuss requirements, investment details, and answer your questions.",
+    title: 'Evaluation / Qualification',
+    desc:  'Our franchise team reviews your application and evaluates your qualifications, financial capacity, and business background.',
   },
   {
     num:   '03',
-    icon:  '📄',
-    title: 'Review & Sign',
-    desc:  'Receive the full franchise disclosure documents, review the agreement, and sign once you\'re ready to move forward.',
+    title: 'Invitation for Meeting',
+    desc:  'Qualified applicants are invited for a meeting at our Head Office or via Zoom to discuss the opportunity in detail.',
   },
   {
     num:   '04',
-    icon:  '🏗️',
-    title: 'Build & Train',
-    desc:  'We handle store build-out and provide full training on operations, recipes, and customer service — you\'re never alone.',
+    title: 'Review and Contract Signing',
+    desc:  'Receive the full franchise disclosure documents, review the agreement, and sign once you\'re ready to move forward.',
   },
   {
     num:   '05',
-    icon:  '🥑',
+    title: 'Build and Training',
+    desc:  'We handle store build-out and provide full training on operations, recipes, and customer service — you\'re never alone.',
+  },
+  {
+    num:   '06',
     title: 'Grand Opening',
     desc:  "Launch your Avocadoria store with our team's full support. Start spreading happiness in avocado!",
   },
@@ -330,8 +331,25 @@ function InquiryForm() {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function FranchisePage() {
+  const [hoveredIcon, setHoveredIcon] = useState(null)
+
   return (
     <>
+      {/* Flash keyframe */}
+      <style>{`
+        @keyframes iconFlash {
+          0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.7), 0 6px 20px rgba(58,107,53,0.4); }
+          40%  { box-shadow: 0 0 0 18px rgba(255,255,255,0), 0 10px 32px rgba(58,107,53,0.5); }
+          100% { box-shadow: 0 0 0 0 rgba(255,255,255,0), 0 6px 20px rgba(58,107,53,0.4); }
+        }
+        @keyframes iconFlashPhoto {
+          0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.7), 0 6px 20px rgba(182,197,72,0.45); }
+          40%  { box-shadow: 0 0 0 18px rgba(255,255,255,0), 0 10px 32px rgba(182,197,72,0.55); }
+          100% { box-shadow: 0 0 0 0 rgba(255,255,255,0), 0 6px 20px rgba(182,197,72,0.45); }
+        }
+        .gallery-icon-video:hover  { animation: iconFlash 0.5s ease-out; transform: scale(1.15) translateY(-4px) !important; }
+        .gallery-icon-photo:hover  { animation: iconFlashPhoto 0.5s ease-out; transform: scale(1.15) translateY(-4px) !important; }
+      `}</style>
       <SEO
         title="Franchise"
         description="Own your Avocadoria franchise. Choose from Food Truck, Island, Pop Up, or Kiosk formats. Spread happiness in avocado!"
@@ -339,37 +357,73 @@ export default function FranchisePage() {
       />
       <div className="page-enter">
 
-        {/* ── HERO ── */}
-        <section style={{
-          position:'relative', overflow:'hidden',
-          backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
-          padding: '100px 32px 80px',
-          textAlign: 'center',
-        }}>
-          <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
-          <div style={{ position:'relative', zIndex:1, maxWidth: '700px', margin: '0 auto' }}>
-            <h1 style={{
-              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-              fontWeight: 'normal',
-              fontSize: 'clamp(1.6rem,4vw,2.8rem)',
-              color: 'var(--c-olive)',
-              textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
-              margin: '0 0 8px', lineHeight: 1.1,
-            }}>
-              Join the <span style={{ color: '#b6c548' }}>Avocadoria</span> Franchise Family
-            </h1>
+        {/* ── TEAM PHOTO SECTION ── */}
+        <section style={{ position:'relative', overflow:'hidden', lineHeight:0 }}>
+          {/* Top wave divider */}
+          <div style={{ background: '#b6c548', lineHeight:0 }}>
+            <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none" style={{ display:'block', width:'100%', height:'70px' }}>
+              <path d="M0,0 C360,70 1080,0 1440,42 L1440,70 L0,70 Z" fill="#d9e29e" />
+            </svg>
+          </div>
 
-            <a href="#franchise-inquiry" style={{
-              display: 'inline-block', background: '#b6c548', color: '#fff',
-              padding: '14px 36px', borderRadius: '999px',
-              fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800',
-              textDecoration: 'none', transition: 'background 0.2s',
-            }}
-              onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
-              onMouseLeave={e => e.currentTarget.style.background = '#b6c548'}
-            >
-              Start Your Journey →
-            </a>
+          {/* Full-width photo */}
+          <div style={{ position:'relative', lineHeight:0, background:'#d9e29e' }}>
+            <img
+              src="/franchise-hero-bg.webp"
+              alt="Avocadoria Team Building 2025"
+              style={{
+                width:'100%',
+                height:'clamp(300px, 60vw, 1250px)',
+                objectFit:'cover',
+                objectPosition:'center 40%',
+                display:'block'
+              }}
+              loading="lazy"
+              decoding="async"
+            />
+            {/* Floating text overlay — bottom of photo */}
+            <div style={{
+              position:'absolute', bottom:'4%', left:0, right:0,
+              display:'flex', flexDirection:'column', alignItems:'center', gap:'12px',
+              zIndex:2, padding:'0 16px',
+            }}>
+              <h1 style={{
+                fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+                fontWeight:'normal',
+                fontSize:'clamp(1.2rem,3vw,3.2rem)',
+                color:'var(--c-olive)',
+                textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
+                margin:0, lineHeight:1.1,
+                textAlign:'center', whiteSpace:'normal',
+              }}>
+                Join the Avocadoria Franchise Family
+              </h1>
+              <a href="#franchise-inquiry" style={{
+                display:'inline-flex', alignItems:'center', justifyContent:'center',
+                background:'var(--c-pink)', color:'#fff',
+                padding:'clamp(10px,1.5vw,16px) clamp(24px,3vw,48px)',
+                borderRadius:'999px',
+                fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+                fontSize:'clamp(0.8rem,1.5vw,1.3rem)', fontWeight:'normal',
+                textDecoration:'none', transition:'background 0.2s',
+                boxShadow:'0 6px 20px rgba(239,126,203,0.45)',
+                textAlign:'center',
+              }}
+                onMouseEnter={e => e.currentTarget.style.background='#d94faa'}
+                onMouseLeave={e => e.currentTarget.style.background='var(--c-pink)'}
+              >
+                Start Your Journey →
+              </a>
+            </div>
+          </div>
+
+          {/* Bottom wave divider */}
+          <div style={{ background: '#b6c548', lineHeight:0 }}>
+            <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none" style={{ display:'block', width:'100%', height:'70px' }}>
+              <path d="M0,0 C360,70 1080,0 1440,42 L1440,70 L0,70 Z" fill="#d9e29e" />
+            </svg>
           </div>
         </section>
 
@@ -484,8 +538,8 @@ export default function FranchisePage() {
               ].map((c, i) => (
                 <a key={i} href={c.href} target="_blank" rel="noopener noreferrer" style={{
                   display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
-                  background: 'rgba(255,255,255,0.7)', borderRadius: '14px', padding: '18px 12px',
-                  textDecoration: 'none', border: '1.5px solid rgba(182,197,72,0.3)',
+                  background: 'transparent', borderRadius: '14px', padding: '18px 12px',
+                  textDecoration: 'none', border: '1.5px solid rgba(182,197,72,0.4)',
                   transition: 'all 0.2s',
                 }}
                   onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#b6c548' }}
@@ -505,12 +559,96 @@ export default function FranchisePage() {
             </div>
 
             {/* Form */}
-            <div style={{ background: 'rgba(255,255,255,0.8)', borderRadius: '20px', padding: '36px', backdropFilter: 'blur(10px)', border: '1.5px solid rgba(255,255,255,0.9)' }}>
+            <div style={{ background: 'transparent', borderRadius: '20px', padding: '36px', border: 'none' }}>
               <InquiryForm />
             </div>
           </div>
         </section>
 
+        {/* ── EVENTS GALLERY ── */}
+        <section id="franchise-gallery" style={{ position:'relative', overflow:'hidden', padding:'72px 32px', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+          <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
+          <div style={{ position:'relative', zIndex:1, maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
+            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 12px', lineHeight: 1.1 }}>
+              Events & Milestones
+            </h2>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: 'rgba(138,95,60,0.75)', marginBottom: '48px' }}>
+              Relive our grand openings, franchise events, and brand milestones with our franchisee community.
+            </p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '28px', justifyItems: 'center' }}>
+              {/* Video Gallery Card */}
+              <a href="/gallery/videos" style={{ textDecoration: 'none', width: '100%' }}
+                onMouseEnter={e => { e.currentTarget.querySelector('.gallery-card').style.transform = 'translateY(-6px)'; e.currentTarget.querySelector('.gallery-card').style.boxShadow = '0 16px 40px rgba(58,107,53,0.18)' }}
+                onMouseLeave={e => { e.currentTarget.querySelector('.gallery-card').style.transform = 'translateY(0)'; e.currentTarget.querySelector('.gallery-card').style.boxShadow = '0 4px 24px rgba(0,0,0,0.08)' }}
+              >
+                <div className="gallery-card" style={{ background: 'rgba(255,255,255,0.85)', borderRadius: '24px', padding: '48px 32px', border: '2px solid rgba(182,197,72,0.35)', backdropFilter: 'blur(10px)', transition: 'transform 0.3s ease, box-shadow 0.3s ease', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', cursor: 'pointer' }}>
+                  {/* Play icon */}
+                  <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'linear-gradient(135deg, #b6c548, #3a6b35)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(182,197,72,0.4)' }}>
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                      <polygon points="6,3 21,12 6,21" fill="#fff" />
+                    </svg>
+                  </div>
+                  <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '1.3rem', color: 'var(--c-olive)', textShadow: '-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff', margin: '0 0 8px' }}>Video Gallery</h3>
+                  <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.75)', lineHeight: 1.6, margin: '0 0 20px' }}>Watch event highlights, grand opening videos, and franchise stories from our growing family.</p>
+                  <span style={{ display: 'inline-block', background: '#b6c548', color: '#fff', padding: '8px 24px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700' }}>Watch Now →</span>
+                </div>
+              </a>
+
+              {/* Image Gallery Card */}
+              <a href="/gallery/photos" style={{ textDecoration: 'none', width: '100%' }}
+                onMouseEnter={e => { e.currentTarget.querySelector('.gallery-card').style.transform = 'translateY(-6px)'; e.currentTarget.querySelector('.gallery-card').style.boxShadow = '0 16px 40px rgba(58,107,53,0.18)' }}
+                onMouseLeave={e => { e.currentTarget.querySelector('.gallery-card').style.transform = 'translateY(0)'; e.currentTarget.querySelector('.gallery-card').style.boxShadow = '0 4px 24px rgba(0,0,0,0.08)' }}
+              >
+                <div className="gallery-card" style={{ background: 'rgba(255,255,255,0.85)', borderRadius: '24px', padding: '48px 32px', border: '2px solid rgba(182,197,72,0.35)', backdropFilter: 'blur(10px)', transition: 'transform 0.3s ease, box-shadow 0.3s ease', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', cursor: 'pointer' }}>
+                  {/* Photo icon */}
+                  <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'linear-gradient(135deg, #d9e29e, #b6c548)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(182,197,72,0.4)' }}>
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+                      <rect x="3" y="5" width="18" height="14" rx="2.5" fill="#fff" opacity="0.9"/>
+                      <circle cx="12" cy="12" r="3.5" fill="#b6c548"/>
+                      <circle cx="18" cy="7" r="1.2" fill="#b6c548"/>
+                    </svg>
+                  </div>
+                  <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '1.3rem', color: 'var(--c-olive)', textShadow: '-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff', margin: '0 0 8px' }}>Image Gallery</h3>
+                  <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.75)', lineHeight: 1.6, margin: '0 0 20px' }}>Browse photos from franchise events, store launches, and behind-the-scenes moments with our team.</p>
+                  <span style={{ display: 'inline-block', background: '#3a6b35', color: '#fff', padding: '8px 24px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700' }}>View Photos →</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      {/* ── FLOATING GALLERY WIDGET ── */}
+      <div style={{ position: 'fixed', right: '20px', bottom: '50%', transform: 'translateY(50%)', zIndex: 999, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {/* Video Gallery Button */}
+        <a href="/gallery/videos"
+          title="Video Gallery"
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '5px', width: '72px', height: '72px', borderRadius: '18px', background: 'linear-gradient(135deg, #b6c548, #3a6b35)', boxShadow: '0 4px 16px rgba(58,107,53,0.35)', textDecoration: 'none', transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'pointer' }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(58,107,53,0.5)' }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(58,107,53,0.35)' }}
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <polygon points="6,3 21,12 6,21" fill="#fff" />
+          </svg>
+          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '7px', fontWeight: '700', color: '#fff', letterSpacing: '0.03em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.2 }}>Video{'\n'}Gallery</span>
+        </a>
+
+        {/* Image Gallery Button */}
+        <a href="/gallery/photos"
+          title="Image Gallery"
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '5px', width: '72px', height: '72px', borderRadius: '18px', background: 'linear-gradient(135deg, #d9e29e, #b6c548)', boxShadow: '0 4px 16px rgba(182,197,72,0.4)', textDecoration: 'none', transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'pointer' }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(182,197,72,0.55)' }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(182,197,72,0.4)' }}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="5" width="18" height="14" rx="2.5" fill="#fff" opacity="0.9"/>
+            <circle cx="12" cy="12" r="3.2" fill="#3a6b35"/>
+            <circle cx="17.5" cy="7.5" r="1.1" fill="#3a6b35"/>
+          </svg>
+          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '7px', fontWeight: '700', color: '#3a6b35', letterSpacing: '0.03em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.2 }}>Image{'\n'}Gallery</span>
+        </a>
       </div>
     </>
   )

@@ -229,12 +229,26 @@ a { touch-action: manipulation; }
   display: flex;
   flex-direction: column;
   gap: var(--sp-md);
+  padding-top: 20px;
+}
+.stores-layout .list-panel {
+  max-height: 380px;
+}
+.stores-layout .map-panel {
+  height: 300px;
 }
 @media (min-width: 900px) {
   .stores-layout {
     display: grid;
     grid-template-columns: 340px 1fr;
     align-items: start;
+    padding-top: 72px;
+  }
+  .stores-layout .list-panel {
+    max-height: 600px;
+  }
+  .stores-layout .map-panel {
+    height: 480px;
   }
 }
 

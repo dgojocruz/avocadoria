@@ -243,7 +243,15 @@ const BRANCHES = [
   {id:233,name:'SM City Davao',address:'2nd Level Main Building SM City Davao',island:'Mindanao',region:'Mindanao — Davao Region',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%202nd%20Level%20Main%20Building%20SM%20City%20Davao%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=2nd+Level+Main+Building+SM+City+Davao+Philippines',orderUrl:null},
   {id:234,name:'SM City General Santos',address:'Cor. Santiago Blvd, San Miguel St, General Santos City, South Cotabato',island:'Mindanao',region:'Mindanao — SOCCSKSARGEN',lat:6.1155,lng:125.181,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Cor.%20Santiago%20Blvd%2C%20San%20Miguel%20St%2C%20General%20Santos%20City%2C%20South%20Cotabato%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Cor.+Santiago+Blvd%2C+San+Miguel+St%2C+General+Santos+City%2C+South+Cotabato+Philippines',orderUrl:null},
   {id:235,name:'SM City Mindpro',address:'Ground Floor SM City Mindpro, La Purisima St, Zamboanga City',island:'Mindanao',region:'Mindanao — Zamboanga Peninsula',lat:6.9077,lng:122.0761,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Ground%20Floor%20SM%20City%20Mindpro%2C%20La%20Purisima%20St%2C%20Zamboanga%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Ground+Floor+SM+City+Mindpro%2C+La+Purisima+St%2C+Zamboanga+City+Philippines',orderUrl:null},
-  {id:236,name:'SM City Zamboanga',address:'Lower Ground SM City Zamboanga, Mayor Vitaliano Agan Avenue, Zamboanga City',island:'Mindanao',region:'Mindanao — Zamboanga Peninsula',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lower%20Ground%20SM%20City%20Zamboanga%2C%20Mayor%20Vitaliano%20Agan%20Avenue%2C%20Zamboanga%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lower+Ground+SM+City+Zamboanga%2C+Mayor+Vitaliano+Agan+Avenue%2C+Zamboanga+City+Philippines',orderUrl:null}
+  {id:236,name:'SM City Zamboanga',address:'Lower Ground SM City Zamboanga, Mayor Vitaliano Agan Avenue, Zamboanga City',island:'Mindanao',region:'Mindanao — Zamboanga Peninsula',lat:7.1907,lng:125.4553,embedUrl:'https://maps.google.com/maps?q=Avocadoria%20Lower%20Ground%20SM%20City%20Zamboanga%2C%20Mayor%20Vitaliano%20Agan%20Avenue%2C%20Zamboanga%20City%20Philippines&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lower+Ground+SM+City+Zamboanga%2C+Mayor+Vitaliano+Agan+Avenue%2C+Zamboanga+City+Philippines',orderUrl:null},
+
+  // ─── International ────────────────────────────────────────────────────────
+  {id:237,name:'Bedok Mall',address:'311 New Upper Changi Road, Bedok Mall, Singapore 467360',island:'International',region:'International — Singapore',lat:1.3241,lng:103.9300,embedUrl:'https://maps.google.com/maps?q=Bedok+Mall+311+New+Upper+Changi+Road+Singapore&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Bedok+Mall+311+New+Upper+Changi+Road+Singapore+467360',orderUrl:null},
+  {id:238,name:'VivoCity',address:'1 HarbourFront Walk, VivoCity, Singapore 098585',island:'International',region:'International — Singapore',lat:1.2644,lng:103.8222,embedUrl:'https://maps.google.com/maps?q=VivoCity+1+HarbourFront+Walk+Singapore&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=VivoCity+1+HarbourFront+Walk+Singapore+098585',orderUrl:null},
+  {id:239,name:'Ang Mo Kio Hub',address:'53 Ang Mo Kio Ave 3, AMK Hub, Singapore 569933',island:'International',region:'International — Singapore',lat:1.3699,lng:103.8487,embedUrl:'https://maps.google.com/maps?q=AMK+Hub+53+Ang+Mo+Kio+Ave+3+Singapore&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=AMK+Hub+53+Ang+Mo+Kio+Ave+3+Singapore+569933',orderUrl:null},
+  {id:240,name:'Lucky Plaza',address:'304 Orchard Road, Lucky Plaza, Singapore 238863',island:'International',region:'International — Singapore',lat:1.3027,lng:103.8321,embedUrl:'https://maps.google.com/maps?q=Lucky+Plaza+304+Orchard+Road+Singapore&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Lucky+Plaza+304+Orchard+Road+Singapore+238863',orderUrl:null},
+  {id:241,name:'Al Ghurair Centre',address:'Al Ghurair Centre, Deira, Dubai, United Arab Emirates',island:'International',region:'International — UAE',lat:25.2653,lng:55.3243,embedUrl:'https://maps.google.com/maps?q=Al+Ghurair+Centre+Deira+Dubai+UAE&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Al+Ghurair+Centre+Deira+Dubai+United+Arab+Emirates',orderUrl:null},
+  {id:242,name:'Central Rama 9',address:'Central Rama 9, 9/9 Rama IX Road, Huai Khwang, Bangkok 10310, Thailand',island:'International',region:'International — Thailand',lat:13.7577,lng:100.5673,embedUrl:'https://maps.google.com/maps?q=Central+Rama+9+Mall+Bangkok+Thailand&output=embed',mapsUrl:'https://www.google.com/maps/search/?api=1&query=Central+Rama+9+9+Rama+IX+Road+Bangkok+Thailand',orderUrl:null}
 ]
 
 // ─── Config ───────────────────────────────────────────────────────────────────
@@ -274,11 +282,37 @@ const C = {
 }
 
 // ─── Island group colors ─────────────────────────────────────────────────────
+// ─── Maps internal island key → display country name + flag ──────────────────
+const COUNTRY_LABELS = {
+  'Metro Manila': 'Philippines',
+  'Luzon':        'Philippines',
+  'Visayas':      'Philippines',
+  'Mindanao':     'Philippines',
+  'International — Singapore': 'Singapore',
+  'International — UAE':       'UAE',
+  'International — Thailand':  'Thailand',
+}
+
+const COUNTRY_FLAGS = {
+  'Philippines': '🇵🇭',
+  'Singapore':   '🇸🇬',
+  'UAE':         '🇦🇪',
+  'Thailand':    '🇹🇭',
+}
+
+const COUNTRY_COLORS = {
+  'Philippines': { bg: 'rgba(182,197,72,.12)', text: '#3a6b35', border: 'rgba(182,197,72,.4)', pin: '#b6c548' },
+  'Singapore':   { bg: 'rgba(220,40,40,.08)',  text: '#9b1a1a', border: 'rgba(220,40,40,.25)', pin: '#dc2828' },
+  'UAE':         { bg: 'rgba(0,130,80,.08)',   text: '#005a38', border: 'rgba(0,130,80,.25)',  pin: '#008250' },
+  'Thailand':    { bg: 'rgba(91,143,217,.1)',  text: '#1a4a8a', border: 'rgba(91,143,217,.3)', pin: '#5b8fd9' },
+}
+
 const ISLAND_COLORS = {
-  'Metro Manila': { bg: 'rgba(182,197,72,.12)',   text: '#3a6b35',  border: 'rgba(182,197,72,.4)',  pin: '#b6c548' },
-  'Luzon':        { bg: 'rgba(63,166,43,.1)',     text: '#1e5c13',  border: 'rgba(63,166,43,.3)',   pin: '#3a6b35' },
-  'Visayas':      { bg: 'rgba(239,126,203,.1)',   text: '#8b1f60',  border: 'rgba(239,126,203,.35)',pin: '#EF7ECB' },
-  'Mindanao':     { bg: 'rgba(223,212,56,.12)',   text: '#6b5e00',  border: 'rgba(223,212,56,.4)',  pin: '#8A5F3C' },
+  'Metro Manila':  { bg: 'rgba(182,197,72,.12)',   text: '#3a6b35',  border: 'rgba(182,197,72,.4)',  pin: '#b6c548' },
+  'Luzon':         { bg: 'rgba(63,166,43,.1)',     text: '#1e5c13',  border: 'rgba(63,166,43,.3)',   pin: '#3a6b35' },
+  'Visayas':       { bg: 'rgba(239,126,203,.1)',   text: '#8b1f60',  border: 'rgba(239,126,203,.35)',pin: '#EF7ECB' },
+  'Mindanao':      { bg: 'rgba(223,212,56,.12)',   text: '#6b5e00',  border: 'rgba(223,212,56,.4)',  pin: '#8A5F3C' },
+  'International': { bg: 'rgba(91,143,217,.1)',    text: '#1a4a8a',  border: 'rgba(91,143,217,.35)', pin: '#5b8fd9' },
 }
 
 // ─── Haversine distance (km) ──────────────────────────────────────────────────
@@ -313,13 +347,16 @@ function makePinUrl(color = '#b6c548', active = false) {
 
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function OurStoresPage() {
-  const [phase,     setPhase]     = useState('idle')
-  const [search,    setSearch]    = useState('')
-  const [userLoc,   setUserLoc]   = useState(null)
-  const [locError,  setLocError]  = useState(null)
-  const [activeId,  setActiveId]  = useState(null)
-  const [nearestId, setNearestId] = useState(null)
-  const [mapReady,  setMapReady]  = useState(false)
+  const [phase,          setPhase]          = useState('idle')
+  const [search,         setSearch]         = useState('')
+  const [userLoc,        setUserLoc]        = useState(null)
+  const [locError,       setLocError]       = useState(null)
+  const [activeId,       setActiveId]       = useState(null)
+  const [nearestId,      setNearestId]      = useState(null)
+  const [mapReady,       setMapReady]       = useState(false)
+  const [drillLevel,     setDrillLevel]     = useState('branches') // 'countries' | 'regions' | 'branches'
+  const [selectedCountry,setSelectedCountry]= useState(null)
+  const [selectedRegion, setSelectedRegion] = useState(null)
 
   const searchRef  = useRef(null)
   const listRef    = useRef(null)
@@ -370,9 +407,10 @@ export default function OurStoresPage() {
 
   // ── Build Leaflet map once libs are ready + results are showing ────────────
   const showResults = phase === 'results' || search.length > 0
+  const showMap = showResults
 
   useEffect(() => {
-    if (!mapReady || !showResults || !mapRef.current || leafletRef.current) return
+    if (!mapReady || !showMap || !mapRef.current || leafletRef.current) return
     if (!window.L) return
 
     const L = window.L
@@ -476,7 +514,7 @@ export default function OurStoresPage() {
       return div
     }
     legend.addTo(map)
-  }, [mapReady, showResults])
+  }, [mapReady, showMap])
 
   // ── Fly map to active branch when selection changes ────────────────────────
   useEffect(() => {
@@ -500,6 +538,50 @@ export default function OurStoresPage() {
     }
   }, [activeId])
 
+  // ── Fly map based on drill level / country / region selection ───────────────
+  useEffect(() => {
+    if (!leafletRef.current) return
+    const map = leafletRef.current
+
+    if (drillLevel === 'countries' || (!selectedCountry && !selectedRegion)) {
+      // Show world view — fit all branches
+      const branches = BRANCHES.filter(b => b.lat && b.lng)
+      if (branches.length) {
+        const lats = branches.map(b => b.lat)
+        const lngs = branches.map(b => b.lng)
+        map.flyToBounds(
+          [[Math.min(...lats), Math.min(...lngs)], [Math.max(...lats), Math.max(...lngs)]],
+          { padding: [40, 40], animate: true, duration: 0.9, maxZoom: 6 }
+        )
+      }
+    } else if (drillLevel === 'regions' && selectedCountry) {
+      // Fit to selected country's branches
+      const countryBranches = BRANCHES.filter(b => {
+        if (selectedCountry === 'Philippines') return ['Metro Manila','Luzon','Visayas','Mindanao'].includes(b.island)
+        return b.region === `International — ${selectedCountry}`
+      }).filter(b => b.lat && b.lng)
+      if (countryBranches.length) {
+        const lats = countryBranches.map(b => b.lat)
+        const lngs = countryBranches.map(b => b.lng)
+        map.flyToBounds(
+          [[Math.min(...lats), Math.min(...lngs)], [Math.max(...lats), Math.max(...lngs)]],
+          { padding: [60, 60], animate: true, duration: 0.9, maxZoom: selectedCountry === 'Philippines' ? 7 : 12 }
+        )
+      }
+    } else if (drillLevel === 'branches' && selectedRegion) {
+      // Fit to selected region's branches
+      const regionBranches = BRANCHES.filter(b => b.island === selectedRegion || b.region === selectedRegion).filter(b => b.lat && b.lng)
+      if (regionBranches.length) {
+        const lats = regionBranches.map(b => b.lat)
+        const lngs = regionBranches.map(b => b.lng)
+        map.flyToBounds(
+          [[Math.min(...lats), Math.min(...lngs)], [Math.max(...lats), Math.max(...lngs)]],
+          { padding: [60, 60], animate: true, duration: 0.9, maxZoom: 11 }
+        )
+      }
+    }
+  }, [drillLevel, selectedCountry, selectedRegion])
+
   // ── GPS locate ─────────────────────────────────────────────────────────────
   const handleLocate = () => {
     if (!navigator.geolocation) { setLocError('Geolocation not supported by your browser.'); return }
@@ -511,6 +593,10 @@ export default function OurStoresPage() {
         setUserLoc({ lat, lng })
         setPhase('results')
         setSearch('')
+        // Reset drill to show all branches sorted by distance
+        setDrillLevel('branches')
+        setSelectedCountry(null)
+        setSelectedRegion(null)
         // Find nearest using real haversine distance
         const nearest = BRANCHES
           .filter(b => b.lat && b.lng)
@@ -532,13 +618,22 @@ export default function OurStoresPage() {
   const { filtered, grouped, islands } = useMemo(() => {
     const q = search.toLowerCase().trim()
 
-    let list = BRANCHES.filter(b =>
-      !q ||
-      b.name.toLowerCase().includes(q) ||
-      b.address.toLowerCase().includes(q) ||
-      b.region.toLowerCase().includes(q) ||
-      b.island.toLowerCase().includes(q)
-    ).map(b => ({
+    let list = BRANCHES.filter(b => {
+      const matchesSearch = !q ||
+        b.name.toLowerCase().includes(q) ||
+        b.address.toLowerCase().includes(q) ||
+        b.region.toLowerCase().includes(q) ||
+        b.island.toLowerCase().includes(q)
+      // Country filter using real country names
+      let matchesCountry = true
+      if (selectedCountry) {
+        if (selectedCountry === 'Philippines') matchesCountry = ['Metro Manila','Luzon','Visayas','Mindanao'].includes(b.island)
+        else matchesCountry = b.region === `International — ${selectedCountry}`
+      }
+      // Region filter: for PH, selectedRegion is the island group; for intl, skip
+      const matchesRegion = !selectedRegion || b.island === selectedRegion || b.region === selectedRegion
+      return matchesSearch && matchesCountry && matchesRegion
+    }).map(b => ({
       ...b,
       distance: (userLoc && b.lat && b.lng)
         ? haversine(userLoc.lat, userLoc.lng, b.lat, b.lng)
@@ -563,7 +658,52 @@ export default function OurStoresPage() {
       grouped:  byIsland,
       islands:  Object.keys(byIsland),
     }
-  }, [search, userLoc])
+  }, [search, userLoc, selectedCountry, selectedRegion])
+
+  // ── Country / Region derived data ──────────────────────────────────────────
+  const allCountries = useMemo(() => {
+    // Group branches by real country name
+    const countryMap = {}
+    BRANCHES.forEach(b => {
+      // Determine real country: international branches use their region key
+      const country = ['Metro Manila','Luzon','Visayas','Mindanao'].includes(b.island)
+        ? 'Philippines'
+        : b.region.replace('International — ', '')
+      if (!countryMap[country]) countryMap[country] = 0
+      countryMap[country]++
+    })
+    return Object.entries(countryMap).map(([name, count]) => ({
+      name,
+      count,
+      flag:   COUNTRY_FLAGS[name]  || '🌐',
+      colors: COUNTRY_COLORS[name] || { bg: 'rgba(182,197,72,.1)', text: '#3a6b35', border: 'rgba(182,197,72,.3)', pin: '#b6c548' },
+    }))
+  }, [])
+
+  const regionsForCountry = useMemo(() => {
+    if (!selectedCountry) return []
+    if (selectedCountry === 'Philippines') {
+      // Sub-group by island group for PH
+      const islandMap = {}
+      BRANCHES.filter(b => ['Metro Manila','Luzon','Visayas','Mindanao'].includes(b.island))
+        .forEach(b => {
+          if (!islandMap[b.island]) islandMap[b.island] = 0
+          islandMap[b.island]++
+        })
+      return Object.entries(islandMap).map(([name, count]) => ({ name, count, isIsland: true }))
+    } else {
+      // For international — show individual branches directly (skip region level)
+      return []
+    }
+  }, [selectedCountry])
+
+  // ── Filter branches by selected country/region ─────────────────────────────
+  const countryFilter = (b) => {
+    if (!selectedCountry) return true
+    if (selectedCountry === 'Philippines') return ['Metro Manila','Luzon','Visayas','Mindanao'].includes(b.island)
+    // International: match by region suffix
+    return b.region === `International — ${selectedCountry}`
+  }
 
   const activeBranch = BRANCHES.find(b => b.id === activeId)
 
@@ -576,7 +716,15 @@ export default function OurStoresPage() {
     }
   }, [filtered, showResults])
 
-  const totalRegions = useMemo(() => new Set(BRANCHES.map(b => b.region)).size, [])
+  const totalRegions   = useMemo(() => new Set(BRANCHES.map(b => b.region)).size, [])
+  const totalCountries = useMemo(() => {
+    const countries = new Set(BRANCHES.map(b =>
+      ['Metro Manila','Luzon','Visayas','Mindanao'].includes(b.island)
+        ? 'Philippines'
+        : b.region.replace('International — ', '')
+    ))
+    return countries.size
+  }, [])
 
   return (
     <>
@@ -636,23 +784,38 @@ export default function OurStoresPage() {
               Find the nearest one and order fresh avocado desserts.
             </p>
 
-            {/* Stats pills */}
+            {/* Stats pills — Countries → Regions → Branches */}
             <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '40px' }}>
               {[
-                { n: BRANCHES.length, l: 'Branches' },
-                { n: totalRegions, l: 'Regions' },
-                { n: 4, l: 'Island Groups' },
+                { n: totalCountries, l: 'Countries', drill: 'countries' },
+                { n: totalRegions,   l: 'Regions',   drill: 'countries'  },
+                { n: BRANCHES.length,l: 'Branches',  drill: 'branches'  },
               ].map(s => (
-                <div key={s.l} style={{
-                  background: 'rgba(255,255,255,.7)',
-                  backdropFilter: 'blur(8px)',
-                  border: '1px solid rgba(255,255,255,.9)',
-                  borderRadius: '999px',
-                  padding: '8px 20px',
-                }}>
-                  <span style={{ fontSize: '20px', fontWeight: '800', color: C.dark }}>{s.n}</span>
-                  <span style={{ fontSize: '12px', color: `${C.brown}99`, marginLeft: '6px', fontWeight: '600' }}>{s.l}</span>
-                </div>
+                <button
+                  key={s.l}
+                  onClick={() => {
+                    setDrillLevel(s.drill)
+                    setSelectedCountry(null)
+                    setSelectedRegion(null)
+                    setSearch('')
+                    setPhase('results')
+                  }}
+                  style={{
+                    background: 'rgba(255,255,255,.7)',
+                    backdropFilter: 'blur(8px)',
+                    border: '1.5px solid rgba(255,255,255,.9)',
+                    borderRadius: '999px',
+                    padding: '8px 20px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    fontFamily: "'Poppins',sans-serif",
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = C.olive; e.currentTarget.style.borderColor = C.olive; e.currentTarget.querySelector('.pill-n').style.color = '#fff'; e.currentTarget.querySelector('.pill-l').style.color = 'rgba(255,255,255,0.85)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.7)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.9)'; e.currentTarget.querySelector('.pill-n').style.color = C.dark; e.currentTarget.querySelector('.pill-l').style.color = `${C.brown}99` }}
+                >
+                  <span className="pill-n" style={{ fontSize: '20px', fontWeight: '800', color: C.dark, transition: 'color 0.2s' }}>{s.n}</span>
+                  <span className="pill-l" style={{ fontSize: '12px', color: `${C.brown}99`, marginLeft: '6px', fontWeight: '600', transition: 'color 0.2s' }}>{s.l}</span>
+                </button>
               ))}
             </div>
 
@@ -745,15 +908,15 @@ export default function OurStoresPage() {
             // ── Overall container ────────────────────────────────
             navbarHeight:    88,    // px — must match your navbar height
             containerMaxW:   1280,  // px — max width of the whole panel
-            containerPadX:   24,    // px — left/right page margin
+            containerPadX:   16,    // px — left/right page margin (mobile-friendly)
 
             // ── Left panel (branch list) ─────────────────────────
             listWidth:       340,   // px — width of the branch list column
-            listMaxH:        600,   // px — max height of the scrollable list
+            listMaxH:        400,   // px — max height on mobile; CSS overrides for desktop
             listBg:          C.cream,
 
             // ── Right panel (map) ────────────────────────────────
-            mapHeight:       480,   // px — height of the Google Maps iframe
+            mapHeight:       320,   // px — mobile map height; CSS overrides for desktop
             mapBorderRadius: 16,    // px — rounded corners on the map
             mapShadow:       '0 8px 32px rgba(58,107,53,.15)',
 
@@ -763,7 +926,7 @@ export default function OurStoresPage() {
 
             // ── Spacing ──────────────────────────────────────────
             gapBetween:      24,    // px — gap between list and map columns
-            sectionPaddingT: 32,    // px — top padding below search bar
+            sectionPaddingT: 48,    // px — top padding below search bar (mobile); more on desktop via CSS
             sectionPaddingB: 48,    // px — bottom padding of results section
           }
 
@@ -774,16 +937,24 @@ export default function OurStoresPage() {
             paddingTop: `${LAYOUT.navbarHeight}px`,
           }}>
 
+            {/* ── Wave divider below search bar ── */}
+            <div style={{ width: '100%', lineHeight: 0, marginBottom: '-2px' }}>
+              <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: '60px' }}>
+                <path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,0 L0,0 Z" fill="#b6c548" opacity="0.25"/>
+                <path d="M0,40 C240,70 480,10 720,40 C960,70 1200,10 1440,40 L1440,0 L0,0 Z" fill="#d9e29e" opacity="0.3"/>
+              </svg>
+            </div>
             <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
             <div style={{ position:'relative', zIndex:1 }}>
             {/* ── Top search + back bar — full width, clear of navbar ── */}
             <div style={{
               background: 'rgba(255,255,255,0.95)',
               borderBottom: `1px solid rgba(182,197,72,.2)`,
-              padding: '12px 24px',
+              padding: '10px 16px',
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
+              flexWrap: 'wrap',
+              gap: '8px',
               position: 'sticky',
               top: `${LAYOUT.navbarHeight}px`,
               zIndex: 20,
@@ -791,7 +962,7 @@ export default function OurStoresPage() {
             }}>
               {/* Back button */}
               <button
-                onClick={() => { setPhase('idle'); setSearch(''); setActiveId(null); setUserLoc(null); setNearestId(null) }}
+                onClick={() => { setPhase('idle'); setSearch(''); setActiveId(null); setUserLoc(null); setNearestId(null); setDrillLevel('branches'); setSelectedCountry(null); setSelectedRegion(null) }}
                 style={{
                   flexShrink: 0, background: 'none', border: `1.5px solid rgba(182,197,72,.4)`,
                   borderRadius: '10px', cursor: 'pointer', color: C.olive,
@@ -871,124 +1042,206 @@ export default function OurStoresPage() {
               padding: `${LAYOUT.sectionPaddingT}px ${LAYOUT.containerPadX}px ${LAYOUT.sectionPaddingB}px`,
             }}>
 
-              {/* ── LEFT: branch list ── */}
-              <div style={{
+              {/* ── LEFT: drill-down list ── */}
+              <div className="list-panel" style={{
                 background: '#fff',
                 borderRadius: '16px',
                 border: `1px solid rgba(182,197,72,.2)`,
                 overflow: 'hidden',
                 boxShadow: '0 4px 20px rgba(58,107,53,.08)',
-                position: 'sticky',
-                top: `${LAYOUT.navbarHeight + 68}px`,
               }}>
-                {filtered.length === 0 ? (
-                  <div style={{ padding: '48px 24px', textAlign: 'center' }}>
-                    <div style={{ fontSize: '36px', marginBottom: '12px' }}>🥑</div>
-                    <p style={{ fontSize: '13px', color: `${C.brown}80`, fontFamily: "'Poppins',sans-serif" }}>
-                      No branches found for "{search}"
-                    </p>
-                  </div>
-                ) : (
-                  <div style={{ maxHeight: `${LAYOUT.listMaxH}px`, overflowY: 'auto' }}>
-                    {islands.map(island => (
-                      <div key={island}>
-                        {/* Island group header */}
-                        <div style={{
-                          padding: '9px 16px 7px',
-                          background: ISLAND_COLORS[island]?.bg || 'rgba(182,197,72,.08)',
-                          borderBottom: `1px solid ${ISLAND_COLORS[island]?.border || 'rgba(182,197,72,.2)'}`,
-                          position: 'sticky', top: 0, zIndex: 2,
-                        }}>
-                          <span style={{
-                            fontSize: '11px', fontWeight: '800',
-                            color: ISLAND_COLORS[island]?.text || C.dark,
-                            textTransform: 'uppercase', letterSpacing: '.06em',
-                            fontFamily: "'Poppins',sans-serif",
-                          }}>
-                            {island} · {Object.values(grouped[island]).reduce((s, a) => s + a.length, 0)} branches
-                          </span>
-                        </div>
 
-                        {Object.entries(grouped[island]).map(([region, branches]) => (
-                          <div key={region}>
-                            {island !== 'Metro Manila' && (
-                              <div style={{
-                                padding: '5px 16px 4px 22px',
-                                fontSize: '10px', fontWeight: '700',
-                                color: `${C.brown}70`, letterSpacing: '.04em',
-                                textTransform: 'uppercase',
-                                background: `rgba(244,250,236,.8)`,
-                                borderBottom: '1px solid rgba(182,197,72,.08)',
+                {/* ── Breadcrumb nav ── */}
+                {(drillLevel === 'regions' || drillLevel === 'branches') && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 14px', borderBottom: '1px solid rgba(182,197,72,.15)', background: 'rgba(244,250,236,.6)', flexWrap: 'wrap' }}>
+                    <button onClick={() => { setDrillLevel('countries'); setSelectedCountry(null); setSelectedRegion(null) }}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: "'Poppins',sans-serif", fontSize: '11px', fontWeight: '700', color: C.olive, padding: '2px 4px' }}>
+                      Countries
+                    </button>
+                    {selectedCountry && (
+                      <>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={`${C.brown}60`} strokeWidth="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        <button onClick={() => { setDrillLevel('regions'); setSelectedRegion(null) }}
+                          style={{ background: 'none', border: 'none', cursor: drillLevel === 'branches' ? 'pointer' : 'default', fontFamily: "'Poppins',sans-serif", fontSize: '11px', fontWeight: drillLevel === 'regions' ? '800' : '700', color: drillLevel === 'regions' ? C.brown : C.olive, padding: '2px 4px' }}>
+                          {selectedCountry}
+                        </button>
+                      </>
+                    )}
+                    {selectedRegion && (
+                      <>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={`${C.brown}60`} strokeWidth="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: '11px', fontWeight: '800', color: C.brown, padding: '2px 4px' }}>
+                          {selectedRegion}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                )}
+
+                <div className="list-panel" style={{ overflowY: 'auto' }}>
+
+                  {/* ── LEVEL 1: Countries ── */}
+                  {drillLevel === 'countries' && (
+                    <div>
+                      {allCountries.map(country => (
+                        <button key={country.name}
+                          onClick={() => {
+                            setSelectedCountry(country.name)
+                            setSelectedRegion(null)
+                            // Philippines has sub-regions; international goes straight to branches
+                            if (country.name === 'Philippines') setDrillLevel('regions')
+                            else setDrillLevel('branches')
+                          }}
+                          style={{
+                            width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                            padding: '14px 16px', background: 'transparent', border: 'none',
+                            borderBottom: '1px solid rgba(182,197,72,.08)', cursor: 'pointer',
+                            fontFamily: "'Poppins',sans-serif", transition: 'background .12s',
+                          }}
+                          onMouseEnter={e => e.currentTarget.style.background = 'rgba(182,197,72,.06)'}
+                          onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <span style={{ fontSize: '20px', lineHeight: 1 }}>{country.flag}</span>
+                            <span style={{ fontSize: '14px', fontWeight: '700', color: C.brown }}>{country.name}</span>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '12px', color: country.colors.text, fontWeight: '700', background: country.colors.bg, padding: '2px 10px', borderRadius: '999px', border: `1px solid ${country.colors.border}` }}>{country.count} branches</span>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={`${C.brown}40`} strokeWidth="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* ── LEVEL 2: Regions ── */}
+                  {drillLevel === 'regions' && selectedCountry && (
+                    <div>
+                      <button
+                        onClick={() => { setSelectedRegion(null); setDrillLevel('branches') }}
+                        style={{
+                          width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                          padding: '12px 16px', background: 'rgba(182,197,72,.07)', border: 'none',
+                          borderBottom: '1px solid rgba(182,197,72,.15)', cursor: 'pointer',
+                          fontFamily: "'Poppins',sans-serif", transition: 'background .12s',
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.background = 'rgba(182,197,72,.13)'}
+                        onMouseLeave={e => e.currentTarget.style.background = 'rgba(182,197,72,.07)'}
+                      >
+                        <span style={{ fontSize: '12px', fontWeight: '700', color: C.olive }}>All branches in {selectedCountry}</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                      </button>
+                      {regionsForCountry.map(region => (
+                        <button key={region.name}
+                          onClick={() => { setSelectedRegion(region.name); setDrillLevel('branches') }}
+                          style={{
+                            width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                            padding: '13px 16px', background: 'transparent', border: 'none',
+                            borderBottom: '1px solid rgba(182,197,72,.08)', cursor: 'pointer',
+                            fontFamily: "'Poppins',sans-serif", transition: 'background .12s',
+                          }}
+                          onMouseEnter={e => e.currentTarget.style.background = 'rgba(182,197,72,.06)'}
+                          onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                        >
+                          <span style={{ fontSize: '13px', fontWeight: '600', color: C.brown }}>
+                            {region.name.replace(/^.*?—\s*/, '')}
+                          </span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '11px', color: C.olive, fontWeight: '700' }}>{region.count}</span>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={`${C.brown}40`} strokeWidth="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* ── LEVEL 3: Branches ── */}
+                  {drillLevel === 'branches' && (
+                    filtered.length === 0 ? (
+                      <div style={{ padding: '48px 24px', textAlign: 'center' }}>
+                        <div style={{ fontSize: '36px', marginBottom: '12px' }}>🥑</div>
+                        <p style={{ fontSize: '13px', color: `${C.brown}80`, fontFamily: "'Poppins',sans-serif" }}>
+                          No branches found{search ? ` for "${search}"` : ''}
+                        </p>
+                      </div>
+                    ) : (
+                      <div>
+                        {islands.map(island => (
+                          <div key={island}>
+                            <div style={{
+                              padding: '9px 16px 7px',
+                              background: ISLAND_COLORS[island]?.bg || 'rgba(182,197,72,.08)',
+                              borderBottom: `1px solid ${ISLAND_COLORS[island]?.border || 'rgba(182,197,72,.2)'}`,
+                              position: 'sticky', top: 0, zIndex: 2,
+                            }}>
+                              <span style={{
+                                fontSize: '11px', fontWeight: '800',
+                                color: ISLAND_COLORS[island]?.text || C.dark,
+                                textTransform: 'uppercase', letterSpacing: '.06em',
                                 fontFamily: "'Poppins',sans-serif",
                               }}>
-                                {region.replace(/^.*?—\s*/, '')} · {branches.length}
-                              </div>
-                            )}
-
-                            {branches.map(b => {
-                              const isActive  = b.id === activeId
-                              const isNearest = b.id === nearestId
-                              return (
-                                <div
-                                  key={b.id}
-                                  onClick={() => setActiveId(b.id)}
-                                  role="button" tabIndex={0}
-                                  onKeyDown={e => e.key === 'Enter' && setActiveId(b.id)}
-                                  style={{
-                                    display: 'flex', alignItems: 'center', gap: '10px',
-                                    padding: '11px 16px',
-                                    background: isActive ? `rgba(182,197,72,.1)` : 'transparent',
-                                    borderLeft: `3px solid ${isActive ? C.olive : 'transparent'}`,
-                                    borderBottom: '1px solid rgba(182,197,72,.07)',
-                                    cursor: 'pointer', transition: 'all .12s',
-                                  }}
-                                  onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = `rgba(182,197,72,.05)` }}
-                                  onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent' }}
-                                >
-                                  <div style={{ flexShrink: 0 }}>
-                                    {CUSTOM_PIN
-                                      ? <img src={CUSTOM_PIN} alt="" style={{ width: '22px' }} aria-hidden="true" />
-                                      : <AvoPin size={22} active={isActive} />
-                                    }
+                                {island} · {Object.values(grouped[island]).reduce((s, a) => s + a.length, 0)} branches
+                              </span>
+                            </div>
+                            {Object.entries(grouped[island]).map(([region, branches]) => (
+                              <div key={region}>
+                                {island !== 'Metro Manila' && (
+                                  <div style={{
+                                    padding: '5px 16px 4px 22px', fontSize: '10px', fontWeight: '700',
+                                    color: `${C.brown}70`, letterSpacing: '.04em', textTransform: 'uppercase',
+                                    background: `rgba(244,250,236,.8)`, borderBottom: '1px solid rgba(182,197,72,.08)',
+                                    fontFamily: "'Poppins',sans-serif",
+                                  }}>
+                                    {region.replace(/^.*?—\s*/, '')} · {branches.length}
                                   </div>
-                                  <div style={{ flex: 1, minWidth: 0 }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}>
-                                      <span style={{
-                                        fontSize: '13px', fontWeight: isActive ? '700' : '600',
-                                        color: isActive ? C.dark : C.brown,
-                                        fontFamily: "'Poppins',sans-serif", lineHeight: '1.35',
-                                      }}>
-                                        {b.name}
-                                      </span>
-                                      {isNearest && (
-                                        <span style={{ fontSize: '9px', background: C.olive, color: '#fff', padding: '2px 6px', borderRadius: '99px', fontWeight: '700', flexShrink: 0 }}>Nearest</span>
-                                      )}
-                                      {b.orderUrl && (
-                                        <span style={{ fontSize: '9px', background: C.pink, color: '#fff', padding: '2px 6px', borderRadius: '99px', fontWeight: '700', flexShrink: 0 }}>Delivery</span>
-                                      )}
-                                      {b.distance !== null && (
-                                        <span style={{ fontSize: '10px', color: C.olive, fontWeight: '600', flexShrink: 0 }}>
-                                          {b.distance < 1 ? `${Math.round(b.distance * 1000)}m` : `${b.distance.toFixed(1)}km`}
-                                        </span>
-                                      )}
+                                )}
+                                {branches.map(b => {
+                                  const isActive  = b.id === activeId
+                                  const isNearest = b.id === nearestId
+                                  return (
+                                    <div key={b.id} onClick={() => setActiveId(b.id)}
+                                      role="button" tabIndex={0} onKeyDown={e => e.key === 'Enter' && setActiveId(b.id)}
+                                      style={{
+                                        display: 'flex', alignItems: 'center', gap: '10px', padding: '11px 16px',
+                                        background: isActive ? `rgba(182,197,72,.1)` : 'transparent',
+                                        borderLeft: `3px solid ${isActive ? C.olive : 'transparent'}`,
+                                        borderBottom: '1px solid rgba(182,197,72,.07)',
+                                        cursor: 'pointer', transition: 'all .12s',
+                                      }}
+                                      onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = `rgba(182,197,72,.05)` }}
+                                      onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent' }}
+                                    >
+                                      <div style={{ flexShrink: 0 }}>
+                                        {CUSTOM_PIN ? <img src={CUSTOM_PIN} alt="" style={{ width: '22px' }} aria-hidden="true" /> : <AvoPin size={22} active={isActive} />}
+                                      </div>
+                                      <div style={{ flex: 1, minWidth: 0 }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}>
+                                          <span style={{ fontSize: '13px', fontWeight: isActive ? '700' : '600', color: isActive ? C.dark : C.brown, fontFamily: "'Poppins',sans-serif", lineHeight: '1.35' }}>
+                                            {b.name}
+                                          </span>
+                                          {isNearest && <span style={{ fontSize: '9px', background: C.olive, color: '#fff', padding: '2px 6px', borderRadius: '99px', fontWeight: '700', flexShrink: 0 }}>Nearest</span>}
+                                          {b.orderUrl && <span style={{ fontSize: '9px', background: C.pink, color: '#fff', padding: '2px 6px', borderRadius: '99px', fontWeight: '700', flexShrink: 0 }}>Delivery</span>}
+                                          {b.distance !== null && <span style={{ fontSize: '10px', color: C.olive, fontWeight: '600', flexShrink: 0 }}>{b.distance < 1 ? `${Math.round(b.distance * 1000)}m` : `${b.distance.toFixed(1)}km`}</span>}
+                                        </div>
+                                      </div>
+                                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={isActive ? C.olive : `${C.brown}35`} strokeWidth="2.5" style={{ flexShrink: 0 }} aria-hidden="true">
+                                        <polyline points="9 18 15 12 9 6" />
+                                      </svg>
                                     </div>
-                                  </div>
-                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-                                    stroke={isActive ? C.olive : `${C.brown}35`} strokeWidth="2.5"
-                                    style={{ flexShrink: 0 }} aria-hidden="true">
-                                    <polyline points="9 18 15 12 9 6" />
-                                  </svg>
-                                </div>
-                              )
-                            })}
+                                  )
+                                })}
+                              </div>
+                            ))}
                           </div>
                         ))}
                       </div>
-                    ))}
-                  </div>
-                )}
+                    )
+                  )}
+
+                </div>
               </div>
 
+              {/* ── RIGHT: detail card + Leaflet map ── */}
               {/* ── RIGHT: detail card + Leaflet map ── */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
 
@@ -1108,7 +1361,7 @@ export default function OurStoresPage() {
                       </p>
                     </div>
                   )}
-                  <div ref={mapRef} style={{ width: '100%', height: `${LAYOUT.mapHeight}px` }} />
+                  <div ref={mapRef} className="map-panel" style={{ width: '100%' }} />
                 </div>
 
               </div>
