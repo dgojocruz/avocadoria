@@ -340,25 +340,20 @@ function decodePolyline(encoded) {
   return points
 }
 
-// ─── Fetch driving route from Google Directions API ───────────────────────────
+// ─── Fetch driving route from our serverless proxy (avoids browser CORS) ──────
 // Returns { path: [[lat,lng]...], distanceText, durationText } or null on failure
 async function fetchGoogleRoute(origin, dest) {
-  const KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
-  if (!KEY) return null
-  const url = `https://maps.googleapis.com/maps/api/directions/json`
+  const url = `/api/directions`
     + `?origin=${origin.lat},${origin.lng}`
     + `&destination=${dest.lat},${dest.lng}`
-    + `&mode=driving&key=${KEY}`
   try {
     const res = await fetch(url)
     const data = await res.json()
-    if (data.status !== 'OK' || !data.routes?.length) return null
-    const route = data.routes[0]
-    const leg = route.legs[0]
+    if (!data.ok || !data.polyline) return null
     return {
-      path: decodePolyline(route.overview_polyline.points),
-      distanceText: leg.distance.text,
-      durationText: leg.duration.text,
+      path: decodePolyline(data.polyline),
+      distanceText: data.distanceText,
+      durationText: data.durationText,
     }
   } catch {
     return null
