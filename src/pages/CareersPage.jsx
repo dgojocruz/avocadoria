@@ -429,6 +429,44 @@ export default function CareersPage() {
           </div>
         </section>
 
+        {/* ── TEAM PHOTO SECTION ── */}
+        <section style={{ position:'relative', overflow:'hidden', lineHeight:0 }}>
+          {/* Top wave divider */}
+          <div style={{ background: '#b6c548', lineHeight:0 }}>
+            <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none" style={{ display:'block', width:'100%', height:'70px' }}>
+              <path d="M0,0 C360,70 1080,0 1440,42 L1440,70 L0,70 Z" fill="#d9e29e" />
+            </svg>
+          </div>
+          {/* Full-width photo */}
+          <div style={{ position:'relative', lineHeight:0, background:'#d9e29e' }}>
+            <img
+              src="/franchise-hero-bg.webp"
+              alt="Avocadoria Team Building 2025"
+              style={{ width:'100%', height:'clamp(300px,60vw,900px)', objectFit:'cover', objectPosition:'center 40%', display:'block' }}
+              loading="lazy" decoding="async"
+            />
+            {/* Floating text overlay */}
+            <div style={{ position:'absolute', bottom:'4%', left:0, right:0, display:'flex', flexDirection:'column', alignItems:'center', gap:'12px', zIndex:2, padding:'0 16px' }}>
+              <h2 style={{
+                fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+                fontWeight:'normal', fontSize:'clamp(1.2rem,3vw,3.2rem)',
+                color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
+                margin:0, lineHeight:1.1, textAlign:'center',
+              }}>
+                Team Building 2025 — Building Bridges
+              </h2>
+            </div>
+          </div>
+          {/* Bottom wave divider */}
+          <div style={{ background: '#b6c548', lineHeight:0 }}>
+            <svg viewBox="0 0 1440 70" xmlns="http://www.w3.org/2000/svg"
+              preserveAspectRatio="none" style={{ display:'block', width:'100%', height:'70px' }}>
+              <path d="M0,0 C360,70 1080,0 1440,42 L1440,70 L0,70 Z" fill="#d9e29e" />
+            </svg>
+          </div>
+        </section>
+
         {/* ── JOB LISTINGS ── */}
         <section style={{ position: 'relative', overflow: 'hidden', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE', padding: '64px 32px' }}>
           <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', backgroundColor: '#b6c548', opacity: 0.25 }} />
