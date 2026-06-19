@@ -565,59 +565,6 @@ export default function FranchisePage() {
           </div>
         </section>
 
-        {/* ── EVENTS GALLERY ── */}
-        <section id="franchise-gallery" style={{ position:'relative', overflow:'hidden', padding:'72px 32px', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
-          <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
-          <div style={{ position:'relative', zIndex:1, maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
-            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 12px', lineHeight: 1.1 }}>
-              Events & Milestones
-            </h2>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: 'rgba(138,95,60,0.75)', marginBottom: '48px' }}>
-              Relive our grand openings, franchise events, and brand milestones with our franchisee community.
-            </p>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '28px', justifyItems: 'center' }}>
-              {/* Video Gallery Card */}
-              <a href="/gallery/videos" style={{ textDecoration: 'none', width: '100%' }}
-                onMouseEnter={e => { e.currentTarget.querySelector('.gallery-card').style.transform = 'translateY(-6px)'; e.currentTarget.querySelector('.gallery-card').style.boxShadow = '0 16px 40px rgba(58,107,53,0.18)' }}
-                onMouseLeave={e => { e.currentTarget.querySelector('.gallery-card').style.transform = 'translateY(0)'; e.currentTarget.querySelector('.gallery-card').style.boxShadow = '0 4px 24px rgba(0,0,0,0.08)' }}
-              >
-                <div className="gallery-card" style={{ background: 'rgba(255,255,255,0.85)', borderRadius: '24px', padding: '48px 32px', border: '2px solid rgba(182,197,72,0.35)', backdropFilter: 'blur(10px)', transition: 'transform 0.3s ease, box-shadow 0.3s ease', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', cursor: 'pointer' }}>
-                  {/* Play icon */}
-                  <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'linear-gradient(135deg, #b6c548, #3a6b35)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(182,197,72,0.4)' }}>
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                      <polygon points="6,3 21,12 6,21" fill="#fff" />
-                    </svg>
-                  </div>
-                  <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '1.3rem', color: 'var(--c-olive)', textShadow: '-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff', margin: '0 0 8px' }}>Video Gallery</h3>
-                  <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.75)', lineHeight: 1.6, margin: '0 0 20px' }}>Watch event highlights, grand opening videos, and franchise stories from our growing family.</p>
-                  <span style={{ display: 'inline-block', background: '#b6c548', color: '#fff', padding: '8px 24px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700' }}>Watch Now →</span>
-                </div>
-              </a>
-
-              {/* Image Gallery Card */}
-              <a href="/gallery/photos" style={{ textDecoration: 'none', width: '100%' }}
-                onMouseEnter={e => { e.currentTarget.querySelector('.gallery-card').style.transform = 'translateY(-6px)'; e.currentTarget.querySelector('.gallery-card').style.boxShadow = '0 16px 40px rgba(58,107,53,0.18)' }}
-                onMouseLeave={e => { e.currentTarget.querySelector('.gallery-card').style.transform = 'translateY(0)'; e.currentTarget.querySelector('.gallery-card').style.boxShadow = '0 4px 24px rgba(0,0,0,0.08)' }}
-              >
-                <div className="gallery-card" style={{ background: 'rgba(255,255,255,0.85)', borderRadius: '24px', padding: '48px 32px', border: '2px solid rgba(182,197,72,0.35)', backdropFilter: 'blur(10px)', transition: 'transform 0.3s ease, box-shadow 0.3s ease', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', cursor: 'pointer' }}>
-                  {/* Photo icon */}
-                  <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'linear-gradient(135deg, #d9e29e, #b6c548)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(182,197,72,0.4)' }}>
-                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
-                      <rect x="3" y="5" width="18" height="14" rx="2.5" fill="#fff" opacity="0.9"/>
-                      <circle cx="12" cy="12" r="3.5" fill="#b6c548"/>
-                      <circle cx="18" cy="7" r="1.2" fill="#b6c548"/>
-                    </svg>
-                  </div>
-                  <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '1.3rem', color: 'var(--c-olive)', textShadow: '-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff', margin: '0 0 8px' }}>Image Gallery</h3>
-                  <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.75)', lineHeight: 1.6, margin: '0 0 20px' }}>Browse photos from franchise events, store launches, and behind-the-scenes moments with our team.</p>
-                  <span style={{ display: 'inline-block', background: '#3a6b35', color: '#fff', padding: '8px 24px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700' }}>View Photos →</span>
-                </div>
-              </a>
-            </div>
-          </div>
-        </section>
-
       </div>
 
       {/* ── FLOATING GALLERY WIDGET ── */}

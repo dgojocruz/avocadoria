@@ -104,17 +104,44 @@ export default function Footer() {
           background: #3a6b35;
           transform: scale(1.1);
         }
+        /* Footer nav — responsive */
+        .footer-nav-desktop {
+          display: none;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: center;
+          gap: 8px 4px;
+        }
+        .footer-nav-link {
+          font-family: Poppins,sans-serif;
+          font-size: 14px;
+          font-weight: 700;
+          color: #8A5F3C;
+          text-decoration: none;
+          padding: 6px 14px;
+          border-radius: 999px;
+          transition: all 0.18s;
+          white-space: nowrap;
+        }
+        .footer-nav-link:hover {
+          background: rgba(182,197,72,0.18);
+          color: #3a6b35;
+        }
+        @media (min-width: 768px) {
+          .footer-nav-desktop { display: flex; }
+          .footer-nav-mobile  { display: none; }
+        }
       `}</style>
 
       {/* ── Main footer ── */}
       <div style={{
-        maxWidth: '680px',
+        maxWidth: '880px',
         margin: '0 auto',
-        padding: '32px 24px 0',
+        padding: '40px 24px 0',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '20px',
+        gap: '22px',
         textAlign: 'center',
       }}>
 
@@ -130,8 +157,25 @@ export default function Footer() {
           />
         </Link>
 
-        {/* Quick Links dropdown */}
-        <div className="footer-dropdown">
+        {/* Quick Links — inline on desktop, dropdown on mobile */}
+        <nav className="footer-nav-desktop" aria-label="Footer navigation">
+          {NAV_LINKS.map(({ label, to }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={to === '/'}
+              className="footer-nav-link"
+              style={({ isActive }) => ({
+                color: isActive ? '#b6c548' : '#8A5F3C',
+                fontWeight: isActive ? '800' : '700',
+              })}
+            >
+              {label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="footer-dropdown footer-nav-mobile">
           <button
             onClick={() => setOpen(v => !v)}
             aria-expanded={open}
@@ -184,17 +228,18 @@ export default function Footer() {
         <address style={{
           fontStyle: 'normal',
           fontFamily: 'Poppins,sans-serif',
-          fontSize: '12px',
-          color: 'rgba(138,95,60,0.7)',
-          lineHeight: 1.7,
+          fontSize: '13px',
+          color: '#8A5F3C',
+          lineHeight: 1.8,
+          fontWeight: '500',
         }}>
           4th Floor, RC Buenviaje Bldg., Gil Fernando, Marikina City
           <br />
-          <a href="tel:+639459716599" style={{ color: 'rgba(138,95,60,0.7)', textDecoration: 'none' }}>
+          <a href="tel:+639459716599" style={{ color: '#3a6b35', textDecoration: 'none', fontWeight: '700' }}>
             +63 945 971 6599
           </a>
           {' · '}
-          <a href="mailto:official@avocadoria.com.ph" style={{ color: 'rgba(138,95,60,0.7)', textDecoration: 'none' }}>
+          <a href="mailto:official@avocadoria.com.ph" style={{ color: '#3a6b35', textDecoration: 'none', fontWeight: '700' }}>
             official@avocadoria.com.ph
           </a>
         </address>
@@ -214,31 +259,16 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* DPO Badge */}
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: '10px',
-          background: 'rgba(255,255,255,0.72)',
-          backdropFilter: 'blur(8px)',
-          border: '1.5px solid rgba(30,60,160,0.15)',
-          borderRadius: '14px',
-          padding: '8px 14px 8px 10px',
-          boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-        }}>
+        {/* DPO / DPS Registered logo */}
+        <a href="https://register.privacy.gov.ph" target="_blank" rel="noopener noreferrer"
+          aria-label="NPC DPO/DPS Registered" title="NPC DPO/DPS Registered · Valid until Sep 09, 2026"
+          style={{ display: 'inline-block', transition: 'transform 0.2s' }}
+          onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+        >
           <img src="/dpo-registered.png" alt="NPC DPO/DPS Registered"
-            style={{ height: '48px', width: 'auto', objectFit: 'contain', borderRadius: '6px' }} />
-          <div style={{ textAlign: 'left' }}>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '800',
-              color: '#1a3aa0', letterSpacing: '0.06em', textTransform: 'uppercase', margin: '0 0 2px' }}>
-              NPC Registered
-            </p>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700',
-              color: '#1a3aa0', margin: '0 0 1px', lineHeight: 1.2 }}>DPO / DPS</p>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '10px',
-              color: 'rgba(30,60,160,0.6)', margin: 0, lineHeight: 1.3 }}>
-              Valid until Sep 09, 2026
-            </p>
-          </div>
-        </div>
+            style={{ height: '90px', width: 'auto', objectFit: 'contain' }} />
+        </a>
 
       </div>
 
