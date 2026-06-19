@@ -324,6 +324,47 @@ function haversine(lat1, lng1, lat2, lng2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
 }
 
+// ─── Decode Google encoded polyline → array of [lat,lng] ──────────────────────
+function decodePolyline(encoded) {
+  const points = []
+  let index = 0, lat = 0, lng = 0
+  while (index < encoded.length) {
+    let b, shift = 0, result = 0
+    do { b = encoded.charCodeAt(index++) - 63; result |= (b & 0x1f) << shift; shift += 5 } while (b >= 0x20)
+    lat += (result & 1) ? ~(result >> 1) : (result >> 1)
+    shift = 0; result = 0
+    do { b = encoded.charCodeAt(index++) - 63; result |= (b & 0x1f) << shift; shift += 5 } while (b >= 0x20)
+    lng += (result & 1) ? ~(result >> 1) : (result >> 1)
+    points.push([lat / 1e5, lng / 1e5])
+  }
+  return points
+}
+
+// ─── Fetch driving route from Google Directions API ───────────────────────────
+// Returns { path: [[lat,lng]...], distanceText, durationText } or null on failure
+async function fetchGoogleRoute(origin, dest) {
+  const KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+  if (!KEY) return null
+  const url = `https://maps.googleapis.com/maps/api/directions/json`
+    + `?origin=${origin.lat},${origin.lng}`
+    + `&destination=${dest.lat},${dest.lng}`
+    + `&mode=driving&key=${KEY}`
+  try {
+    const res = await fetch(url)
+    const data = await res.json()
+    if (data.status !== 'OK' || !data.routes?.length) return null
+    const route = data.routes[0]
+    const leg = route.legs[0]
+    return {
+      path: decodePolyline(route.overview_polyline.points),
+      distanceText: leg.distance.text,
+      durationText: leg.duration.text,
+    }
+  } catch {
+    return null
+  }
+}
+
 // ─── Build SVG pin as base64 data URL (used by Leaflet) ──────────────────────
 // CUSTOM_PIN_URL: set to '/your-logo.png' to use an image instead of SVG
 // null = use the built-in avocado SVG pin
@@ -364,6 +405,8 @@ export default function OurStoresPage() {
   const leafletRef = useRef(null)   // Leaflet map instance
   const markersRef = useRef({})     // id → Leaflet marker
   const activeMarkRef = useRef(null)
+  const userMarkRef = useRef(null)  // user location marker
+  const routeLineRef = useRef(null) // straight-line connector
 
   // ── Inject Leaflet CSS + JS once ───────────────────────────────────────────
   useEffect(() => {
@@ -386,6 +429,16 @@ export default function OurStoresPage() {
         .avo-popup .leaflet-popup-content-wrapper { border-radius: 14px !important; padding: 0 !important; overflow: hidden; box-shadow: 0 8px 28px rgba(0,0,0,.15) !important; }
         .avo-popup .leaflet-popup-content { margin: 0 !important; width: 240px !important; font-family: Poppins,sans-serif; }
         .leaflet-popup-tip-container { display: none; }
+        .route-dist-label {
+          background: #fff !important;
+          border: 2px solid #3a6b35 !important;
+          border-radius: 999px !important;
+          padding: 3px 12px !important;
+          font-family: Poppins,sans-serif !important;
+          font-size: 12px !important;
+          box-shadow: 0 2px 10px rgba(0,0,0,.2) !important;
+        }
+        .route-dist-label::before { display: none !important; }
       `
       document.head.appendChild(style)
     }
@@ -464,6 +517,15 @@ export default function OurStoresPage() {
            </a>`
         : `<span style="font-size:11px;color:#8A5F3C;opacity:.7">🛵 Order link coming soon</span>`
 
+      // Distance badge if user location is known
+      const distHtml = (userLoc && b.lat && b.lng) ? (() => {
+        const d = haversine(userLoc.lat, userLoc.lng, b.lat, b.lng)
+        const lbl = d < 1 ? `${Math.round(d * 1000)} m` : `${d.toFixed(1)} km`
+        return `<div style="display:inline-flex;align-items:center;gap:5px;background:rgba(182,197,72,.15);border:1.5px solid rgba(182,197,72,.4);border-radius:999px;padding:5px 12px;margin:0 0 10px">
+                  <span style="font-size:12px;font-weight:800;color:#3a6b35">📍 ${lbl} away</span>
+                </div>`
+      })() : ''
+
       marker.bindPopup(`
         <div>
           <div style="background:#b6c548;padding:12px 14px">
@@ -472,6 +534,7 @@ export default function OurStoresPage() {
           </div>
           <div style="padding:12px 14px;background:#fff">
             <p style="font-size:12px;color:#8A5F3C;margin:0 0 10px;line-height:1.5">${b.address}</p>
+            ${distHtml}
             <div style="display:flex;flex-direction:column;gap:6px">
               <a href="${b.mapsUrl}" target="_blank" rel="noopener noreferrer"
                 style="display:inline-flex;align-items:center;gap:5px;background:#3a6b35;color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;text-decoration:none">
@@ -535,6 +598,53 @@ export default function OurStoresPage() {
       }
       marker.setIcon(L.icon({ iconUrl: makePinUrl('#3a6b35', true), iconSize:[46,60], iconAnchor:[23,60], popupAnchor:[0,-63] }))
       activeMarkRef.current = marker
+    }
+
+    // ── Draw route from user to active branch (Google road route, fallback straight line) ──
+    if (userLoc && branch.lat && branch.lng) {
+      const map = leafletRef.current
+
+      // Remove old line & user marker
+      if (routeLineRef.current) { map.removeLayer(routeLineRef.current); routeLineRef.current = null }
+      if (userMarkRef.current)  { map.removeLayer(userMarkRef.current);  userMarkRef.current  = null }
+
+      // User location marker (blue dot)
+      const userIcon = L.divIcon({
+        className: 'user-loc-marker',
+        html: `<div style="width:18px;height:18px;border-radius:50%;background:#2d7dd2;border:3px solid #fff;box-shadow:0 0 0 4px rgba(45,125,210,.25),0 2px 6px rgba(0,0,0,.3)"></div>`,
+        iconSize: [18, 18], iconAnchor: [9, 9],
+      })
+      userMarkRef.current = L.marker([userLoc.lat, userLoc.lng], { icon: userIcon, zIndexOffset: 500 })
+        .addTo(map).bindPopup('<div style="padding:8px 10px;font-size:12px;font-weight:700;color:#2d7dd2">📍 Your location</div>')
+
+      const straightDist = haversine(userLoc.lat, userLoc.lng, branch.lat, branch.lng)
+      const straightLabel = straightDist < 1 ? `${Math.round(straightDist * 1000)} m` : `${straightDist.toFixed(1)} km`
+
+      // Helper to draw a polyline + label + fit bounds
+      const drawLine = (path, label, dashed) => {
+        if (routeLineRef.current) { map.removeLayer(routeLineRef.current); routeLineRef.current = null }
+        routeLineRef.current = L.polyline(path, {
+          color: '#3a6b35', weight: 4, opacity: 0.8,
+          dashArray: dashed ? '8, 10' : null, lineCap: 'round', lineJoin: 'round',
+        }).addTo(map)
+        const mid = path[Math.floor(path.length / 2)]
+        routeLineRef.current.bindTooltip(
+          `<span style="font-weight:800;color:#3a6b35">${label}</span>`,
+          { permanent: true, direction: 'top', className: 'route-dist-label' }
+        ).openTooltip(mid)
+        setTimeout(() => map.fitBounds(L.latLngBounds(path), { padding: [80, 80], maxZoom: 15, animate: true, duration: 0.8 }), 100)
+      }
+
+      // Draw straight line immediately (instant feedback), then upgrade to road route
+      drawLine([[userLoc.lat, userLoc.lng], [branch.lat, branch.lng]], straightLabel, true)
+
+      const reqId = branch.id
+      fetchGoogleRoute(userLoc, { lat: branch.lat, lng: branch.lng }).then(route => {
+        // Only apply if user hasn't selected a different branch since
+        if (route && activeMarkRef.current && reqId === activeId) {
+          drawLine(route.path, `${route.distanceText} · ${route.durationText}`, false)
+        }
+      })
     }
   }, [activeId])
 
@@ -767,7 +877,7 @@ export default function OurStoresPage() {
               position: 'relative', zIndex: 1,
               fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontWeight: 'normal',
-              fontSize: 'clamp(1.6rem,4vw,2.8rem)',
+              fontSize: 'clamp(2.4rem,5vw,4.2rem)',
               color: 'var(--c-olive)',
               textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
               margin: '0 0 8px',
@@ -1284,6 +1394,30 @@ export default function OurStoresPage() {
                       <p style={{ fontSize: '13px', color: `${C.brown}99`, margin: '0 0 14px', lineHeight: '1.5', fontFamily: "'Poppins',sans-serif" }}>
                         📍 {activeBranch.address}
                       </p>
+                      {/* Distance from user */}
+                      {userLoc && activeBranch.lat && activeBranch.lng && (() => {
+                        const dist = haversine(userLoc.lat, userLoc.lng, activeBranch.lat, activeBranch.lng)
+                        const distLabel = dist < 1 ? `${Math.round(dist * 1000)} m` : `${dist.toFixed(1)} km`
+                        return (
+                          <div style={{
+                            display: 'inline-flex', alignItems: 'center', gap: '7px',
+                            padding: '7px 14px', borderRadius: '999px',
+                            background: 'rgba(182,197,72,.15)',
+                            border: `1.5px solid rgba(182,197,72,.4)`,
+                            margin: '0 0 14px',
+                          }}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.5" aria-hidden="true">
+                              <circle cx="12" cy="10" r="3" /><path d="M12 2a8 8 0 0 0-8 8c0 5.4 8 12 8 12s8-6.6 8-12a8 8 0 0 0-8-8z" />
+                            </svg>
+                            <span style={{ fontSize: '13px', fontWeight: '800', color: C.dark, fontFamily: "'Poppins',sans-serif" }}>
+                              {distLabel} away
+                            </span>
+                            <span style={{ fontSize: '11px', color: `${C.brown}90`, fontWeight: '600', fontFamily: "'Poppins',sans-serif" }}>
+                              from your location
+                            </span>
+                          </div>
+                        )
+                      })()}
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                         <a href={activeBranch.mapsUrl} target="_blank" rel="noopener noreferrer"
                           style={{

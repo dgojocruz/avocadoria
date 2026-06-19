@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://avocadoria.com.ph/sitemap.xml
