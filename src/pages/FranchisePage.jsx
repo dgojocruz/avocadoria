@@ -357,6 +357,39 @@ export default function FranchisePage() {
       />
       <div className="page-enter">
 
+        {/* ── HERO ── */}
+        <section style={{
+          position:'relative', overflow:'hidden',
+          backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
+          padding: '80px 32px 48px', textAlign: 'center',
+        }}>
+          <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
+          <div style={{ position:'relative', zIndex:1, maxWidth:'700px', margin:'0 auto' }}>
+            <h1 style={{
+              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+              fontWeight: 'normal',
+              fontSize: 'clamp(2.2rem,5vw,3.8rem)',
+              color: 'var(--c-olive)',
+              textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+              margin: '0 0 8px', lineHeight: 1.1,
+            }}>
+              Join the <span style={{ color: '#b6c548' }}>Avocadoria</span> Family
+            </h1>
+            <a href="#franchise-inquiry" style={{
+              display: 'inline-block', background: 'var(--c-pink)', color: '#fff',
+              padding: '14px 36px', borderRadius: '999px',
+              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '1.1rem', fontWeight: 'normal',
+              textDecoration: 'none', transition: 'background 0.2s',
+              boxShadow: '0 4px 16px rgba(239,126,203,0.4)',
+            }}
+              onMouseEnter={e => e.currentTarget.style.background = '#d94faa'}
+              onMouseLeave={e => e.currentTarget.style.background = 'var(--c-pink)'}
+            >
+              Start Your Journey →
+            </a>
+          </div>
+        </section>
+
         {/* ── CART SLIDESHOW ── */}
         <section style={{ position:'relative', overflow:'hidden', padding:'72px 0', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
       <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
