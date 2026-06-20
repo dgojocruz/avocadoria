@@ -403,7 +403,8 @@ export default function OurStoresPage() {
   const markersRef = useRef({})     // id → Leaflet marker
   const activeMarkRef = useRef(null)
   const userMarkRef = useRef(null)  // user location marker
-  const routeLineRef = useRef(null) // straight-line connector
+  const routeLineRef = useRef(null) // route line
+  const infoWindowRef = useRef(null) // track open info window
 
   // ── Load Google Maps JS API once ──────────────────────────────────────────
   useEffect(() => {
@@ -456,8 +457,9 @@ export default function OurStoresPage() {
       anchor: new maps.Point(active ? 23 : 20, active ? 60 : 52),
     })
 
-    // Info window (shared)
+    // Shared info window (single instance — prevents stacking)
     const infoWindow = new maps.InfoWindow({ maxWidth: 260 })
+    infoWindowRef.current = infoWindow
 
     // Add markers for all branches
     BRANCHES.forEach(b => {
@@ -584,13 +586,11 @@ export default function OurStoresPage() {
           bounds.extend({ lat: branch.lat, lng: branch.lng })
           map.fitBounds(bounds, 80)
 
-          // Show distance label in info window
-          const marker = markersRef.current[activeId]
-          if (marker) {
-            new maps.InfoWindow({
-              content: `<div style="font-family:Poppins,sans-serif;font-size:13px;font-weight:700;color:#3a6b35;padding:4px 8px">${route.distanceText} · ${route.durationText}</div>`,
-              position: path[Math.floor(path.length / 2)],
-            }).open(map)
+          // Show distance + time in the shared info window on the route midpoint
+          if (infoWindowRef.current) {
+            infoWindowRef.current.setContent(`<div style="font-family:Poppins,sans-serif;font-size:13px;font-weight:700;color:#3a6b35;padding:4px 8px">${route.distanceText} · ${route.durationText}</div>`)
+            infoWindowRef.current.setPosition(path[Math.floor(path.length / 2)])
+            infoWindowRef.current.open(map)
           }
         }
       })
