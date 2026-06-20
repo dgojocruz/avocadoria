@@ -116,168 +116,7 @@ export const CATEGORIES = [
     ],
   },
 
-  // ── 2. AVOCADO SHAKES ──────────────────────────────────────────────────────
-  {
-    id:       'shakes',
-    name:     'Avocado Shakes',
-    emoji:    '🥤',
-    tagline:  'Thick, creamy, and packed with real avocado — the perfect refreshment.',
-    cover:    '/menu/Avocado Shakes/Avo_Lover.webp',
-    featured: false,
-    items: [
-      {
-        id:    'avo-shake',
-        name:  'Avo Shake',
-        desc:  'Our signature thick and creamy avocado shake topped with almond crumble and chia seeds.',
-        image: '/menu/Avocado Shakes/avo-shake.webp',
-        tags:  ['Signature', 'Fan Fave'],
-        new:   false,
-      },
-      {
-        id:    'coconut-keto-shake',
-        name:  'Coconut Keto Shake',
-        desc:  'A guilt-free blend of avocado and coconut — low-carb, keto-friendly and delicious.',
-        image: '/menu/Avocado Shakes/coconut-keto-shake.webp',
-        tags:  ['Keto'],
-        new:   false,
-      },
-      {
-        id:    'dark-choco-shake',
-        name:  'Dark Choco Shake',
-        desc:  'Avocado meets rich dark chocolate swirls, topped with almonds and chocolate chunks.',
-        image: '/menu/Avocado Shakes/dark-choco-shake.webp',
-        tags:  ['Indulgent'],
-        new:   false,
-      },
-      {
-        id:    'guyabano-shake',
-        name:  'Guyabano Shake',
-        desc:  'Creamy avocado blended with tropical guyabano — refreshing and naturally sweet.',
-        image: '/menu/Avocado Shakes/guyabano-shake.webp',
-        tags:  ['Tropical'],
-        new:   false,
-      },
-      {
-        id:    'jackfruit-shake',
-        name:  'Jackfruit Shake',
-        desc:  'Avocado shake loaded with fresh jackfruit, almond crumble and chia seeds on top.',
-        image: '/menu/Avocado Shakes/jackfruit-shake.webp',
-        tags:  ['Tropical'],
-        new:   false,
-      },
-      {
-        id:    'keto-shake',
-        name:  'Keto Shake',
-        desc:  'Pure avocado keto shake — low-carb, no sugar added, topped with seeds and nuts.',
-        image: '/menu/Avocado Shakes/keto-shake.webp',
-        tags:  ['Keto'],
-        new:   false,
-      },
-      {
-        id:    'mango-shake',
-        name:  'Mango Shake',
-        desc:  'Creamy avocado blended with sweet Philippine mangoes, topped with mango chunks.',
-        image: '/menu/Avocado Shakes/mango-shake.webp',
-        tags:  ['Tropical'],
-        new:   false,
-      },
-      // ↑ ADD MORE SHAKES HERE
-    ],
-  },
-
-  // ── 3. AVOCADO CAKES ───────────────────────────────────────────────────────
-  {
-    id:       'cakes',
-    name:     'Avocado Cakes',
-    emoji:    '🎂',
-    tagline:  'Celebrate every occasion with our indulgent avocado cakes.',
-    cover:    '/menu/Avocado cakes/big-tin-cheesecake.webp', // use first product as cover
-    featured: false,
-    items: [
-      {
-        id:    'big-tin-cheesecake',
-        name:  'Avocado Cheesecake (Big Tin)',
-        desc:  'Rich and creamy avocado cheesecake packed with mixed nuts. Net wt: 400g.',
-        image: '/menu/Avocado cakes/big-tin-cheesecake.webp',
-        tags:  ['Big Tin'],
-        new:   false,
-      },
-      {
-        id:    'big-tin-praline',
-        name:  'Dark Mocha Avocado Praline Cake (Big Tin)',
-        desc:  'Dark mocha avocado cake with praline crumble topping. Net wt: 500g.',
-        image: '/menu/Avocado cakes/big-tin-praline.webp',
-        tags:  ['Big Tin'],
-        new:   false,
-      },
-      {
-        id:    'big-tin-sansrival',
-        name:  'Avocado Sansrival Cake (Big Tin)',
-        desc:  'Frozen cake with avocado ice cream filling & pistachio topping. Net wt: 330g.',
-        image: '/menu/Avocado cakes/big-tin-sansrival.webp',
-        tags:  ['Big Tin', 'Frozen'],
-        new:   false,
-      },
-      {
-        id:    'small-tin-cheesecake',
-        name:  'Avocado Cheesecake (Small Tin)',
-        desc:  'Individual-sized avocado cheesecake — perfect personal treat. Net wt: 240g.',
-        image: '/menu/Avocado cakes/small-tin-cheesecake.webp',
-        tags:  ['Small Tin'],
-        new:   false,
-      },
-      {
-        id:    'small-tin-praline',
-        name:  'Dark Mocha Avocado Praline Cake (Small Tin)',
-        desc:  'Personal-sized dark mocha avocado praline cake. Net wt: 300g.',
-        image: '/menu/Avocado cakes/small-tin-praline.webp',
-        tags:  ['Small Tin'],
-        new:   false,
-      },
-      {
-        id:    'small-tin-sansrival',
-        name:  'Avocado Sansrival Cake (Small Tin)',
-        desc:  'Frozen avocado sansrival cake with pistachio topping. Net wt: 185g.',
-        image: '/menu/Avocado cakes/small-tin-sansrival.webp',
-        tags:  ['Small Tin', 'Frozen'],
-        new:   false,
-      },
-      // ↑ ADD MORE CAKES HERE
-    ],
-  },
-
-  // ── 4. COFFEE ──────────────────────────────────────────────────────────────
-  {
-    id:       'coffee',
-    name:     'Coffee',
-    emoji:    '☕',
-    tagline:  'Premium coffee blends to pair perfectly with your avocado treat.',
-    cover:    '/menu/coffee/HOT_COFFEE.webp',
-    featured: false,
-    items: [
-
-
-      {
-        id:    'hot-coffee',
-        name:  'Hot Coffee',
-        desc:  'Freshly brewed hot coffee served in the iconic Avocadoria cup — warm, rich and satisfying.',
-        image: '/menu/coffee/Coffee_Hot.webp',
-        tags:  [],
-        new:   false,
-      },
-      {
-        id:    'iced-coffee',
-        name:  'Iced Coffee',
-        desc:  'Chilled coffee over ice served in the iconic Avocadoria cup — cool, bold and refreshing.',
-        image: '/menu/coffee/Coffee_Iced.webp',
-        tags:  [],
-        new:   false,
-      },
-      // ↑ ADD MORE COFFEE HERE
-    ],
-  },
-
-  // ── 5. SOFT SERVE ──────────────────────────────────────────────────────────
+  // ── 2. SOFT SERVE ──────────────────────────────────────────────────────────
   {
     id:       'soft-serve',
     name:     'Soft Serve Menu',
@@ -327,6 +166,174 @@ export const CATEGORIES = [
         new:   true,
       },
       // ↑ ADD MORE SOFT SERVE HERE
+    ],
+  },
+
+  // ── 3. AVOCADO SHAKES ──────────────────────────────────────────────────────
+  {
+    id:       'shakes',
+    name:     'Avocado Shakes',
+    emoji:    '🥤',
+    tagline:  'Thick, creamy, and packed with real avocado — the perfect refreshment.',
+    cover:    '/menu/Avocado Shakes/Avo_Lover.webp',
+    featured: false,
+    items: [
+      {
+        id:    'avo-shake',
+        name:  'Avo Shake',
+        desc:  'Our signature thick and creamy avocado shake topped with almond crumble and chia seeds.',
+        image: '/menu/Avocado Shakes/avo-shake.webp',
+        tags:  ['Signature', 'Fan Fave'],
+        new:   false,
+      },
+      {
+        id:    'mango-shake',
+        name:  'Mango Shake',
+        desc:  'Creamy avocado blended with sweet Philippine mangoes, topped with mango chunks.',
+        image: '/menu/Avocado Shakes/mango-shake.webp',
+        tags:  ['Tropical'],
+        new:   false,
+      },
+      {
+        id:    'barley-shake',
+        name:  'Barley Shake',
+        desc:  'Refreshing avocado shake with barley — light, nutritious and satisfying.',
+        image: '/menu/Avocado Shakes/barley-shake.webp',
+        tags:  ['Light'],
+        new:   true,
+      },
+      {
+        id:    'dark-choco-shake',
+        name:  'Dark Choco Shake',
+        desc:  'Avocado meets rich dark chocolate swirls, topped with almonds and chocolate chunks.',
+        image: '/menu/Avocado Shakes/dark-choco-shake.webp',
+        tags:  ['Indulgent'],
+        new:   false,
+      },
+      {
+        id:    'guyabano-shake',
+        name:  'Guyabano Shake',
+        desc:  'Creamy avocado blended with tropical guyabano — refreshing and naturally sweet.',
+        image: '/menu/Avocado Shakes/guyabano-shake.webp',
+        tags:  ['Tropical'],
+        new:   false,
+      },
+      {
+        id:    'jackfruit-shake',
+        name:  'Jackfruit Shake',
+        desc:  'Avocado shake loaded with fresh jackfruit, almond crumble and chia seeds on top.',
+        image: '/menu/Avocado Shakes/jackfruit-shake.webp',
+        tags:  ['Tropical'],
+        new:   false,
+      },
+      {
+        id:    'keto-shake',
+        name:  'Keto Shake',
+        desc:  'Pure avocado keto shake — low-carb, no sugar added, topped with seeds and nuts.',
+        image: '/menu/Avocado Shakes/keto-shake.webp',
+        tags:  ['Keto'],
+        new:   false,
+      },
+      {
+        id:    'coconut-keto-shake',
+        name:  'Coconut Keto Shake',
+        desc:  'A guilt-free blend of avocado and coconut — low-carb, keto-friendly and delicious.',
+        image: '/menu/Avocado Shakes/coconut-keto-shake.webp',
+        tags:  ['Keto'],
+        new:   false,
+      },
+      // ↑ ADD MORE SHAKES HERE
+    ],
+  },
+
+  // ── 4. POPSICLES ────────────────────────────────────────────────────────────
+  {
+    id:       'popsicles',
+    name:     'Popsicles',
+    emoji:    '🍡',
+    tagline:  'Avocado ice cream bars coated in premium chocolate and nutty toppings — happiness on a stick.',
+    cover:    '/menu/Popsicles/senyorita-matcha.webp',
+    featured: false,
+    items: [
+      {
+        id:    'senyorita-biscoff',
+        name:  'Biscoff Señorita',
+        desc:  'Avocado ice cream bar dipped in caramel Biscoff coating — rich, buttery and absolutely addicting.',
+        image: '/menu/Popsicles/senyorita-biscoff.webp',
+        tags:  ['Trending', 'New'],
+        new:   true,
+      },
+      {
+        id:    'senyorita-choc',
+        name:  'Choco Señorita',
+        desc:  'Avocado ice cream bar coated in milk chocolate and crunchy almond bits — classic and indulgent.',
+        image: '/menu/Popsicles/senyorita-choc.webp',
+        tags:  ['Fan Fave'],
+        new:   false,
+      },
+      {
+        id:    'senyorita-dark-choc',
+        name:  'Dark Choco Señorita',
+        desc:  'Avocado ice cream bar wrapped in rich dark chocolate and crushed almonds — bold and satisfying.',
+        image: '/menu/Popsicles/senyorita-dark-choc.webp',
+        tags:  ['Fan Fave'],
+        new:   false,
+      },
+      {
+        id:    'senyorita-matcha',
+        name:  'Matcha Señorita',
+        desc:  'Avocado ice cream bar coated in matcha and crunchy pistachio — smooth, earthy and irresistible.',
+        image: '/menu/Popsicles/senyorita-matcha.webp',
+        tags:  ['New'],
+        new:   true,
+      },
+      {
+        id:    'senyorita-strawberry',
+        name:  'Strawberry Señorita',
+        desc:  'Avocado ice cream bar dipped in strawberry coating and topped with fruity bits — sweet and refreshing.',
+        image: '/menu/Popsicles/senyorita-strawberry.webp',
+        tags:  ['New'],
+        new:   true,
+      },
+      {
+        id:    'senyorita-white-choc',
+        name:  'White Choco Señorita',
+        desc:  'Avocado ice cream bar coated in white chocolate and almonds — creamy, delicate and perfectly sweet.',
+        image: '/menu/Popsicles/senyorita-white-choc.webp',
+        tags:  [],
+        new:   false,
+      },
+    ],
+  },
+
+  // ── 5. COFFEE ──────────────────────────────────────────────────────────────
+  {
+    id:       'coffee',
+    name:     'Coffee',
+    emoji:    '☕',
+    tagline:  'Premium coffee blends to pair perfectly with your avocado treat.',
+    cover:    '/menu/coffee/HOT_COFFEE.webp',
+    featured: false,
+    items: [
+
+
+      {
+        id:    'hot-coffee',
+        name:  'Hot Coffee',
+        desc:  'Freshly brewed hot coffee served in the iconic Avocadoria cup — warm, rich and satisfying.',
+        image: '/menu/coffee/Coffee_Hot.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'iced-coffee',
+        name:  'Iced Coffee',
+        desc:  'Chilled coffee over ice served in the iconic Avocadoria cup — cool, bold and refreshing.',
+        image: '/menu/coffee/Coffee_Iced.webp',
+        tags:  [],
+        new:   false,
+      },
+      // ↑ ADD MORE COFFEE HERE
     ],
   },
 
@@ -414,6 +421,67 @@ export const CATEGORIES = [
       // ↑ ADD MORE OTHERS HERE
     ],
   },
+  // ── 7. AVOCADO CAKES ───────────────────────────────────────────────────────
+  {
+    id:       'cakes',
+    name:     'Avocado Cakes',
+    emoji:    '🎂',
+    tagline:  'Celebrate every occasion with our indulgent avocado cakes.',
+    cover:    '/menu/Avocado cakes/big-tin-cheesecake.webp', // use first product as cover
+    featured: false,
+    items: [
+      {
+        id:    'big-tin-cheesecake',
+        name:  'Avocado Cheesecake (Big Tin)',
+        desc:  'Rich and creamy avocado cheesecake packed with mixed nuts. Net wt: 400g.',
+        image: '/menu/Avocado cakes/big-tin-cheesecake.webp',
+        tags:  ['Big Tin'],
+        new:   false,
+      },
+      {
+        id:    'big-tin-praline',
+        name:  'Dark Mocha Avocado Praline Cake (Big Tin)',
+        desc:  'Dark mocha avocado cake with praline crumble topping. Net wt: 500g.',
+        image: '/menu/Avocado cakes/big-tin-praline.webp',
+        tags:  ['Big Tin'],
+        new:   false,
+      },
+      {
+        id:    'big-tin-sansrival',
+        name:  'Avocado Sansrival Cake (Big Tin)',
+        desc:  'Frozen cake with avocado ice cream filling & pistachio topping. Net wt: 330g.',
+        image: '/menu/Avocado cakes/big-tin-sansrival.webp',
+        tags:  ['Big Tin', 'Frozen'],
+        new:   false,
+      },
+      {
+        id:    'small-tin-cheesecake',
+        name:  'Avocado Cheesecake (Small Tin)',
+        desc:  'Individual-sized avocado cheesecake — perfect personal treat. Net wt: 240g.',
+        image: '/menu/Avocado cakes/small-tin-cheesecake.webp',
+        tags:  ['Small Tin'],
+        new:   false,
+      },
+      {
+        id:    'small-tin-praline',
+        name:  'Dark Mocha Avocado Praline Cake (Small Tin)',
+        desc:  'Personal-sized dark mocha avocado praline cake. Net wt: 300g.',
+        image: '/menu/Avocado cakes/small-tin-praline.webp',
+        tags:  ['Small Tin'],
+        new:   false,
+      },
+      {
+        id:    'small-tin-sansrival',
+        name:  'Avocado Sansrival Cake (Small Tin)',
+        desc:  'Frozen avocado sansrival cake with pistachio topping. Net wt: 185g.',
+        image: '/menu/Avocado cakes/small-tin-sansrival.webp',
+        tags:  ['Small Tin', 'Frozen'],
+        new:   false,
+      },
+      // ↑ ADD MORE CAKES HERE
+    ],
+  },
+
 ]
 
 // ── TAG COLORS — used for badges on product cards ─────────────────────────────

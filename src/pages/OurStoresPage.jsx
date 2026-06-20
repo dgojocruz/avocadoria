@@ -504,13 +504,18 @@ export default function OurStoresPage() {
 
       const marker = L.marker([b.lat, b.lng], { icon })
 
-      // Popup HTML
-      const orderBtn = b.orderUrl
-        ? `<a href="${b.orderUrl}" target="_blank" rel="noopener noreferrer"
-             style="display:inline-flex;align-items:center;gap:5px;background:#EF7ECB;color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;text-decoration:none;margin-top:2px">
-             🛵 Order Now
-           </a>`
-        : `<span style="font-size:11px;color:#8A5F3C;opacity:.7">🛵 Order link coming soon</span>`
+      // Popup HTML — Grab + FoodPanda order buttons
+      const orderButtons = `
+        <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px">
+          <a href="https://food.grab.com/ph/en/restaurants?search=avocadoria" target="_blank" rel="noopener noreferrer"
+            style="display:inline-flex;align-items:center;gap:6px;background:#00B14F;color:#fff;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;text-decoration:none">
+            🟢 Order on Grab
+          </a>
+          <a href="https://www.foodpanda.ph/restaurant/search?q=avocadoria" target="_blank" rel="noopener noreferrer"
+            style="display:inline-flex;align-items:center;gap:6px;background:#d70f64;color:#fff;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;text-decoration:none">
+            🐼 Order on foodpanda
+          </a>
+        </div>`
 
       // Distance badge if user location is known
       const distHtml = (userLoc && b.lat && b.lng) ? (() => {
@@ -535,7 +540,7 @@ export default function OurStoresPage() {
                 style="display:inline-flex;align-items:center;gap:5px;background:#3a6b35;color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;text-decoration:none">
                 📍 Get Directions
               </a>
-              ${orderBtn}
+              ${orderButtons}
             </div>
           </div>
         </div>
@@ -1336,7 +1341,6 @@ export default function OurStoresPage() {
                                             {b.name}
                                           </span>
                                           {isNearest && <span style={{ fontSize: '9px', background: C.olive, color: '#fff', padding: '2px 6px', borderRadius: '99px', fontWeight: '700', flexShrink: 0 }}>Nearest</span>}
-                                          {b.orderUrl && <span style={{ fontSize: '9px', background: C.pink, color: '#fff', padding: '2px 6px', borderRadius: '99px', fontWeight: '700', flexShrink: 0 }}>Delivery</span>}
                                           {b.distance !== null && <span style={{ fontSize: '10px', color: C.olive, fontWeight: '600', flexShrink: 0 }}>{b.distance < 1 ? `${Math.round(b.distance * 1000)}m` : `${b.distance.toFixed(1)}km`}</span>}
                                         </div>
                                       </div>
@@ -1442,37 +1446,35 @@ export default function OurStoresPage() {
                           </svg>
                           Get Directions
                         </a>
-                        {activeBranch.orderUrl ? (
-                          <a href={activeBranch.orderUrl} target="_blank" rel="noopener noreferrer"
-                            style={{
-                              display: 'inline-flex', alignItems: 'center', gap: '5px',
-                              padding: '9px 18px', borderRadius: '999px',
-                              background: C.pink, color: '#fff',
-                              fontSize: '13px', fontWeight: '700',
-                              textDecoration: 'none', fontFamily: "'Poppins',sans-serif",
-                              boxShadow: `0 3px 12px rgba(239,126,203,.4)`, transition: 'all .2s',
-                            }}
-                            onMouseEnter={e => e.currentTarget.style.background = '#c9539f'}
-                            onMouseLeave={e => e.currentTarget.style.background = C.pink}
-                          >
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                              <circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" />
-                              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                            </svg>
-                            Order Now
-                          </a>
-                        ) : (
-                          <span style={{
-                            display: 'inline-flex', alignItems: 'center', gap: '5px',
+                        {/* Grab + FoodPanda order buttons */}
+                        <a href="https://food.grab.com/ph/en/restaurants?search=avocadoria" target="_blank" rel="noopener noreferrer"
+                          style={{
+                            display: 'inline-flex', alignItems: 'center', gap: '6px',
                             padding: '9px 18px', borderRadius: '999px',
-                            background: 'rgba(182,197,72,.1)', color: `${C.brown}80`,
-                            fontSize: '13px', fontWeight: '600',
-                            border: `1px dashed rgba(182,197,72,.4)`,
-                            fontFamily: "'Poppins',sans-serif",
-                          }}>
-                            🛵 Order link coming soon
-                          </span>
-                        )}
+                            background: '#00B14F', color: '#fff',
+                            fontSize: '13px', fontWeight: '700',
+                            textDecoration: 'none', fontFamily: "'Poppins',sans-serif",
+                            boxShadow: '0 3px 12px rgba(0,177,79,.3)', transition: 'background .2s',
+                          }}
+                          onMouseEnter={e => e.currentTarget.style.background = '#009640'}
+                          onMouseLeave={e => e.currentTarget.style.background = '#00B14F'}
+                        >
+                          🟢 Grab
+                        </a>
+                        <a href="https://www.foodpanda.ph/restaurant/search?q=avocadoria" target="_blank" rel="noopener noreferrer"
+                          style={{
+                            display: 'inline-flex', alignItems: 'center', gap: '6px',
+                            padding: '9px 18px', borderRadius: '999px',
+                            background: '#d70f64', color: '#fff',
+                            fontSize: '13px', fontWeight: '700',
+                            textDecoration: 'none', fontFamily: "'Poppins',sans-serif",
+                            boxShadow: '0 3px 12px rgba(215,15,100,.3)', transition: 'background .2s',
+                          }}
+                          onMouseEnter={e => e.currentTarget.style.background = '#b50d55'}
+                          onMouseLeave={e => e.currentTarget.style.background = '#d70f64'}
+                        >
+                          🐼 foodpanda
+                        </a>
                       </div>
                     </div>
                   </div>

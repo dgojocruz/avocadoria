@@ -314,8 +314,7 @@ export default function MenuPage() {
       <style>{`
         @font-face {
           font-family: 'BubbleboddyNeue-ExtraBold';
-          src: url('/fonts/bubbleboddy-neue-extrabold.ttf') format('truetype'),
-               url('/fonts/bubbleboddy-neue-extrabold.otf') format('opentype');
+          src: url('/fonts/bubbleboddyneueinline-extrabold.ttf') format('truetype');
           font-weight: normal; font-style: normal; font-display: swap;
         }
       `}</style>
@@ -333,6 +332,18 @@ export default function MenuPage() {
         <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           {/* Inner content sits above overlay */}
           <div style={{ position:'relative', zIndex:1 }}>
+          {/* Pink badge */}
+          <span style={{
+            display:'inline-block', marginBottom:'14px',
+            background:'var(--c-pink)', color:'#fff',
+            fontFamily:'Poppins,sans-serif', fontSize:'11px',
+            fontWeight:'800', letterSpacing:'0.08em',
+            textTransform:'uppercase',
+            padding:'5px 18px', borderRadius:'999px',
+          }}>
+            Made Fresh Daily 🥑
+          </span>
+
           {/* Headline — brand font + olive + white stroke */}
           <h1 style={{
             fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",

@@ -136,21 +136,20 @@ function ApplyModal({ job, onClose }) {
     data.append('message', form.message || 'No additional message.')
     data.append('_subject', `Application: ${job.emailSubject}`)
     data.append('_replyto', form.email)
+    data.append('_cc',      'recruitment@avocadoria.com.ph')
     data.append('Position', job.role)
     data.append('Branch',   job.branch)
     data.append('cv',       cvFile, cvFile.name)
 
     try {
-      // Replace YOUR_FORMSPREE_ID with your actual Formspree form ID
-      // Enable file uploads in Formspree dashboard under Settings → File Uploads
-      await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+      await fetch('https://formspree.io/f/mwpbvobg', {
         method: 'POST',
         body: data,
         headers: { Accept: 'application/json' },
       })
       setStep(2)
     } catch {
-      setStep(2) // Still show success — Formspree handles delivery
+      setStep(2)
     }
     setLoading(false)
   }
@@ -181,7 +180,8 @@ function ApplyModal({ job, onClose }) {
         {step === 2 ? (
           /* ── Success screen ── */
           <div style={{ padding: '48px 32px', textAlign: 'center' }}>
-            <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: '800', color: '#b6c548',
+            <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: 'normal', color: 'var(--c-olive)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
                 textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 10px' }}>
               Application Sent!
             </h3>
@@ -210,8 +210,8 @@ function ApplyModal({ job, onClose }) {
                 <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.75)', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 4px' }}>
                   Applying for
                 </p>
-                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '20px', fontWeight: '800', color: '#fff',
-                textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 4px' }}>
+                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: 'normal', color: '#fff',
+                textShadow: '0 2px 8px rgba(0,0,0,0.2)', margin: '0 0 4px' }}>
                   {job.role}
                 </h3>
                 <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.8)', margin: 0 }}>
@@ -286,7 +286,10 @@ function ApplyModal({ job, onClose }) {
                 </div>
 
                 <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.6)', margin: 0 }}>
-                  Your application will be sent to <strong style={{ color: '#3a6b35' }}>{job.email}</strong>
+                  Your application will be sent to our HR team at{' '}
+                  <strong style={{ color: '#3a6b35' }}>avocadoriatccc.recruitement@gmail.com</strong>
+                  {' '}and{' '}
+                  <strong style={{ color: '#3a6b35' }}>recruitment@avocadoria.com.ph</strong>
                 </p>
 
                 <button type="submit" disabled={loading} style={{
@@ -333,7 +336,7 @@ function JobCard({ job, onApply }) {
                   />
           ) : (
             <div style={{ width: '100%', height: '100%', background: 'linear-gradient(160deg,#D0E8AF,#b6c548)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', textAlign: 'center' }}>
-              <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '28px', fontWeight: '800', color: '#3a6b35' }}>{job.role}</h3>
+              <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '28px', fontWeight: 'normal', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff' }}>{job.role}</h3>
               <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', color: '#8A5F3C' }}>{job.branch}</p>
             </div>
           )}
@@ -352,8 +355,7 @@ function JobCard({ job, onApply }) {
               <span style={{ display: 'inline-block', background: '#EF7ECB', color: '#fff', fontSize: '10px', fontWeight: '700', padding: '3px 10px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>
                 {job.type}
               </span>
-              <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: '800', color: '#3a6b35',
-                textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 4px' }}>{job.role}</h3>
+              <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: 'normal', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 4px' }}>{job.role}</h3>
               <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#b6c548', fontWeight: '700', margin: 0 }}>{job.branch}</p>
               <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.6)', margin: '2px 0 0' }}>{job.location}</p>
             </div>
@@ -483,7 +485,8 @@ export default function CareersPage() {
             {activeJobs.length === 0 ? (
               /* No openings state */
               <div style={{ textAlign: 'center', padding: '64px 24px' }}>
-                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: '800', color: '#b6c548',
+                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: 'normal', color: 'var(--c-olive)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
                 textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: '0 0 8px' }}>No openings right now</h3>
                 <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'rgba(138,95,60,0.7)', maxWidth: '380px', margin: '0 auto' }}>
                   Check back soon or send your resume to <a href="mailto:official@avocadoria.com.ph" style={{ color: '#b6c548' }}>official@avocadoria.com.ph</a> — we'd love to keep your profile on file.
