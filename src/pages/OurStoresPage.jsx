@@ -389,6 +389,8 @@ export default function OurStoresPage() {
   const [locError,       setLocError]       = useState(null)
   const [activeId,       setActiveId]       = useState(null)
   const [nearestId,      setNearestId]      = useState(null)
+  const [nearbyRadius,   setNearbyRadius]   = useState(5)   // km radius for Near Me
+  const [nearbyMessage,  setNearbyMessage]  = useState(null) // message when no branches within radius
   const [mapReady,       setMapReady]       = useState(false)
   const [drillLevel,     setDrillLevel]     = useState('branches') // 'countries' | 'regions' | 'branches'
   const [selectedCountry,setSelectedCountry]= useState(null)
@@ -403,291 +405,240 @@ export default function OurStoresPage() {
   const userMarkRef = useRef(null)  // user location marker
   const routeLineRef = useRef(null) // straight-line connector
 
-  // ── Inject Leaflet CSS + JS once ───────────────────────────────────────────
+  // ── Load Google Maps JS API once ──────────────────────────────────────────
   useEffect(() => {
-    if (window.__leafletLoaded) { setMapReady(true); return }
-    const css1 = document.createElement('link')
-    css1.rel = 'stylesheet'
-    css1.href = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css'
-    document.head.appendChild(css1)
-
-    const css2 = document.createElement('link')
-    css2.rel = 'stylesheet'
-    css2.href = 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css'
-    document.head.appendChild(css2)
-
-    const injectClusterStyles = () => {
-      const style = document.createElement('style')
-      style.textContent = `
-        .avo-cluster { background: rgba(182,197,72,.25); border-radius: 50%; }
-        .avo-cluster div { background: #b6c548; color: #fff; font-weight: 700; font-family: Poppins,sans-serif; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-        .avo-popup .leaflet-popup-content-wrapper { border-radius: 14px !important; padding: 0 !important; overflow: hidden; box-shadow: 0 8px 28px rgba(0,0,0,.15) !important; }
-        .avo-popup .leaflet-popup-content { margin: 0 !important; width: 240px !important; font-family: Poppins,sans-serif; }
-        .leaflet-popup-tip-container { display: none; }
-        .route-dist-label {
-          background: #fff !important;
-          border: 2px solid #3a6b35 !important;
-          border-radius: 999px !important;
-          padding: 3px 12px !important;
-          font-family: Poppins,sans-serif !important;
-          font-size: 12px !important;
-          box-shadow: 0 2px 10px rgba(0,0,0,.2) !important;
-        }
-        .route-dist-label::before { display: none !important; }
-      `
-      document.head.appendChild(style)
+    if (window.google?.maps) { setMapReady(true); return }
+    if (window.__gmapsLoading) {
+      const check = setInterval(() => { if (window.google?.maps) { setMapReady(true); clearInterval(check) } }, 100)
+      return
     }
-
-    const js1 = document.createElement('script')
-    js1.src = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js'
-    js1.onload = () => {
-      const js2 = document.createElement('script')
-      js2.src = 'https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js'
-      js2.onload = () => {
-        injectClusterStyles()
-        window.__leafletLoaded = true
-        setMapReady(true)
-      }
-      document.head.appendChild(js2)
-    }
-    document.head.appendChild(js1)
+    window.__gmapsLoading = true
+    window.__gmapsCallback = () => { setMapReady(true) }
+    const script = document.createElement('script')
+    const KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || ''
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${KEY}&callback=__gmapsCallback&loading=async`
+    script.async = true; script.defer = true
+    document.head.appendChild(script)
   }, [])
 
-  // ── Build Leaflet map once libs are ready + results are showing ────────────
+  // ── Build Google Map once API is ready ─────────────────────────────────────
   const showResults = phase === 'results' || search.length > 0
   const showMap = showResults
 
   useEffect(() => {
     if (!mapReady || !showMap || !mapRef.current || leafletRef.current) return
-    if (!window.L) return
+    if (!window.google?.maps) return
 
-    const L = window.L
-
-    // Init map
-    const map = L.map(mapRef.current, {
-      center: [12.5, 122.0],
-      zoom: 6,
-      zoomControl: true,
+    const { maps } = window.google
+    const map = new maps.Map(mapRef.current, {
+      center: { lat: 14.5995, lng: 120.9842 }, // Metro Manila default
+      zoom: 11,
+      mapTypeControl: false,
+      streetViewControl: false,
+      fullscreenControl: false,
+      styles: [
+        { featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] },
+        { featureType: 'transit', stylers: [{ visibility: 'off' }] },
+      ],
     })
     leafletRef.current = map
 
-    // CartoDB light tiles — clean, no API key
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '© <a href="https://www.openstreetmap.org">OpenStreetMap</a> · © <a href="https://carto.com">CARTO</a>',
-      subdomains: 'abcd', maxZoom: 20,
-    }).addTo(map)
-
-    // Cluster group with custom Avocadoria cluster icon
-    const clusterGroup = L.markerClusterGroup({
-      maxClusterRadius: 48,
-      iconCreateFunction(cluster) {
-        const n = cluster.getChildCount()
-        return L.divIcon({
-          html: `<div style="width:36px;height:36px;background:#b6c548;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;font-family:Poppins,sans-serif;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.18)">${n}</div>`,
-          className: '',
-          iconSize: [36, 36],
-        })
-      },
+    // Custom avocado SVG pin
+    const makeSvgPin = (color = '#b6c548', active = false) => ({
+      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="${active ? 46 : 40}" height="${active ? 60 : 52}" viewBox="0 0 40 52">
+          <ellipse cx="20" cy="18" rx="14" ry="16" fill="${color}" stroke="#fff" stroke-width="${active ? 3 : 2}"/>
+          <ellipse cx="20" cy="17" rx="7" ry="8" fill="#fff" opacity="0.3"/>
+          <circle cx="20" cy="17" r="4" fill="#3a6b35" opacity="0.7"/>
+          <path d="M20 34 L13 46 Q20 52 27 46 Z" fill="${color}" stroke="#fff" stroke-width="${active ? 3 : 2}"/>
+        </svg>`)}`,
+      scaledSize: new maps.Size(active ? 46 : 40, active ? 60 : 52),
+      anchor: new maps.Point(active ? 23 : 20, active ? 60 : 52),
     })
+
+    // Info window (shared)
+    const infoWindow = new maps.InfoWindow({ maxWidth: 260 })
 
     // Add markers for all branches
     BRANCHES.forEach(b => {
       if (!b.lat || !b.lng) return
       const pinColor = ISLAND_COLORS[b.island]?.pin || '#b6c548'
-
-      const icon = L.icon({
-        iconUrl:    makePinUrl(pinColor, false),
-        iconSize:   [40, 52],
-        iconAnchor: [20, 52],
-        popupAnchor:[0, -55],
+      const marker = new maps.Marker({
+        position: { lat: b.lat, lng: b.lng },
+        map,
+        icon: makeSvgPin(pinColor, false),
+        title: b.name,
       })
 
-      const marker = L.marker([b.lat, b.lng], { icon })
+      marker.addListener('click', () => {
+        // Reset prev active
+        if (activeMarkRef.current && activeMarkRef.current !== marker) {
+          const prevId = Object.keys(markersRef.current).find(k => markersRef.current[k] === activeMarkRef.current)
+          const prevBranch = BRANCHES.find(x => x.id === parseInt(prevId))
+          const prevColor = ISLAND_COLORS[prevBranch?.island]?.pin || '#b6c548'
+          activeMarkRef.current.setIcon(makeSvgPin(prevColor, false))
+        }
+        marker.setIcon(makeSvgPin('#3a6b35', true))
+        activeMarkRef.current = marker
 
-      // Popup HTML — Grab + FoodPanda order buttons
-      const orderButtons = `
-        <div style="display:flex;flex-direction:column;gap:5px;margin-top:6px">
-          <a href="https://food.grab.com/ph/en/restaurants?search=avocadoria" target="_blank" rel="noopener noreferrer"
-            style="display:inline-flex;align-items:center;gap:6px;background:#00B14F;color:#fff;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;text-decoration:none">
-            🟢 Order on Grab
-          </a>
-          <a href="https://www.foodpanda.ph/restaurant/search?q=avocadoria" target="_blank" rel="noopener noreferrer"
-            style="display:inline-flex;align-items:center;gap:6px;background:#d70f64;color:#fff;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;text-decoration:none">
-            🐼 Order on foodpanda
-          </a>
-        </div>`
+        const d = userLoc ? haversine(userLoc.lat, userLoc.lng, b.lat, b.lng) : null
+        const distHtml = d !== null ? `<div style="display:inline-flex;align-items:center;gap:5px;background:rgba(182,197,72,.15);border:1.5px solid rgba(182,197,72,.4);border-radius:999px;padding:5px 12px;margin:0 0 10px"><span style="font-size:12px;font-weight:800;color:#3a6b35">📍 ${d < 1 ? Math.round(d*1000)+' m' : d.toFixed(1)+' km'} away</span></div>` : ''
 
-      // Distance badge if user location is known
-      const distHtml = (userLoc && b.lat && b.lng) ? (() => {
-        const d = haversine(userLoc.lat, userLoc.lng, b.lat, b.lng)
-        const lbl = d < 1 ? `${Math.round(d * 1000)} m` : `${d.toFixed(1)} km`
-        return `<div style="display:inline-flex;align-items:center;gap:5px;background:rgba(182,197,72,.15);border:1.5px solid rgba(182,197,72,.4);border-radius:999px;padding:5px 12px;margin:0 0 10px">
-                  <span style="font-size:12px;font-weight:800;color:#3a6b35">📍 ${lbl} away</span>
-                </div>`
-      })() : ''
-
-      marker.bindPopup(`
-        <div>
-          <div style="background:#b6c548;padding:12px 14px">
-            <div style="font-size:14px;font-weight:700;color:#fff;margin:0 0 2px">${b.name}</div>
-            <div style="font-size:11px;color:rgba(255,255,255,.85)">${b.island}</div>
-          </div>
-          <div style="padding:12px 14px;background:#fff">
-            <p style="font-size:12px;color:#8A5F3C;margin:0 0 10px;line-height:1.5">${b.address}</p>
+        infoWindow.setContent(`
+          <div style="font-family:Poppins,sans-serif;min-width:220px">
+            <div style="background:#b6c548;padding:12px 14px;margin:-8px -8px 10px;border-radius:4px 4px 0 0">
+              <div style="font-size:14px;font-weight:700;color:#fff;margin:0 0 2px">${b.name}</div>
+              <div style="font-size:11px;color:rgba(255,255,255,.85)">${b.island}</div>
+            </div>
+            <p style="font-size:12px;color:#8A5F3C;margin:0 0 8px;line-height:1.5">${b.address}</p>
             ${distHtml}
             <div style="display:flex;flex-direction:column;gap:6px">
               <a href="${b.mapsUrl}" target="_blank" rel="noopener noreferrer"
                 style="display:inline-flex;align-items:center;gap:5px;background:#3a6b35;color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;text-decoration:none">
                 📍 Get Directions
               </a>
-              ${orderButtons}
+              <a href="https://food.grab.com/ph/en/restaurants?search=avocadoria" target="_blank" rel="noopener noreferrer"
+                style="display:inline-flex;align-items:center;gap:6px;background:#00B14F;color:#fff;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;text-decoration:none">
+                🟢 Order on Grab
+              </a>
+              <a href="https://www.foodpanda.ph/restaurant/search?q=avocadoria" target="_blank" rel="noopener noreferrer"
+                style="display:inline-flex;align-items:center;gap:6px;background:#d70f64;color:#fff;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;text-decoration:none">
+                🐼 Order on foodpanda
+              </a>
             </div>
-          </div>
-        </div>
-      `, { className: 'avo-popup', maxWidth: 240 })
-
-      marker.on('click', () => {
-        // Reset previous active marker
-        if (activeMarkRef.current && activeMarkRef.current !== marker) {
-          const prev = activeMarkRef.current
-          const prevBranch = BRANCHES.find(x => markersRef.current[x.id] === prev)
-          const prevColor = ISLAND_COLORS[prevBranch?.island]?.pin || '#b6c548'
-          prev.setIcon(L.icon({ iconUrl: makePinUrl(prevColor, false), iconSize:[40,52], iconAnchor:[20,52], popupAnchor:[0,-55] }))
-        }
-        // Set active pin (larger, white border)
-        marker.setIcon(L.icon({ iconUrl: makePinUrl('#3a6b35', true), iconSize:[46,60], iconAnchor:[23,60], popupAnchor:[0,-63] }))
-        activeMarkRef.current = marker
+          </div>`)
+        infoWindow.open(map, marker)
         setActiveId(b.id)
       })
 
       markersRef.current[b.id] = marker
-      clusterGroup.addLayer(marker)
     })
 
-    map.addLayer(clusterGroup)
+    // Legend
+    const legendDiv = document.createElement('div')
+    legendDiv.style.cssText = 'background:#fff;padding:8px 12px;border-radius:10px;font-size:11px;font-family:Poppins,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.1);line-height:1.9;margin:0 10px 10px'
+    legendDiv.innerHTML = Object.entries(ISLAND_COLORS).map(([name, col]) =>
+      `<div style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;background:${col.pin};display:inline-block;flex-shrink:0"></span><span style="color:#444">${name}</span></div>`
+    ).join('')
+    map.controls[maps.ControlPosition.BOTTOM_LEFT].push(legendDiv)
 
-    // Island legend
-    const legend = L.control({ position: 'bottomleft' })
-    legend.onAdd = () => {
-      const div = L.DomUtil.create('div')
-      div.style.cssText = 'background:#fff;padding:8px 12px;border-radius:10px;font-size:11px;font-family:Poppins,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.1);line-height:1.9'
-      div.innerHTML = Object.entries(ISLAND_COLORS).map(([name, col]) =>
-        `<div style="display:flex;align-items:center;gap:7px"><span style="width:10px;height:10px;border-radius:50%;background:${col.pin};display:inline-block;flex-shrink:0"></span><span style="color:#444">${name}</span></div>`
-      ).join('')
-      return div
-    }
-    legend.addTo(map)
   }, [mapReady, showMap])
 
-  // ── Fly map to active branch when selection changes ────────────────────────
+  // ── Fly map to active branch ───────────────────────────────────────────────
   useEffect(() => {
     if (!leafletRef.current || activeId === null) return
+    if (!window.google?.maps) return
     const branch = BRANCHES.find(b => b.id === activeId)
     if (!branch?.lat) return
-    const L = window.L
-    leafletRef.current.flyTo([branch.lat, branch.lng], 15, { animate: true, duration: 0.8 })
+    const map = leafletRef.current
+    const { maps } = window.google
+
+    map.panTo({ lat: branch.lat, lng: branch.lng })
+    map.setZoom(16)
+
     const marker = markersRef.current[activeId]
     if (marker) {
-      setTimeout(() => marker.openPopup(), 850)
-      // Highlight this marker
       if (activeMarkRef.current && activeMarkRef.current !== marker) {
-        const prev = activeMarkRef.current
-        const prevBranch = BRANCHES.find(x => markersRef.current[x.id] === prev)
+        const prevId = Object.keys(markersRef.current).find(k => markersRef.current[k] === activeMarkRef.current)
+        const prevBranch = BRANCHES.find(x => x.id === parseInt(prevId))
         const prevColor = ISLAND_COLORS[prevBranch?.island]?.pin || '#b6c548'
-        prev.setIcon(L.icon({ iconUrl: makePinUrl(prevColor, false), iconSize:[40,52], iconAnchor:[20,52], popupAnchor:[0,-55] }))
+        activeMarkRef.current.setIcon({ url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="52" viewBox="0 0 40 52"><ellipse cx="20" cy="18" rx="14" ry="16" fill="${prevColor}" stroke="#fff" stroke-width="2"/><ellipse cx="20" cy="17" rx="7" ry="8" fill="#fff" opacity="0.3"/><circle cx="20" cy="17" r="4" fill="#3a6b35" opacity="0.7"/><path d="M20 34 L13 46 Q20 52 27 46 Z" fill="${prevColor}" stroke="#fff" stroke-width="2"/></svg>`)}`, scaledSize: new maps.Size(40, 52), anchor: new maps.Point(20, 52) })
       }
-      marker.setIcon(L.icon({ iconUrl: makePinUrl('#3a6b35', true), iconSize:[46,60], iconAnchor:[23,60], popupAnchor:[0,-63] }))
+      marker.setIcon({ url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="46" height="60" viewBox="0 0 40 52"><ellipse cx="20" cy="18" rx="14" ry="16" fill="#3a6b35" stroke="#fff" stroke-width="3"/><ellipse cx="20" cy="17" rx="7" ry="8" fill="#fff" opacity="0.3"/><circle cx="20" cy="17" r="4" fill="#b6c548" opacity="0.9"/><path d="M20 34 L13 46 Q20 52 27 46 Z" fill="#3a6b35" stroke="#fff" stroke-width="3"/></svg>`)}`, scaledSize: new maps.Size(46, 60), anchor: new maps.Point(23, 60) })
       activeMarkRef.current = marker
     }
 
-    // ── Draw route from user to active branch (Google road route, fallback straight line) ──
+    // Draw route if user location active
     if (userLoc && branch.lat && branch.lng) {
-      const map = leafletRef.current
+      if (routeLineRef.current) { routeLineRef.current.setMap(null); routeLineRef.current = null }
+      if (userMarkRef.current)  { userMarkRef.current.setMap(null);  userMarkRef.current  = null }
 
-      // Remove old line & user marker
-      if (routeLineRef.current) { map.removeLayer(routeLineRef.current); routeLineRef.current = null }
-      if (userMarkRef.current)  { map.removeLayer(userMarkRef.current);  userMarkRef.current  = null }
-
-      // User location marker (blue dot)
-      const userIcon = L.divIcon({
-        className: 'user-loc-marker',
-        html: `<div style="width:18px;height:18px;border-radius:50%;background:#2d7dd2;border:3px solid #fff;box-shadow:0 0 0 4px rgba(45,125,210,.25),0 2px 6px rgba(0,0,0,.3)"></div>`,
-        iconSize: [18, 18], iconAnchor: [9, 9],
+      userMarkRef.current = new maps.Marker({
+        position: { lat: userLoc.lat, lng: userLoc.lng },
+        map,
+        icon: { path: maps.SymbolPath.CIRCLE, scale: 10, fillColor: '#2d7dd2', fillOpacity: 1, strokeColor: '#fff', strokeWeight: 3 },
+        title: 'Your location',
+        zIndex: 999,
       })
-      userMarkRef.current = L.marker([userLoc.lat, userLoc.lng], { icon: userIcon, zIndexOffset: 500 })
-        .addTo(map).bindPopup('<div style="padding:8px 10px;font-size:12px;font-weight:700;color:#2d7dd2">📍 Your location</div>')
 
       const straightDist = haversine(userLoc.lat, userLoc.lng, branch.lat, branch.lng)
       const straightLabel = straightDist < 1 ? `${Math.round(straightDist * 1000)} m` : `${straightDist.toFixed(1)} km`
 
-      // Helper to draw a polyline + label + fit bounds
-      const drawLine = (path, label, dashed) => {
-        if (routeLineRef.current) { map.removeLayer(routeLineRef.current); routeLineRef.current = null }
-        routeLineRef.current = L.polyline(path, {
-          color: '#3a6b35', weight: 4, opacity: 0.8,
-          dashArray: dashed ? '8, 10' : null, lineCap: 'round', lineJoin: 'round',
-        }).addTo(map)
-        const mid = path[Math.floor(path.length / 2)]
-        routeLineRef.current.bindTooltip(
-          `<span style="font-weight:800;color:#3a6b35">${label}</span>`,
-          { permanent: true, direction: 'top', className: 'route-dist-label' }
-        ).openTooltip(mid)
-        setTimeout(() => map.fitBounds(L.latLngBounds(path), { padding: [80, 80], maxZoom: 15, animate: true, duration: 0.8 }), 100)
-      }
-
-      // Draw straight line immediately (instant feedback), then upgrade to road route
-      drawLine([[userLoc.lat, userLoc.lng], [branch.lat, branch.lng]], straightLabel, true)
+      routeLineRef.current = new maps.Polyline({
+        path: [{ lat: userLoc.lat, lng: userLoc.lng }, { lat: branch.lat, lng: branch.lng }],
+        map, strokeColor: '#3a6b35', strokeOpacity: 0.7, strokeWeight: 3,
+        icons: [{ icon: { path: 'M 0,-1 0,1', strokeOpacity: 1, scale: 4 }, offset: '0', repeat: '20px' }],
+      })
 
       const reqId = branch.id
       fetchGoogleRoute(userLoc, { lat: branch.lat, lng: branch.lng }).then(route => {
-        // Only apply if user hasn't selected a different branch since
-        if (route && activeMarkRef.current && reqId === activeId) {
-          drawLine(route.path, `${route.distanceText} · ${route.durationText}`, false)
+        if (route && reqId === activeId) {
+          if (routeLineRef.current) { routeLineRef.current.setMap(null) }
+          const path = route.path.map(([lat, lng]) => ({ lat, lng }))
+          routeLineRef.current = new maps.Polyline({
+            path, map, strokeColor: '#3a6b35', strokeOpacity: 0.85, strokeWeight: 5,
+          })
+          // Fit bounds to show both user and branch
+          const bounds = new maps.LatLngBounds()
+          bounds.extend({ lat: userLoc.lat, lng: userLoc.lng })
+          bounds.extend({ lat: branch.lat, lng: branch.lng })
+          map.fitBounds(bounds, 80)
+
+          // Show distance label in info window
+          const marker = markersRef.current[activeId]
+          if (marker) {
+            new maps.InfoWindow({
+              content: `<div style="font-family:Poppins,sans-serif;font-size:13px;font-weight:700;color:#3a6b35;padding:4px 8px">${route.distanceText} · ${route.durationText}</div>`,
+              position: path[Math.floor(path.length / 2)],
+            }).open(map)
+          }
         }
       })
+
+      map.fitBounds(new maps.LatLngBounds(
+        { lat: Math.min(userLoc.lat, branch.lat) - 0.01, lng: Math.min(userLoc.lng, branch.lng) - 0.01 },
+        { lat: Math.max(userLoc.lat, branch.lat) + 0.01, lng: Math.max(userLoc.lng, branch.lng) + 0.01 }
+      ))
     }
   }, [activeId])
 
-  // ── Fly map based on drill level / country / region selection ───────────────
+  // ── Fly map based on drill level ───────────────────────────────────────────
   useEffect(() => {
-    if (!leafletRef.current) return
+    if (!leafletRef.current || !window.google?.maps) return
     const map = leafletRef.current
+    const { maps } = window.google
 
     if (drillLevel === 'countries' || (!selectedCountry && !selectedRegion)) {
-      // Show world view — fit all branches
       const branches = BRANCHES.filter(b => b.lat && b.lng)
       if (branches.length) {
-        const lats = branches.map(b => b.lat)
-        const lngs = branches.map(b => b.lng)
-        map.flyToBounds(
-          [[Math.min(...lats), Math.min(...lngs)], [Math.max(...lats), Math.max(...lngs)]],
-          { padding: [40, 40], animate: true, duration: 0.9, maxZoom: 6 }
-        )
+        const bounds = new maps.LatLngBounds()
+        branches.forEach(b => bounds.extend({ lat: b.lat, lng: b.lng }))
+        map.fitBounds(bounds, 40)
       }
     } else if (drillLevel === 'regions' && selectedCountry) {
-      // Fit to selected country's branches
       const countryBranches = BRANCHES.filter(b => {
         if (selectedCountry === 'Philippines') return ['Metro Manila','Luzon','Visayas','Mindanao'].includes(b.island)
         return b.region === `International — ${selectedCountry}`
       }).filter(b => b.lat && b.lng)
       if (countryBranches.length) {
-        const lats = countryBranches.map(b => b.lat)
-        const lngs = countryBranches.map(b => b.lng)
-        map.flyToBounds(
-          [[Math.min(...lats), Math.min(...lngs)], [Math.max(...lats), Math.max(...lngs)]],
-          { padding: [60, 60], animate: true, duration: 0.9, maxZoom: selectedCountry === 'Philippines' ? 7 : 12 }
-        )
+        const bounds = new maps.LatLngBounds()
+        countryBranches.forEach(b => bounds.extend({ lat: b.lat, lng: b.lng }))
+        map.fitBounds(bounds, 60)
       }
     } else if (drillLevel === 'branches' && selectedRegion) {
-      // Fit to selected region's branches
       const regionBranches = BRANCHES.filter(b => b.island === selectedRegion || b.region === selectedRegion).filter(b => b.lat && b.lng)
       if (regionBranches.length) {
-        const lats = regionBranches.map(b => b.lat)
-        const lngs = regionBranches.map(b => b.lng)
-        map.flyToBounds(
-          [[Math.min(...lats), Math.min(...lngs)], [Math.max(...lats), Math.max(...lngs)]],
-          { padding: [60, 60], animate: true, duration: 0.9, maxZoom: 11 }
-        )
+        const bounds = new maps.LatLngBounds()
+        // If user location active, center on user + nearby branches only
+        if (userLoc) {
+          bounds.extend({ lat: userLoc.lat, lng: userLoc.lng })
+          const nearby = regionBranches.filter(b => haversine(userLoc.lat, userLoc.lng, b.lat, b.lng) <= 15)
+          const toShow = nearby.length > 0 ? nearby : regionBranches.slice(0, 5)
+          toShow.forEach(b => bounds.extend({ lat: b.lat, lng: b.lng }))
+        } else {
+          regionBranches.forEach(b => bounds.extend({ lat: b.lat, lng: b.lng }))
+        }
+        map.fitBounds(bounds, 80)
       }
     }
   }, [drillLevel, selectedCountry, selectedRegion])
@@ -697,32 +648,51 @@ export default function OurStoresPage() {
     if (!navigator.geolocation) { setLocError('Geolocation not supported by your browser.'); return }
     setPhase('locating')
     setLocError(null)
+    setNearbyMessage(null)
     navigator.geolocation.getCurrentPosition(
       pos => {
         const { latitude: lat, longitude: lng } = pos.coords
         setUserLoc({ lat, lng })
         setPhase('results')
         setSearch('')
-        // Reset drill to show all branches sorted by distance
         setDrillLevel('branches')
         setSelectedCountry(null)
         setSelectedRegion(null)
-        // Find nearest using real haversine distance
-        const nearest = BRANCHES
+
+        // Sort all branches by distance
+        const sorted = BRANCHES
           .filter(b => b.lat && b.lng)
-          .sort((a, b) => haversine(lat, lng, a.lat, a.lng) - haversine(lat, lng, b.lat, b.lng))[0]
-        if (nearest) {
-          setNearestId(nearest.id)
+          .map(b => ({ ...b, dist: haversine(lat, lng, b.lat, b.lng) }))
+          .sort((a, b) => a.dist - b.dist)
+
+        const nearest = sorted[0]
+        if (!nearest) return
+
+        setNearestId(nearest.id)
+
+        // Check if nearest is within 5km
+        const within5km = sorted.filter(b => b.dist <= 5)
+        if (within5km.length > 0) {
+          // Show branches within 5km
+          setNearbyRadius(5)
+          setNearbyMessage(null)
+          setActiveId(within5km[0].id)
+        } else {
+          // No branches within 5km — show nearest with message
+          setNearbyRadius(nearest.dist + 1) // expand to include nearest
+          setNearbyMessage(`The nearest Avocadoria branch to your location is ${nearest.dist.toFixed(1)} km away — ${nearest.name}.`)
           setActiveId(nearest.id)
-          // Auto-select country based on nearest branch
-          const isPhBranch = ['Metro Manila','Luzon','Visayas','Mindanao'].includes(nearest.island)
-          if (isPhBranch) {
-            setSelectedCountry('Philippines')
-            setSelectedRegion(nearest.island) // drill to the island group
-          } else {
-            setSelectedCountry(nearest.region.replace('International — ', ''))
-          }
         }
+
+        // Auto-drill to nearest branch's region
+        const isPhBranch = ['Metro Manila','Luzon','Visayas','Mindanao'].includes(nearest.island)
+        if (isPhBranch) {
+          setSelectedCountry('Philippines')
+          setSelectedRegion(nearest.island)
+        } else {
+          setSelectedCountry(nearest.region.replace('International — ', ''))
+        }
+
         setTimeout(() => searchRef.current?.focus(), 300)
       },
       err => {
@@ -1083,7 +1053,7 @@ export default function OurStoresPage() {
             }}>
               {/* Back button */}
               <button
-                onClick={() => { setPhase('idle'); setSearch(''); setActiveId(null); setUserLoc(null); setNearestId(null); setDrillLevel('branches'); setSelectedCountry(null); setSelectedRegion(null) }}
+                onClick={() => { setPhase('idle'); setSearch(''); setActiveId(null); setUserLoc(null); setNearestId(null); setNearbyRadius(5); setNearbyMessage(null); setDrillLevel('branches'); setSelectedCountry(null); setSelectedRegion(null) }}
                 style={{
                   flexShrink: 0, background: 'none', border: `1.5px solid rgba(182,197,72,.4)`,
                   borderRadius: '10px', cursor: 'pointer', color: C.olive,
@@ -1171,6 +1141,19 @@ export default function OurStoresPage() {
                 overflow: 'hidden',
                 boxShadow: '0 4px 20px rgba(58,107,53,.08)',
               }}>
+
+                {/* ── Nearby message banner ── */}
+                {nearbyMessage && (
+                  <div style={{
+                    background: 'rgba(182,197,72,.12)', borderBottom: '1px solid rgba(182,197,72,.25)',
+                    padding: '10px 14px', display: 'flex', alignItems: 'flex-start', gap: '8px',
+                  }}>
+                    <span style={{ fontSize: '16px', flexShrink: 0 }}>📍</span>
+                    <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#3a6b35', fontWeight: '600', margin: 0, lineHeight: 1.5 }}>
+                      {nearbyMessage}
+                    </p>
+                  </div>
+                )}
 
                 {/* ── Breadcrumb nav ── */}
                 {(drillLevel === 'regions' || drillLevel === 'branches') && (
