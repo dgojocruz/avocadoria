@@ -357,6 +357,49 @@ export default function MenuPage() {
           </div>{/* end zIndex:1 wrapper */}
         </div>
 
+        {/* ── Video showcase — seamless, edges fade into the wall ── */}
+        <div style={{
+          position:'relative', zIndex:1,
+          maxWidth:'1100px', margin:'0 auto',
+          padding:'clamp(8px,2vw,24px) clamp(16px,4vw,48px) clamp(20px,4vw,40px)',
+        }}>
+          <div style={{
+            position:'relative',
+            aspectRatio:'16/9',
+            /* Feather the video edges so it melts into the textured background */
+            WebkitMaskImage:'radial-gradient(ellipse 92% 90% at 50% 50%, #000 60%, transparent 100%)',
+            maskImage:'radial-gradient(ellipse 92% 90% at 50% 50%, #000 60%, transparent 100%)',
+          }}>
+            {/* Poster — shows instantly, behind video, kills black flash */}
+            <img
+              src="/videos/naked-ice-cream-poster.jpg"
+              alt=""
+              aria-hidden="true"
+              style={{
+                position:'absolute', inset:0,
+                width:'100%', height:'100%',
+                objectFit:'cover', display:'block',
+                zIndex:0,
+              }}
+            />
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{
+                position:'absolute', inset:0,
+                width:'100%', height:'100%',
+                objectFit:'cover', display:'block',
+                zIndex:1,
+              }}
+            >
+              <source src="/videos/naked-ice-cream.webm" type="video/webm"/>
+              <source src="/videos/naked-ice-cream.mp4"  type="video/mp4"/>
+            </video>
+          </div>
+        </div>
+
         {/* ── Category grid ── */}
         <div style={{
           position:'relative', overflow:'hidden',
