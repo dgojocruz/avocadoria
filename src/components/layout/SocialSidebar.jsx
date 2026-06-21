@@ -191,8 +191,10 @@ export default function SocialSidebar() {
     <style>{`
       @media (max-width: 767px) {
         .social-sidebar-aside {
-          top: 30% !important;
-          transform: translateY(-30%) !important;
+          left: auto !important;
+          right: 4px !important;
+          top: 50% !important;
+          transform: translateY(-50%) !important;
         }
         .social-sidebar-pill {
           padding: 6px 5px !important;
