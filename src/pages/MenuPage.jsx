@@ -131,18 +131,20 @@ function CategoryCard({ cat, index, onClick }) {
       style={{
         borderRadius:'20px', overflow:'hidden',
         cursor:'pointer', position:'relative', aspectRatio:'16/9',
+        background: '#e8edcc',
         boxShadow: hov
           ? '0 16px 48px rgba(58,107,53,0.22)'
           : '0 4px 20px rgba(58,107,53,0.10)',
         transition:'box-shadow 0.25s ease',
       }}
     >
-      {/* BG image or gradient */}
+      {/* Cover image — objectFit cover, position tuned per category */}
       {cat.cover
         ? <img src={cat.cover} alt={cat.name} style={{
             position:'absolute', inset:0,
             width:'100%', height:'100%',
-            objectFit:'cover', objectPosition:'center 18%',
+            objectFit:'cover',
+            objectPosition: cat.coverPos || 'center center',
             transition:'transform 0.5s ease',
             transform: hov ? 'scale(1.06)' : 'scale(1)',
           }} onError={e => e.target.style.display='none'}/>
@@ -154,14 +156,13 @@ function CategoryCard({ cat, index, onClick }) {
           }}>{cat.emoji}</div>
       }
 
-      {/* Overlay */}
+      {/* Subtle bottom scrim — just enough for label legibility */}
       <div style={{
         position:'absolute', inset:0,
-        background:'linear-gradient(to top, rgba(20,50,10,0.72) 0%, transparent 55%)',
-        opacity: hov ? 1 : 0.82, transition:'opacity 0.25s',
+        background:'linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 32%)',
       }}/>
 
-      {/* Label bottom-left — Mesa style */}
+      {/* Label */}
       <div style={{
         position:'absolute', bottom:'16px', left:'16px', right:'16px',
         display:'flex', alignItems:'center', justifyContent:'space-between', gap:'10px',
@@ -169,16 +170,18 @@ function CategoryCard({ cat, index, onClick }) {
         <div>
           <p style={{
             fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-            fontSize:'clamp(15px,2vw,20px)', fontWeight:'normal',
-            color:'#fff', margin:'0 0 2px', lineHeight:1.15,
-            textShadow:'0 2px 8px rgba(0,0,0,0.3)',
+            fontSize:'clamp(15px,2vw,22px)', fontWeight:'normal',
+            color:'var(--c-olive)',
+            textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
+            margin:'0 0 3px', lineHeight:1.15,
           }}>{cat.name}</p>
           <p style={{
-            fontFamily:'Poppins,sans-serif', fontSize:'11px',
-            color:'rgba(255,255,255,0.78)', margin:0,
+            fontFamily:'Poppins,sans-serif', fontSize:'11px', fontWeight:'600',
+            color:'#fff',
+            textShadow:'0 1px 4px rgba(0,0,0,0.5)',
+            margin:0,
           }}>{cat.items.length} item{cat.items.length !== 1 ? 's' : ''}</p>
         </div>
-        {/* Arrow circle */}
         <div style={{
           width:'36px', height:'36px', borderRadius:'50%', flexShrink:0,
           background: hov ? 'var(--c-olive)' : 'rgba(255,255,255,0.22)',
@@ -410,24 +413,25 @@ export default function MenuPage() {
             {/* Label pill */}
             <div style={{ position:'absolute', bottom:'28px', left:'28px' }}>
               <div style={{
-                background:'rgba(255,255,255,0.93)',
-                backdropFilter:'blur(8px)',
+                background:'rgba(255,255,255,0.06)',
+                backdropFilter:'blur(10px)',
+                border:'1px solid rgba(255,255,255,0.18)',
                 borderRadius:'999px',
                 padding:'12px 20px',
                 display:'inline-flex', alignItems:'center', gap:'14px',
-                boxShadow:'1px 0px rgba(0,0,0,0.12)',
               }}>
                 <div>
                   <p style={{
                     fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                     fontSize:'clamp(1.2rem,2.8vw,2rem)',
                     fontWeight:'normal', color:'var(--c-olive)',
-                    textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
+                    textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                     margin:'0 0 2px', lineHeight:1.1,
                   }}>{featured.name}</p>
                   <p style={{
                     fontFamily:'Poppins,sans-serif', fontSize:'12px',
-                    color:'var(--c-brown)', opacity:0.75, margin:0,
+                    color:'rgba(255,255,255,0.9)', margin:0,
+                    textShadow:'0 1px 4px rgba(0,0,0,0.4)',
                   }}>{featured.tagline}</p>
                 </div>
                 <div style={{

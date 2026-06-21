@@ -122,7 +122,7 @@ export const CATEGORIES = [
     name:     'Soft Serve Menu',
     emoji:    '🍦',
     tagline:  'Velvety avocado soft-serve — pure, light and irresistibly smooth.',
-    cover:    '/menu/Soft Serve Menu/naked-light-ice-cream.webp',
+    cover:    '/menu/Soft Serve Menu/naked-cover.webp',
     featured: false,
     items: [
       {
@@ -175,7 +175,7 @@ export const CATEGORIES = [
     name:     'Avocado Shakes',
     emoji:    '🥤',
     tagline:  'Thick, creamy, and packed with real avocado — the perfect refreshment.',
-    cover:    '/menu/Avocado Shakes/Avo_Lover.webp',
+    cover:    '/menu/Avocado Shakes/avo-shake-cover.webp',
     featured: false,
     items: [
       {
@@ -253,6 +253,7 @@ export const CATEGORIES = [
     emoji:    '🍡',
     tagline:  'Avocado ice cream bars coated in premium chocolate and nutty toppings — happiness on a stick.',
     cover:    '/menu/Popsicles/senyorita-matcha.webp',
+    coverPos: 'center 60%',
     featured: false,
     items: [
       {
@@ -312,7 +313,8 @@ export const CATEGORIES = [
     name:     'Coffee',
     emoji:    '☕',
     tagline:  'Premium coffee blends to pair perfectly with your avocado treat.',
-    cover:    '/menu/coffee/HOT_COFFEE.webp',
+    cover:    '/menu/coffee/Coffee_Hot.webp',
+    coverPos: 'center 30%',
     featured: false,
     items: [
 
@@ -344,6 +346,7 @@ export const CATEGORIES = [
     emoji:    '🥑',
     tagline:  'More avocado goodness — unique treats, snacks and seasonal specials.',
     cover:    '/menu/Others/nachos.webp',
+    coverPos: 'center 55%',
     featured: false,
     items: [
       {
@@ -427,7 +430,8 @@ export const CATEGORIES = [
     name:     'Avocado Cakes',
     emoji:    '🎂',
     tagline:  'Celebrate every occasion with our indulgent avocado cakes.',
-    cover:    '/menu/Avocado cakes/big-tin-cheesecake.webp', // use first product as cover
+    cover:    '/menu/Avocado cakes/big-tin-cheesecake.webp',
+    coverPos: 'center 40%',
     featured: false,
     items: [
       {
