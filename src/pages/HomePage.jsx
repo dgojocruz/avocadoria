@@ -1040,7 +1040,7 @@ export default function HomePage() {
             {/* Header row */}
             <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', flexWrap:'wrap', gap:'12px', marginBottom:'32px' }}>
               <div>
-                <h2 className="section-title" style={{ color:'#b6c548', margin:'0 0 6px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff' }}>
+                <h2 className="section-title" style={{ color:'var(--c-olive)', margin:'0 0 6px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
                   {"What's New"}
                 </h2>
                 <p className="section-sub" style={{ color:'rgba(138,95,60,.65)', margin:0 }}>
@@ -1071,22 +1071,22 @@ export default function HomePage() {
                     style={{ textDecoration:'none', cursor:'pointer' }}
                   >
                     <div style={{
-                      background:'#fff',
-                      border:'1.5px solid rgba(182,197,72,0.18)',
+                      background:'transparent',
+                      border:'none',
                       borderRadius:'20px',
                       display:'flex', flexDirection:'column',
                       height:'100%', boxSizing:'border-box',
                       overflow:'hidden',
-                      boxShadow:'0 2px 12px rgba(58,107,53,0.07)',
-                      transition:'box-shadow 0.25s, border-color 0.25s, transform 0.25s',
+                      boxShadow:'none',
+                      transition:'transform 0.25s',
                     }}
-                      onMouseEnter={e => { e.currentTarget.style.boxShadow='0 12px 36px rgba(58,107,53,0.15)'; e.currentTarget.style.borderColor='var(--c-olive)'; e.currentTarget.style.transform='translateY(-4px)' }}
-                      onMouseLeave={e => { e.currentTarget.style.boxShadow='0 2px 12px rgba(58,107,53,0.07)'; e.currentTarget.style.borderColor='rgba(182,197,72,0.18)'; e.currentTarget.style.transform='none' }}
+                      onMouseEnter={e => { e.currentTarget.style.transform='translateY(-4px)' }}
+                      onMouseLeave={e => { e.currentTarget.style.transform='none' }}
                     >
                       {/* Image — tall and prominent */}
                       <div style={{
                         width:'100%', height:'clamp(180px,22vw,240px)',
-                        background:'#f4f9e8',
+                        background:'transparent',
                         overflow:'hidden', flexShrink:0, position:'relative',
                       }}>
                         {post.image
@@ -1131,34 +1131,13 @@ export default function HomePage() {
                             Watch on Facebook
                           </a>
                         )}
-                        {/* Tag badge */}
-                        {post.tag && (
-                          <span style={{
-                            position:'absolute', top:'10px', right:'10px',
-                            background: post.featured ? 'var(--c-pink)' : 'var(--c-olive)',
-                            color:'#fff',
-                            fontFamily:"'Poppins',sans-serif",
-                            fontSize:'10px', fontWeight:'600',
-                            letterSpacing:'0.06em', textTransform:'uppercase',
-                            padding:'3px 10px', borderRadius:'999px',
-                          }}>{post.tag}</span>
-                        )}
+
                       </div>
 
                       {/* Content */}
                       <div style={{ padding:'16px 18px 20px', display:'flex', flexDirection:'column', gap:'8px', flex:1 }}>
-                        {/* Category + date */}
-                        <div style={{ display:'flex', alignItems:'center', gap:'8px', flexWrap:'wrap' }}>
-                          <span style={{
-                            background: post.featured ? 'var(--c-olive)' : 'rgba(182,197,72,0.15)',
-                            color: post.featured ? '#fff' : 'var(--c-dark)',
-                            fontFamily:"'Poppins',sans-serif",
-                            fontSize:'10px', fontWeight:'600',
-                            letterSpacing:'0.06em', textTransform:'uppercase',
-                            padding:'3px 10px', borderRadius:'999px',
-                          }}>
-                            {post.featured ? 'Featured' : post.category}
-                          </span>
+                        {/* Date only — no pill */}
+                        <div style={{ display:'flex', alignItems:'center', gap:'8px' }}>
                           <span style={{ fontFamily:"'Poppins',sans-serif", fontSize:'11px', color:'rgba(138,95,60,0.55)' }}>
                             {new Date(post.date).toLocaleDateString('en-PH',{month:'short',day:'numeric',year:'numeric'})}
                           </span>
@@ -1167,8 +1146,8 @@ export default function HomePage() {
                         {/* Title */}
                         <h3 style={{
                           fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal',
-                          fontSize:'clamp(14px,1.4vw,16px)', color:'var(--c-dark)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
+                          fontSize:'clamp(14px,1.4vw,16px)', color:'var(--c-olive)',
+                          textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                           margin:0, lineHeight:1.3,
                         }}>
                           {post.title}

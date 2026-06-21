@@ -15,7 +15,7 @@ const BRAND = {
   stats: [
     { num: '2019',  label: 'Year Founded'       },
     { num: '7+',    label: 'Years of Happiness' },
-    { num: '250+',   label: 'Branches Nationwide', color: 'var(--c-pink)' },
+    { num: '233+',   label: 'Philippines & International', color: 'var(--c-pink)' },
     { num: '100K+', label: 'Happy Cups Served'  },
   ],
 }
@@ -227,13 +227,16 @@ function StatCard({ stat, trigger }) {
 
 function SectionLabel({ text, color = 'var(--c-pink)' }) {
   return (
-    <span style={{
-      display: 'inline-block', marginBottom: '12px',
-      background: color, color: '#fff',
-      fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '800',
-      letterSpacing: '0.08em', textTransform: 'uppercase',
-      padding: '5px 18px', borderRadius: '999px',
-    }}>{text}</span>
+    <p style={{
+      fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+      fontWeight: 'normal',
+      fontSize: 'clamp(0.85rem,2vw,1rem)',
+      color: 'var(--c-olive)',
+      letterSpacing: '0.1em',
+      textTransform: 'uppercase',
+      margin: '0 0 10px',
+      textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff',
+    }}>{text}</p>
   )
 }
 
@@ -290,25 +293,24 @@ function RecognitionsCarousel({ items }) {
         .rec-slide {
           flex-shrink: 0;
           width: calc(50% - 6px);
-          background: #fff;
-          border: 1.5px solid rgba(58,107,53,0.12);
+          background: transparent;
+          border: none;
           border-radius: 16px;
           overflow: hidden;
-          transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
-          box-shadow: 0 4px 16px rgba(58,107,53,0.10);
+          transition: border-color 0.25s, transform 0.25s;
         }
         .rec-slide:hover {
-          border-color: var(--c-olive);
           box-shadow: 0 12px 36px rgba(58,107,53,0.18);
           transform: translateY(-5px);
         }
         .rec-slide-img {
-          width: 100%; height: clamp(220px,32vw,320px);
+          width: 100%;
+          height: auto;
+          max-height: clamp(280px,38vw,420px);
           object-fit: contain;
           object-position: center center;
           display: block;
-          background: #1a3a12;
-          padding: 8px;
+          background: transparent;
           box-sizing: border-box;
         }
         .rec-slide-body {
@@ -326,7 +328,8 @@ function RecognitionsCarousel({ items }) {
         .rec-slide-title {
           font-family: 'BubbleboddyNeue-ExtraBold','Poppins',sans-serif;
           font-size: clamp(12px,1.4vw,15px);
-          font-weight: normal; color: var(--c-dark);
+          font-weight: normal; color: var(--c-olive);
+          text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff;
           margin: 0; line-height: 1.25;
         }
         .rec-slide-org {
@@ -334,28 +337,7 @@ function RecognitionsCarousel({ items }) {
           font-size: clamp(10px,1vw,12px);
           color: var(--c-brown); margin: 0;
         }
-        .rec-nav {
-          display: flex; align-items: center;
-          justify-content: center; gap: 12px;
-          margin-top: 16px;
-        }
-        .rec-arrow {
-          width: 38px; height: 38px; border-radius: 50%;
-          background: rgba(255,255,255,0.85);
-          border: 1.5px solid rgba(58,107,53,0.2);
-          display: flex; align-items: center; justify-content: center;
-          cursor: pointer; color: var(--c-dark); font-size: 18px;
-          transition: all 0.2s; flex-shrink: 0;
-          min-height: unset; min-width: unset;
-        }
-        .rec-arrow:hover { background: var(--c-olive); border-color: var(--c-olive); color: #fff; }
-        .rec-dot {
-          width: 6px; height: 6px; border-radius: 50%;
-          background: rgba(58,107,53,0.2);
-          border: none; cursor: pointer; padding: 0;
-          transition: all 0.2s;
-        }
-        .rec-dot.active { background: var(--c-olive); width: 18px; border-radius: 3px; }
+
         @media (max-width: 600px) {
           .rec-slide { width: calc(100% - 0px); }
         }
@@ -380,10 +362,6 @@ function RecognitionsCarousel({ items }) {
                 alignItems: 'center', justifyContent: 'center',
               }}></div>
               <div className="rec-slide-body">
-                <span
-                  className="rec-slide-badge"
-                  style={{ background: catColor(rec.category) }}
-                >{rec.category} · {rec.year}</span>
                 <h3 className="rec-slide-title">{rec.title}</h3>
                 <p className="rec-slide-org">{rec.issuer}</p>
               </div>
@@ -392,20 +370,7 @@ function RecognitionsCarousel({ items }) {
         </div>
       </div>
 
-      <div className="rec-nav">
-        <button className="rec-arrow" onClick={() => goTo(cur - 1)} aria-label="Previous award">‹</button>
-        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-          {Array.from({ length: maxIdx + 1 }, (_, i) => (
-            <button
-              key={i}
-              className={`rec-dot${i === cur ? ' active' : ''}`}
-              onClick={() => goTo(i)}
-              aria-label={`Go to award ${i + 1}`}
-            />
-          ))}
-        </div>
-        <button className="rec-arrow" onClick={() => goTo(cur + 1)} aria-label="Next award">›</button>
-      </div>
+
     </div>
   )
 }
@@ -417,8 +382,8 @@ function NewsCard({ post }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        background: 'rgba(255,255,255,0.92)',
-        border: `1.5px solid ${hov ? 'var(--c-olive)' : 'rgba(182,197,72,0.2)'}`,
+        background: 'transparent',
+        border: 'none',
         borderRadius: '20px', overflow: 'hidden',
         transition: 'all 0.25s ease',
         boxShadow: hov ? '0 12px 32px rgba(58,107,53,0.14)' : '0 2px 12px rgba(58,107,53,0.06)',
@@ -439,13 +404,7 @@ function NewsCard({ post }) {
       </div>
       <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-          <span style={{
-            background: post.featured ? 'var(--c-olive)' : 'rgba(182,197,72,0.15)',
-            color: post.featured ? '#fff' : 'var(--c-dark)',
-            fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '800',
-            letterSpacing: '0.06em', textTransform: 'uppercase',
-            padding: '3px 10px', borderRadius: '999px',
-          }}>{post.featured ? 'Featured' : post.category}</span>
+
           <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.7)' }}>
             {fmt(post.date)}
           </span>
@@ -453,8 +412,8 @@ function NewsCard({ post }) {
         <h3 style={{
           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize: 'clamp(14px, 1.5vw, 17px)', fontWeight: 'normal',
-          color: 'var(--c-dark)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: 0, lineHeight: 1.3,
+          color: 'var(--c-olive)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.3,
         }}>{post.title}</h3>
         <p style={{
           fontFamily: 'Poppins,sans-serif', fontSize: '13px',
@@ -524,45 +483,40 @@ export default function AboutPage() {
         .about-stat-card {
           text-align: center;
           padding: 24px 16px;
-          background: rgba(255,255,255,0.55);
-          border: 1.5px solid rgba(58,107,53,0.18);
+          background: transparent;
+          border: none;
           border-radius: 20px;
-          backdrop-filter: blur(8px);
           flex: 1;
           min-width: 130px;
-          transition: transform 0.25s ease, background 0.25s ease;
+          transition: transform 0.25s ease;
         }
         .about-stat-card:hover {
           transform: translateY(-4px);
-          background: rgba(255,255,255,0.7);
         }
 
         .about-story-card {
           opacity: 0;
           animation: about-fade-up 0.65s ease forwards;
-          background: rgba(255,255,255,0.88);
+          background: transparent;
           border-radius: 24px;
           overflow: hidden;
-          border: 1.5px solid rgba(182,197,72,0.2);
-          box-shadow: 0 4px 20px rgba(58,107,53,0.07);
-          transition: box-shadow 0.25s ease, transform 0.25s ease;
+          border: none;
+          box-shadow: none;
+          transition: transform 0.25s ease;
         }
         .about-story-card:hover {
-          box-shadow: 0 12px 40px rgba(58,107,53,0.14);
           transform: translateY(-4px);
         }
 
         .about-recognition-row {
-          background: rgba(255,255,255,0.88);
-          border: 1.5px solid rgba(182,197,72,0.18);
+          background: transparent;
+          border: none;
           border-radius: 18px;
           padding: 20px 24px;
           display: flex; gap: 18px; align-items: flex-start;
-          transition: box-shadow 0.2s ease, border-color 0.2s ease;
+          transition: border-color 0.2s ease;
         }
         .about-recognition-row:hover {
-          box-shadow: 0 8px 28px rgba(58,107,53,0.10);
-          border-color: rgba(182,197,72,0.45);
         }
 
         .about-news-grid {
@@ -710,23 +664,14 @@ export default function AboutPage() {
 
           {/* Est. badge */}
           <div className="about-hero-text">
-            <span style={{
-              display: 'inline-block', marginBottom: '20px',
-              background: 'var(--c-pink)', color: '#fff',
-              fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '800',
-              letterSpacing: '0.08em', textTransform: 'uppercase',
-              padding: '5px 20px', borderRadius: '999px',
-            }}>
-              Est. 2019 · Philippines No. 1
-            </span>
 
             {/* Tagline quote */}
             <p style={{
               fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontSize: 'clamp(13px, 1.4vw, 16px)',
-              color: 'var(--c-dark)',
+              color: 'var(--c-olive)',
               margin: '0 0 10px', letterSpacing: '0.03em',
-              textShadow: 'none',
+              textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff',
             }}>{BRAND.tagline}</p>
 
             {/* Main headline */}
@@ -801,14 +746,7 @@ export default function AboutPage() {
                     className="about-founder-photo"
                    loading="lazy" decoding="async"/>
                 </div>
-                <div className="about-founder-badge">
-                  <span style={{
-                    fontFamily: 'Poppins,sans-serif',
-                    fontSize: '11px', fontWeight: '800',
-                    color: '#fff', letterSpacing: '0.06em',
-                    textTransform: 'uppercase',
-                  }}>Est. 2019</span>
-                </div>
+
               </div>
             </div>
 
@@ -828,15 +766,16 @@ export default function AboutPage() {
               <div style={{
                 marginTop: 'clamp(24px, 3vw, 36px)',
                 paddingTop: '20px',
-                borderTop: '2px solid rgba(58,107,53,0.15)',
+                borderTop: 'none',
                 display: 'flex', alignItems: 'center', gap: '14px',
               }}>
                 <div>
                   <p style={{
                     fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-                    fontSize: 'clamp(15px, 1.6vw, 19px)',
-                    fontWeight: 'normal', color: 'var(--c-dark)',
-                    margin: 0, lineHeight: 1.2,
+                    fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)',
+                    fontWeight: 'normal', color: 'var(--c-olive)',
+                    textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
+                    margin: '0 0 6px', lineHeight: 1.1,
                   }}>Chef Czarina Sevilla</p>
                   <p style={{
                     fontFamily: 'Poppins,sans-serif',
@@ -869,18 +808,13 @@ export default function AboutPage() {
                         display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px',
                         minHeight: 'unset', minWidth: 'unset',
                       }}>{sec.icon}</div>
-                      <span style={{
-                        background: `${sec.color}18`, color: sec.color,
-                        fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '800',
-                        letterSpacing: '0.07em', textTransform: 'uppercase',
-                        padding: '3px 12px', borderRadius: '999px',
-                      }}>{sec.badge}</span>
+  
                     </div>
                     <h3 style={{
                       fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                       fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
-                      fontWeight: 'normal', color: 'var(--c-dark)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
+                      fontWeight: 'normal', color: 'var(--c-olive)',
+                    textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                       margin: '0 0 10px', lineHeight: 1.2,
                     }}>{sec.title}</h3>
                     <p style={{
@@ -930,60 +864,48 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* Featured award */}
+          {/* Featured award — full-width hero */}
           <div style={{
-            background: 'rgba(255,255,255,0.88)',
-            border: '1.5px solid rgba(58,107,53,0.2)',
-            borderRadius: '20px', overflow: 'hidden',
-            marginBottom: 'clamp(20px,3vw,32px)',
-            boxShadow: '0 4px 24px rgba(58,107,53,0.10)',
+            background: 'transparent',
+            border: 'none',
+            borderRadius: '24px',
+            overflow: 'hidden',
+            marginBottom: 'clamp(32px,5vw,56px)',
+            textAlign: 'center',
           }}>
+            {/* Full-width image — no cropping, correct ratio */}
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'clamp(180px,38%,280px) 1fr',
-              minHeight: '260px',
+              width: '100%',
+              borderRadius: '20px',
+              overflow: 'hidden',
+              boxShadow: '0 20px 60px rgba(58,107,53,0.18)',
+              marginBottom: 'clamp(20px,3vw,32px)',
             }}>
-              {/* Featured image */}
-              <div style={{
-                overflow: 'hidden', flexShrink: 0,
-                background: '#1a3a12',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <img
-                  src={RECOGNITIONS[0].image}
-                  alt={RECOGNITIONS[0].title}
-                  style={{
-                    width: '100%', height: '100%',
-                    objectFit: 'contain', objectPosition: 'center',
-                    display: 'block',
-                  }}
-                  onError={e => e.target.style.display='none'}
-                />
-              </div>
-              {/* Featured text */}
-              <div style={{ padding: 'clamp(16px,3vw,28px)', display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: '8px' }}>
-                <span style={{
-                  display: 'inline-block', width: 'fit-content',
-                  background: 'var(--c-olive)', color: '#fff',
-                  fontFamily: "'Poppins',sans-serif",
-                  fontSize: '10px', fontWeight: '600',
-                  letterSpacing: '0.08em', textTransform: 'uppercase',
-                  padding: '3px 12px', borderRadius: '999px',
-                }}>EY · {RECOGNITIONS[0].year} · Featured</span>
-                <h3 style={{
-                  fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-                  fontSize: 'clamp(1rem,2.2vw,1.4rem)',
-                  fontWeight: 'normal', color: 'var(--c-dark)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
-                  margin: 0, lineHeight: 1.25,
-                }}>{RECOGNITIONS[0].title}</h3>
-                <p style={{
-                  fontFamily: "'Poppins',sans-serif",
-                  fontSize: 'clamp(11px,1.2vw,13px)',
-                  color: 'var(--c-brown)', opacity: 0.8, margin: 0,
-                }}>{RECOGNITIONS[0].issuer}</p>
-              </div>
+              <img
+                src={RECOGNITIONS[0].image}
+                alt={RECOGNITIONS[0].title}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  objectFit: 'contain',
+                }}
+                onError={e => e.target.style.display='none'}
+              />
             </div>
+            {/* Centered text below */}
+            <h3 style={{
+              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+              fontSize: 'clamp(1.4rem,3.5vw,2.4rem)',
+              fontWeight: 'normal', color: 'var(--c-olive)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
+              margin: '0 0 8px', lineHeight: 1.15,
+            }}>{RECOGNITIONS[0].title}</h3>
+            <p style={{
+              fontFamily: "'Poppins',sans-serif",
+              fontSize: 'clamp(13px,1.5vw,16px)',
+              color: 'var(--c-brown)', opacity: 0.85, margin: 0,
+            }}>{RECOGNITIONS[0].issuer}</p>
           </div>
 
           {/* Carousel */}
@@ -1052,8 +974,8 @@ export default function AboutPage() {
           <div className="about-cares-grid">
             {AVO_CARES.map((item) => (
               <div key={item.id} style={{
-                background: 'rgba(255,255,255,0.90)',
-                border: '1.5px solid rgba(182,197,72,0.2)',
+                background: 'transparent',
+                border: 'none',
                 borderRadius: '20px', overflow: 'hidden',
                 display: 'flex', flexDirection: 'column',
                 boxShadow: '0 2px 14px rgba(58,107,53,0.07)',
@@ -1083,13 +1005,7 @@ export default function AboutPage() {
                 <div style={{ padding: '22px 24px 26px', display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <span style={{ fontSize: '20px' }}>{item.icon}</span>
-                    <span style={{
-                      background: item.featured ? 'var(--c-olive)' : 'rgba(182,197,72,0.15)',
-                      color: item.featured ? '#fff' : 'var(--c-dark)',
-                      fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '800',
-                      letterSpacing: '0.06em', textTransform: 'uppercase',
-                      padding: '3px 10px', borderRadius: '999px',
-                    }}>{item.category}</span>
+
                     <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.7)' }}>
                       {fmt(item.date)}
                     </span>
@@ -1097,8 +1013,8 @@ export default function AboutPage() {
                   <h3 style={{
                     fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                     fontSize: 'clamp(14px, 1.5vw, 18px)', fontWeight: 'normal',
-                    color: 'var(--c-dark)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: 0, lineHeight: 1.3,
+                    color: 'var(--c-olive)',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.3,
                   }}>{item.title}</h3>
                   <p style={{
                     fontFamily: 'Poppins,sans-serif', fontSize: '13px',

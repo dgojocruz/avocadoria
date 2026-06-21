@@ -366,9 +366,13 @@ export default function MenuPage() {
           <div style={{
             position:'relative',
             aspectRatio:'16/9',
-            /* Feather the video edges so it melts into the textured background */
-            WebkitMaskImage:'radial-gradient(ellipse 92% 90% at 50% 50%, #000 60%, transparent 100%)',
-            maskImage:'radial-gradient(ellipse 92% 90% at 50% 50%, #000 60%, transparent 100%)',
+            /* Clean 4-sided linear fade — no visible container edges */
+            WebkitMaskImage:'linear-gradient(to right,  transparent 0%, #000 18%, #000 82%, transparent 100%),linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)',
+            maskImage:'linear-gradient(to right,  transparent 0%, #000 18%, #000 82%, transparent 100%),linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)',
+            WebkitMaskComposite:'source-in',
+            maskComposite:'intersect',
+            WebkitMaskRepeat:'no-repeat',
+            maskRepeat:'no-repeat',
           }}>
             {/* Poster — shows instantly, behind video, kills black flash */}
             <img

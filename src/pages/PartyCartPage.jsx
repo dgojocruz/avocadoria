@@ -129,13 +129,13 @@ Please follow up within 24–48 hours.`
       onClick={(e) => e.target === e.currentTarget && onClose()}
       style={{ position: 'fixed', inset: 0, background: 'rgba(58,107,53,0.6)', backdropFilter: 'blur(4px)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px' }}
     >
-      <div style={{ background: '#fff', borderRadius: '24px', border: `3px solid ${pkg.color}`, boxShadow: `8px 8px 0 ${pkg.color}40`, width: '100%', maxWidth: '520px', maxHeight: '92vh', overflowY: 'auto', padding: 'clamp(20px,4vw,32px)' }}>
+      <div style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(16px)', borderRadius: '24px', border: `3px solid ${pkg.color}`, boxShadow: `8px 8px 0 ${pkg.color}40`, width: '100%', maxWidth: '520px', maxHeight: '92vh', overflowY: 'auto', padding: 'clamp(20px,4vw,32px)' }}>
         {sent ? (
           <div style={{ textAlign: 'center', padding: '32px 16px' }}>
             <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#b6c548', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
               <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '28px', color: '#fff', fontWeight: '800' }}>✓</span>
             </div>
-            <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '24px', color: '#b6c548', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', marginBottom: '10px' }}>
+            <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '24px', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', marginBottom: '10px' }}>
               Booking inquiry sent!
             </h3>
             <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
@@ -149,7 +149,7 @@ Please follow up within 24–48 hours.`
           <>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '20px' }}>
               <div>
-                <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px,3.5vw,21px)', color: pkg.color, margin: '0 0 4px', textShadow: '-1px -1px 0 #fff, 1px 1px 0 #fff' }}>
+                <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px,3.5vw,21px)', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff' }}>
                   {pkg.name}
                 </h2>
                 <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', margin: 0 }}>
@@ -218,10 +218,10 @@ function PackageCard({ pkg, onBook }) {
 
   return (
     <div style={{
-      background: '#fff',
+      background: 'transparent',
       borderRadius: '24px',
       overflow: 'hidden',
-      border: '1.5px solid rgba(182,197,72,0.25)',
+      border: '1.5px solid rgba(182,197,72,0.35)',
       boxShadow: '0 8px 40px rgba(58,107,53,0.10)',
       display: 'flex',
       flexDirection: 'column',
@@ -231,11 +231,11 @@ function PackageCard({ pkg, onBook }) {
       onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 8px 40px rgba(58,107,53,0.10)' }}
     >
       {/* Product image */}
-      <div style={{ position: 'relative', height: '240px', overflow: 'hidden', background: `${pkg.color}18` }}>
+      <div style={{ position: 'relative', height: '280px', overflow: 'hidden', background: 'transparent' }}>
         <img
           src={pkg.image}
           alt={pkg.name}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
+          style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center bottom', display: 'block' }}
                     loading="lazy" decoding="async"
                   />
         {/* Tag badge */}
@@ -252,7 +252,7 @@ function PackageCard({ pkg, onBook }) {
       <div style={{ padding: '24px 24px 0', flex: 1, display: 'flex', flexDirection: 'column' }}>
         {/* Name + price */}
         <div style={{ marginBottom: '16px' }}>
-          <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px,2vw,20px)', color: '#3a6b35', margin: '0 0 6px', lineHeight: 1.2, textShadow: '-1px -1px 0 rgba(255,255,255,0.9), 1px 1px 0 rgba(255,255,255,0.9)' }}>
+          <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px,2vw,20px)', color: 'var(--c-olive)', margin: '0 0 6px', lineHeight: 1.2, textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
             {pkg.name}
           </h3>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
@@ -358,7 +358,7 @@ export default function PartyCartPage() {
           <div className="pc-hero-grid">
             {/* Left — text */}
             <div>
-              <h1 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(2rem,8vw,3.5rem)', color: '#3a6b35', margin: '0 0 14px', textShadow: '-2px -2px 0 rgba(255,255,255,0.95), 2px -2px 0 rgba(255,255,255,0.95), -2px 2px 0 rgba(255,255,255,0.95), 2px 2px 0 rgba(255,255,255,0.95), -3px -3px 0 rgba(220,255,80,0.7), 3px 3px 0 rgba(220,255,80,0.7)', lineHeight: 1.1 }}>
+              <h1 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(2rem,8vw,3.5rem)', color: 'var(--c-olive)', margin: '0 0 14px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', lineHeight: 1.1 }}>
                 Bring the Party<br />
                 <em style={{ color: '#b6c548', fontStyle: 'normal' }}>to You!</em>
               </h1>
@@ -400,16 +400,16 @@ export default function PartyCartPage() {
         <div style={OVERLAY} />
         <div style={{ ...INNER, maxWidth: '860px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 10px' }}>How It Works</p>
-            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.4rem,5vw,2rem)', color: '#3a6b35', margin: 0, textShadow: '-1px -1px 0 rgba(255,255,255,0.9), 1px 1px 0 rgba(255,255,255,0.9)' }}>
+            <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(0.85rem,2vw,1rem)', color: 'var(--c-olive)', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 10px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff' }}>How It Works</p>
+            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.4rem,5vw,2rem)', color: 'var(--c-olive)', margin: 0, textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
               Four easy steps to your perfect party
             </h2>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: '16px' }}>
             {STEPS.map((s) => (
-              <div key={s.num} style={{ background: 'rgba(255,255,255,0.82)', borderRadius: '16px', border: '1.5px solid rgba(182,197,72,0.3)', padding: '24px 20px', backdropFilter: 'blur(6px)' }}>
+              <div key={s.num} style={{ background: 'transparent', borderRadius: '16px', border: '1.5px solid rgba(182,197,72,0.35)', padding: '24px 20px' }}>
                 <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', marginBottom: '8px' }}>{s.num}</div>
-                <h3 style={{ fontFamily: 'Poppins,sans-serif', fontWeight: '700', fontSize: '14px', color: '#3a6b35', margin: '0 0 8px' }}>{s.title}</h3>
+                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '14px', color: 'var(--c-olive)', margin: '0 0 8px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff' }}>{s.title}</h3>
                 <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#8A5F3C', lineHeight: 1.65, margin: 0 }}>{s.desc}</p>
               </div>
             ))}
@@ -422,8 +422,8 @@ export default function PartyCartPage() {
         <div style={OVERLAY} />
         <div style={{ ...INNER, maxWidth: '1100px', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 10px' }}>Our Packages</p>
-            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.4rem,5vw,2rem)', color: '#3a6b35', margin: '0 0 10px', textShadow: '-1px -1px 0 rgba(255,255,255,0.9), 1px 1px 0 rgba(255,255,255,0.9)' }}>
+            <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(0.85rem,2vw,1rem)', color: 'var(--c-olive)', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 10px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff' }}>Our Packages</p>
+            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.4rem,5vw,2rem)', color: 'var(--c-olive)', margin: '0 0 10px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
               Pick your celebration flavour
             </h2>
             <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', margin: 0, opacity: 0.8 }}>
@@ -438,7 +438,7 @@ export default function PartyCartPage() {
           </div>
 
           {/* Custom quote CTA */}
-          <div style={{ marginTop: '48px', background: 'rgba(255,255,255,0.75)', borderRadius: '20px', border: '1.5px solid rgba(182,197,72,0.3)', padding: '28px 32px', textAlign: 'center', backdropFilter: 'blur(6px)' }}>
+          <div style={{ marginTop: '48px', background: 'transparent', borderRadius: '20px', border: '1.5px solid rgba(182,197,72,0.35)', padding: '28px 32px', textAlign: 'center' }}>
             <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#3a6b35', margin: '0 0 6px' }}>
               Need something custom?
             </p>
@@ -455,7 +455,7 @@ export default function PartyCartPage() {
       {/* ── Bottom strip ── */}
       <section style={{ ...TEXTURE, padding: '32px var(--sp-md)', textAlign: 'center' }}>
         <div style={OVERLAY} />
-        <p style={{ ...INNER, fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(14px,3vw,18px)', color: '#3a6b35', margin: '0 0 4px', textShadow: '-1px -1px 0 rgba(255,255,255,0.9), 1px 1px 0 rgba(255,255,255,0.9)', display: 'block' }}>
+        <p style={{ ...INNER, fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(14px,3vw,18px)', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', display: 'block' }}>
           Happiness in avocado — delivered to your party.
         </p>
         <p style={{ ...INNER, fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#8A5F3C', margin: 0, opacity: 0.6, display: 'block' }}>
