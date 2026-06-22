@@ -922,7 +922,7 @@ export default function HomePage() {
               rgba(255,255,255,0) 100%)`,
           }}/>
 
-          {/* LAYER 5 — Slope: 3-layer depth wave matching Avo-Faves style */}
+          {/* LAYER 5 — Slope: 3-layer depth wave */}
           <div style={{
             position:'absolute', bottom:-2, left:0, right:0,
             width:'100%', height:SLOPE.height,
@@ -937,31 +937,37 @@ export default function HomePage() {
               style={{ display:'block', width:'100%', height:'calc(100% + 4px)' }}
             >
               <defs>
+                {/* Top wave gradient: matches hero green → Avo-Faves #d9e29e */}
                 <linearGradient id="slopeGrad" x1="0" y1="0" x2="1" y2="0">
                   <stop offset="0%"   stopColor="#b6c548"/>
-                  <stop offset="60%"  stopColor="#c8d860"/>
-                  <stop offset="100%" stopColor="#daea80"/>
+                  <stop offset="50%"  stopColor="#c4d655"/>
+                  <stop offset="100%" stopColor="#d9e29e"/>
+                </linearGradient>
+                {/* Shadow layer gradient: deep hero green fading right */}
+                <linearGradient id="slopeShadow" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"   stopColor="#2a5a20"/>
+                  <stop offset="100%" stopColor="#3a6b35"/>
                 </linearGradient>
               </defs>
-              {/* Shadow layer 1 — darkest, furthest back */}
+              {/* Layer 1 — deep shadow, furthest back */}
               <path
-                d="M0,222 L0,0 C360,222 1080,0 1440,89 L1440,222 Z"
-                fill="#2a5a25" opacity="0.20"
+                d="M0,222 L0,0 C360,222 1080,0 1440,36 L1440,222 Z"
+                fill="url(#slopeShadow)" opacity="0.18"
               />
-              {/* Shadow layer 2 — mid olive */}
+              {/* Layer 2 — mid olive shadow */}
               <path
-                d="M0,222 L0,18 C360,222 1080,18 1440,107 L1440,222 Z"
-                fill="#3a6b35" opacity="0.30"
+                d="M0,222 L0,18 C360,222 1080,18 1440,54 L1440,222 Z"
+                fill="#3a6b35" opacity="0.28"
               />
-              {/* Top wave — lime gradient, same S-curve as Wave component */}
+              {/* Layer 3 — top wave, lime → page bg color so edge disappears */}
               <path
-                d="M0,222 L0,36 C360,222 1080,36 1440,124 L1440,222 Z"
+                d="M0,222 L0,36 C360,222 1080,36 1440,72 L1440,222 Z"
                 fill="url(#slopeGrad)"
               />
-              {/* White shimmer line along the wave edge */}
+              {/* White shimmer edge line */}
               <path
-                d="M0,36 C360,222 1080,36 1440,124"
-                fill="none" stroke="#ffffff" strokeWidth="3" opacity="0.45"
+                d="M0,36 C360,222 1080,36 1440,72"
+                fill="none" stroke="#ffffff" strokeWidth="2.5" opacity="0.40"
               />
             </svg>
           </div>
