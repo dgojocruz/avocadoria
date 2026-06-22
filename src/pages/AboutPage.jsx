@@ -571,6 +571,7 @@ export default function AboutPage() {
           border: 5px solid #fff;
           box-shadow: 0 16px 48px rgba(58,107,53,0.22);
           aspect-ratio: 3/4;
+          background: #ffffff;
         }
 
         .about-founder-photo {
