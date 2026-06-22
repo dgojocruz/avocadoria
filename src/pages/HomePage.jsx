@@ -922,7 +922,7 @@ export default function HomePage() {
               rgba(255,255,255,0) 100%)`,
           }}/>
 
-          {/* LAYER 5 — Slope: seamless inline SVG bleeding into Avo-Faves */}
+          {/* LAYER 5 — Slope: 3-layer depth wave matching Avo-Faves style */}
           <div style={{
             position:'absolute', bottom:-2, left:0, right:0,
             width:'100%', height:SLOPE.height,
@@ -936,11 +936,32 @@ export default function HomePage() {
               preserveAspectRatio="none"
               style={{ display:'block', width:'100%', height:'calc(100% + 4px)' }}
             >
-              {/* Transparent background — Avo-Faves shows through underneath */}
-              {/* Only the wave shape itself is colored */}
+              <defs>
+                <linearGradient id="slopeGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"   stopColor="#b6c548"/>
+                  <stop offset="60%"  stopColor="#c8d860"/>
+                  <stop offset="100%" stopColor="#daea80"/>
+                </linearGradient>
+              </defs>
+              {/* Shadow layer 1 — darkest, furthest back */}
               <path
-                d="M0,222 L0,140 C120,90 240,60 400,80 C560,100 680,160 840,155 C1000,150 1120,95 1280,75 C1360,65 1400,68 1440,72 L1440,222 Z"
-                fill="#b6c548"
+                d="M0,222 L0,0 C360,222 1080,0 1440,89 L1440,222 Z"
+                fill="#2a5a25" opacity="0.20"
+              />
+              {/* Shadow layer 2 — mid olive */}
+              <path
+                d="M0,222 L0,18 C360,222 1080,18 1440,107 L1440,222 Z"
+                fill="#3a6b35" opacity="0.30"
+              />
+              {/* Top wave — lime gradient, same S-curve as Wave component */}
+              <path
+                d="M0,222 L0,36 C360,222 1080,36 1440,124 L1440,222 Z"
+                fill="url(#slopeGrad)"
+              />
+              {/* White shimmer line along the wave edge */}
+              <path
+                d="M0,36 C360,222 1080,36 1440,124"
+                fill="none" stroke="#ffffff" strokeWidth="3" opacity="0.45"
               />
             </svg>
           </div>
