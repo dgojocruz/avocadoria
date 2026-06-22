@@ -120,7 +120,7 @@ function CartSlideshow() {
         @keyframes slide-in-left  { from { opacity:0; transform:translateX(-40px) } to { opacity:1; transform:translateX(0) } }
         .cart-enter { animation: slide-in-right 0.6s cubic-bezier(.22,1,.36,1) forwards }
         .cart-info-enter { animation: slide-in-left 0.5s cubic-bezier(.22,1,.36,1) forwards }
-        .cart-showcase { display: grid; grid-template-columns: 8fr 2fr; gap: 48px; align-items: center; max-width: 1400px; margin: 0 auto; padding: 0 16px; }
+        .cart-showcase { display: grid; grid-template-columns: 6fr 4fr; gap: 48px; align-items: center; max-width: 1400px; margin: 0 auto; padding: 0 16px; }
         .cart-form-row { display: grid; grid-template-columns: 7fr 3fr; gap: 16px; }
         .cart-contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 36px; }
         @media (max-width: 767px) {
@@ -133,7 +133,7 @@ function CartSlideshow() {
       {/* ── Main showcase ── */}
       <div className="cart-showcase">
         {/* Left — image */}
-        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px' }}>
           <img
             key={`img-${current}`}
             src={cart.image}
@@ -224,18 +224,26 @@ function InquiryForm() {
 
   const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault()
-    setLoading(true)
-    // Replace with your Formspree endpoint: https://formspree.io/f/YOUR_ID
-    try {
-      await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      })
-      setSent(true)
-    } catch { setSent(true) }
-    setLoading(false)
+    const subject = encodeURIComponent(`Franchise Inquiry — ${form.name} (${form.format || 'General'})`)
+    const body = encodeURIComponent(
+`Franchise Inquiry
+——————————————————————————
+Name:     ${form.name}
+Email:    ${form.email}
+Phone:    ${form.phone}
+——————————————————————————
+Preferred Format:   ${form.format || 'Not specified'}
+Preferred Location: ${form.location || 'Not specified'}
+——————————————————————————
+Message:
+${form.message || 'None'}
+——————————————————————————
+Sent via avocadoria.com.ph franchise inquiry form.`
+    )
+    window.location.href = `mailto:ka.jagto@avocadoria.com.ph?subject=${subject}&body=${body}`
+    setSent(true)
   }
 
   const inputStyle = {
@@ -332,8 +340,22 @@ function InquiryForm() {
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function FranchisePage() {
   const [hoveredIcon, setHoveredIcon] = useState(null)
+  const [showBrochure, setShowBrochure] = useState(false)
+  const popoverRef = useRef(null)
+
+  useEffect(() => {
+    if (!showBrochure) return
+    const handle = (e) => {
+      if (popoverRef.current && !popoverRef.current.contains(e.target)) {
+        setShowBrochure(false)
+      }
+    }
+    document.addEventListener('mousedown', handle)
+    return () => document.removeEventListener('mousedown', handle)
+  }, [showBrochure])
 
   return (
+    <>
     <>
       {/* Flash keyframe */}
       <style>{`
@@ -391,7 +413,7 @@ export default function FranchisePage() {
         </section>
 
         {/* ── CART SLIDESHOW ── */}
-        <section style={{ position:'relative', overflow:'hidden', padding:'72px 0', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+        <section style={{ position:'relative', overflow:'visible', padding:'72px 0', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
       <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, textAlign: 'center', marginBottom: '48px' }}>
             <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 8px', lineHeight: 1.1 }}>
@@ -495,7 +517,7 @@ export default function FranchisePage() {
             {/* Contact options */}
             <div className="cart-contact-grid">
               {[
-                { label: 'Email',      value: 'franchise@avocadoria.com.ph', href: 'mailto:franchise@avocadoria.com.ph' },
+                { label: 'Email',      value: 'ka.jagto@avocadoria.com.ph', href: 'mailto:ka.jagto@avocadoria.com.ph' },
                 { label: 'Call / SMS', value: '+63 945 971 6599',           href: 'tel:+639459716599' },
                 { label: 'Messenger',  value: 'Message us on FB',           href: 'https://m.me/avocadoria.ph' },
               ].map((c, i) => (
@@ -559,7 +581,107 @@ export default function FranchisePage() {
           </svg>
           <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '7px', fontWeight: '700', color: '#3a6b35', letterSpacing: '0.03em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.2 }}>Image{'\n'}Gallery</span>
         </a>
+
+        {/* Brochures & FAQs — widget + inline popover */}
+        <div style={{ position:'relative' }}>
+          <button
+            onClick={() => setShowBrochure(v => !v)}
+            title="Brochures & FAQs"
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px', width: '72px', height: '72px', borderRadius: '18px', background: 'linear-gradient(135deg, #F06EBB, #3a6b35)', boxShadow: '0 4px 16px rgba(240,110,187,0.35)', border: 'none', transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'pointer' }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(240,110,187,0.5)' }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(240,110,187,0.35)' }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="2" width="11" height="14" rx="2" fill="#fff" opacity="0.9"/>
+              <line x1="6" y1="6" x2="11" y2="6" stroke="#F06EBB" strokeWidth="1.5" strokeLinecap="round"/>
+              <line x1="6" y1="9" x2="11" y2="9" stroke="#F06EBB" strokeWidth="1.5" strokeLinecap="round"/>
+              <circle cx="17" cy="16" r="5" fill="#fff" opacity="0.2"/>
+              <text x="17" y="20" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="900" fontFamily="Poppins,sans-serif">?</text>
+            </svg>
+            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '6.5px', fontWeight: '700', color: '#fff', letterSpacing: '0.02em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.2 }}>Brochures{'\n'}& FAQs</span>
+          </button>
+
+          {/* Popover — slides out to the left of the widget */}
+          {showBrochure && (
+            <div ref={popoverRef} style={{
+              position: 'absolute',
+              right: '84px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: '240px',
+              background: 'transparent',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              borderRadius: '16px',
+              border: '1.5px solid rgba(182,197,72,0.4)',
+              boxShadow: '0 8px 32px rgba(58,107,53,0.14)',
+              padding: '12px',
+              zIndex: 1001,
+            }}>
+              {/* Arrow */}
+              <div style={{ position:'absolute', right:'-8px', top:'50%', transform:'translateY(-50%)', width:0, height:0, borderTop:'8px solid transparent', borderBottom:'8px solid transparent', borderLeft:'8px solid rgba(182,197,72,0.4)' }}/>
+
+              <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
+
+                {/* B2B Brochure */}
+                <div style={{ padding:'10px 12px', background:'transparent', borderRadius:'12px', border:'1px solid rgba(58,107,53,0.2)' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'6px' }}>
+                    <div style={{ width:'28px', height:'28px', borderRadius:'8px', background:'linear-gradient(135deg,#3a6b35,#b6c548)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <rect x="4" y="2" width="12" height="16" rx="2" fill="#fff"/>
+                        <line x1="7" y1="7" x2="13" y2="7" stroke="#3a6b35" strokeWidth="2" strokeLinecap="round"/>
+                        <line x1="7" y1="11" x2="13" y2="11" stroke="#3a6b35" strokeWidth="2" strokeLinecap="round"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'11px', fontWeight:'700', color:'#3a6b35', margin:0 }}>B2B Franchise Brochure</p>
+                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'9px', color:'#8A5F3C', margin:0, opacity:0.7 }}>PDF · 15 pages · 1MB</p>
+                    </div>
+                  </div>
+                  <div style={{ display:'flex', gap:'12px', paddingLeft:'4px' }}>
+                    <a href="/downloads/avocadoria-b2b-brochure.pdf" target="_blank" rel="noreferrer"
+                      style={{ fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', color:'#3a6b35', textDecoration:'underline', cursor:'pointer' }}>
+                      View
+                    </a>
+                    <a href="/downloads/avocadoria-b2b-brochure.pdf" download="Avocadoria-B2B-Brochure.pdf"
+                      style={{ fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', color:'#b6c548', textDecoration:'underline', cursor:'pointer' }}>
+                      Download
+                    </a>
+                  </div>
+                </div>
+
+                {/* Expo Flyer */}
+                <div style={{ padding:'10px 12px', background:'transparent', borderRadius:'12px', border:'1px solid rgba(240,110,187,0.2)' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'6px' }}>
+                    <div style={{ width:'28px', height:'28px', borderRadius:'8px', background:'linear-gradient(135deg,#F06EBB,#d44fa0)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <rect x="3" y="5" width="18" height="14" rx="2.5" fill="#fff" opacity="0.9"/>
+                        <circle cx="12" cy="12" r="3" fill="#F06EBB"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'11px', fontWeight:'700', color:'#3a6b35', margin:0 }}>Expo 2026 Flyer</p>
+                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'9px', color:'#8A5F3C', margin:0, opacity:0.7 }}>Image · 882KB</p>
+                    </div>
+                  </div>
+                  <div style={{ display:'flex', gap:'12px', paddingLeft:'4px' }}>
+                    <a href="/downloads/avocadoria-expo-flyer-2026.webp" target="_blank" rel="noreferrer"
+                      style={{ fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', color:'#F06EBB', textDecoration:'underline', cursor:'pointer' }}>
+                      View
+                    </a>
+                    <a href="/downloads/avocadoria-expo-flyer-2026.webp" download="Avocadoria-Expo-Flyer-2026.webp"
+                      style={{ fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', color:'#b6c548', textDecoration:'underline', cursor:'pointer' }}>
+                      Download
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          )}
+        </div>
       </div>
+    </>
     </>
   )
 }
