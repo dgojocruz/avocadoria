@@ -8,7 +8,7 @@ const CART_INTERVAL = 5000 // ms between auto-advance (5000 = 5 seconds)
 const CARTS = [
   {
     id:          'food-truck',
-    image:       '/franchise-food-truck.png',
+    image:       '/franchise-food-truck.webp',
     name:        'Food Truck',
     size:        '10 sqm',
     color:       '#b6c548',
@@ -24,7 +24,7 @@ const CARTS = [
   },
   {
     id:          'island',
-    image:       '/franchise-island.png',
+    image:       '/franchise-island.webp',
     name:        'Island',
     size:        '20 sqm',
     color:       '#3a6b35',
@@ -40,7 +40,7 @@ const CARTS = [
   },
   {
     id:          'kiosk',
-    image:       '/franchise-kiosk.png',
+    image:       '/franchise-kiosk.webp',
     name:        'Kiosk',
     size:        '6.25 sqm',
     color:       '#8A5F3C',
