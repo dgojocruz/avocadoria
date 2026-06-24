@@ -705,7 +705,7 @@ function RecognitionsTeaser() {
 
           {/* CTA */}
           <Link to="/about#recognitions" className="btn btn-olive"
-            style={{ fontSize: '14px', padding: '11px 28px', width: 'fit-content' }}>
+            style={{ fontSize: '15px', padding: '11px 28px', width: 'fit-content' }}>
             View All Recognitions →
           </Link>
         </div>
@@ -1114,7 +1114,7 @@ export default function HomePage() {
                             />
                           : <div style={{ width:'100%', height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'10px', background:'linear-gradient(135deg,#3a6b35 0%,#b6c548 60%,#d9e29e 100%)', padding:'20px', boxSizing:'border-box' }}>
                               <img src="/icons/avopin.png" alt="" style={{ width:'52px', opacity:0.9 }} onError={e => e.target.style.display='none'} />
-                              <span style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'13px', color:'#fff', textAlign:'center', textShadow:'0 1px 6px rgba(0,0,0,0.2)', lineHeight:1.3, fontWeight:'normal' }}>
+                              <span style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'15px', color:'#fff', textAlign:'center', textShadow:'0 1px 6px rgba(0,0,0,0.2)', lineHeight:1.3, fontWeight:'normal' }}>
                                 {post.category}
                               </span>
                             </div>
@@ -1164,7 +1164,7 @@ export default function HomePage() {
                         {/* Title */}
                         <h3 style={{
                           fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal',
-                          fontSize:'clamp(14px,1.4vw,16px)', color:'var(--c-olive)',
+                          fontSize:'clamp(17px,1.8vw,22px)', color:'var(--c-olive)',
                           textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                           margin:0, lineHeight:1.3,
                         }}>
@@ -1173,7 +1173,7 @@ export default function HomePage() {
 
                         {/* Excerpt */}
                         <p style={{
-                          fontFamily:"'Poppins',sans-serif", fontSize:'12px',
+                          fontFamily:"'Poppins',sans-serif", fontSize:'16px',
                           color:'var(--c-brown)', lineHeight:1.6, margin:0, flex:1,
                           display:'-webkit-box', WebkitLineClamp:2,
                           WebkitBoxOrient:'vertical', overflow:'hidden',

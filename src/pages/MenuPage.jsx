@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import SEO from '@/components/ui/SEO'
 import { CATEGORIES, TAG_COLORS } from '@/data/menu'
 
@@ -26,7 +26,7 @@ function TagBadge({ tag }) {
       display:'inline-block',
       background:s.bg, color:s.text,
       fontFamily:'Poppins,sans-serif',
-      fontSize:'10px', fontWeight:'800',
+      fontSize:'12px', fontWeight:'800',
       letterSpacing:'0.05em', textTransform:'uppercase',
       padding:'3px 10px', borderRadius:'999px',
       whiteSpace:'nowrap', lineHeight:1.4,
@@ -90,14 +90,14 @@ function ProductCard({ item }) {
 
         <h3 style={{
           fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-          fontSize:'var(--fs-md)', fontWeight:'normal',
+          fontSize:'clamp(17px,1.8vw,20px)', fontWeight:'normal',
           color:'var(--c-olive)',
           textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
           margin:0, lineHeight:1.2,
         }}>{item.name}</h3>
         <p style={{
           fontFamily:'Poppins,sans-serif',
-          fontSize:'var(--fs-sm)', lineHeight:1.65,
+          fontSize:'15px', lineHeight:1.65,
           color:'#5a3a1a', opacity:1,
           margin:0, flex:1,
         }}>{item.desc}</p>
@@ -156,13 +156,13 @@ function CategoryCard({ cat, index, onClick }) {
         <div>
           <p style={{
             fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-            fontSize:'clamp(15px,2vw,22px)', fontWeight:'normal',
+            fontSize:'clamp(17px,2vw,22px)', fontWeight:'normal',
             color:'var(--c-olive)',
             textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
             margin:'0 0 3px', lineHeight:1.15,
           }}>{cat.name}</p>
           <p style={{
-            fontFamily:'Poppins,sans-serif', fontSize:'11px', fontWeight:'600',
+            fontFamily:'Poppins,sans-serif', fontSize:'13px', fontWeight:'600',
             color:'#fff',
             textShadow:'0 1px 4px rgba(0,0,0,0.5)',
             margin:0,
@@ -216,7 +216,7 @@ function CategoryView({ cat, onBack }) {
           </h1>
           <p style={{
             fontFamily:'Poppins,sans-serif',
-            fontSize:'var(--fs-sm)',
+            fontSize:'15px',
             color:'rgba(58,107,53,0.8)', margin:0,
           }}>{cat.tagline}</p>
         </div>
@@ -233,12 +233,12 @@ function CategoryView({ cat, onBack }) {
         <button
           onClick={onBack}
           className="btn btn-outline"
-          style={{ fontSize:'13px', minHeight:'36px', padding:'6px 16px' }}
+          style={{ fontSize:'14px', minHeight:'36px', padding:'6px 16px' }}
         >
           ← Back to Menu
         </button>
         <span style={{
-          fontFamily:'Poppins,sans-serif', fontSize:'13px',
+          fontFamily:'Poppins,sans-serif', fontSize:'14px',
           color:'#3a6b35', opacity:1, fontWeight:'600',
         }}>
           / {cat.name}
@@ -310,81 +310,87 @@ export default function MenuPage() {
       <div className="page-enter" style={{ position:'relative', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
         <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
 
-        {/* ── Header — matches About / Home hero style ── */}
+        {/* ── Hero — full video background ── */}
         <div style={{
           position:'relative', overflow:'hidden',
-          backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
-          padding:'clamp(90px,10vw,110px) 32px clamp(28px,4vw,44px)',
-          textAlign:'center',
+          height:'clamp(420px,70vh,700px)',
         }}>
-        <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
-          {/* Inner content sits above overlay */}
-          <div style={{ position:'relative', zIndex:1 }}>
-          {/* Headline — brand font + olive + white stroke */}
-          <h1 style={{
-            fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-            fontWeight:'normal',
-            fontSize:'clamp(2.4rem,5vw,4.2rem)',
-            color:'var(--c-olive)',
-            textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
-            marginBottom:'10px', lineHeight:1.1,
-          }}>
-            Our Menu
-          </h1>
+          {/* Poster fallback — behind video */}
+          <img
+            src="/videos/naked-ice-cream-poster.jpg"
+            alt="" aria-hidden="true"
+            style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', zIndex:0 }}
+          />
 
-          <p className="section-sub" style={{
-            color:'var(--c-dark)', opacity:0.75,
-            maxWidth:'400px', margin:'0 auto',
-          }}>
-            Real avocado. Real happiness. Made fresh daily.
-          </p>
-          </div>{/* end zIndex:1 wrapper */}
+          {/* Video — full bleed, no effects */}
+          <video
+            autoPlay muted loop playsInline
+            ref={el => { if (el) el.play().catch(() => {}) }}
+            style={{
+              position:'absolute', inset:0,
+              width:'100%', height:'100%',
+              objectFit:'cover', display:'block',
+              zIndex:1,
+            }}
+          >
+            <source src="/videos/naked-ice-cream.webm" type="video/webm"/>
+            <source src="/videos/naked-ice-cream.mp4"  type="video/mp4"/>
+          </video>
+        </div>
+        {/* Wave pulled up to overlap video */}
+        <div style={{ marginTop:'-60px', position:'relative', zIndex:5, lineHeight:0 }}>
+          <svg viewBox="0 0 1440 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+            style={{ display:'block', width:'100%', height:'clamp(60px,8vw,100px)' }}>
+            <defs>
+              <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"   stopColor="#b6c548"/>
+                <stop offset="60%"  stopColor="#c8d860"/>
+                <stop offset="100%" stopColor="#d9e29e"/>
+              </linearGradient>
+              <linearGradient id="waveShadow" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%"   stopColor="#2a5a20"/>
+                <stop offset="100%" stopColor="#3a6b35"/>
+              </linearGradient>
+            </defs>
+            {/* Fill entire bottom so no gap shows */}
+            <rect x="0" y="50" width="1440" height="50" fill="url(#waveGrad)"/>
+            {/* Shadow layer */}
+            <path d="M0,100 L0,0 C360,100 1080,0 1440,40 L1440,100 Z"
+              fill="url(#waveShadow)" opacity="0.18"/>
+            {/* Mid olive layer */}
+            <path d="M0,100 L0,18 C360,100 1080,18 1440,58 L1440,100 Z"
+              fill="#3a6b35" opacity="0.28"/>
+            {/* Top wave — lime gradient */}
+            <path d="M0,100 L0,36 C360,100 1080,36 1440,72 L1440,100 Z"
+              fill="url(#waveGrad)"/>
+            {/* White shimmer edge */}
+            <path d="M0,36 C360,100 1080,36 1440,72"
+              fill="none" stroke="#fff" strokeWidth="2" opacity="0.4"/>
+          </svg>
         </div>
 
-        {/* ── Video showcase — seamless, edges fade into the wall ── */}
+        {/* ── Section header — standard brand style ── */}
         <div style={{
-          position:'relative', zIndex:1,
-          maxWidth:'1100px', margin:'0 auto',
-          padding:'clamp(8px,2vw,24px) clamp(16px,4vw,48px) clamp(20px,4vw,40px)',
+          position:'relative', overflow:'hidden',
+          backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundPosition:'center', backgroundColor:'#F3F2EE',
+          padding:'clamp(32px,5vw,56px) 32px clamp(16px,3vw,32px)',
+          textAlign:'center',
         }}>
-          <div style={{
-            position:'relative',
-            aspectRatio:'16/9',
-            /* Clean 4-sided linear fade — no visible container edges */
-            WebkitMaskImage:'linear-gradient(to right,  transparent 0%, #000 18%, #000 82%, transparent 100%),linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)',
-            maskImage:'linear-gradient(to right,  transparent 0%, #000 18%, #000 82%, transparent 100%),linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%)',
-            WebkitMaskComposite:'source-in',
-            maskComposite:'intersect',
-            WebkitMaskRepeat:'no-repeat',
-            maskRepeat:'no-repeat',
-          }}>
-            {/* Poster — shows instantly, behind video, kills black flash */}
-            <img
-              src="/videos/naked-ice-cream-poster.jpg"
-              alt=""
-              aria-hidden="true"
-              style={{
-                position:'absolute', inset:0,
-                width:'100%', height:'100%',
-                objectFit:'cover', display:'block',
-                zIndex:0,
-              }}
-             loading="lazy" decoding="async"/>
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                position:'absolute', inset:0,
-                width:'100%', height:'100%',
-                objectFit:'cover', display:'block',
-                zIndex:1,
-              }}
-            >
-              <source src="/videos/naked-ice-cream.webm" type="video/webm"/>
-              <source src="/videos/naked-ice-cream.mp4"  type="video/mp4"/>
-            </video>
+          <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }}/>
+          <div style={{ position:'relative', zIndex:1 }}>
+            <h1 style={{
+              fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+              fontWeight:'normal',
+              fontSize:'clamp(2.4rem,5vw,4.2rem)',
+              color:'var(--c-olive)',
+              textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
+              marginBottom:'10px', lineHeight:1.1,
+            }}>
+              Our Menu
+            </h1>
+            <p className="section-sub" style={{ color:'var(--c-dark)', opacity:0.75, maxWidth:'400px', margin:'0 auto' }}>
+              Real avocado. Real happiness. Made fresh daily.
+            </p>
           </div>
         </div>
 
@@ -454,13 +460,13 @@ export default function MenuPage() {
                 <div>
                   <p style={{
                     fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-                    fontSize:'clamp(1.2rem,2.8vw,2rem)',
+                    fontSize:'clamp(1.4rem,2.8vw,2.2rem)',
                     fontWeight:'normal', color:'var(--c-olive)',
                     textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                     margin:'0 0 2px', lineHeight:1.1,
                   }}>{featured.name}</p>
                   <p style={{
-                    fontFamily:'Poppins,sans-serif', fontSize:'12px',
+                    fontFamily:'Poppins,sans-serif', fontSize:'15px',
                     color:'rgba(255,255,255,0.9)', margin:0,
                     textShadow:'0 1px 4px rgba(0,0,0,0.4)',
                   }}>{featured.tagline}</p>

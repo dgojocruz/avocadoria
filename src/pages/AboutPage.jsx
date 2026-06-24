@@ -819,7 +819,7 @@ export default function AboutPage() {
                     }}>{sec.title}</h3>
                     <p style={{
                       fontFamily: 'Poppins,sans-serif',
-                      fontSize: '14px', lineHeight: 1.8,
+                      fontSize: '15px', lineHeight: 1.8,
                       color: 'var(--c-brown)', margin: 0,
                     }}>{sec.body}</p>
                   </div>

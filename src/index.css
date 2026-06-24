@@ -438,3 +438,40 @@ a { touch-action: manipulation; }
 
 /* page enter animation */
 .page-enter { animation: fade-up .4s ease both; }
+
+/* ── Global Post / Card Typography Standards ─────────────────────────────── */
+.post-title {
+  font-family: 'BubbleboddyNeue-ExtraBold','Poppins',sans-serif;
+  font-weight: normal;
+  font-size: clamp(17px, 1.8vw, 20px);
+  color: var(--c-olive);
+  text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff;
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+.post-excerpt {
+  font-family: 'Poppins',sans-serif;
+  font-size: 15px;
+  color: var(--c-brown);
+  line-height: 1.65;
+  margin: 0;
+}
+.post-date {
+  font-family: 'Poppins',sans-serif;
+  font-size: 14px;
+  color: rgba(138,95,60,0.6);
+  margin: 0 0 6px;
+}
+.post-badge {
+  font-family: 'Poppins',sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--c-olive);
+  color: #fff;
+  display: inline-block;
+}
+.post-badge.featured {
+  background: var(--c-pink, #F06EBB);
+}

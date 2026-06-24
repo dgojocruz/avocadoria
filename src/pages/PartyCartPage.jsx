@@ -209,7 +209,7 @@ Please follow up within 24–48 hours.`
             <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '24px', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', marginBottom: '10px' }}>
               Booking inquiry sent!
             </h3>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
               Your email app should have opened with the inquiry for <strong>{pkg.name}</strong>. Our party team will get back to you within 24–48 hours!
             </p>
             <button onClick={onClose} style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '13px 28px', fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', cursor: 'pointer', minHeight: '44px' }}>
@@ -352,7 +352,7 @@ Please follow up within 24–48 hours.`
             <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '22px', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', marginBottom: '10px' }}>
               Quote request sent!
             </h3>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#3a6b35', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#3a6b35', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
               Your email app has opened with your custom inquiry. Our party team will get back to you within 24–48 hours!
             </p>
             <button onClick={onClose} style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '13px 28px', fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', cursor: 'pointer', minHeight: '44px' }}>
@@ -581,7 +581,7 @@ function PackageCard({ pkg, onBook }) {
           </p>
           <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '5px' }}>
             {inclusions.map((item, i) => (
-              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', lineHeight: 1.4 }}>
+              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.4 }}>
                 <span style={{ color: 'var(--c-olive)', fontWeight: '900', flexShrink: 0, fontSize: '12px', marginTop: '2px' }}>—</span>
                 {item}
               </li>
@@ -600,7 +600,7 @@ function PackageCard({ pkg, onBook }) {
         {open && (
           <ul style={{ margin: '4px 0 8px', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '4px' }}>
             {pkg.addons.map((item, i) => (
-              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#8A5F3C', lineHeight: 1.45, opacity: 0.85 }}>
+              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.45, opacity: 0.85 }}>
                 <span style={{ color: '#b6c548', flexShrink: 0 }}>+</span>
                 {item}
               </li>
@@ -720,7 +720,7 @@ export default function PartyCartPage() {
               <div key={s.num} style={{ background: 'transparent', borderRadius: '16px', border: '1.5px solid rgba(182,197,72,0.35)', padding: '24px 20px' }}>
                 <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', marginBottom: '8px' }}>{s.num}</div>
                 <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '14px', color: 'var(--c-olive)', margin: '0 0 8px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff' }}>{s.title}</h3>
-                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#8A5F3C', lineHeight: 1.65, margin: 0 }}>{s.desc}</p>
+                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.65, margin: 0 }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -752,7 +752,7 @@ export default function PartyCartPage() {
             <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#3a6b35', margin: '0 0 6px' }}>
               Need something custom?
             </p>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', margin: '0 0 16px', lineHeight: 1.6, opacity: 0.85 }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', margin: '0 0 16px', lineHeight: 1.6, opacity: 0.85 }}>
               Different flavour, cup count, or event setup? Reach out and we will build a package just for you.
             </p>
             <button onClick={() => setShowQuote(true)} style={{ display: 'inline-flex', alignItems: 'center', background: '#3a6b35', color: '#fff', border: 'none', borderRadius: '999px', padding: '12px 28px', fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', cursor: 'pointer', minHeight: '44px', letterSpacing: '0.02em', transition: 'background 0.2s' }}

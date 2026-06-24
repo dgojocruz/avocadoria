@@ -166,7 +166,7 @@ function CartSlideshow() {
           </h2>
           <p style={{
             fontFamily: 'Poppins,sans-serif',
-            fontSize: '13px', color: '#8A5F3C',
+            fontSize: '16px', color: '#8A5F3C',
             opacity: 0.7, margin: '0 0 24px',
           }}>
             Store Size: <strong>{cart.size}</strong>
@@ -175,8 +175,8 @@ function CartSlideshow() {
           {/* Highlights */}
           <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {cart.highlights.map((h, i) => (
-              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#8A5F3C' }}>
-                <span style={{ width: '20px', height: '20px', borderRadius: '50%', background: cart.color, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', fontWeight: '700', flexShrink: 0, marginTop: '1px' }}>✓</span>
+              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontFamily: 'Poppins,sans-serif', fontSize: '17px', color: '#8A5F3C' }}>
+                <span style={{ width: '22px', height: '22px', borderRadius: '50%', background: cart.color, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: '700', flexShrink: 0, marginTop: '2px' }}>✓</span>
                 {h}
               </li>
             ))}
@@ -188,8 +188,8 @@ function CartSlideshow() {
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '8px',
               background: cart.color, color: '#fff',
-              padding: '12px 28px', borderRadius: '999px',
-              fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700',
+              padding: '14px 32px', borderRadius: '999px',
+              fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '700',
               textDecoration: 'none', transition: 'opacity 0.2s',
             }}
             onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
@@ -260,7 +260,7 @@ Sent via avocadoria.com.ph franchise inquiry form.`
       <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '26px', color: '#b6c548', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', marginBottom: '8px' }}>
         Thank you for your interest!
       </h3>
-      <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', maxWidth: '400px', margin: '0 auto' }}>
+      <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', maxWidth: '400px', margin: '0 auto' }}>
         Our franchise team will reach out to you within 3–5 business days. Let's spread happiness in avocado together!
       </p>
     </div>
@@ -270,14 +270,14 @@ Sent via avocadoria.com.ph franchise inquiry form.`
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <div className="cart-form-row">
         <div>
-          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Full Name *</label>
+          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Full Name *</label>
           <input required value={form.name} onChange={set('name')} placeholder="Juan dela Cruz" style={inputStyle}
             onFocus={e => e.target.style.borderColor = '#b6c548'}
             onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
           />
         </div>
         <div>
-          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Address *</label>
+          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Address *</label>
           <input required type="email" value={form.email} onChange={set('email')} placeholder="juan@email.com" style={inputStyle}
             onFocus={e => e.target.style.borderColor = '#b6c548'}
             onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
@@ -286,14 +286,14 @@ Sent via avocadoria.com.ph franchise inquiry form.`
       </div>
       <div className="cart-form-row">
         <div>
-          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Number *</label>
+          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Number *</label>
           <input required value={form.phone} onChange={set('phone')} placeholder="+63 9XX XXX XXXX" style={inputStyle}
             onFocus={e => e.target.style.borderColor = '#b6c548'}
             onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
           />
         </div>
         <div>
-          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Preferred Location</label>
+          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Preferred Location</label>
           <input value={form.location} onChange={set('location')} placeholder="City, Province" style={inputStyle}
             onFocus={e => e.target.style.borderColor = '#b6c548'}
             onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
@@ -301,7 +301,7 @@ Sent via avocadoria.com.ph franchise inquiry form.`
         </div>
       </div>
       <div>
-        <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Preferred Cart Format</label>
+        <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Preferred Cart Format</label>
         <select value={form.format} onChange={set('format')} style={{ ...inputStyle, cursor: 'pointer' }}
           onFocus={e => e.target.style.borderColor = '#b6c548'}
           onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
@@ -312,7 +312,7 @@ Sent via avocadoria.com.ph franchise inquiry form.`
         </select>
       </div>
       <div>
-        <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tell us about yourself</label>
+        <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tell us about yourself</label>
         <textarea value={form.message} onChange={set('message')} rows={4} placeholder="Share your business experience, why you want to franchise Avocadoria, and any questions you have..." style={{ ...inputStyle, resize: 'vertical' }}
           onFocus={e => e.target.style.borderColor = '#b6c548'}
           onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
@@ -340,22 +340,7 @@ Sent via avocadoria.com.ph franchise inquiry form.`
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function FranchisePage() {
   const [hoveredIcon, setHoveredIcon] = useState(null)
-  const [showBrochure, setShowBrochure] = useState(false)
-  const popoverRef = useRef(null)
-
-  useEffect(() => {
-    if (!showBrochure) return
-    const handle = (e) => {
-      if (popoverRef.current && !popoverRef.current.contains(e.target)) {
-        setShowBrochure(false)
-      }
-    }
-    document.addEventListener('mousedown', handle)
-    return () => document.removeEventListener('mousedown', handle)
-  }, [showBrochure])
-
   return (
-    <>
     <>
       {/* Flash keyframe */}
       <style>{`
@@ -419,7 +404,7 @@ export default function FranchisePage() {
             <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 8px', lineHeight: 1.1 }}>
               Choose Your Format
             </h2>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: 'rgba(138,95,60,0.7)', margin: 0 }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: 'rgba(138,95,60,0.7)', margin: 0 }}>
               Four store types. One brand. Endless happiness.
             </p>
           </div>
@@ -448,13 +433,13 @@ export default function FranchisePage() {
                   backdropFilter: 'blur(2px)',
                 }}>
                   <div style={{
-                    fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '800',
-                    color: '#3a6b35', letterSpacing: '0.08em', textTransform: 'uppercase',
-                    marginBottom: '10px',
-                    textShadow: '-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff',
+                    fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: 'clamp(17px,1.8vw,20px)', fontWeight: 'normal',
+                    color: '#b6c548', letterSpacing: '0.04em',
+                    marginBottom: '12px',
+                    textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                   }}>{w.title}</div>
                   <div style={{
-                    fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700',
+                    fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '500',
                     color: '#8A5F3C', lineHeight: '1.6',
                     textShadow: '0 1px 0 rgba(255,255,255,0.9)',
                   }}>{w.desc}</div>
@@ -490,10 +475,10 @@ export default function FranchisePage() {
                   {/* Content */}
                   <div style={{ paddingTop: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-                      <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em' }}>STEP {step.num}</span>
-                      <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(16px,1.8vw,20px)', color: '#b6c548', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.2 }}>{step.title}</h3>
+                      <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em' }}>STEP {step.num}</span>
+                      <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px, 1.8vw, 20px)', color: '#b6c548', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.2 }}>{step.title}</h3>
                     </div>
-                    <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.8)', lineHeight: '1.65', margin: 0 }}>{step.desc}</p>
+                    <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', color: 'rgba(138,95,60,0.8)', lineHeight: '1.65', margin: 0 }}>{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -509,7 +494,7 @@ export default function FranchisePage() {
               <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 8px', lineHeight: 1.1 }}>
                 Ready to Join the Family?
               </h2>
-              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', opacity: 0.85 }}>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', opacity: 0.85 }}>
                 Fill out the form below and our franchise team will get back to you within 3–5 business days.
               </p>
             </div>
@@ -530,8 +515,8 @@ export default function FranchisePage() {
                   onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#b6c548' }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.7)'; e.currentTarget.style.borderColor = 'rgba(182,197,72,0.3)' }}
                 >
-                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '700', color: '#b6c548', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{c.label}</span>
-                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#8A5F3C', textAlign: 'center', lineHeight: 1.4 }}>{c.value}</span>
+                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{c.label}</span>
+                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', textAlign: 'center', lineHeight: 1.4 }}>{c.value}</span>
                 </a>
               ))}
             </div>
@@ -539,7 +524,7 @@ export default function FranchisePage() {
             {/* Divider */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
               <div style={{ flex: 1, height: '1px', background: 'rgba(182,197,72,0.3)' }}/>
-              <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.6)', whiteSpace: 'nowrap' }}>or fill out the form</span>
+              <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'rgba(138,95,60,0.6)', whiteSpace: 'nowrap' }}>or fill out the form</span>
               <div style={{ flex: 1, height: '1px', background: 'rgba(182,197,72,0.3)' }}/>
             </div>
 
@@ -552,136 +537,6 @@ export default function FranchisePage() {
 
       </div>
 
-      {/* ── FLOATING GALLERY WIDGET ── */}
-      <div style={{ position: 'fixed', right: '20px', bottom: '50%', transform: 'translateY(50%)', zIndex: 999, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        {/* Video Gallery Button */}
-        <a href="/gallery/videos"
-          title="Video Gallery"
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '5px', width: '72px', height: '72px', borderRadius: '18px', background: 'linear-gradient(135deg, #b6c548, #3a6b35)', boxShadow: '0 4px 16px rgba(58,107,53,0.35)', textDecoration: 'none', transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'pointer' }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(58,107,53,0.5)' }}
-          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(58,107,53,0.35)' }}
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <polygon points="6,3 21,12 6,21" fill="#fff" />
-          </svg>
-          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '7px', fontWeight: '700', color: '#fff', letterSpacing: '0.03em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.2 }}>Video{'\n'}Gallery</span>
-        </a>
-
-        {/* Image Gallery Button */}
-        <a href="/gallery/photos"
-          title="Image Gallery"
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '5px', width: '72px', height: '72px', borderRadius: '18px', background: 'linear-gradient(135deg, #d9e29e, #b6c548)', boxShadow: '0 4px 16px rgba(182,197,72,0.4)', textDecoration: 'none', transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'pointer' }}
-          onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(182,197,72,0.55)' }}
-          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(182,197,72,0.4)' }}
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <rect x="3" y="5" width="18" height="14" rx="2.5" fill="#fff" opacity="0.9"/>
-            <circle cx="12" cy="12" r="3.2" fill="#3a6b35"/>
-            <circle cx="17.5" cy="7.5" r="1.1" fill="#3a6b35"/>
-          </svg>
-          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '7px', fontWeight: '700', color: '#3a6b35', letterSpacing: '0.03em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.2 }}>Image{'\n'}Gallery</span>
-        </a>
-
-        {/* Brochures & FAQs — widget + inline popover */}
-        <div style={{ position:'relative' }}>
-          <button
-            onClick={() => setShowBrochure(v => !v)}
-            title="Brochures & FAQs"
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '4px', width: '72px', height: '72px', borderRadius: '18px', background: 'linear-gradient(135deg, #F06EBB, #3a6b35)', boxShadow: '0 4px 16px rgba(240,110,187,0.35)', border: 'none', transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'pointer' }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.1)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(240,110,187,0.5)' }}
-            onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(240,110,187,0.35)' }}
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="2" width="11" height="14" rx="2" fill="#fff" opacity="0.9"/>
-              <line x1="6" y1="6" x2="11" y2="6" stroke="#F06EBB" strokeWidth="1.5" strokeLinecap="round"/>
-              <line x1="6" y1="9" x2="11" y2="9" stroke="#F06EBB" strokeWidth="1.5" strokeLinecap="round"/>
-              <circle cx="17" cy="16" r="5" fill="#fff" opacity="0.2"/>
-              <text x="17" y="20" textAnchor="middle" fill="#fff" fontSize="10" fontWeight="900" fontFamily="Poppins,sans-serif">?</text>
-            </svg>
-            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '6.5px', fontWeight: '700', color: '#fff', letterSpacing: '0.02em', textTransform: 'uppercase', textAlign: 'center', lineHeight: 1.2 }}>Brochures{'\n'}& FAQs</span>
-          </button>
-
-          {/* Popover — slides out to the left of the widget */}
-          {showBrochure && (
-            <div ref={popoverRef} style={{
-              position: 'absolute',
-              right: '84px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              width: '240px',
-              background: 'transparent',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              borderRadius: '16px',
-              border: '1.5px solid rgba(182,197,72,0.4)',
-              boxShadow: '0 8px 32px rgba(58,107,53,0.14)',
-              padding: '12px',
-              zIndex: 1001,
-            }}>
-              {/* Arrow */}
-              <div style={{ position:'absolute', right:'-8px', top:'50%', transform:'translateY(-50%)', width:0, height:0, borderTop:'8px solid transparent', borderBottom:'8px solid transparent', borderLeft:'8px solid rgba(182,197,72,0.4)' }}/>
-
-              <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
-
-                {/* B2B Brochure */}
-                <div style={{ padding:'10px 12px', background:'transparent', borderRadius:'12px', border:'1px solid rgba(58,107,53,0.2)' }}>
-                  <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'6px' }}>
-                    <div style={{ width:'28px', height:'28px', borderRadius:'8px', background:'linear-gradient(135deg,#3a6b35,#b6c548)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                        <rect x="4" y="2" width="12" height="16" rx="2" fill="#fff"/>
-                        <line x1="7" y1="7" x2="13" y2="7" stroke="#3a6b35" strokeWidth="2" strokeLinecap="round"/>
-                        <line x1="7" y1="11" x2="13" y2="11" stroke="#3a6b35" strokeWidth="2" strokeLinecap="round"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'11px', fontWeight:'700', color:'#3a6b35', margin:0 }}>B2B Franchise Brochure</p>
-                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'9px', color:'#8A5F3C', margin:0, opacity:0.7 }}>PDF · 15 pages · 1MB</p>
-                    </div>
-                  </div>
-                  <div style={{ display:'flex', gap:'12px', paddingLeft:'4px' }}>
-                    <a href="/downloads/avocadoria-b2b-brochure.pdf" target="_blank" rel="noreferrer"
-                      style={{ fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', color:'#3a6b35', textDecoration:'underline', cursor:'pointer' }}>
-                      View
-                    </a>
-                    <a href="/downloads/avocadoria-b2b-brochure.pdf" download="Avocadoria-B2B-Brochure.pdf"
-                      style={{ fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', color:'#b6c548', textDecoration:'underline', cursor:'pointer' }}>
-                      Download
-                    </a>
-                  </div>
-                </div>
-
-                {/* Expo Flyer */}
-                <div style={{ padding:'10px 12px', background:'transparent', borderRadius:'12px', border:'1px solid rgba(240,110,187,0.2)' }}>
-                  <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'6px' }}>
-                    <div style={{ width:'28px', height:'28px', borderRadius:'8px', background:'linear-gradient(135deg,#F06EBB,#d44fa0)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                        <rect x="3" y="5" width="18" height="14" rx="2.5" fill="#fff" opacity="0.9"/>
-                        <circle cx="12" cy="12" r="3" fill="#F06EBB"/>
-                      </svg>
-                    </div>
-                    <div>
-                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'11px', fontWeight:'700', color:'#3a6b35', margin:0 }}>Expo 2026 Flyer</p>
-                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'9px', color:'#8A5F3C', margin:0, opacity:0.7 }}>Image · 882KB</p>
-                    </div>
-                  </div>
-                  <div style={{ display:'flex', gap:'12px', paddingLeft:'4px' }}>
-                    <a href="/downloads/avocadoria-expo-flyer-2026.webp" target="_blank" rel="noreferrer"
-                      style={{ fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', color:'#F06EBB', textDecoration:'underline', cursor:'pointer' }}>
-                      View
-                    </a>
-                    <a href="/downloads/avocadoria-expo-flyer-2026.webp" download="Avocadoria-Expo-Flyer-2026.webp"
-                      style={{ fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', color:'#b6c548', textDecoration:'underline', cursor:'pointer' }}>
-                      Download
-                    </a>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    </>
     </>
   )
 }

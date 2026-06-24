@@ -86,8 +86,8 @@ function VideoCard({ video, onClick }) {
 
       {/* Info */}
       <div style={{ padding: '16px 18px' }}>
-        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '10px', color: '#b6c548', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>{video.date}</p>
-        <h3 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#3a6b35', margin: 0, lineHeight: 1.4 }}>{video.title}</h3>
+        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#b6c548', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 4px' }}>{video.date}</p>
+        <h3 style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '700', color: '#3a6b35', margin: 0, lineHeight: 1.4 }}>{video.title}</h3>
       </div>
     </div>
   )

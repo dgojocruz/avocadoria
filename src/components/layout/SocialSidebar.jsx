@@ -98,14 +98,21 @@ function IconBtn({ children, onClick, href, ariaLabel }) {
     display:        'flex',
     alignItems:     'center',
     justifyContent: 'center',
-    color:          hovered ? STYLE.iconColorHover : STYLE.iconColor,
-    background:     hovered ? STYLE.iconButtonBackgroundHover : STYLE.iconButtonBackground,
-    boxShadow:      pressed ? STYLE.iconButtonShadowActive : STYLE.iconButtonShadow,
+    color:          hovered ? '#fff' : STYLE.iconColor,
+    background:     hovered
+      ? 'linear-gradient(135deg, #b6c548, #3a6b35)'
+      : STYLE.iconButtonBackground,
+    boxShadow:      pressed
+      ? STYLE.iconButtonShadowActive
+      : hovered
+        ? '0 0 0 3px rgba(182,197,72,0.4), 0 6px 20px rgba(58,107,53,0.4)'
+        : STYLE.iconButtonShadow,
     border:         'none',
     cursor:         'pointer',
-    transition:     'color 0.2s, background 0.2s, box-shadow 0.1s',
+    transition:     'color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.2s',
     textDecoration: 'none',
-    transform:      pressed ? 'scale(0.93)' : 'scale(1)',
+    transform:      pressed ? 'scale(0.93)' : hovered ? 'scale(1.15)' : 'scale(1)',
+    position:       'relative',
   }
 
   const handlers = {
@@ -117,9 +124,54 @@ function IconBtn({ children, onClick, href, ariaLabel }) {
     style,
   }
 
+  const label = ariaLabel
+    ? ariaLabel.replace('Avocadoria on ', '')
+    : null
+
+  const tooltip = hovered && label ? (
+    <div style={{
+      position:       'absolute',
+      left:           'calc(100% + 10px)',
+      top:            '50%',
+      transform:      'translateY(-50%)',
+      background:     '#3a6b35',
+      color:          '#fff',
+      fontFamily:     'Poppins,sans-serif',
+      fontSize:       '11px',
+      fontWeight:     '700',
+      padding:        '4px 10px',
+      borderRadius:   '8px',
+      whiteSpace:     'nowrap',
+      boxShadow:      '0 4px 12px rgba(58,107,53,0.3)',
+      pointerEvents:  'none',
+      zIndex:         9999,
+      letterSpacing:  '0.02em',
+    }}>
+      {label}
+      {/* Arrow */}
+      <div style={{
+        position:     'absolute',
+        right:        '100%',
+        top:          '50%',
+        transform:    'translateY(-50%)',
+        width:        0, height: 0,
+        borderTop:    '5px solid transparent',
+        borderBottom: '5px solid transparent',
+        borderRight:  '5px solid #3a6b35',
+      }}/>
+    </div>
+  ) : null
+
+  const inner = (
+    <>
+      {children}
+      {tooltip}
+    </>
+  )
+
   return href
-    ? <a href={href} target="_blank" rel="noopener noreferrer" {...handlers}>{children}</a>
-    : <button onClick={onClick} {...handlers}>{children}</button>
+    ? <a href={href} rel="noopener noreferrer" {...handlers}>{inner}</a>
+    : <button onClick={onClick} {...handlers}>{inner}</button>
 }
 
 // ── Sound wave bars animation (playing indicator) ─────────────────────────────
@@ -185,6 +237,20 @@ export default function SocialSidebar() {
   }, [soundOn])
 
   const handleToggle = () => setSoundOn(v => !v)
+
+  const [showBrochure, setShowBrochure] = useState(false)
+  const popoverRef = useRef(null)
+
+  useEffect(() => {
+    if (!showBrochure) return
+    const handle = (e) => {
+      if (popoverRef.current && !popoverRef.current.contains(e.target)) {
+        setShowBrochure(false)
+      }
+    }
+    document.addEventListener('mousedown', handle)
+    return () => document.removeEventListener('mousedown', handle)
+  }, [showBrochure])
 
   return (
     <>
@@ -276,6 +342,99 @@ export default function SocialSidebar() {
             <Icon {...iconSz} />
           </IconBtn>
         ))}
+
+        {/* Divider dot */}
+        <div aria-hidden="true" style={{
+          width: STYLE.dividerSize, height: STYLE.dividerSize,
+          borderRadius: '50%', background: STYLE.dividerColor,
+          boxShadow: 'inset 1px 1px 2px rgba(0,0,0,0.1)',
+        }}/>
+
+        {/* Video Gallery */}
+        <IconBtn href="/gallery/videos" ariaLabel="Video Gallery">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={iconSz}>
+            <polygon points="6,3 21,12 6,21"/>
+          </svg>
+        </IconBtn>
+
+        {/* Image Gallery */}
+        <IconBtn href="/gallery/photos" ariaLabel="Image Gallery">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={iconSz}>
+            <rect x="3" y="5" width="18" height="14" rx="2.5"/>
+            <circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/>
+            <circle cx="17.5" cy="7.5" r="1.1" fill="currentColor" stroke="none"/>
+          </svg>
+        </IconBtn>
+
+        {/* Brochures & FAQs */}
+        <div style={{ position:'relative' }}>
+          <IconBtn onClick={() => setShowBrochure(v => !v)} ariaLabel="Brochures & FAQs">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={iconSz}>
+              <rect x="4" y="2" width="12" height="16" rx="2"/>
+              <line x1="7" y1="7" x2="13" y2="7" strokeLinecap="round"/>
+              <line x1="7" y1="11" x2="13" y2="11" strokeLinecap="round"/>
+              <line x1="7" y1="15" x2="10" y2="15" strokeLinecap="round"/>
+            </svg>
+          </IconBtn>
+
+          {/* Popover */}
+          {showBrochure && (
+            <div ref={popoverRef} style={{
+              position:'absolute', left:'48px', top:'50%', transform:'translateY(-50%)',
+              width:'240px', background:'rgba(255,255,255,0.97)',
+              backdropFilter:'blur(16px)', WebkitBackdropFilter:'blur(16px)',
+              borderRadius:'16px', border:'1.5px solid #b6c548',
+              boxShadow:'0 8px 32px rgba(58,107,53,0.18)',
+              padding:'14px', zIndex:1001,
+            }}>
+              {/* Arrow pointing left */}
+              <div style={{
+                position:'absolute', left:'-8px', top:'50%', transform:'translateY(-50%)',
+                width:0, height:0,
+                borderTop:'8px solid transparent',
+                borderBottom:'8px solid transparent',
+                borderRight:'8px solid #b6c548',
+              }}/>
+              <p style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'13px', color:'var(--c-olive)', margin:'0 0 10px', textShadow:'-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff' }}>
+                Downloads
+              </p>
+              <div style={{ display:'flex', flexDirection:'column', gap:'8px' }}>
+                {/* B2B Brochure */}
+                <div style={{ padding:'10px 12px', background:'rgba(58,107,53,0.06)', borderRadius:'10px', border:'1px solid rgba(58,107,53,0.15)' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'6px' }}>
+                    <div style={{ width:'28px', height:'28px', borderRadius:'8px', background:'linear-gradient(135deg,#3a6b35,#b6c548)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="4" y="2" width="12" height="16" rx="2" fill="#fff"/><line x1="7" y1="7" x2="13" y2="7" stroke="#3a6b35" strokeWidth="2" strokeLinecap="round"/><line x1="7" y1="11" x2="13" y2="11" stroke="#3a6b35" strokeWidth="2" strokeLinecap="round"/></svg>
+                    </div>
+                    <div>
+                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'11px', fontWeight:'700', color:'#3a6b35', margin:0 }}>B2B Franchise Brochure</p>
+                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'9px', color:'#8A5F3C', margin:0, opacity:0.75 }}>PDF · 15 pages · 1MB</p>
+                    </div>
+                  </div>
+                  <div style={{ display:'flex', gap:'6px' }}>
+                    <a href="/downloads/avocadoria-b2b-brochure.pdf" target="_blank" rel="noreferrer" style={{ flex:1, textAlign:'center', padding:'5px 0', borderRadius:'8px', background:'#3a6b35', color:'#fff', fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', textDecoration:'none' }}>View</a>
+                    <a href="/downloads/avocadoria-b2b-brochure.pdf" download="Avocadoria-B2B-Brochure.pdf" style={{ flex:1, textAlign:'center', padding:'5px 0', borderRadius:'8px', background:'transparent', color:'#3a6b35', fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', textDecoration:'none', border:'1.5px solid #3a6b35' }}>Download</a>
+                  </div>
+                </div>
+                {/* Expo Flyer */}
+                <div style={{ padding:'10px 12px', background:'rgba(240,110,187,0.06)', borderRadius:'10px', border:'1px solid rgba(240,110,187,0.2)' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'6px' }}>
+                    <div style={{ width:'28px', height:'28px', borderRadius:'8px', background:'linear-gradient(135deg,#F06EBB,#d44fa0)', display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0 }}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2.5" fill="#fff" opacity="0.9"/><circle cx="12" cy="12" r="3" fill="#F06EBB"/></svg>
+                    </div>
+                    <div>
+                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'11px', fontWeight:'700', color:'#3a6b35', margin:0 }}>Expo 2026 Flyer</p>
+                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'9px', color:'#8A5F3C', margin:0, opacity:0.75 }}>Image · 882KB</p>
+                    </div>
+                  </div>
+                  <div style={{ display:'flex', gap:'6px' }}>
+                    <a href="/downloads/avocadoria-expo-flyer-2026.webp" target="_blank" rel="noreferrer" style={{ flex:1, textAlign:'center', padding:'5px 0', borderRadius:'8px', background:'#F06EBB', color:'#fff', fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', textDecoration:'none' }}>View</a>
+                    <a href="/downloads/avocadoria-expo-flyer-2026.webp" download="Avocadoria-Expo-Flyer-2026.webp" style={{ flex:1, textAlign:'center', padding:'5px 0', borderRadius:'8px', background:'transparent', color:'#F06EBB', fontFamily:'Poppins,sans-serif', fontSize:'10px', fontWeight:'700', textDecoration:'none', border:'1.5px solid #F06EBB' }}>Download</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
 
       </div>
     </aside>

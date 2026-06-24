@@ -479,7 +479,7 @@ export default function CareersPage() {
               ].map((w, i) => (
                 <div key={i} style={{ background: 'rgba(255,255,255,0.08)', borderRadius: '16px', padding: '24px 16px' }}>
                   <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '800', color: '#3a6b35', marginBottom: '8px', textShadow: '-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{w.title}</div>
-                  <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '600', color: '#8A5F3C', lineHeight: '1.55', textShadow: '0 1px 0 rgba(255,255,255,0.9)' }}>{w.desc}</div>
+                  <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '600', color: '#8A5F3C', lineHeight: '1.55', textShadow: '0 1px 0 rgba(255,255,255,0.9)' }}>{w.desc}</div>
                 </div>
               ))}
             </div>

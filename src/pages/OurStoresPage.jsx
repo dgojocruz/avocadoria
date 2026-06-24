@@ -1149,7 +1149,7 @@ export default function OurStoresPage() {
                     padding: '10px 14px', display: 'flex', alignItems: 'flex-start', gap: '8px',
                   }}>
                     <span style={{ fontSize: '16px', flexShrink: 0 }}>📍</span>
-                    <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#3a6b35', fontWeight: '600', margin: 0, lineHeight: 1.5 }}>
+                    <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#3a6b35', fontWeight: '600', margin: 0, lineHeight: 1.5 }}>
                       {nearbyMessage}
                     </p>
                   </div>

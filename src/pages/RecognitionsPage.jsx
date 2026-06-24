@@ -57,7 +57,7 @@ export default function RecognitionsPage() {
               <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'6px', flexWrap:'wrap' }}>
 <span className="post-date" style={{ margin:0 }}>{formatDate(rec.date)}</span>
               </div>
-              <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(16px,1.8vw,20px)', color:'#b6c548', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 4px', lineHeight:1.25 }}>{rec.title}</h3>
+              <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(17px, 1.8vw, 20px)', color:'#b6c548', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 4px', lineHeight:1.25 }}>{rec.title}</h3>
               <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'12px', color:'rgba(138,95,60,0.55)', margin:'0 0 6px' }}>
                 Issued by: <strong>{rec.issuer}</strong>
               </p>
