@@ -682,7 +682,6 @@ export default function AboutPage() {
               color: 'var(--c-olive)',
               textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff',
               margin: '0 0 8px', lineHeight: 1.1,
-              whiteSpace: 'nowrap',
             }}>
               {BRAND.headline}
             </h1>

@@ -172,7 +172,13 @@ export default function FloatingWidgets() {
   }
 
   return (
-    <div style={{
+    <>
+    <style>{`
+      @media (max-width: 767px) {
+        .floating-widgets { bottom: 64px !important; }
+      }
+    `}</style>
+    <div className="floating-widgets" style={{
       position: 'fixed',
       right: POSITION.right,
       bottom: POSITION.bottom,
@@ -222,5 +228,6 @@ export default function FloatingWidgets() {
       </a>
 
     </div>
+    </>
   )
 }

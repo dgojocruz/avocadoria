@@ -509,27 +509,11 @@ function PackageCard({ pkg, onBook }) {
       boxShadow: '0 8px 40px rgba(58,107,53,0.10)',
       display: 'flex',
       flexDirection: 'column',
-      aspectRatio: '1/1',
-      flexDirection: 'column',
       transition: 'transform 0.2s, box-shadow 0.2s',
     }}
       onMouseEnter={e => { e.currentTarget.style.transform='translateY(-4px)'; e.currentTarget.style.boxShadow='0 16px 48px rgba(58,107,53,0.16)' }}
       onMouseLeave={e => { e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.boxShadow='0 8px 40px rgba(58,107,53,0.10)' }}
     >
-      {/* Product image */}
-      <div style={{ position: 'relative', height: '280px', overflow: 'hidden', background: 'transparent' }}>
-        <img
-          src={pkg.image}
-          alt={pkg.name}
-          style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center bottom', display: 'block' }}
-          loading="lazy" decoding="async"
-        />
-
-        <div style={{ position: 'absolute', top: '14px', right: '14px', background: 'rgba(255,255,255,0.92)', color: '#3a6b35', fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', padding: '4px 10px', borderRadius: '999px', border: '1.5px solid rgba(182,197,72,0.4)' }}>
-          {pkg.size}
-        </div>
-      </div>
-
       {/* Card body */}
       <div style={{ padding: '24px 24px 0', flex: 1, display: 'flex', flexDirection: 'column' }}>
 
@@ -576,19 +560,35 @@ function PackageCard({ pkg, onBook }) {
         {/* Divider */}
         <div style={{ height: '1px', background: 'rgba(182,197,72,0.2)', marginBottom: '16px' }} />
 
-        {/* Inclusions — serving updates dynamically */}
-        <div style={{ marginBottom: '12px' }}>
-          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 8px' }}>
-            Inclusions
-          </p>
-          <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-            {inclusions.map((item, i) => (
-              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.4 }}>
-                <span style={{ color: 'var(--c-olive)', fontWeight: '900', flexShrink: 0, fontSize: '12px', marginTop: '2px' }}>—</span>
-                {item}
-              </li>
-            ))}
-          </ul>
+        {/* Inclusions + product image side by side */}
+        <div style={{ display: 'flex', gap: '14px', alignItems: 'stretch', marginBottom: '12px' }}>
+          {/* Left — inclusions (serving updates dynamically) */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 8px' }}>
+              Inclusions
+            </p>
+            <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              {inclusions.map((item, i) => (
+                <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.4 }}>
+                  <span style={{ color: 'var(--c-olive)', fontWeight: '900', flexShrink: 0, fontSize: '12px', marginTop: '2px' }}>—</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Right — product image */}
+          <div style={{ position: 'relative', flexShrink: 0, width: 'clamp(150px,42%,200px)', minHeight: '240px' }}>
+            <img
+              src={pkg.image}
+              alt={pkg.name}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center', display: 'block' }}
+              loading="lazy" decoding="async"
+            />
+            <div style={{ position: 'absolute', top: '8px', right: '8px', background: 'rgba(255,255,255,0.92)', color: '#3a6b35', fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '700', padding: '3px 8px', borderRadius: '999px', border: '1.5px solid rgba(182,197,72,0.4)' }}>
+              {pkg.size}
+            </div>
+          </div>
         </div>
 
         {/* Add-ons toggle */}
@@ -611,7 +611,7 @@ function PackageCard({ pkg, onBook }) {
         )}
 
         {/* Note */}
-        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '10px', color: '#8A5F3C', opacity: 0.5, lineHeight: 1.5, margin: '8px 0 0', fontStyle: 'italic' }}>
+        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C', opacity: 0.5, lineHeight: 1.5, margin: '8px 0 0', fontStyle: 'italic' }}>
           {pkg.note}
         </p>
       </div>
@@ -654,6 +654,22 @@ export default function PartyCartPage() {
         description="Bring Avocadoria to your celebration. Book a party cart package for birthdays, corporate events, and any occasion worth celebrating."
         path="/party-cart"
       />
+
+      <style>{`
+        .pc-pkg-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; align-items: stretch; }
+        .pc-steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        @media (max-width: 1100px) {
+          .pc-pkg-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 820px) {
+          .pc-pkg-grid { grid-template-columns: repeat(2, 1fr); }
+          .pc-steps-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 560px) {
+          .pc-pkg-grid { grid-template-columns: 1fr; }
+          .pc-steps-grid { grid-template-columns: 1fr; }
+        }
+      `}</style>
 
       {/* ── Hero ── */}
       <section style={{ ...TEXTURE, paddingTop: 'clamp(80px,12vw,120px)', paddingBottom: 0, textAlign: 'center' }}>
@@ -717,7 +733,7 @@ export default function PartyCartPage() {
               Four easy steps to your perfect party
             </h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
+          <div className="pc-steps-grid">
             {STEPS.map((s) => (
               <div key={s.num} style={{ background: 'transparent', borderRadius: '16px', border: '1.5px solid rgba(182,197,72,0.35)', padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
                 <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', marginBottom: '10px' }}>{s.num}</div>
@@ -743,7 +759,7 @@ export default function PartyCartPage() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', alignItems: 'stretch' }}>
+          <div className="pc-pkg-grid">
             {PACKAGES.map((pkg) => (
               <PackageCard key={pkg.id} pkg={pkg} onBook={setSelectedPkg} />
             ))}

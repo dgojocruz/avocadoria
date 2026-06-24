@@ -257,19 +257,21 @@ export default function SocialSidebar() {
     <style>{`
       @media (max-width: 767px) {
         .social-sidebar-aside {
-          left: auto !important;
-          right: 4px !important;
-          top: 50% !important;
-          transform: translateY(-50%) !important;
+          left: 12px !important;
+          right: auto !important;
+          top: auto !important;
+          bottom: 12px !important;
+          transform: none !important;
         }
         .social-sidebar-pill {
-          padding: 6px 5px !important;
-          gap: 4px !important;
+          flex-direction: row !important;
+          padding: 5px 7px !important;
+          gap: 5px !important;
         }
         .social-sidebar-pill button,
         .social-sidebar-pill a {
-          width: 28px !important;
-          height: 28px !important;
+          width: 30px !important;
+          height: 30px !important;
         }
         .social-sidebar-pill svg {
           width: 16px !important;
