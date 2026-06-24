@@ -509,6 +509,8 @@ function PackageCard({ pkg, onBook }) {
       boxShadow: '0 8px 40px rgba(58,107,53,0.10)',
       display: 'flex',
       flexDirection: 'column',
+      aspectRatio: '1/1',
+      flexDirection: 'column',
       transition: 'transform 0.2s, box-shadow 0.2s',
     }}
       onMouseEnter={e => { e.currentTarget.style.transform='translateY(-4px)'; e.currentTarget.style.boxShadow='0 16px 48px rgba(58,107,53,0.16)' }}
@@ -532,13 +534,13 @@ function PackageCard({ pkg, onBook }) {
       <div style={{ padding: '24px 24px 0', flex: 1, display: 'flex', flexDirection: 'column' }}>
 
         {/* Name */}
-        <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px,2vw,20px)', color: 'var(--c-olive)', margin: '0 0 14px', lineHeight: 1.2, textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
+        <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(20px,2.2vw,26px)', color: 'var(--c-olive)', margin: '0 0 14px', lineHeight: 1.2, textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
           {pkg.name}
         </h3>
 
         {/* ── Cup toggle ── */}
         <div style={{ marginBottom: '16px' }}>
-          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 8px' }}>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 8px' }}>
             {`Choose your ${unit}`}
           </p>
           <div style={{ display: 'flex', gap: '6px', background: 'rgba(182,197,72,0.1)', borderRadius: '999px', padding: '4px' }}>
@@ -556,16 +558,16 @@ function PackageCard({ pkg, onBook }) {
 
         {/* Price — updates with tier */}
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '16px' }}>
-          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '26px', fontWeight: '800', color: isTBA ? '#b6c548' : pkg.color, transition: 'color 0.2s' }}>
+          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '30px', fontWeight: '800', color: isTBA ? '#b6c548' : pkg.color, transition: 'color 0.2s' }}>
             {tier.price === 'Get a Quote' ? 'Get a Quote' : isTBA ? 'Price TBA' : tier.price}
           </span>
           {!isTBA && (
-            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: '#8A5F3C', opacity: 0.7 }}>
+            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', opacity: 0.7 }}>
               {`starts at · ${cups} ${unit}`}
             </span>
           )}
           {isTBA && (
-            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: '#8A5F3C', opacity: 0.7 }}>
+            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', opacity: 0.7 }}>
               {`· ${cups} ${unit} — contact us`}
             </span>
           )}
@@ -576,7 +578,7 @@ function PackageCard({ pkg, onBook }) {
 
         {/* Inclusions — serving updates dynamically */}
         <div style={{ marginBottom: '12px' }}>
-          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 8px' }}>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 8px' }}>
             Inclusions
           </p>
           <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '5px' }}>
@@ -592,7 +594,7 @@ function PackageCard({ pkg, onBook }) {
         {/* Add-ons toggle */}
         <button
           onClick={() => setOpen(o => !o)}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 0', fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#8A5F3C', opacity: 0.7, letterSpacing: '0.04em', minHeight: '36px' }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 0', fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#8A5F3C', opacity: 0.7, letterSpacing: '0.04em', minHeight: '36px' }}
         >
           <span style={{ transform: open ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s', display: 'inline-block', fontSize: '10px' }}>▶</span>
           ADD-ONS
@@ -618,7 +620,7 @@ function PackageCard({ pkg, onBook }) {
       <div style={{ padding: '20px 24px 24px' }}>
         <button
           onClick={() => onBook({ ...pkg, selectedCups: cups, selectedUnit: unit, selectedPrice: tier.price, selectedServing: tier.serving })}
-          style={{ width: '100%', background: pkg.color, color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 20px', fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', cursor: 'pointer', transition: 'background 0.15s, transform 0.15s', minHeight: '48px', letterSpacing: '0.02em' }}
+          style={{ width: '100%', background: pkg.color, color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 20px', fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '800', cursor: 'pointer', transition: 'background 0.15s, transform 0.15s', minHeight: '52px', letterSpacing: '0.02em' }}
           onMouseEnter={e => { e.currentTarget.style.background='#3a6b35'; e.currentTarget.style.transform='scale(0.98)' }}
           onMouseLeave={e => { e.currentTarget.style.background=pkg.color; e.currentTarget.style.transform='scale(1)' }}
         >
@@ -708,18 +710,18 @@ export default function PartyCartPage() {
       {/* ── How It Works ── */}
       <section style={{ ...TEXTURE, padding: 'clamp(48px,7vw,80px) var(--sp-md)' }}>
         <div style={OVERLAY} />
-        <div style={{ ...INNER, maxWidth: '860px', margin: '0 auto' }}>
+        <div style={{ ...INNER, maxWidth: '100%', margin: '0 auto', padding: '0 clamp(20px,4vw,60px)' }}>
           <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(0.85rem,2vw,1rem)', color: 'var(--c-olive)', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 10px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff' }}>How It Works</p>
-            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.4rem,5vw,2rem)', color: 'var(--c-olive)', margin: 0, textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
+            <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1rem,2vw,1.2rem)', color: 'var(--c-olive)', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 10px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>How It Works</p>
+            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,5vw,2.8rem)', color: 'var(--c-olive)', margin: 0, textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
               Four easy steps to your perfect party
             </h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))', gap: '16px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
             {STEPS.map((s) => (
-              <div key={s.num} style={{ background: 'transparent', borderRadius: '16px', border: '1.5px solid rgba(182,197,72,0.35)', padding: '24px 20px' }}>
-                <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', marginBottom: '8px' }}>{s.num}</div>
-                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '14px', color: 'var(--c-olive)', margin: '0 0 8px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff' }}>{s.title}</h3>
+              <div key={s.num} style={{ background: 'transparent', borderRadius: '16px', border: '1.5px solid rgba(182,197,72,0.35)', padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
+                <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', marginBottom: '10px' }}>{s.num}</div>
+                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px,1.8vw,20px)', color: 'var(--c-olive)', margin: '0 0 10px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>{s.title}</h3>
                 <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.65, margin: 0 }}>{s.desc}</p>
               </div>
             ))}
@@ -730,9 +732,9 @@ export default function PartyCartPage() {
       {/* ── Packages ── */}
       <section id="packages" style={{ ...TEXTURE, padding: 'clamp(48px,7vw,80px) var(--sp-md)' }}>
         <div style={OVERLAY} />
-        <div style={{ ...INNER, maxWidth: '1100px', margin: '0 auto' }}>
+        <div style={{ ...INNER, maxWidth: '100%', margin: '0 auto', padding: '0 clamp(20px,4vw,60px)' }}>
           <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(0.85rem,2vw,1rem)', color: 'var(--c-olive)', letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 10px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff' }}>Our Packages</p>
+            <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(2.5rem,6vw,4.8rem)', color: 'var(--c-olive)', letterSpacing: '0.05em', textTransform: 'uppercase', margin: '0 0 10px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>Our Packages</p>
             <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.4rem,5vw,2rem)', color: 'var(--c-olive)', margin: '0 0 10px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
               Pick your celebration flavour
             </h2>
@@ -741,7 +743,7 @@ export default function PartyCartPage() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: '28px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', alignItems: 'stretch' }}>
             {PACKAGES.map((pkg) => (
               <PackageCard key={pkg.id} pkg={pkg} onBook={setSelectedPkg} />
             ))}
