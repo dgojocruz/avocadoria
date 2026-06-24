@@ -491,7 +491,7 @@ export default function FranchisePage() {
                   <div style={{ paddingTop: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
                       <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em' }}>STEP {step.num}</span>
-                      <h3 style={{ fontFamily: 'Poppins,sans-serif', fontWeight: '700', fontSize: '15px', color: '#3a6b35', margin: 0 }}>{step.title}</h3>
+                      <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(16px,1.8vw,20px)', color: '#b6c548', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.2 }}>{step.title}</h3>
                     </div>
                     <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.8)', lineHeight: '1.65', margin: 0 }}>{step.desc}</p>
                   </div>
