@@ -29,7 +29,7 @@ export default function RecognitionsPage() {
         <div style={{ position:'relative', zIndex:1, maxWidth:'900px', margin:'0 auto', padding:'clamp(52px,7vw,88px) clamp(20px,5vw,72px)' }}>
 
       <div style={{ marginBottom:'36px' }}>
-        <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,4vw,2.8rem)', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 8px', lineHeight:1.1 }}>
+        <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,4vw,2.8rem)', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 8px', lineHeight:1.1 }}>
           Recognitions
         </h2>
         <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'14px', color:'rgba(138,95,60,0.65)', margin:0 }}>
@@ -55,10 +55,9 @@ export default function RecognitionsPage() {
             {/* Info */}
             <div style={{ flex:1 }}>
               <div style={{ display:'flex', alignItems:'center', gap:'8px', marginBottom:'6px', flexWrap:'wrap' }}>
-                <span className={`post-badge${rec.featured ? ' featured' : ''}`}>{rec.category}</span>
-                <span className="post-date" style={{ margin:0 }}>{formatDate(rec.date)}</span>
+<span className="post-date" style={{ margin:0 }}>{formatDate(rec.date)}</span>
               </div>
-              <h3 className="post-title" style={{ marginBottom:'4px' }}>{rec.title}</h3>
+              <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(16px,1.8vw,20px)', color:'#b6c548', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 4px', lineHeight:1.25 }}>{rec.title}</h3>
               <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'12px', color:'rgba(138,95,60,0.55)', margin:'0 0 6px' }}>
                 Issued by: <strong>{rec.issuer}</strong>
               </p>
@@ -89,13 +88,12 @@ function PostDetail({ post, onBack }) {
       </button>
       <div style={{ display:'flex', alignItems:'center', gap:'14px', marginBottom:'20px' }}>
         <div>
-          <span className="post-badge featured">{post.category}</span>
-          <p className="post-date" style={{ margin:'4px 0 0' }}>
+<p className="post-date" style={{ margin:'4px 0 0' }}>
             {new Date(post.date).toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'})} · Issued by {post.issuer}
           </p>
         </div>
       </div>
-      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,4vw,2.8rem)', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 20px', lineHeight:1.1 }}>
+      <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'clamp(1.6rem,4vw,2.8rem)', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 20px', lineHeight:1.1 }}>
         {post.title}
       </h2>
       {post.image && <img src={post.image} alt={post.title} style={{ width:'100%', borderRadius:'16px', marginBottom:'24px', objectFit:'cover', maxHeight:'360px' }}

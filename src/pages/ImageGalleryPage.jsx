@@ -23,7 +23,7 @@ const HEADING_STYLE = {
   fontWeight: 'normal',
   fontSize:   'clamp(1.6rem,4vw,2.8rem)',
   color:      'var(--c-olive)',
-  textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+  textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff',
   margin:     '0 0 8px',
   lineHeight: 1.1,
 }

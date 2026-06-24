@@ -122,6 +122,23 @@ const PACKAGES = [
       100: { price: '₱27,500', serving: '5 hours' },
     },
   },
+  {
+    id:    'popsicle-freezer',
+    name:  'Popsicle Freezer Package',
+    size:  'Assorted',
+    image: '/menu/Popsicles/popsicle-cover.webp',
+    color: '#b6c548',
+    tag:   'New',
+    note:  'Pricing and full package details coming soon. Contact us for a custom quote.',
+    addons: [
+      'Flavour assortment available upon request',
+      'Extended service hours',
+    ],
+    tiers: {
+      50:  { price: 'Get a Quote', serving: 'TBA' },
+      100: { price: 'Get a Quote', serving: 'TBA' },
+    },
+  },
 ]
 
 // ─── How It Works ─────────────────────────────────────────────────────────────
@@ -158,7 +175,7 @@ function BookingModal({ pkg, onClose }) {
     const body = encodeURIComponent(
 `New Party Cart Booking Inquiry
 
-Package: ${pkg.name} ${pkg.size} — ${pkg.selectedCups} cups — ${pkg.selectedPrice}
+Package: ${pkg.name} ${pkg.size} — ${pkg.selectedCups} ${pkg.selectedUnit || 'cups'} — ${pkg.selectedPrice}
 ——————————————————————
 Name:    ${form.name}
 Email:   ${form.email}
@@ -207,7 +224,7 @@ Please follow up within 24–48 hours.`
                   {pkg.name}
                 </h2>
                 <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#3a6b35', fontWeight: '600', margin: 0 }}>
-                  {pkg.size} &nbsp;·&nbsp; {pkg.selectedCups} cups &nbsp;·&nbsp; {pkg.selectedPrice}
+                  {pkg.size} &nbsp;·&nbsp; {pkg.selectedCups} {pkg.selectedUnit || 'cups'} &nbsp;·&nbsp; {pkg.selectedPrice}
                 </p>
               </div>
               <button onClick={onClose} style={{ background: 'rgba(58,107,53,0.08)', border: 'none', cursor: 'pointer', fontSize: '18px', color: '#3a6b35', padding: '4px', lineHeight: 1, minHeight: '36px', minWidth: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}>✕</button>
@@ -458,7 +475,8 @@ function PackageCard({ pkg, onBook }) {
   const [cups, setCups]   = useState(100)
   const [open, setOpen]   = useState(false)
   const tier              = pkg.tiers[cups]
-  const isTBA             = tier.price === 'TBA'
+  const unit              = pkg.id === 'popsicle-freezer' ? 'pieces' : 'cups'
+  const isTBA             = tier.price === 'TBA' || tier.price === 'Get a Quote'
 
   const inclusions = [
     'Booth setup cart',
@@ -521,7 +539,7 @@ function PackageCard({ pkg, onBook }) {
         {/* ── Cup toggle ── */}
         <div style={{ marginBottom: '16px' }}>
           <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '10px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 8px' }}>
-            Choose your cups
+            {`Choose your ${unit}`}
           </p>
           <div style={{ display: 'flex', gap: '6px', background: 'rgba(182,197,72,0.1)', borderRadius: '999px', padding: '4px' }}>
             {[50, 100].map(n => (
@@ -530,7 +548,7 @@ function PackageCard({ pkg, onBook }) {
                 onClick={() => setCups(n)}
                 style={toggleStyle(cups === n, pkg.color)}
               >
-                {n} cups
+                {`${n} ${unit}`}
               </button>
             ))}
           </div>
@@ -539,16 +557,16 @@ function PackageCard({ pkg, onBook }) {
         {/* Price — updates with tier */}
         <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '16px' }}>
           <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '26px', fontWeight: '800', color: isTBA ? '#b6c548' : pkg.color, transition: 'color 0.2s' }}>
-            {isTBA ? 'Price TBA' : tier.price}
+            {tier.price === 'Get a Quote' ? 'Get a Quote' : isTBA ? 'Price TBA' : tier.price}
           </span>
           {!isTBA && (
             <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: '#8A5F3C', opacity: 0.7 }}>
-              starts at · {cups} cups
+              {`starts at · ${cups} ${unit}`}
             </span>
           )}
           {isTBA && (
             <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: '#8A5F3C', opacity: 0.7 }}>
-              · {cups} cups — contact us
+              {`· ${cups} ${unit} — contact us`}
             </span>
           )}
         </div>
@@ -599,12 +617,12 @@ function PackageCard({ pkg, onBook }) {
       {/* Book button — passes selected cup tier to modal */}
       <div style={{ padding: '20px 24px 24px' }}>
         <button
-          onClick={() => onBook({ ...pkg, selectedCups: cups, selectedPrice: tier.price, selectedServing: tier.serving })}
+          onClick={() => onBook({ ...pkg, selectedCups: cups, selectedUnit: unit, selectedPrice: tier.price, selectedServing: tier.serving })}
           style={{ width: '100%', background: pkg.color, color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 20px', fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', cursor: 'pointer', transition: 'background 0.15s, transform 0.15s', minHeight: '48px', letterSpacing: '0.02em' }}
           onMouseEnter={e => { e.currentTarget.style.background='#3a6b35'; e.currentTarget.style.transform='scale(0.98)' }}
           onMouseLeave={e => { e.currentTarget.style.background=pkg.color; e.currentTarget.style.transform='scale(1)' }}
         >
-          Book {cups} Cups
+          {`Book ${cups} ${unit.charAt(0).toUpperCase() + unit.slice(1)}`}
         </button>
       </div>
     </div>

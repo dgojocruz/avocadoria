@@ -78,17 +78,7 @@ function ProductCard({ item }) {
           fontSize:'56px', background:'rgba(182,197,72,0.06)',
         }}>🥑</div>
 
-        {/* NEW badge */}
-        {item.new && (
-          <span style={{
-            position:'absolute', top:'10px', right:'10px',
-            background:'var(--c-pink)', color:'#fff',
-            fontFamily:'Poppins,sans-serif', fontSize:'10px',
-            fontWeight:'800', letterSpacing:'0.06em',
-            textTransform:'uppercase', padding:'4px 12px',
-            borderRadius:'999px', lineHeight:1.4,
-          }}>NEW</span>
-        )}
+
       </div>
 
       {/* Content */}
@@ -97,16 +87,12 @@ function ProductCard({ item }) {
         flex:1, display:'flex', flexDirection:'column', gap:'8px',
         background:'transparent',
       }}>
-        {item.tags?.length > 0 && (
-          <div style={{ display:'flex', gap:'5px', flexWrap:'wrap' }}>
-            {item.tags.map(t => <TagBadge key={t} tag={t}/>)}
-          </div>
-        )}
+
         <h3 style={{
           fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize:'var(--fs-md)', fontWeight:'normal',
           color:'var(--c-olive)',
-          textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
+          textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
           margin:0, lineHeight:1.2,
         }}>{item.name}</h3>
         <p style={{
@@ -172,7 +158,7 @@ function CategoryCard({ cat, index, onClick }) {
             fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
             fontSize:'clamp(15px,2vw,22px)', fontWeight:'normal',
             color:'var(--c-olive)',
-            textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
+            textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
             margin:'0 0 3px', lineHeight:1.15,
           }}>{cat.name}</p>
           <p style={{
@@ -225,9 +211,9 @@ function CategoryView({ cat, onBack }) {
             fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
             fontSize:'clamp(1.6rem,4vw,2.8rem)', fontWeight:'normal',
             color:'var(--c-olive)', margin:'0 0 6px', lineHeight:1.1,
-            textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
+            textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
           }}>
-            {cat.emoji} {cat.name}
+            {cat.name}
           </h1>
           <p style={{
             fontFamily:'Poppins,sans-serif',
@@ -276,7 +262,6 @@ function CategoryView({ cat, onBack }) {
             </div>
           ) : (
             <div style={{ textAlign:'center', padding:'64px 0' }}>
-              <div style={{ fontSize:'52px', marginBottom:'14px' }}>{cat.emoji}</div>
               <p className="section-sub" style={{ color:'var(--c-brown)' }}>
                 Products coming soon — check back!
               </p>
@@ -342,7 +327,7 @@ export default function MenuPage() {
             fontWeight:'normal',
             fontSize:'clamp(2.4rem,5vw,4.2rem)',
             color:'var(--c-olive)',
-            textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
+            textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
             marginBottom:'10px', lineHeight:1.1,
           }}>
             Our Menu
@@ -472,7 +457,7 @@ export default function MenuPage() {
                     fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                     fontSize:'clamp(1.2rem,2.8vw,2rem)',
                     fontWeight:'normal', color:'var(--c-olive)',
-                    textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
+                    textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                     margin:'0 0 2px', lineHeight:1.1,
                   }}>{featured.name}</p>
                   <p style={{

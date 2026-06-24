@@ -158,10 +158,9 @@ const AVO_CARES = [
 // ═══════════════════════════════════════════════════════════════════════════════
 
 const STROKE = [
-  '-3px -3px 0 #fff', ' 3px -3px 0 #fff',
-  '-3px  3px 0 #fff', ' 3px  3px 0 #fff',
-  '-3px  0   0 #fff', ' 3px  0   0 #fff',
-  ' 0   -3px 0 #fff', ' 0    3px 0 #fff',
+  '-2px -2px 0 #fff', ' 2px -2px 0 #fff',
+  '-2px  2px 0 #fff', ' 2px  2px 0 #fff',
+  ' 0   -2px 0 #fff', ' 0    2px 0 #fff',
   '-2px -2px 0 #fff', ' 2px -2px 0 #fff',
   '-2px  2px 0 #fff', ' 2px  2px 0 #fff',
 ].join(', ')
@@ -327,9 +326,9 @@ function RecognitionsCarousel({ items }) {
         }
         .rec-slide-title {
           font-family: 'BubbleboddyNeue-ExtraBold','Poppins',sans-serif;
-          font-size: clamp(12px,1.4vw,15px);
-          font-weight: normal; color: var(--c-olive);
-          text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff;
+          font-size: clamp(16px,2vw,22px);
+          font-weight: normal; color: #b6c548;
+          text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff;
           margin: 0; line-height: 1.25;
         }
         .rec-slide-org {
@@ -362,7 +361,7 @@ function RecognitionsCarousel({ items }) {
                 alignItems: 'center', justifyContent: 'center',
               }}></div>
               <div className="rec-slide-body">
-                <h3 className="rec-slide-title">{rec.title}</h3>
+                <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(16px,2vw,22px)', color:'#b6c548', textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin:'0 0 6px', lineHeight:1.25 }}>{rec.title}</h3>
                 <p className="rec-slide-org">{rec.issuer}</p>
               </div>
             </div>
@@ -413,7 +412,7 @@ function NewsCard({ post }) {
           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize: 'clamp(14px, 1.5vw, 17px)', fontWeight: 'normal',
           color: 'var(--c-olive)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.3,
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.3,
         }}>{post.title}</h3>
         <p style={{
           fontFamily: 'Poppins,sans-serif', fontSize: '13px',
@@ -681,7 +680,7 @@ export default function AboutPage() {
               fontWeight: 'normal',
               fontSize: 'clamp(2.2rem,5vw,3.8rem)',
               color: 'var(--c-olive)',
-              textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+              textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff',
               margin: '0 0 8px', lineHeight: 1.1,
               whiteSpace: 'nowrap',
             }}>
@@ -729,7 +728,7 @@ export default function AboutPage() {
             fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
             fontSize: 'clamp(1.6rem,4vw,2.8rem)',
             fontWeight: 'normal', color: 'var(--c-olive)',
-            textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+            textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff',
             margin: '0 0 8px', lineHeight: 1.1,
           }}>Our Story</h2>
 
@@ -775,7 +774,7 @@ export default function AboutPage() {
                     fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                     fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)',
                     fontWeight: 'normal', color: 'var(--c-olive)',
-                    textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
+                    textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                     margin: '0 0 6px', lineHeight: 1.1,
                   }}>Chef Czarina Sevilla</p>
                   <p style={{
@@ -815,7 +814,7 @@ export default function AboutPage() {
                       fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                       fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
                       fontWeight: 'normal', color: 'var(--c-olive)',
-                    textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
+                    textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                       margin: '0 0 10px', lineHeight: 1.2,
                     }}>{sec.title}</h3>
                     <p style={{
@@ -849,7 +848,7 @@ export default function AboutPage() {
             <SectionLabel text="Awards & Recognitions" color="var(--c-olive)" />
             <h2 style={{
               fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-              fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
+              fontSize: 'clamp(2.2rem, 5vw, 3.8rem)',
               fontWeight: 'normal', color: 'var(--c-olive)',
               textShadow: STROKE,
               margin: '0 0 10px', lineHeight: 1.1,
@@ -898,8 +897,8 @@ export default function AboutPage() {
             <h3 style={{
               fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontSize: 'clamp(1.4rem,3.5vw,2.4rem)',
-              fontWeight: 'normal', color: 'var(--c-olive)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
+              fontWeight: 'normal', color: '#b6c548',
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
               margin: '0 0 8px', lineHeight: 1.15,
             }}>{RECOGNITIONS[0].title}</h3>
             <p style={{
@@ -935,7 +934,7 @@ export default function AboutPage() {
                 fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                 fontSize: 'clamp(1.6rem,4vw,2.8rem)',
                 fontWeight: 'normal', color: 'var(--c-olive)',
-                textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+                textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff',
                 margin: '0 0 8px', lineHeight: 1.1,
               }}>Latest from Avocadoria</h2>
               <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'var(--c-brown)', margin: 0 }}>
@@ -962,7 +961,7 @@ export default function AboutPage() {
               fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
               fontSize: 'clamp(1.6rem,4vw,2.8rem)',
               fontWeight: 'normal', color: 'var(--c-olive)',
-              textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+              textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff',
               margin: '0 0 8px', lineHeight: 1.1,
             }}>Spreading Happiness Beyond Our Cups</h2>
             <p style={{
@@ -1015,7 +1014,7 @@ export default function AboutPage() {
                     fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                     fontSize: 'clamp(14px, 1.5vw, 18px)', fontWeight: 'normal',
                     color: 'var(--c-olive)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.3,
+              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.3,
                   }}>{item.title}</h3>
                   <p style={{
                     fontFamily: 'Poppins,sans-serif', fontSize: '13px',
