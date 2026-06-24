@@ -867,7 +867,7 @@ export default function OurStoresPage() {
               Find Your Avocadoria
             </h1>
             <p style={{
-              fontSize: '16px', color: `${C.brown}cc`,
+              fontSize: '24px', color: `${C.brown}cc`,
               maxWidth: '400px', margin: '0 auto 36px',
               lineHeight: '1.7',
             }}>
@@ -904,8 +904,8 @@ export default function OurStoresPage() {
                   onMouseEnter={e => { e.currentTarget.style.background = C.olive; e.currentTarget.style.borderColor = C.olive; e.currentTarget.querySelector('.pill-n').style.color = '#fff'; e.currentTarget.querySelector('.pill-l').style.color = 'rgba(255,255,255,0.85)' }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.7)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.9)'; e.currentTarget.querySelector('.pill-n').style.color = C.dark; e.currentTarget.querySelector('.pill-l').style.color = `${C.brown}99` }}
                 >
-                  <span className="pill-n" style={{ fontSize: '20px', fontWeight: '800', color: C.dark, transition: 'color 0.2s' }}>{s.n}</span>
-                  <span className="pill-l" style={{ fontSize: '12px', color: `${C.brown}99`, marginLeft: '6px', fontWeight: '600', transition: 'color 0.2s' }}>{s.l}</span>
+                  <span className="pill-n" style={{ fontSize: '28px', fontWeight: '800', color: C.dark, transition: 'color 0.2s' }}>{s.n}</span>
+                  <span className="pill-l" style={{ fontSize: '18px', color: `${C.brown}99`, marginLeft: '6px', fontWeight: '600', transition: 'color 0.2s' }}>{s.l}</span>
                 </button>
               ))}
             </div>
@@ -918,7 +918,7 @@ export default function OurStoresPage() {
                 display: 'inline-flex', alignItems: 'center', gap: '10px',
                 background: phase === 'locating' ? `${C.olive}80` : C.olive,
                 color: '#fff', border: 'none', borderRadius: '999px',
-                padding: '15px 36px', fontSize: '17px', fontWeight: '800',
+                padding: '15px 36px', fontSize: '28px', fontWeight: '800',
                 cursor: phase === 'locating' ? 'not-allowed' : 'pointer',
                 fontFamily: "'Poppins',sans-serif",
                 boxShadow: `0 8px 28px rgba(182,197,72,.45)`,
@@ -958,7 +958,7 @@ export default function OurStoresPage() {
             <div style={{ position: 'relative', width: '100%', maxWidth: '420px', margin: '0 auto' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px' }}>
                 <div style={{ flex: 1, height: '1px', background: 'rgba(138,95,60,.2)' }} />
-                <span style={{ fontSize: '12px', color: `${C.brown}80`, fontWeight: '600' }}>or search manually</span>
+                <span style={{ fontSize: '18px', color: `${C.brown}80`, fontWeight: '600' }}>or search manually</span>
                 <div style={{ flex: 1, height: '1px', background: 'rgba(138,95,60,.2)' }} />
               </div>
               <div style={{ position: 'relative' }}>
@@ -975,7 +975,7 @@ export default function OurStoresPage() {
                     width: '100%', padding: '13px 16px 13px 40px',
                     border: `1.5px solid rgba(182,197,72,.4)`,
                     borderRadius: '12px', background: 'rgba(255,255,255,.85)',
-                    fontFamily: "'Poppins',sans-serif", fontSize: '14px', color: C.brown,
+                    fontFamily: "'Poppins',sans-serif", fontSize: '18px', color: C.brown,
                     outline: 'none', boxSizing: 'border-box', transition: 'border-color .2s',
                     backdropFilter: 'blur(6px)',
                   }}
@@ -1320,7 +1320,7 @@ export default function OurStoresPage() {
                                       </div>
                                       <div style={{ flex: 1, minWidth: 0 }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}>
-                                          <span style={{ fontSize: '13px', fontWeight: isActive ? '700' : '600', color: isActive ? C.dark : C.brown, fontFamily: "'Poppins',sans-serif", lineHeight: '1.35' }}>
+                                          <span style={{ fontSize: '24px', fontWeight: isActive ? '700' : '600', color: isActive ? C.dark : C.brown, fontFamily: "'Poppins',sans-serif", lineHeight: '1.35' }}>
                                             {b.name}
                                           </span>
                                           {isNearest && <span style={{ fontSize: '9px', background: C.olive, color: '#fff', padding: '2px 6px', borderRadius: '99px', fontWeight: '700', flexShrink: 0 }}>Nearest</span>}
@@ -1378,13 +1378,13 @@ export default function OurStoresPage() {
                         }
                         <h2 style={{
                           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-                          fontSize: '20px', fontWeight: 'normal',
+                          fontSize: '24px', fontWeight: 'normal',
                           color: C.dark, textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: 0, lineHeight: '1.2',
                         }}>
                           {activeBranch.name}
                         </h2>
                       </div>
-                      <p style={{ fontSize: '13px', color: `${C.brown}99`, margin: '0 0 14px', lineHeight: '1.5', fontFamily: "'Poppins',sans-serif" }}>
+                      <p style={{ fontSize: '18px', color: `${C.brown}99`, margin: '0 0 14px', lineHeight: '1.5', fontFamily: "'Poppins',sans-serif" }}>
                         📍 {activeBranch.address}
                       </p>
                       {/* Distance from user */}

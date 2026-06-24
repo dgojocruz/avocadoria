@@ -217,14 +217,14 @@ function StatCard({ stat, trigger }) {
       }}>{val || stat.num}</div>
       <div style={{
         fontFamily: 'Poppins,sans-serif',
-        fontSize: '11px', color: 'var(--c-dark)',
+        fontSize: '12px', color: 'var(--c-dark)',
         marginTop: '6px', letterSpacing: '0.06em', textTransform: 'uppercase',
       }}>{stat.label}</div>
     </div>
   )
 }
 
-function SectionLabel({ text, color = 'var(--c-pink)' }) {
+function SectionLabel({ text, color = 'var(--c-pink)', style: overrideStyle = {} }) {
   return (
     <p style={{
       fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
@@ -235,6 +235,7 @@ function SectionLabel({ text, color = 'var(--c-pink)' }) {
       textTransform: 'uppercase',
       margin: '0 0 10px',
       textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff',
+      ...overrideStyle,
     }}>{text}</p>
   )
 }
@@ -333,7 +334,7 @@ function RecognitionsCarousel({ items }) {
         }
         .rec-slide-org {
           font-family: 'Poppins',sans-serif;
-          font-size: clamp(10px,1vw,12px);
+          font-size: 12px;
           color: var(--c-brown); margin: 0;
         }
 
@@ -361,7 +362,7 @@ function RecognitionsCarousel({ items }) {
                 alignItems: 'center', justifyContent: 'center',
               }}></div>
               <div className="rec-slide-body">
-                <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(16px,2vw,22px)', color:'#b6c548', textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin:'0 0 6px', lineHeight:1.25 }}>{rec.title}</h3>
+                <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'24px', color:'#b6c548', textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin:'0 0 6px', lineHeight:1.25 }}>{rec.title}</h3>
                 <p className="rec-slide-org">{rec.issuer}</p>
               </div>
             </div>
@@ -392,7 +393,7 @@ function NewsCard({ post }) {
     >
       {/* Image / placeholder */}
       <div style={{
-        width: '100%', height: '160px', overflow: 'hidden',
+        width: '100%', height: '320px', overflow: 'hidden',
         background: 'linear-gradient(135deg, rgba(182,197,72,0.15), rgba(58,107,53,0.08))',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
@@ -403,19 +404,18 @@ function NewsCard({ post }) {
       </div>
       <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
-
-          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.7)' }}>
+          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.7)' }}>
             {fmt(post.date)}
           </span>
         </div>
         <h3 style={{
           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-          fontSize: 'clamp(14px, 1.5vw, 17px)', fontWeight: 'normal',
+          fontSize: '24px', fontWeight: 'normal',
           color: 'var(--c-olive)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.3,
+          textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.3,
         }}>{post.title}</h3>
         <p style={{
-          fontFamily: 'Poppins,sans-serif', fontSize: '13px',
+          fontFamily: 'Poppins,sans-serif', fontSize: '18px',
           color: 'var(--c-brown)', lineHeight: 1.65, margin: 0, flex: 1,
         }}>{post.excerpt}</p>
       </div>
@@ -520,8 +520,8 @@ export default function AboutPage() {
 
         .about-news-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 20px;
+          grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+          gap: 28px;
         }
 
         .about-cares-grid {
@@ -605,7 +605,7 @@ export default function AboutPage() {
 
         .about-founder-para {
           font-family: 'Poppins',sans-serif;
-          font-size: clamp(15px, 1.6vw, 19px);
+          font-size: 18px;
           color: var(--c-dark);
           line-height: 1.75;
           margin: 0 0 clamp(16px, 2.5vw, 24px);
@@ -633,6 +633,7 @@ export default function AboutPage() {
           .about-news-grid  { grid-template-columns: 1fr; }
           .about-cares-grid { grid-template-columns: 1fr; }
           .about-stat-card  { min-width: 110px; }
+          .about-story-3col { grid-template-columns: 1fr !important; }
         }
       `}</style>
 
@@ -660,7 +661,7 @@ export default function AboutPage() {
         }} />
 
         {/* Content */}
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: '720px', margin: '0 auto' }}>
+        <div style={{ position: 'relative', zIndex: 2 }}>
 
           {/* Est. badge */}
           <div className="about-hero-text">
@@ -668,7 +669,7 @@ export default function AboutPage() {
             {/* Tagline quote */}
             <p style={{
               fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-              fontSize: 'clamp(13px, 1.4vw, 16px)',
+              fontSize: '48px',
               color: 'var(--c-olive)',
               margin: '0 0 10px', letterSpacing: '0.03em',
               textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff',
@@ -690,7 +691,7 @@ export default function AboutPage() {
           <div className="about-hero-sub">
             <p style={{
               fontFamily: 'Poppins,sans-serif',
-              fontSize: 'clamp(14px, 1.6vw, 18px)',
+              fontSize: '18px',
               color: 'var(--c-dark)',
               maxWidth: '560px', margin: '0 auto 40px',
               lineHeight: 1.7,
@@ -720,7 +721,7 @@ export default function AboutPage() {
       ══════════════════════════════════════════════════════════════ */}
       <div id="our-story" className="about-section" style={{ position:'relative', overflow:'hidden', padding: 'clamp(52px,7vw,88px) clamp(20px,5vw,72px)', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
         <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
-        <div style={{ position:'relative', zIndex:1, maxWidth: '1160px', margin: '0 auto' }}>
+        <div style={{ position:'relative', zIndex:1 }}>
 
           {/* ── "Our Story" heading — top-left, bold, dark green, matches slide ── */}
           <h2 style={{
@@ -787,9 +788,9 @@ export default function AboutPage() {
             </div>
           </div>
           <div style={{ marginTop: 'clamp(48px, 7vw, 72px)' }}>
-            <div style={{
+            <div className="about-story-3col" style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gridTemplateColumns: 'repeat(3, 1fr)',
               gap: '20px',
             }}>
               {STORY_SECTIONS.filter(s => s.id !== 'beginning').map((sec, i) => (
@@ -811,14 +812,14 @@ export default function AboutPage() {
                     </div>
                     <h3 style={{
                       fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-                      fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
+                      fontSize: '24px',
                       fontWeight: 'normal', color: 'var(--c-olive)',
                     textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                       margin: '0 0 10px', lineHeight: 1.2,
                     }}>{sec.title}</h3>
                     <p style={{
                       fontFamily: 'Poppins,sans-serif',
-                      fontSize: '15px', lineHeight: 1.8,
+                      fontSize: '18px', lineHeight: 1.8,
                       color: 'var(--c-brown)', margin: 0,
                     }}>{sec.body}</p>
                   </div>
@@ -840,7 +841,7 @@ export default function AboutPage() {
         <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
         <div style={{ display: 'none' }} />
 
-        <div style={{ position: 'relative', zIndex: 2, maxWidth: '1000px', margin: '0 auto', padding: 'clamp(48px,7vw,80px) clamp(16px,4vw,48px)' }}>
+        <div style={{ position: 'relative', zIndex: 2, padding: 'clamp(48px,7vw,80px) clamp(16px,4vw,48px)' }}>
 
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: 'clamp(28px,4vw,44px)' }}>
@@ -925,10 +926,10 @@ export default function AboutPage() {
         backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
       }}>
         <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
-        <div style={{ position:'relative', zIndex:1, maxWidth: '1100px', margin: '0 auto' }}>
+        <div style={{ position:'relative', zIndex:1 }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '36px' }}>
             <div>
-              <SectionLabel text="What's New" color="var(--c-pink)" />
+              <SectionLabel text="What's New" color="var(--c-pink)" style={{ fontSize: 'clamp(2rem,5vw,3rem)' }} />
               <h2 style={{
                 fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                 fontSize: 'clamp(1.6rem,4vw,2.8rem)',
@@ -936,7 +937,7 @@ export default function AboutPage() {
                 textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff',
                 margin: '0 0 8px', lineHeight: 1.1,
               }}>Latest from Avocadoria</h2>
-              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'var(--c-brown)', margin: 0 }}>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '18px', color: 'var(--c-brown)', margin: 0 }}>
                 New branches, products, and announcements.
               </p>
             </div>
@@ -953,7 +954,7 @@ export default function AboutPage() {
       ══════════════════════════════════════════════════════════════ */}
       <div id="avo-cares" className="about-section" style={{ position:'relative', overflow:'hidden', padding: 'clamp(52px,8vw,88px) clamp(20px,5vw,72px)', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
         <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
-        <div style={{ position:'relative', zIndex:1, maxWidth: '1100px', margin: '0 auto' }}>
+        <div style={{ position:'relative', zIndex:1, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '44px' }}>
             <SectionLabel text="Avo Cares" color="var(--c-dark)" />
             <h2 style={{
@@ -1005,18 +1006,18 @@ export default function AboutPage() {
                   <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                     <span style={{ fontSize: '20px' }}>{item.icon}</span>
 
-                    <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.7)' }}>
+                    <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.7)' }}>
                       {fmt(item.date)}
                     </span>
                   </div>
                   <h3 style={{
                     fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-                    fontSize: 'clamp(14px, 1.5vw, 18px)', fontWeight: 'normal',
+                    fontSize: '24px', fontWeight: 'normal',
                     color: 'var(--c-olive)',
               textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.3,
                   }}>{item.title}</h3>
                   <p style={{
-                    fontFamily: 'Poppins,sans-serif', fontSize: '13px',
+                    fontFamily: 'Poppins,sans-serif', fontSize: '18px',
                     color: 'var(--c-brown)', lineHeight: 1.7, margin: 0,
                   }}>{item.excerpt}</p>
                 </div>
