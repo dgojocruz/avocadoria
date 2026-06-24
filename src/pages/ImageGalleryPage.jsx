@@ -68,7 +68,7 @@ export default function ImageGalleryPage() {
 
   return (
     <>
-      <SEO title="Image Gallery" description="Browse photos from Avocadoria franchise events, grand openings, and community moments." path="/gallery/photos" />
+      <SEO title="Snapshots" description="Browse photos from Avocadoria franchise events, grand openings, and community moments." path="/gallery/photos" />
       <div className="page-enter">
 
         {/* HERO */}
@@ -82,7 +82,7 @@ export default function ImageGalleryPage() {
                 <circle cx="18" cy="7" r="1.2" fill="#3a6b35"/>
               </svg>
             </div>
-            <h1 style={HEADING_STYLE}>Image Gallery</h1>
+            <h1 style={HEADING_STYLE}>Snapshots</h1>
             <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'13px', color:'rgba(138,95,60,0.8)', marginBottom:'24px' }}>
               Photos from our grand openings, franchise events, and behind-the-scenes moments.
             </p>

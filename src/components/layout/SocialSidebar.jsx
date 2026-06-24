@@ -352,15 +352,15 @@ export default function SocialSidebar() {
           boxShadow: 'inset 1px 1px 2px rgba(0,0,0,0.1)',
         }}/>
 
-        {/* Video Gallery */}
-        <IconBtn href="/gallery/videos" ariaLabel="Video Gallery">
+        {/* Highlights */}
+        <IconBtn href="/gallery/videos" ariaLabel="Highlights">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style={iconSz}>
             <polygon points="6,3 21,12 6,21"/>
           </svg>
         </IconBtn>
 
-        {/* Image Gallery */}
-        <IconBtn href="/gallery/photos" ariaLabel="Image Gallery">
+        {/* Snapshots */}
+        <IconBtn href="/gallery/photos" ariaLabel="Snapshots">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={iconSz}>
             <rect x="3" y="5" width="18" height="14" rx="2.5"/>
             <circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/>

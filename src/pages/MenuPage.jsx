@@ -116,7 +116,7 @@ function CategoryCard({ cat, index, onClick }) {
       onMouseLeave={() => setHov(false)}
       style={{
         borderRadius:'20px', overflow:'hidden',
-        cursor:'pointer', position:'relative', aspectRatio:'16/9',
+        cursor:'pointer', position:'relative', aspectRatio:'4/3',
         background: '#e8edcc',
         boxShadow: hov
           ? '0 16px 48px rgba(58,107,53,0.22)'
@@ -124,12 +124,12 @@ function CategoryCard({ cat, index, onClick }) {
         transition:'box-shadow 0.25s ease',
       }}
     >
-      {/* Cover image — objectFit cover, position tuned per category */}
+      {/* Cover image — objectFit contain so full image is visible */}
       {cat.cover
         ? <img src={cat.cover} alt={cat.name} style={{
             position:'absolute', inset:0,
             width:'100%', height:'100%',
-            objectFit:'cover',
+            objectFit:'contain',
             objectPosition: cat.coverPos || 'center center',
             transition:'transform 0.5s ease',
             transform: hov ? 'scale(1.06)' : 'scale(1)',
@@ -247,15 +247,14 @@ function CategoryView({ cat, onBack }) {
 
       {/* Products */}
       <div style={{
-        maxWidth:'1200px', margin:'0 auto',
-        padding:'28px clamp(20px,4vw,48px) 80px',
+        padding:'28px clamp(16px,3vw,40px) 80px',
       }}>
         {cat.items.length > 0
           ? (
             <div style={{
               display:'grid',
-              gridTemplateColumns:'repeat(auto-fill, minmax(220px, 1fr))',
-              gap:'20px',
+              gridTemplateColumns:'repeat(auto-fill, minmax(360px, 1fr))',
+              gap:'24px',
             }}>
               {cat.items.map(item => <ProductCard key={item.id} item={item}/>)}
             </div>
@@ -313,7 +312,7 @@ export default function MenuPage() {
         {/* ── Hero — full video background ── */}
         <div style={{
           position:'relative', overflow:'hidden',
-          height:'clamp(420px,70vh,700px)',
+          height:'clamp(520px,85vh,900px)',
         }}>
           {/* Poster fallback — behind video */}
           <img
@@ -402,8 +401,7 @@ export default function MenuPage() {
         <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
         <div style={{
           position:'relative', zIndex:1,
-          maxWidth:'1280px', margin:'0 auto',
-          padding:'clamp(24px,4vw,48px) clamp(20px,4vw,48px) 80px',
+          padding:'clamp(24px,4vw,48px) clamp(16px,3vw,40px) 80px',
         }}>
 
           {/* Featured — full width like Mesa */}
@@ -411,7 +409,7 @@ export default function MenuPage() {
             onClick={() => setActiveCat(featured)}
             style={{
               position:'relative', width:'100%',
-              height:'clamp(220px,36vw,480px)',
+              height:'clamp(280px,42vw,580px)',
               borderRadius:'24px', overflow:'hidden',
               cursor:'pointer', marginBottom:'20px',
               boxShadow:'0 4px 24px rgba(58,107,53,0.12)',

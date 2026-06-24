@@ -95,7 +95,7 @@ export const CATEGORIES = [
   // ── 2. SOFT SERVE ──────────────────────────────────────────────────────────
   {
     id:       'soft-serve',
-    name:     'Soft Serve Menu',
+    name:     'Soft Serve',
     emoji:    '🍦',
     tagline:  'Velvety avocado soft-serve — pure, light and irresistibly smooth.',
     cover:    '/menu/Soft Serve Menu/naked-cover.webp',
@@ -147,8 +147,8 @@ export const CATEGORIES = [
 
   // ── 3. AVOCADO SHAKES ──────────────────────────────────────────────────────
   {
-    id:       'shakes',
-    name:     'Avocado Shakes',
+    id:       'avocado-shake',
+    name:     'Avocado Shake',
     emoji:    '🥤',
     tagline:  'Thick, creamy, and packed with real avocado — the perfect refreshment.',
     cover:    '/menu/Avocado Shakes/avo-shake-cover.webp',
@@ -169,14 +169,6 @@ export const CATEGORIES = [
         image: '/menu/Avocado Shakes/mango-shake.webp',
         tags:  ['Tropical'],
         new:   false,
-      },
-      {
-        id:    'barley-shake',
-        name:  'Barley Shake',
-        desc:  'Refreshing avocado shake with barley — light, nutritious and satisfying.',
-        image: '/menu/Avocado Shakes/barley-shake.webp',
-        tags:  ['Light'],
-        new:   true,
       },
       {
         id:    'dark-choco-shake',
@@ -202,122 +194,18 @@ export const CATEGORIES = [
         tags:  ['Tropical'],
         new:   false,
       },
-      {
-        id:    'keto-shake',
-        name:  'Keto Shake',
-        desc:  'Pure avocado keto shake — low-carb, no sugar added, topped with seeds and nuts.',
-        image: '/menu/Avocado Shakes/keto-shake.webp',
-        tags:  ['Keto'],
-        new:   false,
-      },
-      {
-        id:    'coconut-keto-shake',
-        name:  'Coconut Keto Shake',
-        desc:  'A guilt-free blend of avocado and coconut — low-carb, keto-friendly and delicious.',
-        image: '/menu/Avocado Shakes/coconut-keto-shake.webp',
-        tags:  ['Keto'],
-        new:   false,
-      },
       // ↑ ADD MORE SHAKES HERE
     ],
   },
 
   // ── 4. POPSICLES ────────────────────────────────────────────────────────────
   {
-    id:       'popsicles',
-    name:     'Popsicles',
-    emoji:    '🍡',
-    tagline:  'Avocado ice cream bars coated in premium chocolate and nutty toppings — happiness on a stick.',
-    cover:    '/menu/Popsicles/senyorita-matcha.webp',
-    coverPos: 'center 60%',
-    featured: false,
-    items: [
-    ],
-  },
-
-  // ── 5. COFFEE ──────────────────────────────────────────────────────────────
-  {
-    id:       'coffee',
-    name:     'Coffee',
-    emoji:    '☕',
-    tagline:  'Premium coffee blends to pair perfectly with your avocado treat.',
-    cover:    '/menu/coffee/Coffee_Hot.webp',
-    coverPos: 'center 30%',
-    featured: false,
-    items: [
-
-
-      {
-        id:    'hot-coffee',
-        name:  'Hot Coffee',
-        desc:  'Freshly brewed hot coffee served in the iconic Avocadoria cup — warm, rich and satisfying.',
-        image: '/menu/coffee/Coffee_Hot.webp',
-        tags:  [],
-        new:   false,
-      },
-      {
-        id:    'iced-coffee',
-        name:  'Iced Coffee',
-        desc:  'Chilled coffee over ice served in the iconic Avocadoria cup — cool, bold and refreshing.',
-        image: '/menu/coffee/Coffee_Iced.webp',
-        tags:  [],
-        new:   false,
-      },
-      // ↑ ADD MORE COFFEE HERE
-    ],
-  },
-
-  // ── 6. OTHERS ──────────────────────────────────────────────────────────────
-  {
-    id:       'others',
-    name:     'Others',
-    emoji:    '🥑',
-    tagline:  'More avocado goodness — unique treats, snacks and seasonal specials.',
-    cover:    '/menu/Others/nachos.webp',
-    coverPos: 'center 55%',
-    featured: false,
-    items: [
-      {
-        id:    'dream',
-        name:  'Avo Dream',
-        desc:  'Fresh avocado half filled with silky avocado cream — a dreamy, indulgent treat served in its own shell.',
-        image: '/menu/Others/dream.webp',
-        tags:  ['Signature'],
-        new:   false,
-      },
-      {
-        id:    'inipit',
-        name:  'Inipit',
-        desc:  'Soft and fluffy Filipino sponge cake sandwich filled with rich avocado cream. A local classic reimagined.',
-        image: '/menu/Others/inipit.webp',
-        tags:  ['Local Fave'],
-        new:   false,
-      },
-      {
-        id:    'nachos',
-        name:  'Avo Nachos',
-        desc:  'Crispy nachos loaded with fresh guacamole, cheese sauce, salsa and toppings — the ultimate avocado snack.',
-        image: '/menu/Others/nachos.webp',
-        tags:  ['Snack'],
-        new:   false,
-      },
-
-
-
-
-
-
-      // ↑ ADD MORE OTHERS HERE
-    ],
-  },
-  // ── 7. AVOCADO CAKES ───────────────────────────────────────────────────────
-  {
-    id:       'cakes',
-    name:     'Avocado Cakes',
-    emoji:    '🎂',
-    tagline:  'Celebrate every occasion with our indulgent avocado cakes.',
+    id:       'avocado-tin-cans',
+    name:     'Avocado Tin Cans',
+    emoji:    '🥫',
+    tagline:  'Indulgent avocado cakes in convenient tin packaging — perfect for gifting and sharing.',
     cover:    '/menu/Avocado cakes/big-tin-cheesecake.webp',
-    coverPos: 'center 40%',
+    coverPos: 'center center',
     featured: false,
     items: [
       {
@@ -368,7 +256,177 @@ export const CATEGORIES = [
         tags:  ['Small Tin', 'Frozen'],
         new:   false,
       },
-      // ↑ ADD MORE CAKES HERE
+      // ↑ ADD MORE TIN CANS HERE
+    ],
+  },
+
+  // ── 5. POPSICLES ────────────────────────────────────────────────────────────
+  {
+    id:       'popsicles',
+    name:     'Popsicles',
+    emoji:    '🍡',
+    tagline:  'Avocado ice cream bars coated in premium chocolate and nutty toppings — happiness on a stick.',
+    cover:    '/menu/Popsicles/popsicle-cover-horizontal.webp',
+    coverPos: 'center center',
+    featured: false,
+    items: [
+      {
+        id:    'senyorita-matcha',
+        name:  'Señorita Matcha',
+        desc:  'Creamy avocado popsicle coated in matcha chocolate — smooth, earthy and indulgent.',
+        image: '/menu/Popsicles/senyorita-matcha.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'senyorita-choc',
+        name:  'Señorita Chocolate',
+        desc:  'Classic avocado popsicle dipped in rich milk chocolate coating.',
+        image: '/menu/Popsicles/senyorita-choc.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'senyorita-dark-choc',
+        name:  'Señorita Dark Chocolate',
+        desc:  'Avocado popsicle coated in premium dark chocolate for a bittersweet finish.',
+        image: '/menu/Popsicles/senyorita-dark-choc.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'senyorita-white-choc',
+        name:  'Señorita White Chocolate',
+        desc:  'Smooth avocado popsicle wrapped in creamy white chocolate coating.',
+        image: '/menu/Popsicles/senyorita-white-choc.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'senyorita-strawberry',
+        name:  'Señorita Strawberry',
+        desc:  'Avocado popsicle coated in sweet strawberry chocolate — fruity and refreshing.',
+        image: '/menu/Popsicles/senyorita-strawberry.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'senyorita-biscoff',
+        name:  'Señorita Biscoff',
+        desc:  'Avocado popsicle coated in Biscoff caramel — rich, crunchy and irresistible.',
+        image: '/menu/Popsicles/senyorita-biscoff.webp',
+        tags:  [],
+        new:   false,
+      },
+      // ↑ ADD MORE POPSICLES HERE
+    ],
+  },
+
+  // ── 6. HEALTHY SERIES ───────────────────────────────────────────────────────
+  {
+    id:       'healthy-series',
+    name:     'Healthy Series',
+    emoji:    '🌿',
+    tagline:  'Nourishing avocado-based drinks and treats — good for the body, great for the soul.',
+    cover:    '/menu/Avocado Shakes/keto-shake.webp',
+    coverPos: 'center center',
+    featured: false,
+    items: [
+
+
+      {
+        id:    'hot-coffee',
+        name:  'Hot Coffee',
+        desc:  'Freshly brewed hot coffee served in the iconic Avocadoria cup — warm, rich and satisfying.',
+        image: '/menu/coffee/Coffee_Hot.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'iced-coffee',
+        name:  'Iced Coffee',
+        desc:  'Chilled coffee over ice served in the iconic Avocadoria cup — cool, bold and refreshing.',
+        image: '/menu/coffee/Coffee_Iced.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'barley-shake',
+        name:  'Barley Shake',
+        desc:  'Refreshing avocado shake with barley — light, nutritious and satisfying.',
+        image: '/menu/Avocado Shakes/barley-shake.webp',
+        tags:  ['Light'],
+        new:   true,
+      },
+      {
+        id:    'keto-shake',
+        name:  'Keto Shake',
+        desc:  'Pure avocado keto shake — low-carb, no sugar added, topped with seeds and nuts.',
+        image: '/menu/Avocado Shakes/keto-shake.webp',
+        tags:  ['Keto'],
+        new:   false,
+      },
+      {
+        id:    'coconut-keto-shake',
+        name:  'Coconut Keto Shake',
+        desc:  'A guilt-free blend of avocado and coconut — low-carb, keto-friendly and delicious.',
+        image: '/menu/Avocado Shakes/coconut-keto-shake.webp',
+        tags:  ['Keto'],
+        new:   false,
+      },
+      // ↑ ADD MORE HEALTHY SERIES HERE
+    ],
+  },
+
+  // ── 6. OTHERS ──────────────────────────────────────────────────────────────
+  {
+    id:       'avo-signature',
+    name:     'Avo Signature',
+    emoji:    '🥑',
+    tagline:  'Avocadoria originals — unique creations you won\'t find anywhere else.',
+    cover:    '/menu/Others/inipit.webp',
+    coverPos: 'center 55%',
+    featured: false,
+    items: [
+      {
+        id:    'dream',
+        name:  'Avo Dream',
+        desc:  'Fresh avocado half filled with silky avocado cream — a dreamy, indulgent treat served in its own shell.',
+        image: '/menu/Others/dream.webp',
+        tags:  ['Signature'],
+        new:   false,
+      },
+      {
+        id:    'inipit',
+        name:  'Inipit',
+        desc:  'Soft and fluffy Filipino sponge cake sandwich filled with rich avocado cream. A local classic reimagined.',
+        image: '/menu/Others/inipit.webp',
+        tags:  ['Local Fave'],
+        new:   false,
+      },
+
+      // ↑ ADD MORE OTHERS HERE
+    ],
+  },
+  // ── 7. FOOD ────────────────────────────────────────────────────────────────
+  {
+    id:       'food',
+    name:     'Food',
+    emoji:    '🍽️',
+    tagline:  'Hearty avocado-infused food — from cakes to savory bites, all made with love.',
+    cover:    '/menu/Others/nachos.webp',
+    coverPos: 'center 55%',
+    featured: false,
+    items: [
+      {
+        id:    'nachos',
+        name:  'Avo Nachos',
+        desc:  'Crispy nachos loaded with fresh guacamole, cheese sauce, salsa and toppings — the ultimate avocado snack.',
+        image: '/menu/Others/nachos.webp',
+        tags:  ['Snack'],
+        new:   false,
+      },
+      // ↑ ADD FOOD ITEMS HERE
     ],
   },
 

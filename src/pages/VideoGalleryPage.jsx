@@ -99,7 +99,7 @@ export default function VideoGalleryPage() {
   return (
     <>
       <SEO
-        title="Video Gallery"
+        title="Highlights"
         description="Watch Avocadoria franchise events, grand openings, and franchisee stories."
         path="/gallery/videos"
       />
@@ -115,7 +115,7 @@ export default function VideoGalleryPage() {
                 <polygon points="6,3 21,12 6,21" fill="#fff" />
               </svg>
             </div>
-            <h1 style={HEADING_STYLE}>Video Gallery</h1>
+            <h1 style={HEADING_STYLE}>Highlights</h1>
             <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'13px', color:'rgba(138,95,60,0.8)', marginBottom:'24px' }}>
               Grand openings, franchise events, and stories from our growing Avocadoria family.
             </p>

@@ -44,6 +44,15 @@ const SOCIAL_LINKS = [
   },
 ]
 
+const COL_LABEL = {
+  fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+  fontSize: '16px', fontWeight: 'normal',
+  color: '#b6c548',
+  textShadow: '-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff',
+  letterSpacing: '0.08em', textTransform: 'uppercase',
+  margin: '0 0 14px',
+}
+
 export default function Footer() {
   const year = new Date().getFullYear()
   const [open, setOpen] = useState(false)
@@ -57,39 +66,6 @@ export default function Footer() {
       borderTop: '1px solid rgba(182,197,72,0.25)',
     }}>
       <style>{`
-        .footer-dropdown {
-          position: relative;
-          display: inline-block;
-        }
-        .footer-dropdown-menu {
-          position: absolute;
-          bottom: calc(100% + 8px);
-          left: 50%;
-          transform: translateX(-50%);
-          background: rgba(255,255,255,0.96);
-          backdropFilter: blur(12px);
-          border: 1.5px solid rgba(182,197,72,0.25);
-          border-radius: 16px;
-          padding: 8px 0;
-          min-width: 180px;
-          box-shadow: 0 -8px 32px rgba(58,107,53,0.12);
-          z-index: 100;
-        }
-        .footer-dropdown-item {
-          display: block;
-          padding: 9px 20px;
-          font-family: Poppins,sans-serif;
-          font-size: 13px;
-          font-weight: 600;
-          color: #8A5F3C;
-          text-decoration: none;
-          transition: background 0.15s, color 0.15s;
-          text-align: left;
-        }
-        .footer-dropdown-item:hover {
-          background: rgba(182,197,72,0.12);
-          color: #b6c548;
-        }
         .footer-social-btn {
           width: 38px; height: 38px;
           border-radius: 50%;
@@ -104,183 +80,126 @@ export default function Footer() {
           background: #3a6b35;
           transform: scale(1.1);
         }
-        /* Footer nav — responsive */
-        .footer-nav-desktop {
-          display: none;
-          flex-wrap: wrap;
-          align-items: center;
-          justify-content: center;
-          gap: 8px 4px;
-        }
-        .footer-nav-link {
+        .footer-ql-link {
+          display: block;
           font-family: Poppins,sans-serif;
-          font-size: 14px;
-          font-weight: 700;
+          font-size: 15px; font-weight: 600;
           color: #8A5F3C;
           text-decoration: none;
-          padding: 6px 14px;
-          border-radius: 999px;
-          transition: all 0.18s;
-          white-space: nowrap;
+          padding: 4px 0;
+          transition: color 0.18s;
         }
-        .footer-nav-link:hover {
-          background: rgba(182,197,72,0.18);
-          color: #3a6b35;
+        .footer-ql-link:hover { color: #b6c548; }
+
+        /* Multi-col grid */
+        .footer-grid {
+          display: grid;
+          grid-template-columns: auto 1fr 1fr 1fr auto;
+          gap: 40px;
+          align-items: start;
+          width: 100%;
+          padding: 48px 60px 40px;
         }
-        @media (min-width: 768px) {
-          .footer-nav-desktop { display: flex; }
-          .footer-nav-mobile  { display: none; }
+        @media (max-width: 900px) {
+          .footer-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            padding: 40px 24px;
+          }
+          .footer-col-logo { grid-column: 1 / -1; text-align: center; }
+          .footer-col-dpo  { grid-column: 1 / -1; display: flex; justify-content: center; }
+        }
+        @media (max-width: 560px) {
+          .footer-grid { grid-template-columns: 1fr; }
+          .footer-col-logo { text-align: center; }
+          .footer-col-dpo  { justify-content: center; }
         }
       `}</style>
 
-      {/* ── Main footer ── */}
-      <div style={{
-        maxWidth: '880px',
-        margin: '0 auto',
-        padding: '40px 24px 0',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '22px',
-        textAlign: 'center',
-      }}>
+      {/* ── Multi-column grid ── */}
+      <div className="footer-grid">
 
-        {/* Logo — links to homepage */}
-        <Link to="/" aria-label="Avocadoria homepage">
-          <img
-            src="/logo.svg"
-            alt="Avocadoria"
-            style={{
-              height: '60px', width: 'auto',
-              filter: 'drop-shadow(0px 1px 0px rgba(255,255,255,0.9)) drop-shadow(0px 2px 4px rgba(58,107,53,0.15))',
-            }}
-          />
-        </Link>
-
-        {/* Quick Links — inline on desktop, dropdown on mobile */}
-        <nav className="footer-nav-desktop" aria-label="Footer navigation">
-          {NAV_LINKS.map(({ label, to }) => (
-            <NavLink
-              key={to}
-              to={to}
-              end={to === '/'}
-              className="footer-nav-link"
-              style={({ isActive }) => ({
-                color: isActive ? '#b6c548' : '#8A5F3C',
-                fontWeight: isActive ? '800' : '700',
-              })}
-            >
-              {label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className="footer-dropdown footer-nav-mobile">
-          <button
-            onClick={() => setOpen(v => !v)}
-            aria-expanded={open}
-            aria-haspopup="true"
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '8px',
-              padding: '9px 20px',
-              background: 'rgba(255,255,255,0.85)',
-              border: '1.5px solid rgba(182,197,72,0.3)',
-              borderRadius: '999px',
-              fontFamily: 'Poppins,sans-serif',
-              fontSize: '13px', fontWeight: '700',
-              color: '#8A5F3C', cursor: 'pointer',
-              backdropFilter: 'blur(8px)',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={e => e.currentTarget.style.borderColor = '#b6c548'}
-            onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(182,197,72,0.3)'}
-          >
-            Quick Links
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
-              style={{ transform: open ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
-              <polyline points="6 9 12 15 18 9"/>
-            </svg>
-          </button>
-
-          {open && (
-            <div className="footer-dropdown-menu" role="menu">
-              {NAV_LINKS.map(({ label, to }) => (
-                <NavLink
-                  key={to}
-                  to={to}
-                  end={to === '/'}
-                  className="footer-dropdown-item"
-                  role="menuitem"
-                  onClick={() => setOpen(false)}
-                  style={({ isActive }) => ({
-                    color: isActive ? '#b6c548' : '#8A5F3C',
-                    fontWeight: isActive ? '700' : '600',
-                  })}
-                >
-                  {label}
-                </NavLink>
-              ))}
-            </div>
-          )}
+        {/* Col 1 — Logo */}
+        <div className="footer-col-logo" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '16px' }}>
+          <Link to="/" aria-label="Avocadoria homepage">
+            <img
+              src="/logo.svg"
+              alt="Avocadoria"
+              style={{
+                height: '70px', width: 'auto',
+                filter: 'drop-shadow(0px 1px 0px rgba(255,255,255,0.9)) drop-shadow(0px 2px 4px rgba(58,107,53,0.15))',
+              }}
+            />
+          </Link>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C', lineHeight: 1.7, margin: 0, maxWidth: '180px' }}>
+            Happiness in Avocado — since 2019.
+          </p>
         </div>
 
-        {/* Address */}
-        <address style={{
-          fontStyle: 'normal',
-          fontFamily: 'Poppins,sans-serif',
-          fontSize: '13px',
-          color: '#8A5F3C',
-          lineHeight: 1.8,
-          fontWeight: '500',
-        }}>
-          4th Floor, RC Buenviaje Bldg., Gil Fernando, Marikina City
-          <br />
-          <a href="tel:+639459716599" style={{ color: '#3a6b35', textDecoration: 'none', fontWeight: '700' }}>
-            +63 945 971 6599
-          </a>
-          {' · '}
-          <a href="mailto:official@avocadoria.com.ph" style={{ color: '#3a6b35', textDecoration: 'none', fontWeight: '700' }}>
-            official@avocadoria.com.ph
-          </a>
-        </address>
+        {/* Col 2 — About + Social */}
+        <div>
+          <p style={COL_LABEL}>About</p>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C', lineHeight: 1.75, margin: '0 0 18px' }}>
+            Avocadoria is the Philippines' No. 1 avocado dessert brand — bringing happiness in every cup since 2019.
+          </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+            {SOCIAL_LINKS.map(({ label, href, icon }) => (
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                aria-label={`Avocadoria on ${label}`} className="footer-social-btn">
+                {icon}
+              </a>
+            ))}
+          </div>
+        </div>
 
-        {/* Social links */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <span style={{
-            fontFamily: 'Poppins,sans-serif', fontSize: '11px',
-            fontWeight: '700', color: '#8A5F3C',
-            letterSpacing: '0.05em', textTransform: 'uppercase',
-          }}>Follow us</span>
-          {SOCIAL_LINKS.map(({ label, href, icon }) => (
-            <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-              aria-label={`Avocadoria on ${label}`} className="footer-social-btn">
-              {icon}
+        {/* Col 3 — Headquarters */}
+        <div>
+          <p style={COL_LABEL}>Headquarters</p>
+          <address style={{ fontStyle: 'normal', fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C', lineHeight: 1.8 }}>
+            4th Floor, RC Buenviaje Bldg.<br />
+            Gil Fernando, Marikina City<br />
+            <a href="mailto:official@avocadoria.com.ph"
+              style={{ color: '#3a6b35', textDecoration: 'none', fontWeight: '700' }}>
+              official@avocadoria.com.ph
             </a>
-          ))}
+          </address>
         </div>
 
-        {/* DPO / DPS Registered logo */}
-        <a href="https://register.privacy.gov.ph" target="_blank" rel="noopener noreferrer"
-          aria-label="NPC DPO/DPS Registered" title="NPC DPO/DPS Registered · Valid until Sep 09, 2026"
-          style={{ display: 'inline-block', transition: 'transform 0.2s' }}
-          onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
-          onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-        >
-          <img src="/dpo-registered.png" alt="NPC DPO/DPS Registered"
-            style={{ height: '90px', width: 'auto', objectFit: 'contain' }} />
-        </a>
+        {/* Col 4 — Quick Links */}
+        <div>
+          <p style={COL_LABEL}>Quick Links</p>
+          <nav aria-label="Footer navigation">
+            {NAV_LINKS.map(({ label, to }) => (
+              <NavLink key={to} to={to} end={to === '/'} className="footer-ql-link"
+                style={({ isActive }) => ({ color: isActive ? '#b6c548' : undefined, fontWeight: isActive ? '700' : '600' })}>
+                {label}
+              </NavLink>
+            ))}
+          </nav>
+        </div>
+
+        {/* Col 5 — DPO/DPS */}
+        <div className="footer-col-dpo" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+          <p style={COL_LABEL}>Privacy</p>
+          <a href="https://privacy.gov.ph" target="_blank" rel="noopener noreferrer"
+            aria-label="NPC DPO/DPS Registered" title="NPC DPO/DPS Registered · Valid until Sep 09, 2026"
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', transition: 'transform 0.2s', textDecoration: 'none' }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+          >
+            <img src="/dpo-registered-transparent.png" alt="NPC DPO/DPS Registered"
+              style={{ height: '120px', width: 'auto', objectFit: 'contain' }} />
+            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.7)', fontWeight: '600', textAlign: 'center', maxWidth: '130px' }}>
+              Registered Data Processing System &amp; DPO
+            </span>
+          </a>
+        </div>
 
       </div>
 
-      {/* ── Copyright ── */}
-      <div style={{
-        maxWidth: '680px', margin: '0 auto',
-        padding: '16px 24px 20px',
-        textAlign: 'center',
-      }}>
-        <div style={{ height: '1px', background: 'rgba(182,197,72,0.2)', marginBottom: '12px' }} />
-        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px',
-          color: 'rgba(138,95,60,0.5)', margin: 0 }}>
+      {/* ── Copyright bar ── */}
+      <div style={{ borderTop: '1px solid rgba(182,197,72,0.2)', padding: '14px 40px', textAlign: 'center' }}>
+        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: 'rgba(138,95,60,0.5)', margin: 0 }}>
           Copyright © {year} Avocadoria. All Rights Reserved.
         </p>
       </div>
