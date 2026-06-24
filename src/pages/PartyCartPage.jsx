@@ -171,27 +171,23 @@ function BookingModal({ pkg, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const subject = encodeURIComponent(`Party Cart Booking — ${pkg.name} ${pkg.size} — ${form.name}`)
-    const body = encodeURIComponent(
-`New Party Cart Booking Inquiry
+    const message = encodeURIComponent(
+`Hi Avocadoria! I'd like to book a Party Cart 🥑
 
-Package: ${pkg.name} ${pkg.size} — ${pkg.selectedCups} ${pkg.selectedUnit || 'cups'} — ${pkg.selectedPrice}
-——————————————————————
-Name:    ${form.name}
-Email:   ${form.email}
-Phone:   ${form.phone}
-
+Package: ${pkg.name} (${pkg.size}) — ${pkg.selectedCups} ${pkg.selectedUnit || 'cups'} — ${pkg.selectedPrice}
+——————————————————
+Name:        ${form.name}
+Mobile:      ${form.phone}
+Email:       ${form.email}
 Event Date:  ${form.date}
 Time:        ${form.time}
 Guests:      ${form.guests || 'Not specified'}
 Venue:       ${form.venue || 'TBD'}
-
-Notes / Special Requests:
-${form.notes || 'None'}
-——————————————————————
-Please follow up within 24–48 hours.`
+Notes:       ${form.notes || 'None'}
+——————————————————
+Looking forward to hearing from you!`
     )
-    window.location.href = `mailto:official@avocadoria.com.ph?subject=${subject}&body=${body}`
+    window.open(`https://m.me/avocadoria.official?text=${message}`, '_blank')
     setSent(true)
   }
 
@@ -210,7 +206,7 @@ Please follow up within 24–48 hours.`
               Booking inquiry sent!
             </h3>
             <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
-              Your email app should have opened with the inquiry for <strong>{pkg.name}</strong>. Our party team will get back to you within 24–48 hours!
+              Facebook Messenger has opened with your booking details for <strong>{pkg.name}</strong>. Just hit send and our party team will get back to you shortly! 🥑
             </p>
             <button onClick={onClose} style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '13px 28px', fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', cursor: 'pointer', minHeight: '44px' }}>
               Close
@@ -272,7 +268,7 @@ Please follow up within 24–48 hours.`
                   Send Booking Inquiry
                 </button>
                 <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: '#3a6b35', opacity: 0.75, textAlign: 'center', margin: 0 }}>
-                  This opens your email app with your details pre-filled. Our team responds within 24–48 hours.
+                  This will open Facebook Messenger with your details pre-filled. Just hit send! 💬
                 </p>
               </form>
             </div>
@@ -312,29 +308,28 @@ function CustomQuoteModal({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const subject = encodeURIComponent(`Custom Quote Inquiry — ${form.name}`)
-    const body = encodeURIComponent(
-`Custom Party Cart Quote Inquiry
-——————————————————————————
-Name:   ${form.name}
-Email:  ${form.email}
-Phone:  ${form.phone}
-——————————————————————————
-Event Date:     ${form.date || 'TBD'}
+    const message = encodeURIComponent(
+`Hi Avocadoria! I'd like to get a custom Party Cart quote 🥑
+
+——————————————————
+Name:    ${form.name}
+Mobile:  ${form.phone}
+Email:   ${form.email}
+
+Event Date:       ${form.date || 'TBD'}
 Estimated Guests: ${form.guests || 'Not specified'}
 Venue / Location: ${form.venue || 'TBD'}
-——————————————————————————
+
 Custom Requirements:
-Preferred Flavour:  ${form.flavour || 'Open to suggestions'}
-Cup Count Needed:   ${form.cups || 'TBD'}
-Service Hours:      ${form.hours || 'TBD'}
-——————————————————————————
-Additional Notes / Special Requests:
-${form.notes || 'None'}
-——————————————————————————
-Please follow up within 24–48 hours.`
+Preferred Flavour: ${form.flavour || 'Open to suggestions'}
+Cup Count Needed:  ${form.cups || 'TBD'}
+Service Hours:     ${form.hours || 'TBD'}
+
+Notes: ${form.notes || 'None'}
+——————————————————
+Looking forward to hearing from you!`
     )
-    window.location.href = `mailto:official@avocadoria.com.ph?subject=${subject}&body=${body}`
+    window.open(`https://m.me/avocadoria.official?text=${message}`, '_blank')
     setSent(true)
   }
 
@@ -353,7 +348,7 @@ Please follow up within 24–48 hours.`
               Quote request sent!
             </h3>
             <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#3a6b35', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
-              Your email app has opened with your custom inquiry. Our party team will get back to you within 24–48 hours!
+              Facebook Messenger has opened with your custom inquiry. Just hit send and our party team will get back to you shortly! 🥑
             </p>
             <button onClick={onClose} style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '13px 28px', fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', cursor: 'pointer', minHeight: '44px' }}>
               Close

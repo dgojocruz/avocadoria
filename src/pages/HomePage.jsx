@@ -454,7 +454,7 @@ function FranchiseTeaser() {
         </h2>
         <p style={{
           fontFamily: "'Poppins',sans-serif",
-          fontSize: 'clamp(13px,1.3vw,15px)',
+          fontSize: '18px',
           color: 'var(--c-dark)', opacity: 0.7, margin: '0 0 24px',
         }}>
           Be part of our growing family. Let's spread happiness in avocado!
@@ -619,7 +619,7 @@ function RecognitionsTeaser() {
         }}>A Legacy of Excellence</h2>
         <p style={{
           fontFamily: "'Poppins',sans-serif",
-          fontSize: 'clamp(13px,1.3vw,15px)',
+          fontSize: '18px',
           color: 'var(--c-dark)', opacity: 0.7, margin: 0,
         }}>Chef Czarina Sevilla · 9 awards · 5 years of entrepreneurial excellence</p>
       </div>
@@ -1043,17 +1043,36 @@ export default function HomePage() {
 
         {/* ════════════ WHAT'S NEW ════════════ */}
         <section style={{
-            position:'relative', overflow:'hidden', padding:'64px 32px 80px',
+            position:'relative', overflow:'hidden', padding:'48px 16px 64px',
             backgroundImage: "url('/website_layer_1.png')",
             backgroundSize: 'cover', backgroundPosition: 'center',
             backgroundColor: '#F3F2EE',
           }}>
+          <style>{`
+            .whats-new-grid {
+              display: grid;
+              grid-template-columns: 1fr;
+              gap: 20px;
+            }
+            .news-card-img {
+              width: 100%; height: 260px;
+              background: transparent;
+              overflow: hidden; flex-shrink: 0; position: relative;
+            }
+            @media (min-width: 560px) {
+              .whats-new-grid { grid-template-columns: repeat(2, 1fr); }
+            }
+            @media (min-width: 900px) {
+              .whats-new-grid { grid-template-columns: repeat(4, 1fr); }
+              .news-card-img { height: clamp(240px, 25vw, 320px); }
+            }
+          `}</style>
           <div style={{
             position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none',
             backgroundColor: '#b6c548', opacity: 0.25,
           }} />
           <div style={{ position:'relative', zIndex:1 }}>
-          <div style={{ maxWidth:'1200px', margin:'0 auto' }}>
+          <div>
 
             {/* Header row */}
             <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', flexWrap:'wrap', gap:'12px', marginBottom:'32px' }}>
@@ -1081,7 +1100,7 @@ export default function HomePage() {
 
             {/* Live post cards — pulls from posts.js, shows latest 3 */}
             {NEWS_POSTS.length > 0 ? (
-              <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(280px,1fr))', gap:'20px' }}>
+              <div className="whats-new-grid">
                 {NEWS_POSTS.slice(0, 4).map(post => (
                   <div
                     key={post.id}
@@ -1102,13 +1121,9 @@ export default function HomePage() {
                       onMouseLeave={e => { e.currentTarget.style.transform='none' }}
                     >
                       {/* Image — tall and prominent */}
-                      <div style={{
-                        width:'100%', height:'clamp(180px,22vw,240px)',
-                        background:'transparent',
-                        overflow:'hidden', flexShrink:0, position:'relative',
-                      }}>
+                      <div className="news-card-img">
                         {post.image
-                          ? <img src={post.image} alt={post.title} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'center top', transition:'transform 0.4s ease' }}
+                          ? <img src={post.image} alt={post.title} style={{ width:'100%', height:'100%', objectFit:'cover', objectPosition:'center center', transition:'transform 0.4s ease' }}
                               onMouseEnter={e => e.target.style.transform='scale(1.05)'}
                               onMouseLeave={e => e.target.style.transform='scale(1)'}
                             />

@@ -469,7 +469,7 @@ a { touch-action: manipulation; }
 }
 .section-sub {
   font-family: 'Poppins',sans-serif;
-  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  font-size: var(--fs-body-lg);
   opacity: .75;
   margin: 0 0 var(--sp-md);
 }
