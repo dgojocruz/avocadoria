@@ -196,7 +196,6 @@ function CategoryView({ cat, onBack }) {
         backgroundImage: "url('/website_layer_1.png')",
         backgroundSize: 'cover', backgroundPosition: 'center',
         backgroundColor: '#F3F2EE',
-        position: 'relative',
       }}>
         {/* Same green overlay as all sections */}
         <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
@@ -370,7 +369,7 @@ export default function MenuPage() {
                 objectFit:'cover', display:'block',
                 zIndex:0,
               }}
-            />
+             loading="lazy" decoding="async"/>
             <video
               autoPlay
               muted

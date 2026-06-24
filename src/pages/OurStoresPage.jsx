@@ -1316,7 +1316,7 @@ export default function OurStoresPage() {
                                       onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent' }}
                                     >
                                       <div style={{ flexShrink: 0 }}>
-                                        {CUSTOM_PIN ? <img src={CUSTOM_PIN} alt="" style={{ width: '22px' }} aria-hidden="true" /> : <AvoPin size={22} active={isActive} />}
+                                        {CUSTOM_PIN ? <img src={CUSTOM_PIN} alt="" style={{ width: '22px' }} aria-hidden="true"  loading="lazy" decoding="async"/> : <AvoPin size={22} active={isActive} />}
                                       </div>
                                       <div style={{ flex: 1, minWidth: 0 }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexWrap: 'wrap' }}>
@@ -1373,7 +1373,7 @@ export default function OurStoresPage() {
                       </span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                         {CUSTOM_PIN
-                          ? <img src={CUSTOM_PIN} alt="" style={{ width: '26px' }} aria-hidden="true" />
+                          ? <img src={CUSTOM_PIN} alt="" style={{ width: '26px' }} aria-hidden="true"  loading="lazy" decoding="async"/>
                           : <AvoPin size={26} active />
                         }
                         <h2 style={{

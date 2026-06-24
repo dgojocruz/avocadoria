@@ -97,7 +97,7 @@ a { touch-action: manipulation; }
 
 /* Logo scales with viewport */
 .navbar-logo {
-  height: clamp(44px, 10vw, 100px);
+  height: clamp(85px, 11vw, 130px);
   width: auto;
 }
 
@@ -431,7 +431,7 @@ a { touch-action: manipulation; }
 }
 .section-sub {
   font-family: 'Poppins',sans-serif;
-  font-size: var(--fs-sm);
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
   opacity: .75;
   margin: 0 0 var(--sp-md);
 }

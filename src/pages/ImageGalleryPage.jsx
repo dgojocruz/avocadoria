@@ -125,7 +125,7 @@ export default function ImageGalleryPage() {
       {lightbox && (
         <div onClick={() => setLightbox(null)} style={{ position:'fixed', inset:0, zIndex:9999, background:'rgba(0,0,0,0.88)', display:'flex', alignItems:'center', justifyContent:'center', padding:'24px' }}>
           <div onClick={e => e.stopPropagation()} style={{ maxWidth:'900px', width:'100%' }}>
-            <img src={lightbox.src} alt={lightbox.title} style={{ width:'100%', display:'block', maxHeight:'80vh', objectFit:'contain', borderRadius:'16px' }} />
+            <img src={lightbox.src} alt={lightbox.title} style={{ width:'100%', display:'block', maxHeight:'80vh', objectFit:'contain', borderRadius:'16px' }}  loading="lazy" decoding="async"/>
             <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'12px 4px 0' }}>
               <span style={{ fontFamily:'Poppins,sans-serif', fontSize:'13px', fontWeight:'700', color:'#fff' }}>{lightbox.title}</span>
               <button onClick={() => setLightbox(null)} style={{ background:'#b6c548', color:'#fff', border:'none', borderRadius:'999px', padding:'8px 20px', fontFamily:'Poppins,sans-serif', fontSize:'12px', fontWeight:'700', cursor:'pointer' }}>Close ✕</button>
