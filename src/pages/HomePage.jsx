@@ -611,9 +611,10 @@ function RecognitionsTeaser() {
       <div style={{ textAlign: 'center', marginBottom: 'clamp(24px,4vw,36px)' }}>
         <h2 style={{
           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-          fontSize: 'clamp(1.6rem,4vw,2.8rem)',
-          fontWeight: 'normal', color: 'var(--c-olive)',
-          textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+          fontSize: 'clamp(1.5rem,4vw,2.8rem)',
+          fontWeight: 'normal',
+          color: '#b6c548',
+          textShadow: '-3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff, 3px 3px 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff',
           margin: '0 0 8px', lineHeight: 1.1,
         }}>A Legacy of Excellence</h2>
         <p style={{
@@ -676,22 +677,12 @@ function RecognitionsTeaser() {
 
         {/* Right — text info */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px,2vw,22px)' }}>
-          {/* Year + category */}
-          <span style={{
-            display: 'inline-block', width: 'fit-content',
-            background: 'var(--c-olive)', color: '#fff',
-            fontFamily: "'Poppins',sans-serif",
-            fontSize: '11px', fontWeight: '600',
-            letterSpacing: '0.07em', textTransform: 'uppercase',
-            padding: '4px 14px', borderRadius: '999px',
-          }}>{a.year}</span>
-
           {/* Award title */}
           <h3 style={{
             fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
             fontSize: 'clamp(1.2rem,2.8vw,2rem)',
-            fontWeight: 'normal', color: 'var(--c-dark)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff',
+            fontWeight: 'normal', color: '#b6c548',
+            textShadow: '-3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff, 3px 3px 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff',
             margin: 0, lineHeight: 1.2,
           }}>{a.label}</h3>
 
@@ -1067,7 +1058,7 @@ export default function HomePage() {
             {/* Header row */}
             <div style={{ display:'flex', alignItems:'flex-end', justifyContent:'space-between', flexWrap:'wrap', gap:'12px', marginBottom:'32px' }}>
               <div>
-                <h2 className="section-title" style={{ color:'var(--c-olive)', margin:'0 0 6px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
+                <h2 className="section-title" style={{ color:'#b6c548', margin:'0 0 6px', textShadow: '-3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff, 3px 3px 0 #fff, 0 -3px 0 #fff, 0 3px 0 #fff, -3px 0 0 #fff, 3px 0 0 #fff' }}>
                   {"What's New"}
                 </h2>
                 <p className="section-sub" style={{ color:'rgba(138,95,60,.65)', margin:0 }}>
