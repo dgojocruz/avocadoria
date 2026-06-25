@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import SEO from '@/components/ui/SEO'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -10,15 +10,15 @@ import SEO from '@/components/ui/SEO'
 // ─────────────────────────────────────────────────────────────────────────────
 const JOBS = [
   {
-    active:        true,                          // true = visible | false = hidden
-    id:            'store-crew-clark',
+    active:        true,
+    id:            'store-crew-robinsons-malabon',
     role:          'Store Crew',
-    branch:        'SM City Clark',
-    location:      'Pampanga City',
+    branch:        'Robinsons Malabon',
+    location:      'Malabon, Metro Manila',
     type:          'Full-time',
-    email:         'MFFinc@gmail.com',
-    emailSubject:  'Store Crew - SM City Clark',
-    image:         '/hiring-sm-clark.webp',       // hiring poster image in /public/
+    email:         'avocadoriarobmalabon@gmail.com',
+    emailSubject:  'Store Crew - Robinsons Malabon',
+    image:         '/careers/hiring-robinsons-malabon.webp',
     qualifications: [
       'Female or Male',
       'At least High School Graduate',
@@ -27,19 +27,19 @@ const JOBS = [
       'Honest and Trustworthy',
       'Preferably has a Service Crew experience',
       'Willing to be trained',
-      'Residing within Pampanga City',
+      'Residing within Malabon, Metro Manila',
     ],
   },
   {
     active:        true,
-    id:            'store-crew-zuellig',
+    id:            'store-crew-times-plaza-manila',
     role:          'Store Crew',
-    branch:        'The Zuellig Building',
-    location:      'Makati City',
+    branch:        'Times Plaza Manila',
+    location:      'Ermita, Metro Manila',
     type:          'Full-time',
-    email:         'avocadoriazuellig@gmail.com',
-    emailSubject:  'Store Crew - Makati City',
-    image:         '/hiring-zuellig.webp',
+    email:         'avocadoria.timesplaza@gmail.com',
+    emailSubject:  'Store Crew - Times Plaza Manila',
+    image:         '/careers/hiring-times-plaza-manila.webp',
     qualifications: [
       'Female or Male',
       'At least High School Graduate',
@@ -48,19 +48,19 @@ const JOBS = [
       'Honest and Trustworthy',
       'Preferably has a Service Crew experience',
       'Willing to be trained',
-      'Residing in Makati',
+      'Residing within Ermita, Metro Manila',
     ],
   },
   {
     active:        true,
-    id:            'store-crew-calapan',
+    id:            'store-crew-waltermart-sta-maria',
     role:          'Store Crew',
-    branch:        'Xentro Mall Calapan',
-    location:      'Calapan, Oriental Mindoro',
-    type:          'Part-time',
-    email:         'avocadoriamindoro@gmail.com',
-    emailSubject:  'Part-Store Crew - Xentro Mall Calapan',
-    image:         '/hiring-calapan.webp',
+    branch:        'WalterMart Sta. Maria',
+    location:      'Sta. Maria, Bulacan',
+    type:          'Full-time',
+    email:         'Mmffinc@gmail.com',
+    emailSubject:  'Store Crew - Waltermart Sta Maria',
+    image:         '/careers/hiring-waltermart-sta-maria.webp',
     qualifications: [
       'Female or Male',
       'At least High School Graduate',
@@ -69,7 +69,28 @@ const JOBS = [
       'Honest and Trustworthy',
       'Preferably has a Service Crew experience',
       'Willing to be trained',
-      'Residing within Xentro Mall Calapan area',
+      'Residing within Sta Maria, Bulacan',
+    ],
+  },
+  {
+    active:        true,
+    id:            'store-crew-bayombong',
+    role:          'Store Crew',
+    branch:        'Bayombong',
+    location:      'Bayombong, Nueva Vizcaya',
+    type:          'Full-time',
+    email:         'avocadoriabayombongnv@gmail.com',
+    emailSubject:  'Store Crew - Bayombong',
+    image:         '/careers/hiring-bayombong.webp',
+    qualifications: [
+      'Female or Male',
+      'At least High School Graduate',
+      'Has a pleasing and happy personality',
+      'Friendly and Approachable',
+      'Honest and Trustworthy',
+      'Preferably has a Service Crew experience',
+      'Willing to be trained',
+      'Residing within Bayombong, Nueva Vizcaya',
     ],
   },
 
@@ -83,7 +104,7 @@ const JOBS = [
   //   type:          'Full-time',      // Full-time | Part-time | Contractual
   //   email:         'email@avocadoria.com.ph',
   //   emailSubject:  'Job Title - Branch Name',
-  //   image:         '/hiring-poster.webp',   // or null for no poster
+  //   image:         '/careers/hiring-poster.webp',   // or null for no poster
   //   qualifications: [
   //     'Qualification 1',
   //     'Qualification 2',
@@ -92,77 +113,123 @@ const JOBS = [
 ]
 // ─────────────────────────────────────────────────────────────────────────────
 
-// ── Apply Modal with file attachment ─────────────────────────────────────────
+// ── Job Card ──────────────────────────────────────────────────────────────────
+function JobCard({ job, onApply }) {
+  const [expanded, setExpanded] = useState(false)
+
+  return (
+    <div style={{
+      background: 'rgba(255,255,255,0.7)', borderRadius: '20px',
+      overflow: 'hidden', boxShadow: '0 4px 20px rgba(58,107,53,0.08)',
+      border: '1.5px solid rgba(182,197,72,0.25)',
+      display: 'flex', flexDirection: 'column',
+      transition: 'transform 0.2s, box-shadow 0.2s',
+    }}
+      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(58,107,53,0.14)' }}
+      onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(58,107,53,0.08)' }}
+    >
+      {/* Hiring poster image */}
+      {job.image && (
+        <div style={{ width: '100%', aspectRatio: '1/1', overflow: 'hidden', cursor: 'pointer' }} onClick={() => setExpanded(!expanded)}>
+          <img src={job.image} alt={`${job.role} - ${job.branch}`}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.4s ease' }}
+            onMouseEnter={e => e.target.style.transform = 'scale(1.04)'}
+            onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+            loading="lazy" decoding="async"
+          />
+        </div>
+      )}
+
+      {/* Card body */}
+      <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div>
+          <span style={{ display: 'inline-block', background: 'rgba(182,197,72,0.15)', color: '#3a6b35', fontSize: '11px', fontWeight: '700', padding: '3px 10px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>
+            {job.type}
+          </span>
+          <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '20px', fontWeight: 'normal', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin: '0 0 4px', lineHeight: 1.2 }}>
+            {job.role}
+          </h3>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C', margin: 0, fontWeight: '600' }}>
+            {job.branch} · {job.location}
+          </p>
+        </div>
+
+        {/* Qualifications toggle */}
+        <button onClick={() => setExpanded(!expanded)} style={{
+          background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+          display: 'flex', alignItems: 'center', gap: '6px',
+          fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548',
+          textAlign: 'left',
+        }}>
+          <span>{expanded ? '▲' : '▼'}</span>
+          {expanded ? 'Hide' : 'View'} Qualifications
+        </button>
+
+        {expanded && (
+          <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            {job.qualifications.map((q, i) => (
+              <li key={i} style={{ display: 'flex', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', lineHeight: 1.5 }}>
+                <span style={{ color: '#b6c548', fontWeight: '900', flexShrink: 0 }}>—</span>
+                {q}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {/* Apply button */}
+        <button onClick={() => onApply(job)} style={{
+          marginTop: 'auto', width: '100%', padding: '12px',
+          background: '#b6c548', color: '#fff', border: 'none',
+          borderRadius: '12px', cursor: 'pointer',
+          fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '800',
+          transition: 'background 0.2s',
+        }}
+          onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
+          onMouseLeave={e => e.currentTarget.style.background = '#b6c548'}
+        >
+          Apply Now
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// ── Apply Modal — mailto + copy email ────────────────────────────────────────
 function ApplyModal({ job, onClose }) {
-  const [step,     setStep]     = useState(1) // 1 = form, 2 = success
-  const [loading,  setLoading]  = useState(false)
-  const [cvFile,   setCvFile]   = useState(null)
-  const [dragOver, setDragOver] = useState(false)
-  const [form,     setForm]     = useState({ name: '', email: '', phone: '', message: '' })
-  const fileRef = useRef()
+  const [copied, setCopied] = useState(false)
 
-  const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
+  const handleApply = () => {
+    const subject = encodeURIComponent(job.emailSubject)
+    const body = encodeURIComponent(
+`Hi Avocadoria Team,
 
-  const handleFile = (file) => {
-    if (!file) return
-    const allowed = ['application/pdf', 'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
-    if (!allowed.includes(file.type)) {
-      alert('Please upload a PDF or Word document (.pdf, .doc, .docx)')
-      return
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      alert('File must be under 5MB')
-      return
-    }
-    setCvFile(file)
+I am interested in applying for the ${job.role} position at ${job.branch}.
+
+Please find my CV/Resume attached.
+
+Name:
+Contact Number:
+Current Address:
+
+Thank you and I look forward to hearing from you!`
+    )
+    // Try mailto first, fall back to Gmail web compose
+    const mailtoLink = `mailto:${job.email}?subject=${subject}&body=${body}`
+    const gmailLink = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(job.email)}&su=${subject}&body=${body}`
+
+    // Open mailto — if nothing happens after 500ms, open Gmail
+    window.location.href = mailtoLink
+    setTimeout(() => {
+      window.open(gmailLink, '_blank')
+    }, 500)
   }
 
-  const handleDrop = (e) => {
-    e.preventDefault(); setDragOver(false)
-    handleFile(e.dataTransfer.files[0])
+  const handleCopy = () => {
+    navigator.clipboard.writeText(job.email).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
   }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!cvFile) { alert('Please attach your CV/Resume before submitting.'); return }
-    setLoading(true)
-
-    // Build FormData so the file is included in the email
-    const data = new FormData()
-    data.append('name',    form.name)
-    data.append('email',   form.email)
-    data.append('phone',   form.phone)
-    data.append('message', form.message || 'No additional message.')
-    data.append('_subject', `Application: ${job.emailSubject}`)
-    data.append('_replyto', form.email)
-    data.append('_cc',      'recruitment@avocadoria.com.ph')
-    data.append('Position', job.role)
-    data.append('Branch',   job.branch)
-    data.append('cv',       cvFile, cvFile.name)
-
-    try {
-      await fetch('https://formspree.io/f/mwpbvobg', {
-        method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' },
-      })
-      setStep(2)
-    } catch {
-      setStep(2)
-    }
-    setLoading(false)
-  }
-
-  const inp = {
-    width: '100%', padding: '11px 14px',
-    border: '1.5px solid rgba(182,197,72,0.35)',
-    borderRadius: '10px', background: '#fff',
-    fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C',
-    outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.2s',
-  }
-  const focus = (e) => e.target.style.borderColor = '#b6c548'
-  const blur  = (e) => e.target.style.borderColor = 'rgba(182,197,72,0.35)'
 
   return (
     <div style={{
@@ -172,229 +239,105 @@ function ApplyModal({ job, onClose }) {
       padding: '20px',
     }} onClick={onClose}>
       <div style={{
-        background: '#fff', borderRadius: '20px', width: '100%', maxWidth: '540px',
-        maxHeight: '90vh', overflowY: 'auto',
+        background: '#fff', borderRadius: '24px', width: '100%', maxWidth: '480px',
         boxShadow: '0 24px 60px rgba(0,0,0,0.2)',
+        overflow: 'hidden',
       }} onClick={e => e.stopPropagation()}>
 
-        {step === 2 ? (
-          /* ── Success screen ── */
-          <div style={{ padding: '48px 32px', textAlign: 'center' }}>
-            <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: 'normal', color: 'var(--c-olive)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
-                textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: '0 0 10px' }}>
-              Application Sent!
-            </h3>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C', lineHeight: '1.7', margin: '0 0 8px' }}>
-              Your application for <strong>{job.role}</strong> at <strong>{job.branch}</strong> has been sent to our team.
-            </p>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: 'rgba(138,95,60,0.6)', margin: '0 0 28px' }}>
-              We'll review your CV and get back to you within 5–7 business days.
-            </p>
-            <button onClick={onClose} style={{
-              background: '#b6c548', color: '#fff', border: 'none',
-              borderRadius: '999px', padding: '12px 32px',
-              fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '700', cursor: 'pointer',
-            }}>Close</button>
-          </div>
-        ) : (
-          /* ── Application form ── */
-          <>
-            {/* Header */}
-            <div style={{
-              background: 'linear-gradient(135deg, #b6c548, #3a6b35)',
-              borderRadius: '20px 20px 0 0', padding: '24px 28px',
-              display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
-            }}>
-              <div>
-                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.75)', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 4px' }}>
-                  Applying for
-                </p>
-                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: 'normal', color: '#fff',
-                textShadow: '0 2px 8px rgba(0,0,0,0.2)', margin: '0 0 4px' }}>
-                  {job.role}
-                </h3>
-                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: 'rgba(255,255,255,0.8)', margin: 0 }}>
-                  {job.branch} · {job.location}
-                </p>
-              </div>
-              <button onClick={onClose} style={{
-                background: 'rgba(255,255,255,0.2)', border: 'none', borderRadius: '50%',
-                width: '32px', height: '32px', cursor: 'pointer', color: '#fff',
-                fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>✕</button>
-            </div>
-
-            {/* Form body */}
-            <form onSubmit={handleSubmit} style={{ padding: '28px' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-
-                <div>
-                  <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Full Name *</label>
-                  <input required value={form.name} onChange={set('name')} placeholder="Juan dela Cruz" style={inp} onFocus={focus} onBlur={blur} />
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                  <div>
-                    <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Address *</label>
-                    <input required type="email" value={form.email} onChange={set('email')} placeholder="juan@email.com" style={inp} onFocus={focus} onBlur={blur} />
-                  </div>
-                  <div>
-                    <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Number *</label>
-                    <input required value={form.phone} onChange={set('phone')} placeholder="+63 9XX XXX XXXX" style={inp} onFocus={focus} onBlur={blur} />
-                  </div>
-                </div>
-
-                {/* CV Upload */}
-                <div>
-                  <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>CV / Resume * <span style={{ color: 'rgba(138,95,60,0.5)', fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>(PDF or Word, max 5MB)</span></label>
-                  <div
-                    onClick={() => fileRef.current.click()}
-                    onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
-                    onDragLeave={() => setDragOver(false)}
-                    onDrop={handleDrop}
-                    style={{
-                      border: `2px dashed ${dragOver ? '#b6c548' : cvFile ? '#3a6b35' : 'rgba(182,197,72,0.4)'}`,
-                      borderRadius: '12px',
-                      padding: '20px',
-                      textAlign: 'center',
-                      cursor: 'pointer',
-                      background: cvFile ? 'rgba(208,232,175,0.2)' : dragOver ? 'rgba(182,197,72,0.05)' : '#fafafa',
-                      transition: 'all 0.2s',
-                    }}
-                  >
-                    <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" style={{ display: 'none' }} onChange={e => handleFile(e.target.files[0])} />
-                    {cvFile ? (
-                      <div>
-                        <div style={{ fontSize: '28px', marginBottom: '6px' }}>✅</div>
-                        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#3a6b35', margin: '0 0 2px' }}>{cvFile.name}</p>
-                        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.5)', margin: 0 }}>{(cvFile.size / 1024).toFixed(0)} KB · Click to replace</p>
-                      </div>
-                    ) : (
-                      <div>
-                        <div style={{ fontSize: '28px', marginBottom: '6px' }}>📎</div>
-                        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#8A5F3C', margin: '0 0 2px' }}>Drop your CV here or click to browse</p>
-                        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.5)', margin: 0 }}>PDF, DOC, DOCX accepted</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div>
-                  <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', display: 'block', marginBottom: '5px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Short Introduction <span style={{ color: 'rgba(138,95,60,0.5)', fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>(optional)</span></label>
-                  <textarea value={form.message} onChange={set('message')} rows={3} placeholder="Tell us a little about yourself and why you'd like to join Avocadoria..." style={{ ...inp, resize: 'vertical' }} onFocus={focus} onBlur={blur} />
-                </div>
-
-                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.6)', margin: 0 }}>
-                  Your application will be sent to our HR team at{' '}
-                  <strong style={{ color: '#3a6b35' }}>avocadoriatccc.recruitement@gmail.com</strong>
-                  {' '}and{' '}
-                  <strong style={{ color: '#3a6b35' }}>recruitment@avocadoria.com.ph</strong>
-                </p>
-
-                <button type="submit" disabled={loading} style={{
-                  background: loading ? 'rgba(182,197,72,0.5)' : '#b6c548',
-                  color: '#fff', border: 'none', borderRadius: '999px',
-                  padding: '13px', fontFamily: 'Poppins,sans-serif',
-                  fontSize: '15px', fontWeight: '800', cursor: loading ? 'not-allowed' : 'pointer',
-                  transition: 'background 0.2s', width: '100%',
-                }}
-                  onMouseEnter={e => { if (!loading) e.currentTarget.style.background = '#3a6b35' }}
-                  onMouseLeave={e => { if (!loading) e.currentTarget.style.background = '#b6c548' }}
-                >
-                  {loading ? 'Sending Application...' : 'Submit Application'}
-                </button>
-              </div>
-            </form>
-          </>
-        )}
-      </div>
-    </div>
-  )
-}
-
-// ── Job Card ──────────────────────────────────────────────────────────────────
-function JobCard({ job, onApply }) {
-  const [flipped, setFlipped] = useState(false)
-
-  return (
-    <div style={{ perspective: '1000px', height: '520px', cursor: 'pointer' }} onClick={() => setFlipped(f => !f)}>
-      <style>{`
-        .card-inner { position:relative; width:100%; height:100%; transition:transform 0.6s cubic-bezier(.4,0,.2,1); transform-style:preserve-3d; }
-        .card-inner.flipped { transform: rotateY(180deg); }
-        .card-face { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:20px; overflow:hidden; }
-        .card-back { transform: rotateY(180deg); }
-      `}</style>
-
-      <div className={`card-inner${flipped ? ' flipped' : ''}`}>
-
-        {/* Front — poster image */}
-        <div className="card-face" style={{ boxShadow: '0 8px 32px rgba(138,95,60,0.15)' }}>
-          {job.image ? (
-            <img src={job.image} alt={`${job.role} - ${job.branch}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                    loading="lazy" decoding="async"
-                  />
-          ) : (
-            <div style={{ width: '100%', height: '100%', background: 'linear-gradient(160deg,#D0E8AF,#b6c548)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '32px', textAlign: 'center' }}>
-              <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '28px', fontWeight: 'normal', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>{job.role}</h3>
-              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', color: '#8A5F3C' }}>{job.branch}</p>
-            </div>
-          )}
-          {/* Flip hint */}
-          <div style={{ position: 'absolute', bottom: '12px', right: '14px', background: 'rgba(255,255,255,0.85)', borderRadius: '999px', padding: '5px 12px', fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', backdropFilter: 'blur(6px)' }}>
-            Tap to see details →
-          </div>
+        {/* Header */}
+        <div style={{ background: '#b6c548', padding: '28px 28px 24px', position: 'relative' }}>
+          <button onClick={onClose} aria-label="Close" style={{
+            position: 'absolute', top: '16px', right: '16px',
+            background: 'rgba(255,255,255,0.25)', border: 'none', borderRadius: '50%',
+            width: '32px', height: '32px', cursor: 'pointer', color: '#fff', fontSize: '18px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>✕</button>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700', color: 'rgba(255,255,255,0.8)', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 4px' }}>
+            Apply Now
+          </p>
+          <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: 'normal', color: '#fff', margin: '0 0 4px',
+            textShadow: '-1px -1px 0 rgba(58,107,53,0.3), 1px 1px 0 rgba(58,107,53,0.3)' }}>
+            {job.role}
+          </h2>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'rgba(255,255,255,0.85)', margin: 0 }}>
+            {job.branch} · {job.location}
+          </p>
         </div>
 
-        {/* Back — qualifications + apply */}
-        <div className="card-face card-back" style={{ background: 'rgba(244,250,236,0.15)', border: '1.5px solid rgba(182,197,72,0.45)', backdropFilter: 'blur(8px)', boxShadow: '0 8px 32px rgba(138,95,60,0.08)' }}>
-          <div style={{ padding: '28px', height: '100%', display: 'flex', flexDirection: 'column' }}>
+        {/* Body */}
+        <div style={{ padding: '28px' }}>
 
-            {/* Header */}
-            <div style={{ marginBottom: '16px' }}>
-              <span style={{ display: 'inline-block', background: '#EF7ECB', color: '#fff', fontSize: '10px', fontWeight: '700', padding: '3px 10px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>
-                {job.type}
-              </span>
-              <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: 'normal', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: '0 0 4px' }}>{job.role}</h3>
-              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#b6c548', fontWeight: '700', margin: 0 }}>{job.branch}</p>
-              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.6)', margin: '2px 0 0' }}>{job.location}</p>
+          {/* Step 1 — Open email app */}
+          <div style={{ display: 'flex', gap: '12px', marginBottom: '20px' }}>
+            <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#b6c548', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Poppins,sans-serif', fontWeight: '700', fontSize: '13px', flexShrink: 0 }}>1</div>
+            <div>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#3a6b35', margin: '0 0 4px' }}>Click "Send Application" below</p>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', margin: 0, lineHeight: 1.6 }}>
+                Opens your email app — or Gmail in your browser if no email app is set up.
+              </p>
             </div>
+          </div>
 
-            {/* Qualifications */}
-            <div style={{ flex: 1, overflowY: 'auto' }}>
-              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700', color: '#b6c548', textTransform: 'uppercase', letterSpacing: '0.07em', margin: '0 0 10px' }}>Qualifications</p>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '7px' }}>
-                {job.qualifications.map((q, i) => (
-                  <li key={i} style={{ display: 'flex', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', alignItems: 'flex-start' }}>
-                    <span style={{ color: '#b6c548', fontWeight: '800', flexShrink: 0, marginTop: '1px' }}>•</span>
-                    {q}
-                  </li>
-                ))}
-              </ul>
+          <div style={{ display: 'flex', gap: '12px', marginBottom: '28px' }}>
+            <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#b6c548', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Poppins,sans-serif', fontWeight: '700', fontSize: '13px', flexShrink: 0 }}>2</div>
+            <div>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#3a6b35', margin: '0 0 4px' }}>Attach your CV/Resume and send</p>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', margin: 0, lineHeight: 1.6 }}>
+                Add your CV as a PDF or Word file, fill in your details, then hit send!
+              </p>
             </div>
+          </div>
 
-            {/* Apply button */}
-            <button
-              onClick={e => { e.stopPropagation(); onApply(job) }}
-              style={{
-                marginTop: '16px', background: '#EF7ECB', color: '#fff', border: 'none',
-                borderRadius: '999px', padding: '12px', fontFamily: 'Poppins,sans-serif',
-                fontSize: '15px', fontWeight: '800', cursor: 'pointer',
-                transition: 'background 0.2s', width: '100%',
-                boxShadow: '0 4px 14px rgba(239,126,203,0.4)',
-              }}
-              onMouseEnter={e => e.currentTarget.style.background = '#c9539f'}
-              onMouseLeave={e => e.currentTarget.style.background = '#EF7ECB'}
-            >
-              Apply Now
+          {/* Main CTA */}
+          <button onClick={handleApply} style={{
+            width: '100%', padding: '14px', borderRadius: '12px',
+            background: '#b6c548', border: 'none', cursor: 'pointer',
+            fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '700', color: '#fff',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+            boxShadow: '0 4px 14px rgba(182,197,72,0.4)', transition: 'all 0.2s',
+            marginBottom: '16px',
+          }}
+            onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
+            onMouseLeave={e => e.currentTarget.style.background = '#b6c548'}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Send Application
+          </button>
+
+          {/* Divider */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '0 0 16px' }}>
+            <div style={{ flex: 1, height: '1px', background: 'rgba(182,197,72,0.25)' }} />
+            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(138,95,60,0.5)', fontWeight: '600' }}>or send manually</span>
+            <div style={{ flex: 1, height: '1px', background: 'rgba(182,197,72,0.25)' }} />
+          </div>
+
+          {/* Email + copy */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(182,197,72,0.08)', border: '1.5px solid rgba(182,197,72,0.3)', borderRadius: '12px', padding: '12px 14px' }}>
+            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#3a6b35', flex: 1, wordBreak: 'break-all' }}>
+              {job.email}
+            </span>
+            <button onClick={handleCopy} style={{
+              flexShrink: 0, padding: '6px 14px', borderRadius: '8px',
+              background: copied ? '#3a6b35' : '#b6c548', border: 'none', cursor: 'pointer',
+              fontFamily: 'Poppins,sans-serif', fontSize: '12px', fontWeight: '700', color: '#fff',
+              transition: 'background 0.2s',
+            }}>
+              {copied ? '✓ Copied!' : 'Copy'}
             </button>
           </div>
-        </div>
 
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: 'rgba(138,95,60,0.6)', textAlign: 'center', margin: '12px 0 0', lineHeight: 1.5 }}>
+            Subject: <strong>{job.emailSubject}</strong>
+          </p>
+
+        </div>
       </div>
     </div>
   )
 }
+
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export default function CareersPage() {

@@ -442,7 +442,7 @@ function FranchiseTeaser() {
       `}</style>
 
       {/* ── Branded tagline + CTA ── */}
-      <div style={{ textAlign: 'center', marginBottom: '28px', position: 'relative', zIndex: 1 }}>
+      <div style={{ textAlign: 'center', marginBottom: '28px', position: 'relative', zIndex: 10 }}>
         <h2 style={{
           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
           fontSize: 'clamp(1.6rem,4vw,2.8rem)',

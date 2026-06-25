@@ -260,68 +260,6 @@ export const CATEGORIES = [
     ],
   },
 
-  // ── 5. POPSICLES ────────────────────────────────────────────────────────────
-  {
-    id:       'popsicles',
-    name:     'Popsicles',
-    emoji:    '🍡',
-    tagline:  'Avocado ice cream bars coated in premium chocolate and nutty toppings — happiness on a stick.',
-    cover:    '/menu/Popsicles/popsicle-cover-horizontal.webp',
-    coverPos: 'center center',
-    featured: false,
-    items: [
-      {
-        id:    'senyorita-matcha',
-        name:  'Señorita Matcha',
-        desc:  'Creamy avocado popsicle coated in matcha chocolate — smooth, earthy and indulgent.',
-        image: '/menu/Popsicles/senyorita-matcha.webp',
-        tags:  [],
-        new:   false,
-      },
-      {
-        id:    'senyorita-choc',
-        name:  'Señorita Chocolate',
-        desc:  'Classic avocado popsicle dipped in rich milk chocolate coating.',
-        image: '/menu/Popsicles/senyorita-choc.webp',
-        tags:  [],
-        new:   false,
-      },
-      {
-        id:    'senyorita-dark-choc',
-        name:  'Señorita Dark Chocolate',
-        desc:  'Avocado popsicle coated in premium dark chocolate for a bittersweet finish.',
-        image: '/menu/Popsicles/senyorita-dark-choc.webp',
-        tags:  [],
-        new:   false,
-      },
-      {
-        id:    'senyorita-white-choc',
-        name:  'Señorita White Chocolate',
-        desc:  'Smooth avocado popsicle wrapped in creamy white chocolate coating.',
-        image: '/menu/Popsicles/senyorita-white-choc.webp',
-        tags:  [],
-        new:   false,
-      },
-      {
-        id:    'senyorita-strawberry',
-        name:  'Señorita Strawberry',
-        desc:  'Avocado popsicle coated in sweet strawberry chocolate — fruity and refreshing.',
-        image: '/menu/Popsicles/senyorita-strawberry.webp',
-        tags:  [],
-        new:   false,
-      },
-      {
-        id:    'senyorita-biscoff',
-        name:  'Señorita Biscoff',
-        desc:  'Avocado popsicle coated in Biscoff caramel — rich, crunchy and irresistible.',
-        image: '/menu/Popsicles/senyorita-biscoff.webp',
-        tags:  [],
-        new:   false,
-      },
-      // ↑ ADD MORE POPSICLES HERE
-    ],
-  },
-
   // ── 6. HEALTHY SERIES ───────────────────────────────────────────────────────
   {
     id:       'healthy-series',
@@ -334,22 +272,6 @@ export const CATEGORIES = [
     items: [
 
 
-      {
-        id:    'hot-coffee',
-        name:  'Hot Coffee',
-        desc:  'Freshly brewed hot coffee served in the iconic Avocadoria cup — warm, rich and satisfying.',
-        image: '/menu/coffee/Coffee_Hot.webp',
-        tags:  [],
-        new:   false,
-      },
-      {
-        id:    'iced-coffee',
-        name:  'Iced Coffee',
-        desc:  'Chilled coffee over ice served in the iconic Avocadoria cup — cool, bold and refreshing.',
-        image: '/menu/coffee/Coffee_Iced.webp',
-        tags:  [],
-        new:   false,
-      },
       {
         id:    'barley-shake',
         name:  'Barley Shake',
@@ -405,6 +327,70 @@ export const CATEGORIES = [
         new:   false,
       },
 
+      {
+        id:    'senyorita-matcha',
+        name:  'Señorita Matcha',
+        desc:  'Creamy avocado popsicle coated in matcha chocolate — smooth, earthy and indulgent.',
+        image: '/menu/Popsicles/senyorita-matcha.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'senyorita-choc',
+        name:  'Señorita Chocolate',
+        desc:  'Classic avocado popsicle dipped in rich milk chocolate coating.',
+        image: '/menu/Popsicles/senyorita-choc.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'senyorita-dark-choc',
+        name:  'Señorita Dark Chocolate',
+        desc:  'Avocado popsicle coated in premium dark chocolate for a bittersweet finish.',
+        image: '/menu/Popsicles/senyorita-dark-choc.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'senyorita-white-choc',
+        name:  'Señorita White Chocolate',
+        desc:  'Smooth avocado popsicle wrapped in creamy white chocolate coating.',
+        image: '/menu/Popsicles/senyorita-white-choc.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'senyorita-strawberry',
+        name:  'Señorita Strawberry',
+        desc:  'Avocado popsicle coated in sweet strawberry chocolate — fruity and refreshing.',
+        image: '/menu/Popsicles/senyorita-strawberry.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'senyorita-biscoff',
+        name:  'Señorita Biscoff',
+        desc:  'Avocado popsicle coated in Biscoff caramel — rich, crunchy and irresistible.',
+        image: '/menu/Popsicles/senyorita-biscoff.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'hot-coffee',
+        name:  'Hot Avocado Queen Coffee',
+        desc:  'Freshly brewed hot coffee served in the iconic Avocadoria cup — warm, rich and satisfying.',
+        image: '/menu/coffee/Coffee_Hot.webp',
+        tags:  [],
+        new:   false,
+      },
+      {
+        id:    'iced-coffee',
+        name:  'Iced Avocado Queen Coffee',
+        desc:  'Chilled coffee over ice served in the iconic Avocadoria cup — cool, bold and refreshing.',
+        image: '/menu/coffee/Coffee_Iced.webp',
+        tags:  [],
+        new:   false,
+      },
       // ↑ ADD MORE OTHERS HERE
     ],
   },

@@ -274,9 +274,20 @@ function CategoryView({ cat, onBack }) {
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function MenuPage() {
   const [activeCat, setActiveCat] = useState(null)
+  const gridRef = useRef(null)
 
   const featured = CATEGORIES.find(c => c.featured) || CATEGORIES[0]
   const rest      = CATEGORIES.filter(c => c.id !== featured.id)
+
+  const handleBack = () => {
+    setActiveCat(null)
+    setTimeout(() => {
+      if (gridRef.current) {
+        const top = gridRef.current.getBoundingClientRect().top + window.scrollY - 70
+        window.scrollTo({ top, behavior: 'smooth' })
+      }
+    }, 50)
+  }
 
   if (activeCat) return (
     <>
@@ -285,7 +296,7 @@ export default function MenuPage() {
         description={activeCat.tagline}
         path="/menu"
       />
-      <CategoryView cat={activeCat} onBack={() => setActiveCat(null)}/>
+      <CategoryView cat={activeCat} onBack={handleBack}/>
     </>
   )
 
@@ -394,7 +405,7 @@ export default function MenuPage() {
         </div>
 
         {/* ── Category grid ── */}
-        <div style={{
+        <div ref={gridRef} style={{
           position:'relative', overflow:'hidden',
           backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
         }}>
