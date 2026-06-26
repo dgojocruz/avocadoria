@@ -416,6 +416,15 @@ export default function OurStoresPage() {
     if (!mapReady || !showMap || !mapRef.current || leafletRef.current) return
     if (!window.google?.maps) return
 
+    // Wait for the container to have actual dimensions before initializing
+    const initMap = () => {
+      if (!mapRef.current) return
+      const rect = mapRef.current.getBoundingClientRect()
+      if (rect.width === 0 || rect.height === 0) {
+        setTimeout(initMap, 100)
+        return
+      }
+
     const { maps } = window.google
     const map = new maps.Map(mapRef.current, {
       center: { lat: 14.5995, lng: 120.9842 }, // Metro Manila default
@@ -510,6 +519,8 @@ export default function OurStoresPage() {
     ).join('')
     map.controls[maps.ControlPosition.BOTTOM_LEFT].push(legendDiv)
 
+    } // end initMap
+    setTimeout(initMap, 200)
   }, [mapReady, showMap])
 
   // ── Fly map to active branch ───────────────────────────────────────────────
@@ -1501,7 +1512,7 @@ export default function OurStoresPage() {
                       </p>
                     </div>
                   )}
-                  <div ref={mapRef} className="map-panel" style={{ width: '100%', height: '400px', minHeight: '300px' }} />
+                  <div ref={mapRef} className="map-panel" style={{ width: '100%', height: '500px', minHeight: '400px' }} />
                 </div>
 
               </div>
