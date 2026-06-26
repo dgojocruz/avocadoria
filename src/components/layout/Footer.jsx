@@ -17,7 +17,7 @@ const SOCIAL_LINKS = [
     label: 'Facebook',
     href:  'https://www.facebook.com/avocadoria.official',
     icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true">
         <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
       </svg>
     ),
@@ -26,7 +26,7 @@ const SOCIAL_LINKS = [
     label: 'Instagram',
     href:  'https://www.instagram.com/avocadoriaph.official',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="22" height="22" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16" aria-hidden="true">
         <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
         <circle cx="12" cy="12" r="4"/>
         <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
@@ -37,28 +37,102 @@ const SOCIAL_LINKS = [
     label: 'TikTok',
     href:  'https://www.tiktok.com/@avocadoria',
     icon: (
-      <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true">
         <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.22 8.22 0 0 0 4.84 1.56V6.79a4.85 4.85 0 0 1-1.07-.1z"/>
       </svg>
     ),
   },
 ]
 
+// Column heading — keep existing brand style
 const COL_LABEL = {
   fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-  fontSize: '16px', fontWeight: 'normal',
+  fontSize: '13px', fontWeight: 'normal',
   color: '#b6c548',
   textShadow: '-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff',
   letterSpacing: '0.08em', textTransform: 'uppercase',
-  margin: '0 0 14px',
+  margin: '0 0 10px',
 }
 
-// Body text — dark green, pops on lime bg
-const BODY = { fontFamily: "'Poppins',sans-serif", color: '#1e3d1b', lineHeight: 1.75 }
+const PINNED_LINKS  = NAV_LINKS.slice(0, 3)   // Home, Our Stores, About
+const HIDDEN_LINKS  = NAV_LINKS.slice(3)        // Menu, Franchise, Events, Party Cart, Careers
+
+function QuickLinks() {
+  const [open, setOpen] = useState(false)
+  return (
+    <nav aria-label="Footer navigation">
+      {PINNED_LINKS.map(({ label, to }) => (
+        <NavLink key={to} to={to} end={to === '/'} className="footer-ql-link"
+          style={({ isActive }) => ({ color: isActive ? '#fff' : undefined, fontWeight: isActive ? '700' : '500' })}>
+          {label}
+        </NavLink>
+      ))}
+
+      {/* +N chip */}
+      {!open && (
+        <button
+          onClick={() => setOpen(true)}
+          aria-label="Show more links"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '4px',
+            marginTop: '6px',
+            background: 'rgba(255,255,255,0.22)',
+            border: '1.5px solid rgba(255,255,255,0.5)',
+            borderRadius: '99px',
+            padding: '2px 10px',
+            fontSize: '10px', fontWeight: '700',
+            color: '#1e3d1b',
+            cursor: 'pointer',
+            fontFamily: 'Poppins,sans-serif',
+            transition: 'background .15s',
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.4)'}
+          onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.22)'}
+        >
+          +{HIDDEN_LINKS.length} more
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1e3d1b" strokeWidth="3" strokeLinecap="round">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </button>
+      )}
+
+      {/* Expanded links */}
+      {open && (
+        <>
+          {HIDDEN_LINKS.map(({ label, to }) => (
+            <NavLink key={to} to={to} className="footer-ql-link"
+              style={({ isActive }) => ({ color: isActive ? '#fff' : undefined, fontWeight: isActive ? '700' : '500' })}>
+              {label}
+            </NavLink>
+          ))}
+          <button
+            onClick={() => setOpen(false)}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '4px',
+              marginTop: '6px',
+              background: 'rgba(255,255,255,0.22)',
+              border: '1.5px solid rgba(255,255,255,0.5)',
+              borderRadius: '99px',
+              padding: '2px 10px',
+              fontSize: '10px', fontWeight: '700',
+              color: '#1e3d1b',
+              cursor: 'pointer',
+              fontFamily: 'Poppins,sans-serif',
+            }}
+          >
+            Show less
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1e3d1b" strokeWidth="3" strokeLinecap="round">
+              <path d="M18 15l-6-6-6 6"/>
+            </svg>
+          </button>
+        </>
+      )}
+    </nav>
+  )
+}
 
 export default function Footer() {
   const year = new Date().getFullYear()
-  const [open, setOpen] = useState(false)
 
   return (
     <footer style={{
@@ -66,15 +140,16 @@ export default function Footer() {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
-      borderTop: '1px solid rgba(182,197,72,0.25)',
+      borderTop: '2px solid rgba(255,255,255,0.3)',
     }}>
       <style>{`
+        /* Social buttons — compact */
         .footer-social-btn {
-          width: 44px; height: 44px;
+          width: 32px; height: 32px;
           border-radius: 50%;
           background: #fff;
           color: #b6c548;
-          border: 2.5px solid #b6c548;
+          border: 2px solid #b6c548;
           display: flex; align-items: center; justify-content: center;
           transition: background 0.2s, color 0.2s, transform 0.15s;
           text-decoration: none;
@@ -86,74 +161,68 @@ export default function Footer() {
           border-color: #3a6b35;
           transform: scale(1.1);
         }
+
+        /* Nav links — compact */
         .footer-ql-link {
           display: block;
-          font-family: Poppins,sans-serif;
-          font-size: 15px; font-weight: 600;
+          font-family: Poppins, sans-serif;
+          font-size: 12px; font-weight: 500;
           color: #1e3d1b;
           text-decoration: none;
-          padding: 5px 0;
-          transition: color 0.18s;
+          padding: 3px 0;
+          transition: color 0.15s;
+          line-height: 1.6;
         }
-        @media (min-width: 560px) { .footer-ql-link { font-size: 16px; } }
-        @media (min-width: 900px) { .footer-ql-link { font-size: 17px; } }
         .footer-ql-link:hover { color: #fff; }
 
-        /* Multi-col grid — mobile first */
+        /* Grid — mobile first */
         .footer-grid {
           display: grid;
-          grid-template-columns: 1fr;
-          gap: 28px;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px 16px;
+          padding: 24px 20px 20px;
           align-items: start;
-          width: 100%;
-          padding: 36px 20px 28px;
         }
-        .footer-col-logo { text-align: center; }
-        .footer-col-dpo { justify-content: center; }
-        @media (min-width: 560px) {
+        .footer-col-logo   { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; }
+        .footer-col-dpo    { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; }
+
+        @media (min-width: 768px) {
           .footer-grid {
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: auto 1.4fr 1fr 1fr auto;
             gap: 32px;
-            padding: 40px 28px;
+            padding: 28px 40px 24px;
           }
-          .footer-col-logo { grid-column: 1 / -1; }
-          .footer-col-dpo { grid-column: 1 / -1; display: flex; justify-content: center; }
-        }
-        @media (min-width: 900px) {
-          .footer-grid {
-            grid-template-columns: auto 1fr 1fr 1fr auto;
-            gap: 40px;
-            padding: 52px 64px 44px;
-          }
-          .footer-col-logo { grid-column: auto; }
-          .footer-col-dpo { grid-column: auto; display: block; }
+          .footer-col-logo { grid-column: auto; flex-direction: column; align-items: flex-start; gap: 0; }
+          .footer-col-dpo  { grid-column: auto; flex-direction: column; align-items: center; }
         }
       `}</style>
 
-      {/* ── Multi-column grid ── */}
       <div className="footer-grid">
 
         {/* Col 1 — Logo */}
-        <div className="footer-col-logo" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', textAlign: 'center' }}>
+        <div className="footer-col-logo">
           <Link to="/" aria-label="Avocadoria homepage">
             <img
               src="/logo.svg"
               alt="Avocadoria"
               style={{
-                height: '120px', width: 'auto',
-                filter: 'drop-shadow(0px 1px 0px rgba(255,255,255,0.9)) drop-shadow(0px 2px 4px rgba(58,107,53,0.15))',
+                height: '52px', width: 'auto',
+                filter: 'drop-shadow(0 1px 0 rgba(255,255,255,0.9))',
               }}
             />
           </Link>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: '#1e3d1b', margin: 0, lineHeight: 1.5 }}>
+            Philippines' No. 1<br />avocado dessert brand
+          </p>
         </div>
 
         {/* Col 2 — About + Social */}
         <div>
           <p style={COL_LABEL}>About</p>
-          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#1e3d1b', lineHeight: 1.75, margin: '0 0 18px' }}>
-            Avocadoria is the Philippines' No. 1 avocado dessert brand — bringing happiness in every cup since 2019.
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#1e3d1b', lineHeight: 1.65, margin: '0 0 12px' }}>
+            Bringing happiness in every cup since 2019.
           </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             {SOCIAL_LINKS.map(({ label, href, icon }) => (
               <a key={label} href={href} target="_blank" rel="noopener noreferrer"
                 aria-label={`Avocadoria on ${label}`} className="footer-social-btn">
@@ -166,7 +235,7 @@ export default function Footer() {
         {/* Col 3 — Headquarters */}
         <div>
           <p style={COL_LABEL}>Headquarters</p>
-          <address style={{ fontStyle: 'normal', fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#1e3d1b', lineHeight: 1.8 }}>
+          <address style={{ fontStyle: 'normal', fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#1e3d1b', lineHeight: 1.7 }}>
             4th Floor, RC Buenviaje Bldg.<br />
             Gil Fernando, Marikina City<br />
             <a href="mailto:official@avocadoria.com.ph"
@@ -179,39 +248,31 @@ export default function Footer() {
         {/* Col 4 — Quick Links */}
         <div>
           <p style={COL_LABEL}>Quick Links</p>
-          <nav aria-label="Footer navigation">
-            {NAV_LINKS.map(({ label, to }) => (
-              <NavLink key={to} to={to} end={to === '/'} className="footer-ql-link"
-                style={({ isActive }) => ({ color: isActive ? '#b6c548' : undefined, fontWeight: isActive ? '700' : '600' })}>
-                {label}
-              </NavLink>
-            ))}
-          </nav>
+          <QuickLinks />
         </div>
 
-        {/* Col 5 — DPO/DPS */}
-        <div className="footer-col-dpo" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', alignSelf: 'start' }}>
-          <p style={COL_LABEL}>Privacy</p>
+        {/* Col 5 — DPO */}
+        <div className="footer-col-dpo">
           <a href="https://privacy.gov.ph" target="_blank" rel="noopener noreferrer"
             aria-label="NPC DPO/DPS Registered" title="NPC DPO/DPS Registered · Valid until Sep 09, 2026"
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', transition: 'transform 0.2s', textDecoration: 'none' }}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', transition: 'transform 0.2s', textDecoration: 'none' }}
             onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
             onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
           >
             <img src="/dpo-registered-transparent.png" alt="NPC DPO/DPS Registered"
-              style={{ height: '240px', width: 'auto', objectFit: 'contain' }} />
-            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#1e3d1b', fontWeight: '600', textAlign: 'center', maxWidth: '130px' }}>
-              Registered Data Processing System &amp; DPO
+              style={{ height: '72px', width: 'auto', objectFit: 'contain' }} />
+            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '9px', color: '#1e3d1b', fontWeight: '600', textAlign: 'center', maxWidth: '90px', lineHeight: 1.4 }}>
+              Registered DPO/DPS
             </span>
           </a>
         </div>
 
       </div>
 
-      {/* ── Copyright bar ── */}
-      <div style={{ borderTop: '1px solid rgba(30,61,27,0.2)', padding: '14px 20px', textAlign: 'center' }}>
-        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'rgba(30,61,27,0.65)', margin: 0 }}>
-          Copyright © {year} Avocadoria. All Rights Reserved.
+      {/* Copyright bar */}
+      <div style={{ borderTop: '1px solid rgba(30,61,27,0.15)', padding: '10px 20px', textAlign: 'center' }}>
+        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(30,61,27,0.6)', margin: 0 }}>
+          © {year} Avocadoria. All Rights Reserved.
         </p>
       </div>
 
