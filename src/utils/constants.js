@@ -7,9 +7,9 @@ export const SITE = {
   phone:    '+63 945 971 6599',
   address:  '4th Floor, RC Buenviaje Bldg., Gil Fernando, Marikina City',
   grabfood: 'https://food.grab.com/ph/en/restaurant/avocadoria',
-  facebook: 'https://facebook.com/avocadoria.ph',
-  instagram:'https://instagram.com/avocadoria.ph',
-  tiktok:   'https://tiktok.com/@avocadoria.ph',
+  facebook: 'https://www.facebook.com/avocadoria.official',
+  instagram:'https://www.instagram.com/avocadoriaph.official',
+  tiktok:   'https://www.tiktok.com/@avocadoria',
   messenger:'https://m.me/avocadoria.ph',
 }
 

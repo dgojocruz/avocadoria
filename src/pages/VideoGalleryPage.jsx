@@ -134,7 +134,7 @@ export default function VideoGalleryPage() {
             </div>
             {/* Empty state hint */}
             <p style={{ textAlign:'center', fontFamily:'Poppins,sans-serif', fontSize:'12px', color:'rgba(138,95,60,0.55)', marginTop:'40px' }}>
-              More videos coming soon. Follow us on <a href="https://www.facebook.com/avocadoria.ph" target="_blank" rel="noopener noreferrer" style={{ color:'#b6c548', fontWeight:'600' }}>Facebook</a> for live updates!
+              More videos coming soon. Follow us on <a href="https://www.facebook.com/avocadoria.official" target="_blank" rel="noopener noreferrer" style={{ color:'#b6c548', fontWeight:'600' }}>Facebook</a> for live updates!
             </p>
           </div>
         </section>
