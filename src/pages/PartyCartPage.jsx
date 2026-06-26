@@ -33,7 +33,7 @@ const PACKAGES = [
       'Extended service hours',
     ],
     tiers: {
-      50:  { price: 'TBA', serving: '3 hours' },
+      50:  { price: '₱21,500', serving: '3 hours' },
       100: { price: '₱35,000', serving: '5 hours' },
     },
   },
@@ -50,7 +50,7 @@ const PACKAGES = [
       'Extended service hours',
     ],
     tiers: {
-      50:  { price: 'TBA', serving: '3 hours' },
+      50:  { price: '₱24,000', serving: '3 hours' },
       100: { price: '₱40,000', serving: '5 hours' },
     },
   },
@@ -67,7 +67,7 @@ const PACKAGES = [
       'Extended service hours',
     ],
     tiers: {
-      50:  { price: 'TBA', serving: '3 hours' },
+      50:  { price: '₱19,000', serving: '3 hours' },
       100: { price: '₱30,000', serving: '5 hours' },
     },
   },
@@ -84,7 +84,7 @@ const PACKAGES = [
       'Extended service hours',
     ],
     tiers: {
-      50:  { price: 'TBA', serving: '3 hours' },
+      50:  { price: '₱23,500', serving: '3 hours' },
       100: { price: '₱39,000', serving: '5 hours' },
     },
   },
@@ -101,7 +101,7 @@ const PACKAGES = [
       'Extended service hours',
     ],
     tiers: {
-      50:  { price: 'TBA', serving: '3 hours' },
+      50:  { price: '₱22,250', serving: '3 hours' },
       100: { price: '₱36,500', serving: '5 hours' },
     },
   },
@@ -118,7 +118,7 @@ const PACKAGES = [
       'Extended service hours',
     ],
     tiers: {
-      50:  { price: 'TBA', serving: '3 hours' },
+      50:  { price: '₱17,750', serving: '3 hours' },
       100: { price: '₱27,500', serving: '5 hours' },
     },
   },
