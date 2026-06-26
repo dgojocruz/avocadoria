@@ -1112,24 +1112,6 @@ export default function OurStoresPage() {
                 {userLoc ? ' · by distance' : ''}
               </span>
 
-              {/* Radius slider — only when GPS active */}
-              {userLoc && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, background: 'rgba(182,197,72,.1)', border: '1.5px solid rgba(182,197,72,.3)', borderRadius: '10px', padding: '6px 12px' }}>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.5" aria-hidden="true">
-                    <circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
-                  </svg>
-                  <input
-                    type="range" min="1" max="50" step="1" value={radiusKm}
-                    onChange={e => setRadiusKm(Number(e.target.value))}
-                    style={{ width: '90px', accentColor: C.olive, cursor: 'pointer' }}
-                    aria-label="Search radius in kilometers"
-                  />
-                  <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: '12px', fontWeight: '700', color: C.dark, minWidth: '38px' }}>
-                    {radiusKm} km
-                  </span>
-                </div>
-              )}
-
               {/* GPS button */}
               <button onClick={handleLocate}
                 style={{
@@ -1148,7 +1130,28 @@ export default function OurStoresPage() {
                 </svg>
                 {userLoc ? 'Location active' : 'Near me'}
               </button>
+
+              {/* Radius slider — inline in toolbar when GPS active */}
+              {userLoc && (
+                <>
+                  <div style={{ width: '1px', height: '24px', background: 'rgba(182,197,72,.3)', flexShrink: 0 }} />
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.5" flexShrink="0" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
+                  </svg>
+                  <input
+                    type="range" min="1" max="50" step="1" value={radiusKm}
+                    onChange={e => setRadiusKm(Number(e.target.value))}
+                    style={{ width: '100px', accentColor: C.olive, cursor: 'pointer', flexShrink: 0 }}
+                    aria-label="Search radius in kilometers"
+                  />
+                  <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: '12px', fontWeight: '800', color: C.dark, flexShrink: 0 }}>
+                    {radiusKm} km
+                  </span>
+                </>
+              )}
             </div>
+
+            {/* Remove old slider row below toolbar */}
 
             {/* ── Main content — centered, max-width container ── */}
             <div className="stores-layout" style={{
@@ -1436,7 +1439,11 @@ export default function OurStoresPage() {
                         )
                       })()}
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        <a href={activeBranch.directionsUrl || `https://www.google.com/maps/dir/?api=1&destination=${activeBranch.lat},${activeBranch.lng}&travelmode=driving`} target="_blank" rel="noopener noreferrer"
+                        <a href={
+                          activeBranch.placeId
+                            ? `https://www.google.com/maps/dir/?api=1${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}&destination_place_id=${activeBranch.placeId}&travelmode=driving`
+                            : `https://www.google.com/maps/dir/?api=1${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}&destination=${activeBranch.lat},${activeBranch.lng}&travelmode=driving`
+                        } target="_blank" rel="noopener noreferrer"
                           style={{
                             display: 'inline-flex', alignItems: 'center', gap: '5px',
                             padding: '9px 18px', borderRadius: '999px',
