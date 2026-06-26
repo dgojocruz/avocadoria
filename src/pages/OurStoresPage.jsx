@@ -523,6 +523,11 @@ export default function OurStoresPage() {
 
     map.panTo({ lat: branch.lat, lng: branch.lng })
     map.setZoom(16)
+    // Trigger resize in case the map container was hidden/zero-size on init
+    setTimeout(() => {
+      window.google.maps.event.trigger(map, 'resize')
+      map.panTo({ lat: branch.lat, lng: branch.lng })
+    }, 100)
 
     const marker = markersRef.current[activeId]
     if (marker) {
@@ -1495,7 +1500,7 @@ export default function OurStoresPage() {
                       </p>
                     </div>
                   )}
-                  <div ref={mapRef} className="map-panel" style={{ width: '100%', minHeight: '300px' }} />
+                  <div ref={mapRef} className="map-panel" style={{ width: '100%', height: '400px', minHeight: '300px' }} />
                 </div>
 
               </div>
