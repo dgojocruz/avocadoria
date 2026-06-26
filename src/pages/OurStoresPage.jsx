@@ -479,7 +479,13 @@ export default function OurStoresPage() {
         activeMarkRef.current = marker
 
         const d = userLoc ? haversine(userLoc.lat, userLoc.lng, b.lat, b.lng) : null
-        const distHtml = d !== null ? `<div style="display:inline-flex;align-items:center;gap:5px;background:rgba(182,197,72,.15);border:1.5px solid rgba(182,197,72,.4);border-radius:999px;padding:5px 12px;margin:0 0 10px"><span style="font-size:12px;font-weight:800;color:#3a6b35">📍 ${d < 1 ? Math.round(d*1000)+' m' : d.toFixed(1)+' km'} away</span></div>` : ''
+        const dLabel = d !== null ? (d < 1 ? Math.round(d * 1000) + ' m' : d.toFixed(1) + ' km') : null
+        const mins = d !== null ? Math.max(1, Math.round((d / 25) * 60)) : null
+        const timeLabel = mins !== null ? (mins < 60 ? `~${mins} min drive` : `~${Math.round(mins/60)}h ${mins%60}m`) : null
+        const distHtml = dLabel ? `<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(182,197,72,.12);border:1.5px solid rgba(182,197,72,.35);border-radius:999px;padding:5px 12px;margin:0 0 10px;user-select:none"><span style="font-size:12px;font-weight:800;color:#3a6b35">📍 ${dLabel} away</span><span style="font-size:10px;color:#8A5F3C;font-weight:600">· ${timeLabel}</span></div>` : ''
+        const dirUrl = b.placeId
+          ? `https://www.google.com/maps/dir/?api=1&destination_place_id=${b.placeId}&travelmode=driving${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}`
+          : `https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}&travelmode=driving${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}`
 
         infoWindow.setContent(`
           <div style="font-family:Poppins,sans-serif;min-width:220px">
@@ -490,17 +496,32 @@ export default function OurStoresPage() {
             <p style="font-size:12px;color:#8A5F3C;margin:0 0 8px;line-height:1.5">${b.address}</p>
             ${distHtml}
             <div style="display:flex;flex-direction:column;gap:6px">
-              <a href="${b.directionsUrl || `https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}&travelmode=driving`}" target="_blank" rel="noopener noreferrer"
-                style="display:inline-flex;align-items:center;gap:5px;background:#3a6b35;color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;text-decoration:none">
-                📍 Get Directions
+              <a href="${dirUrl}" target="_blank" rel="noopener noreferrer"
+                style="display:inline-flex;align-items:center;gap:6px;background:#3a6b35;color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;text-decoration:none">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" style="flex-shrink:0"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+                Get Directions
               </a>
-              <a href="https://food.grab.com/ph/en/restaurants?search=avocadoria" target="_blank" rel="noopener noreferrer"
+              <a href="https://food.grab.com/ph/en/restaurants?search=avocadoria&location=${b.lat},${b.lng}" target="_blank" rel="noopener noreferrer"
                 style="display:inline-flex;align-items:center;gap:6px;background:#00B14F;color:#fff;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;text-decoration:none">
-                🟢 Order on Grab
+                <svg width="16" height="16" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+                  <circle cx="30" cy="30" r="30" fill="#00B14F"/>
+                  <path d="M30 14C21.2 14 14 21.2 14 30s7.2 16 16 16 16-7.2 16-16H30V26h16.8c.8 2.3 1.2 4.7 1.2 7.3 0 12.2-9.8 22-22 22S8 45.5 8 33.3 17.8 11 30 11v3z" fill="#fff"/>
+                  <path d="M30 14v12h16.8C45.1 19.7 38.1 14 30 14z" fill="#fff" opacity=".7"/>
+                </svg>
+                Order on Grab
               </a>
               <a href="https://foodpanda.ph/chain/cy2uf/avocadoria-ph" target="_blank" rel="noopener noreferrer"
                 style="display:inline-flex;align-items:center;gap:6px;background:#d70f64;color:#fff;border-radius:999px;padding:6px 14px;font-size:11px;font-weight:700;text-decoration:none">
-                🐼 Order on foodpanda
+                <svg width="16" height="16" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+                  <circle cx="30" cy="30" r="30" fill="#d70f64"/>
+                  <ellipse cx="30" cy="28" rx="10" ry="9" fill="#fff"/>
+                  <circle cx="25" cy="26" r="2.5" fill="#d70f64"/>
+                  <circle cx="35" cy="26" r="2.5" fill="#d70f64"/>
+                  <path d="M22 34 Q30 40 38 34" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+                  <path d="M24 18 Q20 12 16 14" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                  <path d="M36 18 Q40 12 44 14" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                </svg>
+                foodpanda
               </a>
             </div>
           </div>`)
@@ -1414,50 +1435,67 @@ export default function OurStoresPage() {
                       <p style={{ fontSize: '18px', color: `${C.brown}99`, margin: '0 0 14px', lineHeight: '1.5', fontFamily: "'Poppins',sans-serif" }}>
                         📍 {activeBranch.address}
                       </p>
-                      {/* Distance pill — clickable to open Google Maps directions */}
+                      {/* Distance info pill — informational only, no link */}
                       {userLoc && activeBranch.lat && activeBranch.lng && (() => {
                         const dist = haversine(userLoc.lat, userLoc.lng, activeBranch.lat, activeBranch.lng)
                         const distLabel = dist < 1 ? `${Math.round(dist * 1000)} m` : `${dist.toFixed(1)} km`
-                        const dirUrl = activeBranch.placeId
-                          ? `https://www.google.com/maps/dir/?api=1&origin=${userLoc.lat},${userLoc.lng}&destination_place_id=${activeBranch.placeId}&travelmode=driving`
-                          : `https://www.google.com/maps/dir/?api=1&origin=${userLoc.lat},${userLoc.lng}&destination=${activeBranch.lat},${activeBranch.lng}&travelmode=driving`
+                        // rough drive time: avg 25 km/h in PH urban traffic
+                        const mins = Math.max(1, Math.round((dist / 25) * 60))
+                        const timeLabel = mins < 60 ? `~${mins} min drive` : `~${Math.round(mins/60)}h ${mins%60}m drive`
                         return (
-                          <a href={dirUrl} target="_blank" rel="noopener noreferrer" style={{
-                            display: 'inline-flex', alignItems: 'center', gap: '7px',
-                            padding: '8px 16px', borderRadius: '999px',
-                            background: 'rgba(182,197,72,.15)',
-                            border: `1.5px solid rgba(182,197,72,.4)`,
-                            margin: '0 0 14px',
-                            textDecoration: 'none',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s',
-                          }}
-                          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(182,197,72,.3)'; e.currentTarget.style.borderColor = C.olive }}
-                          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(182,197,72,.15)'; e.currentTarget.style.borderColor = 'rgba(182,197,72,.4)' }}
-                          >
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.5" aria-hidden="true">
+                          <div style={{
+                            display: 'inline-flex', alignItems: 'center', gap: '6px',
+                            padding: '7px 14px', borderRadius: '999px',
+                            background: 'rgba(182,197,72,.12)',
+                            border: '1.5px solid rgba(182,197,72,.35)',
+                            margin: '0 0 12px',
+                            userSelect: 'none',
+                          }}>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.5" aria-hidden="true">
                               <circle cx="12" cy="10" r="3" /><path d="M12 2a8 8 0 0 0-8 8c0 5.4 8 12 8 12s8-6.6 8-12a8 8 0 0 0-8-8z" />
                             </svg>
                             <span style={{ fontSize: '13px', fontWeight: '800', color: C.dark, fontFamily: "'Poppins',sans-serif" }}>
                               {distLabel} away
                             </span>
-                            <span style={{ fontSize: '11px', color: `${C.brown}90`, fontWeight: '600', fontFamily: "'Poppins',sans-serif" }}>
-                              from your location
+                            <span style={{ fontSize: '11px', color: `${C.brown}80`, fontWeight: '600', fontFamily: "'Poppins',sans-serif" }}>
+                              · {timeLabel}
                             </span>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.5" aria-hidden="true">
-                              <path d="M3 11l19-9-9 19-2-8-8-2z" />
-                            </svg>
-                            <span style={{ fontSize: '11px', fontWeight: '700', color: C.olive, fontFamily: "'Poppins',sans-serif" }}>
-                              Get Directions
-                            </span>
-                          </a>
+                          </div>
                         )
                       })()}
-                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '0' }}>
+                        {/* Get Directions button */}
+                        {(() => {
+                          const dirUrl = activeBranch.placeId
+                            ? `https://www.google.com/maps/dir/?api=1&destination_place_id=${activeBranch.placeId}&travelmode=driving${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}`
+                            : `https://www.google.com/maps/dir/?api=1&destination=${activeBranch.lat},${activeBranch.lng}&travelmode=driving${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}`
+                          return (
+                            <a href={dirUrl} target="_blank" rel="noopener noreferrer"
+                              style={{
+                                display: 'inline-flex', alignItems: 'center', gap: '7px',
+                                padding: '9px 18px', borderRadius: '999px',
+                                background: C.dark, color: '#fff',
+                                fontSize: '13px', fontWeight: '700',
+                                textDecoration: 'none', fontFamily: "'Poppins',sans-serif",
+                                boxShadow: '0 3px 12px rgba(58,107,53,.35)', transition: 'background .2s',
+                              }}
+                              onMouseEnter={e => e.currentTarget.style.background = '#2a4f28'}
+                              onMouseLeave={e => e.currentTarget.style.background = C.dark}
+                            >
+                              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" aria-hidden="true" style={{ flexShrink: 0 }}>
+                                <path d="M3 11l19-9-9 19-2-8-8-2z" />
+                              </svg>
+                              Get Directions
+                            </a>
+                          )
+                        })()}
                         {/* Grab + FoodPanda order buttons */}
-                        <a href="https://food.grab.com/ph/en/restaurants?search=avocadoria" target="_blank" rel="noopener noreferrer"
+                        {/* Grab — branch-specific lat/lng search */}
+                        <a
+                          href={`https://food.grab.com/ph/en/restaurants?search=avocadoria&location=${activeBranch.lat},${activeBranch.lng}`}
+                          target="_blank" rel="noopener noreferrer"
                           style={{
-                            display: 'inline-flex', alignItems: 'center', gap: '6px',
+                            display: 'inline-flex', alignItems: 'center', gap: '7px',
                             padding: '9px 18px', borderRadius: '999px',
                             background: '#00B14F', color: '#fff',
                             fontSize: '13px', fontWeight: '700',
@@ -1467,11 +1505,20 @@ export default function OurStoresPage() {
                           onMouseEnter={e => e.currentTarget.style.background = '#009640'}
                           onMouseLeave={e => e.currentTarget.style.background = '#00B14F'}
                         >
-                          🟢 Grab
+                          {/* Grab logo SVG */}
+                          <svg width="18" height="18" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ flexShrink: 0 }}>
+                            <circle cx="30" cy="30" r="30" fill="#00B14F"/>
+                            <path d="M30 14C21.2 14 14 21.2 14 30s7.2 16 16 16 16-7.2 16-16H30V26h16.8c.8 2.3 1.2 4.7 1.2 7.3 0 12.2-9.8 22-22 22S8 45.5 8 33.3 17.8 11 30 11v3z" fill="#fff"/>
+                            <path d="M30 14v12h16.8C45.1 19.7 38.1 14 30 14z" fill="#fff" opacity=".6"/>
+                          </svg>
+                          Grab
                         </a>
-                        <a href="https://foodpanda.ph/chain/cy2uf/avocadoria-ph" target="_blank" rel="noopener noreferrer"
+                        {/* FoodPanda — chain-level URL (auto-detects location) */}
+                        <a
+                          href="https://foodpanda.ph/chain/cy2uf/avocadoria-ph"
+                          target="_blank" rel="noopener noreferrer"
                           style={{
-                            display: 'inline-flex', alignItems: 'center', gap: '6px',
+                            display: 'inline-flex', alignItems: 'center', gap: '7px',
                             padding: '9px 18px', borderRadius: '999px',
                             background: '#d70f64', color: '#fff',
                             fontSize: '13px', fontWeight: '700',
@@ -1481,7 +1528,17 @@ export default function OurStoresPage() {
                           onMouseEnter={e => e.currentTarget.style.background = '#b50d55'}
                           onMouseLeave={e => e.currentTarget.style.background = '#d70f64'}
                         >
-                          🐼 foodpanda
+                          {/* FoodPanda panda face SVG */}
+                          <svg width="18" height="18" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style={{ flexShrink: 0 }}>
+                            <circle cx="30" cy="30" r="30" fill="#d70f64"/>
+                            <ellipse cx="30" cy="28" rx="12" ry="11" fill="#fff"/>
+                            <circle cx="24" cy="26" r="3" fill="#d70f64"/>
+                            <circle cx="36" cy="26" r="3" fill="#d70f64"/>
+                            <path d="M23 34 Q30 40 37 34" stroke="#d70f64" strokeWidth="2" fill="none" strokeLinecap="round"/>
+                            <path d="M22 18 Q17 11 13 13" stroke="#fff" strokeWidth="3" fill="none" strokeLinecap="round"/>
+                            <path d="M38 18 Q43 11 47 13" stroke="#fff" strokeWidth="3" fill="none" strokeLinecap="round"/>
+                          </svg>
+                          foodpanda
                         </a>
                       </div>
                     </div>

@@ -2,18 +2,11 @@ import { useState } from 'react'
 import SEO from '@/components/ui/SEO'
 
 const PHOTOS = [
-  { id:  1, src: '/gallery/tb-group-1.webp',      title: 'Team Building 2025 — Group Photo',     event: 'Team Building', date: '2025' },
-  { id:  2, src: '/gallery/tb-group-2.webp',      title: 'Team Building 2025 — Full Team',       event: 'Team Building', date: '2025' },
-  { id: 10, src: '/gallery/tb-group-3.webp',      title: 'Team Building 2025 — Night Photo',     event: 'Team Building', date: '2025' },
-  { id:  3, src: '/gallery/tb-activities-1.webp', title: 'Building Bridges — Activity 1',        event: 'Team Building', date: '2025' },
-  { id:  5, src: '/gallery/tb-activities-2.webp', title: 'Building Bridges — Human Pyramid',     event: 'Team Building', date: '2025' },
-  { id:  6, src: '/gallery/tb-activities-3.webp', title: 'Building Bridges — Purple Team',       event: 'Team Building', date: '2025' },
-  { id:  7, src: '/gallery/tb-activities-4.webp', title: 'Building Bridges — Green Team Race',   event: 'Team Building', date: '2025' },
-  { id:  8, src: '/gallery/tb-activities-5.webp', title: 'Building Bridges — Blue Team',         event: 'Team Building', date: '2025' },
-  { id:  9, src: '/gallery/tb-activities-6.webp', title: 'Building Bridges — Group Games',       event: 'Team Building', date: '2025' },
-  { id:  4, src: '/gallery/grand-opening-1.webp', title: 'Grand Opening — Avocadoria.ph Kiosk', event: 'Grand Opening', date: '2025' },
-  { id: 11, src: '/gallery/avo-buddy-expo.webp',  title: 'Avo-Buddy at the Franchise Expo',      event: 'Expo',          date: '2025' },
-  { id: 12, src: '/gallery/franchise-expo.webp',  title: 'Franchise Asia Philippines 2025',      event: 'Expo',          date: '2025' },
+  { id: 1, src: '/gallery/grand-opening-zamboanga.webp',           title: 'SM City Zamboanga',           event: 'Grand Openings' },
+  { id: 2, src: '/gallery/grand-opening-robinsons-galleria.webp',  title: 'Robinsons Galleria',          event: 'Grand Openings' },
+  { id: 3, src: '/gallery/grand-opening-sm-masinag.webp',          title: 'SM Masinag',                  event: 'Grand Openings' },
+  { id: 4, src: '/gallery/grand-opening-thailand.webp',            title: 'Thailand',                    event: 'Grand Openings' },
+  { id: 5, src: '/gallery/grand-opening-upad-hotel.webp',          title: 'UPAD Hotel',                  event: 'Grand Openings' },
 ]
 
 const EVENT_TAGS = ['All', ...Array.from(new Set(PHOTOS.map(p => p.event)))]
@@ -37,13 +30,14 @@ function PhotoCard({ photo, onClick }) {
         overflow: 'hidden',
         background: 'transparent',
         border: 'none',
-        boxShadow: 'none',
+        boxShadow: '0 4px 18px rgba(58,107,53,0.13)',
         cursor: photo.src ? 'pointer' : 'default',
-        transition: 'transform 0.25s ease',
+        transition: 'transform 0.25s ease, box-shadow 0.25s ease',
         aspectRatio: '4/3',
+        position: 'relative',
       }}
-      onMouseEnter={e => { if (photo.src) e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)' }}
-      onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)' }}
+      onMouseEnter={e => { if (photo.src) { e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(58,107,53,0.22)' } }}
+      onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = '0 4px 18px rgba(58,107,53,0.13)' }}
     >
       {photo.src
         ? <img src={photo.src} alt={photo.title}
@@ -57,6 +51,27 @@ function PhotoCard({ photo, onClick }) {
             </svg>
           </div>
       }
+      {/* Title overlay */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0,
+        background: 'linear-gradient(to top, rgba(30,61,27,0.75) 0%, transparent 100%)',
+        borderRadius: '0 0 16px 16px',
+        padding: '28px 14px 12px',
+        pointerEvents: 'none',
+      }}>
+        <p style={{
+          fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+          fontSize: 'clamp(13px,2vw,17px)',
+          fontWeight: 'normal',
+          color: '#b6c548',
+          textShadow: '-1.5px -1.5px 0 #fff,1.5px -1.5px 0 #fff,-1.5px 1.5px 0 #fff,1.5px 1.5px 0 #fff',
+          margin: 0,
+          lineHeight: 1.2,
+          letterSpacing: '0.03em',
+        }}>
+          🥑 Grand Opening — {photo.title}
+        </p>
+      </div>
     </div>
   )
 }
@@ -106,14 +121,33 @@ export default function ImageGalleryPage() {
           </div>
         </section>
 
-        {/* PHOTO GRID */}
+        {/* GROUPED PHOTO GRID */}
         <section style={{ position:'relative', overflow:'hidden', padding:'16px 16px 64px', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundColor:'#F3F2EE' }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth:'1400px', margin:'0 auto' }}>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(360px,1fr))', gap:'12px' }}>
-              {filtered.map(p => <PhotoCard key={p.id} photo={p} onClick={setLightbox} />)}
-            </div>
-            <p style={{ textAlign:'center', fontFamily:'Poppins,sans-serif', fontSize:'12px', color:'rgba(138,95,60,0.5)', marginTop:'40px' }}>
+            {Array.from(new Set(filtered.map(p => p.event))).map(group => (
+              <div key={group} style={{ marginBottom:'48px' }}>
+                {/* Group heading */}
+                <h2 style={{
+                  fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+                  fontWeight: 'normal',
+                  fontSize: 'clamp(1.4rem,3.5vw,2.2rem)',
+                  color: '#b6c548',
+                  textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff',
+                  margin: '0 0 18px',
+                  lineHeight: 1.1,
+                  letterSpacing: '0.04em',
+                }}>
+                  {group}
+                </h2>
+                <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:'14px' }}>
+                  {filtered.filter(p => p.event === group).map(p => (
+                    <PhotoCard key={p.id} photo={p} onClick={setLightbox} />
+                  ))}
+                </div>
+              </div>
+            ))}
+            <p style={{ textAlign:'center', fontFamily:'Poppins,sans-serif', fontSize:'12px', color:'rgba(138,95,60,0.5)', marginTop:'8px' }}>
               More photos being added regularly. Follow us on <a href="https://www.facebook.com/avocadoria.official" target="_blank" rel="noopener noreferrer" style={{ color:'#b6c548', fontWeight:'600' }}>Facebook</a> for the latest!
             </p>
           </div>
