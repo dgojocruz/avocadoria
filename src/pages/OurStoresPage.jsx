@@ -1414,18 +1414,27 @@ export default function OurStoresPage() {
                       <p style={{ fontSize: '18px', color: `${C.brown}99`, margin: '0 0 14px', lineHeight: '1.5', fontFamily: "'Poppins',sans-serif" }}>
                         📍 {activeBranch.address}
                       </p>
-                      {/* Distance from user */}
+                      {/* Distance pill — clickable to open Google Maps directions */}
                       {userLoc && activeBranch.lat && activeBranch.lng && (() => {
                         const dist = haversine(userLoc.lat, userLoc.lng, activeBranch.lat, activeBranch.lng)
                         const distLabel = dist < 1 ? `${Math.round(dist * 1000)} m` : `${dist.toFixed(1)} km`
+                        const dirUrl = activeBranch.placeId
+                          ? `https://www.google.com/maps/dir/?api=1&origin=${userLoc.lat},${userLoc.lng}&destination_place_id=${activeBranch.placeId}&travelmode=driving`
+                          : `https://www.google.com/maps/dir/?api=1&origin=${userLoc.lat},${userLoc.lng}&destination=${activeBranch.lat},${activeBranch.lng}&travelmode=driving`
                         return (
-                          <div style={{
+                          <a href={dirUrl} target="_blank" rel="noopener noreferrer" style={{
                             display: 'inline-flex', alignItems: 'center', gap: '7px',
-                            padding: '7px 14px', borderRadius: '999px',
+                            padding: '8px 16px', borderRadius: '999px',
                             background: 'rgba(182,197,72,.15)',
                             border: `1.5px solid rgba(182,197,72,.4)`,
                             margin: '0 0 14px',
-                          }}>
+                            textDecoration: 'none',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                          }}
+                          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(182,197,72,.3)'; e.currentTarget.style.borderColor = C.olive }}
+                          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(182,197,72,.15)'; e.currentTarget.style.borderColor = 'rgba(182,197,72,.4)' }}
+                          >
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.5" aria-hidden="true">
                               <circle cx="12" cy="10" r="3" /><path d="M12 2a8 8 0 0 0-8 8c0 5.4 8 12 8 12s8-6.6 8-12a8 8 0 0 0-8-8z" />
                             </svg>
@@ -1435,31 +1444,16 @@ export default function OurStoresPage() {
                             <span style={{ fontSize: '11px', color: `${C.brown}90`, fontWeight: '600', fontFamily: "'Poppins',sans-serif" }}>
                               from your location
                             </span>
-                          </div>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.5" aria-hidden="true">
+                              <path d="M3 11l19-9-9 19-2-8-8-2z" />
+                            </svg>
+                            <span style={{ fontSize: '11px', fontWeight: '700', color: C.olive, fontFamily: "'Poppins',sans-serif" }}>
+                              Get Directions
+                            </span>
+                          </a>
                         )
                       })()}
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        <a href={
-                          activeBranch.placeId
-                            ? `https://www.google.com/maps/dir/?api=1${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}&destination_place_id=${activeBranch.placeId}&travelmode=driving`
-                            : `https://www.google.com/maps/dir/?api=1${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}&destination=${activeBranch.lat},${activeBranch.lng}&travelmode=driving`
-                        } target="_blank" rel="noopener noreferrer"
-                          style={{
-                            display: 'inline-flex', alignItems: 'center', gap: '5px',
-                            padding: '9px 18px', borderRadius: '999px',
-                            background: C.olive, color: '#fff',
-                            fontSize: '13px', fontWeight: '700',
-                            textDecoration: 'none', fontFamily: "'Poppins',sans-serif",
-                            boxShadow: `0 3px 12px rgba(182,197,72,.4)`, transition: 'all .2s',
-                          }}
-                          onMouseEnter={e => e.currentTarget.style.background = C.dark}
-                          onMouseLeave={e => e.currentTarget.style.background = C.olive}
-                        >
-                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                            <path d="M3 11l19-9-9 19-2-8-8-2z" />
-                          </svg>
-                          Get Directions
-                        </a>
                         {/* Grab + FoodPanda order buttons */}
                         <a href="https://food.grab.com/ph/en/restaurants?search=avocadoria" target="_blank" rel="noopener noreferrer"
                           style={{
