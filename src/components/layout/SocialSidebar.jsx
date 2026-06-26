@@ -170,7 +170,7 @@ function IconBtn({ children, onClick, href, ariaLabel }) {
   )
 
   return href
-    ? <a href={href} rel="noopener noreferrer" {...handlers}>{inner}</a>
+    ? <a href={href} target="_blank" rel="noopener noreferrer" {...handlers}>{inner}</a>
     : <button onClick={onClick} {...handlers}>{inner}</button>
 }
 
