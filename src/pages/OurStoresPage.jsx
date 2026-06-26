@@ -490,7 +490,7 @@ export default function OurStoresPage() {
             <p style="font-size:12px;color:#8A5F3C;margin:0 0 8px;line-height:1.5">${b.address}</p>
             ${distHtml}
             <div style="display:flex;flex-direction:column;gap:6px">
-              <a href="${b.mapsUrl}" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=${encodeURIComponent(b.name + ', ' + b.address)}" target="_blank" rel="noopener noreferrer"
                 style="display:inline-flex;align-items:center;gap:5px;background:#3a6b35;color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;text-decoration:none">
                 📍 Get Directions
               </a>
@@ -543,12 +543,10 @@ export default function OurStoresPage() {
 
     const marker = markersRef.current[activeId]
     if (marker) {
-      if (activeMarkRef.current && activeMarkRef.current !== marker) {
-        const prevId = Object.keys(markersRef.current).find(k => markersRef.current[k] === activeMarkRef.current)
-        const prevBranch = BRANCHES.find(x => x.id === parseInt(prevId))
-        const prevColor = ISLAND_COLORS[prevBranch?.island]?.pin || '#b6c548'
-        activeMarkRef.current.setIcon({ url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="40" height="52" viewBox="0 0 40 52"><ellipse cx="20" cy="18" rx="14" ry="16" fill="${prevColor}" stroke="#fff" stroke-width="2"/><ellipse cx="20" cy="17" rx="7" ry="8" fill="#fff" opacity="0.3"/><circle cx="20" cy="17" r="4" fill="#3a6b35" opacity="0.7"/><path d="M20 34 L13 46 Q20 52 27 46 Z" fill="${prevColor}" stroke="#fff" stroke-width="2"/></svg>`)}`, scaledSize: new maps.Size(40, 52), anchor: new maps.Point(20, 52) })
-      }
+      // Hide ALL markers first
+      Object.values(markersRef.current).forEach(m => m.setMap(null))
+      // Show only the selected marker
+      marker.setMap(map)
       marker.setIcon({ url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="46" height="60" viewBox="0 0 40 52"><ellipse cx="20" cy="18" rx="14" ry="16" fill="#3a6b35" stroke="#fff" stroke-width="3"/><ellipse cx="20" cy="17" rx="7" ry="8" fill="#fff" opacity="0.3"/><circle cx="20" cy="17" r="4" fill="#b6c548" opacity="0.9"/><path d="M20 34 L13 46 Q20 52 27 46 Z" fill="#3a6b35" stroke="#fff" stroke-width="3"/></svg>`)}`, scaledSize: new maps.Size(46, 60), anchor: new maps.Point(23, 60) })
       activeMarkRef.current = marker
     }
@@ -1438,7 +1436,7 @@ export default function OurStoresPage() {
                         )
                       })()}
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        <a href={activeBranch.mapsUrl} target="_blank" rel="noopener noreferrer"
+                        <a href={`https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=${encodeURIComponent(activeBranch.name + ', ' + activeBranch.address)}&destination_place_id=`} target="_blank" rel="noopener noreferrer"
                           style={{
                             display: 'inline-flex', alignItems: 'center', gap: '5px',
                             padding: '9px 18px', borderRadius: '999px',
