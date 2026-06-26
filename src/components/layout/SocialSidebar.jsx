@@ -265,17 +265,22 @@ export default function SocialSidebar() {
         }
         .social-sidebar-pill {
           flex-direction: row !important;
-          padding: 5px 7px !important;
+          padding: 6px 10px !important;
           gap: 5px !important;
+          background: rgba(255,255,255,0.88) !important;
+          border: 2px solid #b6c548 !important;
+          box-shadow: 0 0 0 3px rgba(182,197,72,0.25), 0 6px 20px rgba(58,107,53,0.35), 0 2px 8px rgba(182,197,72,0.3) !important;
+          backdrop-filter: blur(12px) !important;
         }
         .social-sidebar-pill button,
         .social-sidebar-pill a {
-          width: 30px !important;
-          height: 30px !important;
+          width: 32px !important;
+          height: 32px !important;
         }
         .social-sidebar-pill svg {
-          width: 16px !important;
-          height: 16px !important;
+          width: 17px !important;
+          height: 17px !important;
+          color: #b6c548 !important;
         }
         .social-sidebar-sound-bars { display: none !important; }
       }

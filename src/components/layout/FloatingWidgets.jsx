@@ -79,9 +79,15 @@ const SHADOW = {
 const CartIcon = () => (
   <div style={{
     width: SIZE.iconSize, height: SIZE.iconSize, borderRadius: '50%',
-    background: COLORS.cartBg, flexShrink: 0,
+    background: `radial-gradient(circle at 35% 35%, #d4e060, #b6c548 50%, #8a9c2a)`,
+    flexShrink: 0,
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    boxShadow: '0 2px 6px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.3)',
+    boxShadow: `
+      0 4px 10px rgba(58,107,53,0.45),
+      inset 0 2px 3px rgba(255,255,255,0.6),
+      inset 0 -2px 4px rgba(0,0,0,0.25),
+      0 1px 0 rgba(255,255,255,0.5)
+    `,
   }}>
     <svg width={SIZE.iconSize * 0.58} height={SIZE.iconSize * 0.58} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
@@ -94,9 +100,15 @@ const CartIcon = () => (
 const MessengerIcon = () => (
   <div style={{
     width: SIZE.iconSize, height: SIZE.iconSize, borderRadius: '50%',
-    background: COLORS.messengerBg, flexShrink: 0,
+    background: `radial-gradient(circle at 35% 35%, #a8cc30, #8aaa1a 50%, #5a7a00)`,
+    flexShrink: 0,
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    boxShadow: '0 2px 6px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.3)',
+    boxShadow: `
+      0 4px 10px rgba(58,107,53,0.45),
+      inset 0 2px 3px rgba(255,255,255,0.6),
+      inset 0 -2px 4px rgba(0,0,0,0.25),
+      0 1px 0 rgba(255,255,255,0.5)
+    `,
   }}>
     <svg width={SIZE.iconSize * 0.58} height={SIZE.iconSize * 0.58} viewBox="0 0 24 24" fill="none">
       <path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.906 1.419 5.502 3.64 7.22V22l3.338-1.83c.892.246 1.836.378 2.812.378 5.523 0 10-4.145 10-9.243C22 6.145 17.523 2 12 2z" fill="white"/>
@@ -175,7 +187,7 @@ export default function FloatingWidgets() {
     <>
     <style>{`
       @media (max-width: 767px) {
-        .floating-widgets { bottom: 64px !important; }
+        .floating-widgets { bottom: 80px !important; }
       }
     `}</style>
     <div className="floating-widgets" style={{
