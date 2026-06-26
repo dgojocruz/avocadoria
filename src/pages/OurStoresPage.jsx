@@ -490,7 +490,7 @@ export default function OurStoresPage() {
             <p style="font-size:12px;color:#8A5F3C;margin:0 0 8px;line-height:1.5">${b.address}</p>
             ${distHtml}
             <div style="display:flex;flex-direction:column;gap:6px">
-              <a href="https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=${encodeURIComponent(b.name + ', ' + b.address)}" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}&travelmode=driving" target="_blank" rel="noopener noreferrer"
                 style="display:inline-flex;align-items:center;gap:5px;background:#3a6b35;color:#fff;border-radius:999px;padding:7px 14px;font-size:12px;font-weight:700;text-decoration:none">
                 📍 Get Directions
               </a>
@@ -1436,7 +1436,7 @@ export default function OurStoresPage() {
                         )
                       })()}
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        <a href={`https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=${encodeURIComponent(activeBranch.name + ', ' + activeBranch.address)}&destination_place_id=`} target="_blank" rel="noopener noreferrer"
+                        <a href={`https://www.google.com/maps/dir/?api=1&destination=${activeBranch.lat},${activeBranch.lng}&travelmode=driving`} target="_blank" rel="noopener noreferrer"
                           style={{
                             display: 'inline-flex', alignItems: 'center', gap: '5px',
                             padding: '9px 18px', borderRadius: '999px',
