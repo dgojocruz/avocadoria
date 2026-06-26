@@ -526,8 +526,9 @@ export default function OurStoresPage() {
     // Trigger resize in case the map container was hidden/zero-size on init
     setTimeout(() => {
       window.google.maps.event.trigger(map, 'resize')
-      map.panTo({ lat: branch.lat, lng: branch.lng })
-    }, 100)
+      map.setCenter({ lat: branch.lat, lng: branch.lng })
+      map.setZoom(16)
+    }, 150)
 
     const marker = markersRef.current[activeId]
     if (marker) {
