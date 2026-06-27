@@ -483,9 +483,7 @@ export default function OurStoresPage() {
         const mins = d !== null ? Math.max(1, Math.round((d / 25) * 60)) : null
         const timeLabel = mins !== null ? (mins < 60 ? `~${mins} min drive` : `~${Math.round(mins/60)}h ${mins%60}m`) : null
         const distHtml = dLabel ? `<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(182,197,72,.12);border:1.5px solid rgba(182,197,72,.35);border-radius:999px;padding:5px 12px;margin:0 0 10px;user-select:none"><span style="font-size:12px;font-weight:800;color:#3a6b35">📍 ${dLabel} away</span><span style="font-size:10px;color:#8A5F3C;font-weight:600">· ${timeLabel}</span></div>` : ''
-        const dirUrl = b.placeId
-          ? `https://www.google.com/maps/dir/?api=1&destination_place_id=${b.placeId}&travelmode=driving${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}`
-          : `https://www.google.com/maps/dir/?api=1&destination=${b.lat},${b.lng}&travelmode=driving${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}`
+        const dirUrl = (b.directionsUrl || `https://www.google.com/maps/dir/?api=1&destination_place_id=${b.placeId}&travelmode=driving`) + (userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : '')
 
         infoWindow.setContent(`
           <div style="font-family:Poppins,sans-serif;min-width:220px">
@@ -1466,9 +1464,7 @@ export default function OurStoresPage() {
                       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '0' }}>
                         {/* Get Directions button */}
                         {(() => {
-                          const dirUrl = activeBranch.placeId
-                            ? `https://www.google.com/maps/dir/?api=1&destination_place_id=${activeBranch.placeId}&travelmode=driving${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}`
-                            : `https://www.google.com/maps/dir/?api=1&destination=${activeBranch.lat},${activeBranch.lng}&travelmode=driving${userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : ''}`
+                          const dirUrl = (activeBranch.directionsUrl || `https://www.google.com/maps/dir/?api=1&destination_place_id=${activeBranch.placeId}&travelmode=driving`) + (userLoc ? `&origin=${userLoc.lat},${userLoc.lng}` : '')
                           return (
                             <a href={dirUrl} target="_blank" rel="noopener noreferrer"
                               style={{
