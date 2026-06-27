@@ -1211,7 +1211,7 @@ export default function HomePage() {
             ) : (
               /* Empty state */
               <div style={{ textAlign:'center', padding:'48px 0' }}>
-                <span style={{ fontSize:'40px' }}>🥑</span>
+                <span style={{ fontSize:'clamp(24px,4vw,40px)' }}>🥑</span>
                 <p style={{ fontFamily:'Poppins,sans-serif', color:'rgba(138,95,60,0.5)', marginTop:'12px' }}>
                   No posts yet — check back soon!
                 </p>

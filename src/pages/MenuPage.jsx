@@ -75,7 +75,7 @@ function ProductCard({ item }) {
           display: item.image ? 'none' : 'flex',
           position:'absolute', inset:0,
           alignItems:'center', justifyContent:'center',
-          fontSize:'56px', background:'rgba(182,197,72,0.06)',
+          fontSize:'clamp(32px,6vw,56px)', background:'rgba(182,197,72,0.06)',
         }}>🥑</div>
 
 
@@ -138,7 +138,7 @@ function CategoryCard({ cat, index, onClick }) {
             position:'absolute', inset:0,
             background: FALLBACKS[index % FALLBACKS.length],
             display:'flex', alignItems:'center', justifyContent:'center',
-            fontSize:'64px',
+            fontSize:'clamp(36px,7vw,64px)',
           }}>{cat.emoji}</div>
       }
 
@@ -449,7 +449,7 @@ export default function MenuPage() {
               background: FALLBACKS[0],
               display: featured.cover ? 'none' : 'flex',
               alignItems:'center', justifyContent:'center',
-              fontSize:'100px',
+              fontSize:'clamp(52px,10vw,100px)',
             }}>{featured.emoji}</div>
             {/* Gradient */}
             <div style={{

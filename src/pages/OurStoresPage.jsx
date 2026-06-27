@@ -660,7 +660,7 @@ export default function OurStoresPage() {
               Find Your Avocadoria
             </h1>
             <p style={{
-              fontSize: '24px', color: `${C.brown}cc`,
+              fontSize: 'clamp(15px,2vw,24px)', color: `${C.brown}cc`,
               maxWidth: '400px', margin: '0 auto 36px',
               lineHeight: '1.7',
             }}>
@@ -697,7 +697,7 @@ export default function OurStoresPage() {
                   onMouseEnter={e => { e.currentTarget.style.background = C.olive; e.currentTarget.style.borderColor = C.olive; e.currentTarget.querySelector('.pill-n').style.color = '#fff'; e.currentTarget.querySelector('.pill-l').style.color = 'rgba(255,255,255,0.85)' }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.7)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,.9)'; e.currentTarget.querySelector('.pill-n').style.color = C.dark; e.currentTarget.querySelector('.pill-l').style.color = `${C.brown}99` }}
                 >
-                  <span className="pill-n" style={{ fontSize: '28px', fontWeight: '800', color: C.dark, transition: 'color 0.2s' }}>{s.n}</span>
+                  <span className="pill-n" style={{ fontSize: 'clamp(18px,2.5vw,28px)', fontWeight: '800', color: C.dark, transition: 'color 0.2s' }}>{s.n}</span>
                   <span className="pill-l" style={{ fontSize: '18px', color: `${C.brown}99`, marginLeft: '6px', fontWeight: '600', transition: 'color 0.2s' }}>{s.l}</span>
                 </button>
               ))}
@@ -719,7 +719,7 @@ export default function OurStoresPage() {
                 display: 'inline-flex', alignItems: 'center', gap: '10px',
                 background: phase === 'locating' ? `${C.olive}80` : C.olive,
                 color: '#fff', border: 'none', borderRadius: '999px',
-                padding: '15px 36px', fontSize: '28px', fontWeight: '800',
+                padding: 'clamp(10px,2vw,15px) clamp(18px,3vw,36px)', fontSize: 'clamp(18px,2.5vw,28px)', fontWeight: '800',
                 cursor: phase === 'locating' ? 'not-allowed' : 'pointer',
                 fontFamily: "'Poppins',sans-serif",
                 boxShadow: `0 8px 28px rgba(182,197,72,.45)`,
@@ -1085,7 +1085,7 @@ export default function OurStoresPage() {
                   {drillLevel === 'branches' && (
                     filtered.length === 0 ? (
                       <div style={{ padding: '48px 24px', textAlign: 'center' }}>
-                        <div style={{ fontSize: '36px', marginBottom: '12px' }}>🥑</div>
+                        <div style={{ fontSize: 'clamp(22px,3.5vw,36px)', marginBottom: '12px' }}>🥑</div>
                         <p style={{ fontSize: '13px', color: `${C.brown}80`, fontFamily: "'Poppins',sans-serif" }}>
                           No branches found{search ? ` for "${search}"` : ''}
                         </p>
@@ -1200,7 +1200,7 @@ export default function OurStoresPage() {
                         }
                         <h2 style={{
                           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-                          fontSize: '24px', fontWeight: 'normal',
+                          fontSize: 'var(--fs-h3)', fontWeight: 'normal',
                           color: C.dark, textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', margin: 0, lineHeight: '1.2',
                         }}>
                           {activeBranch.name}

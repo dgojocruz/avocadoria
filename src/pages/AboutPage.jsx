@@ -410,7 +410,7 @@ function NewsCard({ post }) {
         </div>
         <h3 style={{
           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-          fontSize: '24px', fontWeight: 'normal',
+          fontSize: 'var(--fs-h3)', fontWeight: 'normal',
           color: 'var(--c-olive)',
           textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.3,
         }}>{post.title}</h3>
@@ -669,7 +669,7 @@ export default function AboutPage() {
             {/* Tagline quote */}
             <p style={{
               fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-              fontSize: '48px',
+              fontSize: 'clamp(28px,5vw,48px)',
               color: 'var(--c-olive)',
               margin: '0 0 10px', letterSpacing: '0.03em',
               textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff',
@@ -824,7 +824,7 @@ export default function AboutPage() {
                     )}
                     <h3 style={{
                       fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-                      fontSize: '24px',
+                      fontSize: 'var(--fs-h3)',
                       fontWeight: 'normal', color: 'var(--c-olive)',
                     textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                       margin: '0 0 10px', lineHeight: 1.2,
@@ -1024,7 +1024,7 @@ export default function AboutPage() {
                   </div>
                   <h3 style={{
                     fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-                    fontSize: '24px', fontWeight: 'normal',
+                    fontSize: 'var(--fs-h3)', fontWeight: 'normal',
                     color: 'var(--c-olive)',
               textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.3,
                   }}>{item.title}</h3>

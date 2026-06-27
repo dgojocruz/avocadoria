@@ -514,7 +514,7 @@ export default function CareersPage() {
         <div style={{ position:'relative', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'1920px auto', backgroundRepeat:'repeat-y', backgroundPosition:'center top', backgroundColor:'#F3F2EE' }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           {/* HERO */}
-          <div style={{ position:'relative', zIndex:1, padding:'80px 32px 60px', textAlign:'center' }}>
+          <div style={{ position:'relative', zIndex:1, padding:'clamp(40px,7vw,80px) clamp(16px,4vw,32px) clamp(32px,5vw,60px)', textAlign:'center' }}>
             <span style={{ display:'inline-block', background:'#b6c548', color:'#fff', fontSize:'11px', fontWeight:'700', padding:'4px 14px', borderRadius:'999px', fontFamily:'Poppins,sans-serif', letterSpacing:'0.08em', textTransform:'uppercase', marginBottom:'20px' }}>
               {activeJobs.length} Opening{activeJobs.length !== 1 ? 's' : ''} Available
             </span>
@@ -527,7 +527,7 @@ export default function CareersPage() {
           </div>
 
           {/* JOB LISTINGS */}
-          <div style={{ position:'relative', zIndex:1, padding:'64px 32px' }}>
+          <div style={{ position:'relative', zIndex:1, padding:'clamp(32px,5vw,64px) clamp(16px,4vw,32px)' }}>
             <div style={{ maxWidth:'1200px', margin:'0 auto' }}>
               <div style={{ textAlign:'center', marginBottom:'48px' }}>
                 <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 8px', lineHeight:1.1 }}>
@@ -581,7 +581,7 @@ export default function CareersPage() {
           </div>
 
           {/* WHY JOIN US */}
-          <div style={{ position:'relative', zIndex:1, padding:'64px 32px' }}>
+          <div style={{ position:'relative', zIndex:1, padding:'clamp(32px,5vw,64px) clamp(16px,4vw,32px)' }}>
             <div style={{ maxWidth:'1000px', margin:'0 auto', textAlign:'center' }}>
               <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 40px', lineHeight:1.1 }}>Why Work With Us?</h2>
               <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(180px, 1fr))', gap:'20px' }}>
@@ -602,7 +602,7 @@ export default function CareersPage() {
           </div>
 
           {/* GENERAL APPLICATION */}
-          <div style={{ position:'relative', zIndex:1, padding:'64px 32px', textAlign:'center' }}>
+          <div style={{ position:'relative', zIndex:1, padding:'clamp(32px,5vw,64px) clamp(16px,4vw,32px)', textAlign:'center' }}>
             <div style={{ maxWidth:'560px', margin:'0 auto' }}>
               <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 10px', lineHeight:1.1 }}>Don't see your branch?</h2>
               <p style={{ fontFamily:"'Poppins',sans-serif", fontSize:'clamp(13px,1.3vw,15px)', color:'var(--c-dark)', opacity:0.7, lineHeight:'1.7', margin:'0 0 24px' }}>

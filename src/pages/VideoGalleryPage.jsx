@@ -170,7 +170,7 @@ export default function VideoGalleryPage() {
       <div className="page-enter">
 
         {/* ── HERO ── */}
-        <section style={{ position:'relative', overflow:'hidden', backgroundImage: "url('/website_layer_1.png')", backgroundSize:'cover', backgroundPosition:'center', backgroundColor:'#F3F2EE', padding:'100px 32px 72px', textAlign:'center' }}>
+        <section style={{ position:'relative', overflow:'hidden', backgroundImage: "url('/website_layer_1.png')", backgroundSize:'cover', backgroundPosition:'center', backgroundColor:'#F3F2EE', padding:'clamp(60px,8vw,100px) clamp(16px,3vw,32px) clamp(40px,5vw,72px)', textAlign:'center' }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth:'680px', margin:'0 auto' }}>
             {/* Icon */}
@@ -190,7 +190,7 @@ export default function VideoGalleryPage() {
         </section>
 
         {/* ── VIDEO GRID ── */}
-        <section style={{ position:'relative', overflow:'hidden', padding:'64px 32px', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundPosition:'center', backgroundColor:'#F3F2EE' }}>
+        <section style={{ position:'relative', overflow:'hidden', padding:'clamp(32px,5vw,64px) clamp(16px,3vw,32px)', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundPosition:'center', backgroundColor:'#F3F2EE' }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.15 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth:'1100px', margin:'0 auto' }}>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:'24px' }}>

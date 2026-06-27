@@ -87,7 +87,7 @@ export default function ImageGalleryPage() {
       <div className="page-enter">
 
         {/* HERO */}
-        <section style={{ position:'relative', overflow:'hidden', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundPosition:'center', backgroundColor:'#F3F2EE', padding:'100px 32px 72px', textAlign:'center' }}>
+        <section style={{ position:'relative', overflow:'hidden', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundPosition:'center', backgroundColor:'#F3F2EE', padding:'clamp(60px,8vw,100px) clamp(16px,3vw,32px) clamp(40px,5vw,72px)', textAlign:'center' }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth:'680px', margin:'0 auto' }}>
             <div style={{ width:'72px', height:'72px', borderRadius:'50%', background:'linear-gradient(135deg,#d9e29e,#b6c548)', margin:'0 auto 20px', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 8px 24px rgba(182,197,72,0.4)' }}>
@@ -106,7 +106,7 @@ export default function ImageGalleryPage() {
         </section>
 
         {/* FILTER TABS */}
-        <section style={{ position:'relative', padding:'32px 32px 16px', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundColor:'#F3F2EE' }}>
+        <section style={{ position:'relative', padding:'clamp(16px,3vw,32px) clamp(16px,3vw,32px) clamp(8px,1.5vw,16px)', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundColor:'#F3F2EE' }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth:'1400px', margin:'0 auto', display:'flex', flexWrap:'wrap', gap:'10px', justifyContent:'center' }}>
             {EVENT_TAGS.map(tag => (
@@ -122,7 +122,7 @@ export default function ImageGalleryPage() {
         </section>
 
         {/* GROUPED PHOTO GRID */}
-        <section style={{ position:'relative', overflow:'hidden', padding:'16px 16px 64px', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundColor:'#F3F2EE' }}>
+        <section style={{ position:'relative', overflow:'hidden', padding:'clamp(12px,2vw,16px) clamp(12px,2vw,16px) clamp(32px,5vw,64px)', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundColor:'#F3F2EE' }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth:'1400px', margin:'0 auto' }}>
             {Array.from(new Set(filtered.map(p => p.event))).map(group => (

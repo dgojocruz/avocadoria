@@ -398,7 +398,7 @@ export default function FranchisePage() {
         </section>
 
         {/* ── CART SLIDESHOW ── */}
-        <section style={{ position:'relative', overflow:'visible', padding:'72px 0', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+        <section style={{ position:'relative', overflow:'visible', padding:'clamp(32px,6vw,72px) 0', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
       <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, textAlign: 'center', marginBottom: '48px' }}>
             <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 8px', lineHeight: 1.1 }}>
@@ -412,7 +412,7 @@ export default function FranchisePage() {
         </section>
 
         {/* ── WHY AVOCADORIA ── */}
-        <section style={{ position:'relative', overflow:'hidden', padding:'72px 32px', textAlign:'center', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+        <section style={{ position:'relative', overflow:'hidden', padding:'clamp(32px,6vw,72px) clamp(16px,4vw,32px)', textAlign:'center', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
       <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth: '1100px', margin: '0 auto' }}>
             <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 48px', lineHeight: 1.1 }}>
@@ -450,7 +450,7 @@ export default function FranchisePage() {
         </section>
 
         {/* ── HOW IT WORKS ── */}
-        <section style={{ position:'relative', overflow:'hidden', padding:'72px 32px', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+        <section style={{ position:'relative', overflow:'hidden', padding:'clamp(32px,6vw,72px) clamp(16px,4vw,32px)', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
       <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth: '900px', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '52px' }}>
@@ -487,7 +487,7 @@ export default function FranchisePage() {
         </section>
 
         {/* ── INQUIRY FORM ── */}
-        <section id="franchise-inquiry" style={{ position:'relative', overflow:'hidden', padding:'72px 32px', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
+        <section id="franchise-inquiry" style={{ position:'relative', overflow:'hidden', padding:'clamp(32px,6vw,72px) clamp(16px,4vw,32px)', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
       <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth: '760px', margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: '40px' }}>

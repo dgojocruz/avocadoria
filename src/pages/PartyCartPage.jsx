@@ -202,7 +202,7 @@ Looking forward to hearing from you!`
             <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#b6c548', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
               <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '28px', color: '#fff', fontWeight: '800' }}>✓</span>
             </div>
-            <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '24px', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', marginBottom: '10px' }}>
+            <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'var(--fs-h3)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', marginBottom: '10px' }}>
               Booking inquiry sent!
             </h3>
             <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
@@ -344,7 +344,7 @@ Looking forward to hearing from you!`
             <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: '#b6c548', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
               <span style={{ fontSize: '28px', color: '#fff', fontWeight: '800' }}>✓</span>
             </div>
-            <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '22px', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', marginBottom: '10px' }}>
+            <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'var(--fs-h3)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', marginBottom: '10px' }}>
               Quote request sent!
             </h3>
             <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#3a6b35', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
