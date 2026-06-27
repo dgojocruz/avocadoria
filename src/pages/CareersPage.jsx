@@ -94,7 +94,150 @@ const JOBS = [
     ],
   },
 
-  // ── TEMPLATE — copy this block to add a new job ──────────────────────────
+  // ── IN-HOUSE / CORPORATE OPENINGS ────────────────────────────────────────
+  // These go to recruitment@avocadoria.com.ph (HQ Marikina City)
+  {
+    active:        true,
+    id:            'hq-accounting-assistant',
+    role:          'Accounting Assistant',
+    branch:        'Head Office',
+    location:      'Marikina City',
+    type:          'Full-time',
+    email:         'avocadoriatccc.recruitment@gmail.com',
+    emailSubject:  'Accounting Assistant | Last Name',
+    image:         '/careers/hiring-hq-accounting-assistant.webp',
+    qualifications: [
+      "Bachelor's Degree in Accountancy, Accounting Technology, Financial Management, or any related field",
+      'At least 1–2 years of experience in accounting, preferably handling payroll, compensation and benefits, and accounts payable',
+      'Proficient in payroll and accounting software applications',
+      'Strong analytical, communication, and interpersonal skills',
+      'Fast learner with the ability to multitask and stay organized',
+      'Capable of working efficiently in a fast-paced environment while meeting deadlines',
+    ],
+  },
+  {
+    active:        true,
+    id:            'hq-audit-staff',
+    role:          'Audit Staff',
+    branch:        'Head Office',
+    location:      'Marikina City',
+    type:          'Full-time',
+    email:         'avocadoriatccc.recruitment@gmail.com',
+    emailSubject:  'Audit Staff | Last Name',
+    image:         '/careers/hiring-hq-audit-staff.webp',
+    qualifications: [
+      'Male or Female',
+      "Bachelor's Degree in Auditing, Business Administration, or any related field",
+      'At least 2–3 years of experience in auditing, accounting, regulatory compliance within the food manufacturing, processing, or distribution industry',
+      'Knowledgeable of IIA Standards, GAAP, GAAS, COSO Framework, or industry-specific regulations',
+      'Familiarity with auditing principles and techniques',
+      'Proficiency in MS Office (Word, Excel, Outlook)',
+      'Ability to clearly document findings and write concise audit reports',
+      'Willing to do field work',
+      'Can start ASAP',
+    ],
+  },
+  {
+    active:        true,
+    id:            'hq-driver',
+    role:          'Driver',
+    branch:        'Head Office',
+    location:      'Marikina City',
+    type:          'Full-time',
+    email:         'avocadoriatccc.recruitment@gmail.com',
+    emailSubject:  'Driver | Last Name',
+    image:         '/careers/hiring-hq-driver.webp',
+    qualifications: [
+      'At least a High School graduate or Vocational graduate',
+      'With 2–3 years of relevant work experience as a driver or in a similar role',
+      "Must have a valid driver's license with restrictions Code A–D",
+      'Knowledgeable in safe and efficient vehicle operation, including basic vehicle maintenance',
+      'Familiar with local traffic laws and road safety regulations',
+      'Skilled in route planning, navigation, and use of navigation technologies',
+      'Knowledgeable in safe cargo handling procedures',
+      'With good customer service skills and professional driving attitude',
+    ],
+  },
+  {
+    active:        true,
+    id:            'hq-franchise-ops-specialist',
+    role:          'Franchise Operations Specialist',
+    branch:        'Head Office',
+    location:      'Marikina City',
+    type:          'Full-time',
+    email:         'avocadoriatccc.recruitment@gmail.com',
+    emailSubject:  'Franchise Operations Specialist | Last Name',
+    image:         '/careers/hiring-hq-franchise-ops-specialist.webp',
+    qualifications: [
+      "Bachelor's degree in Business Administration, Entrepreneurship, Hospitality Management, or Food Service Management",
+      '2–5 years of experience in franchise operations',
+      'Willing to conduct fieldwork',
+      'Audit and compliance management',
+      'Hands-on experience with standard operations (SO), audits, and franchise-related concerns',
+      'Strong communication skills',
+      'Conflict resolution and negotiation abilities',
+      'Training and coaching experience',
+      'Effective time and territory management',
+    ],
+  },
+  {
+    active:        true,
+    id:            'hq-line-cook',
+    role:          'Line Cook',
+    branch:        'Head Office',
+    location:      'Marikina City',
+    type:          'Full-time',
+    email:         'avocadoriatccc.recruitment@gmail.com',
+    emailSubject:  'Line Cook | Last Name',
+    image:         '/careers/hiring-hq-line-cook.webp',
+    qualifications: [
+      'At least High School graduate',
+      'Culinary or Hospitality training is an advantage',
+      "1–2 years' experience as line cook, cook, or kitchen staff in restaurant, cafe, or hotel",
+      'With knowledge in basic cooking methods',
+      'Ability to prepare ingredients quickly and accurately',
+    ],
+  },
+  {
+    active:        true,
+    id:            'hq-multimedia-artist',
+    role:          'Multimedia Artist',
+    branch:        'Head Office',
+    location:      'Marikina City',
+    type:          'Full-time',
+    email:         'avocadoriatccc.recruitment@gmail.com',
+    emailSubject:  'Multimedia Artist | Last Name',
+    image:         '/careers/hiring-hq-multimedia-artist.webp',
+    qualifications: [
+      "Bachelor's degree in Multimedia Arts, Graphic Design, Digital Arts, Animation, or related field",
+      "2 years' experience in multimedia design, photography, and video production",
+      'Proficiency in Adobe Creative Suite',
+      'Strong understanding of camera settings, lighting techniques, and composition',
+      'Experience with motion graphics and animation is a plus',
+      'Ability to take direction and work collaboratively with team',
+      'Excellent time management and organizational skills',
+      'Willing to do field work',
+      'Can start ASAP',
+    ],
+  },
+  {
+    active:        true,
+    id:            'hq-treasury-assistant',
+    role:          'Treasury Assistant',
+    branch:        'Head Office',
+    location:      'Marikina City',
+    type:          'Full-time',
+    email:         'avocadoriatccc.recruitment@gmail.com',
+    emailSubject:  'Treasury Assistant | Last Name',
+    image:         '/careers/hiring-hq-treasury-assistant.webp',
+    qualifications: [
+      "Bachelor's degree in Finance, Accounting, Business Administration, or related field",
+      "1–2 years' experience in billing, collections, or accounts receivable",
+      'Excellent verbal and written communication skills for client interaction',
+      'Strong analytical, numerical, and organizational skills with high attention to detail',
+      'Proficient in MS Office',
+    ],
+  },
   // {
   //   active:        true,
   //   id:            'unique-id-here',
@@ -119,18 +262,22 @@ function JobCard({ job, onApply }) {
 
   return (
     <div style={{
-      background: 'rgba(255,255,255,0.7)', borderRadius: '20px',
-      overflow: 'hidden', boxShadow: '0 4px 20px rgba(58,107,53,0.08)',
-      border: '1.5px solid rgba(182,197,72,0.25)',
-      display: 'flex', flexDirection: 'column',
-      transition: 'transform 0.2s, box-shadow 0.2s',
+      background:    'transparent',
+      border:        'none',
+      borderRadius:  '20px',
+      overflow:      'hidden',
+      boxShadow:     'none',
+      display:       'flex',
+      flexDirection: 'column',
+      transition:    'transform 0.25s',
     }}
-      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(58,107,53,0.14)' }}
-      onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(58,107,53,0.08)' }}
+      onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)' }}
+      onMouseLeave={e => { e.currentTarget.style.transform = 'none' }}
     >
       {/* Hiring poster image */}
       {job.image && (
-        <div style={{ width: '100%', aspectRatio: '1/1', overflow: 'hidden', cursor: 'pointer' }} onClick={() => setExpanded(!expanded)}>
+        <div style={{ width: '100%', aspectRatio: '1/1', borderRadius: '16px', overflow: 'hidden', cursor: 'pointer' }}
+          onClick={() => setExpanded(!expanded)}>
           <img src={job.image} alt={`${job.role} - ${job.branch}`}
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.4s ease' }}
             onMouseEnter={e => e.target.style.transform = 'scale(1.04)'}
@@ -141,34 +288,44 @@ function JobCard({ job, onApply }) {
       )}
 
       {/* Card body */}
-      <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <div>
-          <span style={{ display: 'inline-block', background: 'rgba(182,197,72,0.15)', color: '#3a6b35', fontSize: '11px', fontWeight: '700', padding: '3px 10px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '8px' }}>
-            {job.type}
-          </span>
-          <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '20px', fontWeight: 'normal', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin: '0 0 4px', lineHeight: 1.2 }}>
-            {job.role}
-          </h3>
-          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C', margin: 0, fontWeight: '600' }}>
-            {job.branch} · {job.location}
-          </p>
-        </div>
+      <div style={{ padding: '14px 4px 20px', flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+
+        {/* Branch · location — fs-meta */}
+        <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'var(--fs-meta)', color: 'rgba(138,95,60,0.55)' }}>
+          {job.branch} · {job.location}
+        </span>
+
+        {/* Role — h3 card title standard */}
+        <h3 style={{
+          fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+          fontWeight: 'normal',
+          fontSize:   'var(--fs-h3)',
+          color:      'var(--c-olive)',
+          textShadow: '-1.5px -1.5px 0 #fff,1.5px -1.5px 0 #fff,-1.5px 1.5px 0 #fff,1.5px 1.5px 0 #fff',
+          margin:     0,
+          lineHeight: 1.2,
+        }}>
+          {job.role}
+        </h3>
 
         {/* Qualifications toggle */}
         <button onClick={() => setExpanded(!expanded)} style={{
           background: 'none', border: 'none', cursor: 'pointer', padding: 0,
           display: 'flex', alignItems: 'center', gap: '6px',
-          fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548',
+          fontFamily: "'Poppins',sans-serif", fontSize: 'var(--fs-meta)', fontWeight: '700', color: '#b6c548',
           textAlign: 'left',
         }}>
-          <span>{expanded ? '▲' : '▼'}</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#b6c548" strokeWidth="3" strokeLinecap="round"
+            style={{ transform: expanded ? 'rotate(180deg)' : 'none', transition: 'transform .2s', flexShrink: 0 }}>
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
           {expanded ? 'Hide' : 'View'} Qualifications
         </button>
 
         {expanded && (
-          <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '5px' }}>
             {job.qualifications.map((q, i) => (
-              <li key={i} style={{ display: 'flex', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', lineHeight: 1.5 }}>
+              <li key={i} style={{ display: 'flex', gap: '8px', fontFamily: "'Poppins',sans-serif", fontSize: 'var(--fs-body)', color: '#8A5F3C', lineHeight: 1.55 }}>
                 <span style={{ color: '#b6c548', fontWeight: '900', flexShrink: 0 }}>—</span>
                 {q}
               </li>
@@ -180,8 +337,8 @@ function JobCard({ job, onApply }) {
         <button onClick={() => onApply(job)} style={{
           marginTop: 'auto', width: '100%', padding: '12px',
           background: '#b6c548', color: '#fff', border: 'none',
-          borderRadius: '12px', cursor: 'pointer',
-          fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '800',
+          borderRadius: '999px', cursor: 'pointer',
+          fontFamily: "'Poppins',sans-serif", fontSize: 'var(--fs-body)', fontWeight: '800',
           transition: 'background 0.2s',
         }}
           onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
@@ -353,100 +510,116 @@ export default function CareersPage() {
       />
       <div className="page-enter">
 
-        {/* ── HERO ── */}
-        <section style={{
-          position: 'relative', overflow: 'hidden',
-          backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center',
-          backgroundColor: '#F3F2EE',
-          padding: '80px 32px 60px', textAlign: 'center',
-        }}>
-          <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', backgroundColor: '#b6c548', opacity: 0.25 }} />
-          <div style={{ position: 'relative', zIndex: 1 }}>
-          <span style={{ display: 'inline-block', background: '#b6c548', color: '#fff', fontSize: '11px', fontWeight: '700', padding: '4px 14px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '20px' }}>
-            {activeJobs.length} Opening{activeJobs.length !== 1 ? 's' : ''} Available
-          </span>
-          <h1 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', lineHeight: 1.1, margin: '0 0 16px' }}>
-            Join the <span style={{ color: '#b6c548' }}>Avocadoria</span> Family
-          </h1>
-          <p style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(13px,1.3vw,15px)', color: 'var(--c-dark)', opacity: 0.7, maxWidth: '560px', margin: '0 auto' }}>
-            Be part of a joyful, growing team that's spreading happiness in avocado across the Philippines. We're looking for passionate, energetic crew members to join us!
-          </p>
+        {/* ── SINGLE BACKGROUND WRAPPER — one texture, one overlay, no seams ── */}
+        <div style={{ position:'relative', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'1920px auto', backgroundRepeat:'repeat-y', backgroundPosition:'center top', backgroundColor:'#F3F2EE' }}>
+          <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
+          {/* HERO */}
+          <div style={{ position:'relative', zIndex:1, padding:'80px 32px 60px', textAlign:'center' }}>
+            <span style={{ display:'inline-block', background:'#b6c548', color:'#fff', fontSize:'11px', fontWeight:'700', padding:'4px 14px', borderRadius:'999px', fontFamily:'Poppins,sans-serif', letterSpacing:'0.08em', textTransform:'uppercase', marginBottom:'20px' }}>
+              {activeJobs.length} Opening{activeJobs.length !== 1 ? 's' : ''} Available
+            </span>
+            <h1 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', lineHeight:1.1, margin:'0 0 16px' }}>
+              Join the <span style={{ color:'#b6c548' }}>Avocadoria</span> Family
+            </h1>
+            <p style={{ fontFamily:"'Poppins',sans-serif", fontSize:'clamp(13px,1.3vw,15px)', color:'var(--c-dark)', opacity:0.7, maxWidth:'560px', margin:'0 auto' }}>
+              Be part of a joyful, growing team that's spreading happiness in avocado across the Philippines. We're looking for passionate, energetic crew members to join us!
+            </p>
           </div>
-        </section>
 
-        {/* ── JOB LISTINGS ── */}
-        <section style={{ position: 'relative', overflow: 'hidden', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE', padding: '64px 32px' }}>
-          <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', backgroundColor: '#b6c548', opacity: 0.25 }} />
-          <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-            <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-              <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin: '0 0 8px', lineHeight: 1.1 }}>
-                Current Openings
-              </h2>
-              <p style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(13px,1.3vw,15px)', color: 'var(--c-dark)', opacity: 0.7, margin: 0 }}>
-                Tap a card to see qualifications · Click Apply Now to send your CV
-              </p>
-            </div>
-
-            {activeJobs.length === 0 ? (
-              /* No openings state */
-              <div style={{ textAlign: 'center', padding: '64px 24px' }}>
-                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: '22px', fontWeight: 'normal', color: 'var(--c-olive)',
-              textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
-                textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: '0 0 8px' }}>No openings right now</h3>
-                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'rgba(138,95,60,0.7)', maxWidth: '380px', margin: '0 auto' }}>
-                  Check back soon or send your resume to <a href="mailto:official@avocadoria.com.ph" style={{ color: '#b6c548' }}>official@avocadoria.com.ph</a> — we'd love to keep your profile on file.
+          {/* JOB LISTINGS */}
+          <div style={{ position:'relative', zIndex:1, padding:'64px 32px' }}>
+            <div style={{ maxWidth:'1200px', margin:'0 auto' }}>
+              <div style={{ textAlign:'center', marginBottom:'48px' }}>
+                <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 8px', lineHeight:1.1 }}>
+                  Current Openings
+                </h2>
+                <p style={{ fontFamily:"'Poppins',sans-serif", fontSize:'clamp(13px,1.3vw,15px)', color:'var(--c-dark)', opacity:0.7, margin:0 }}>
+                  Tap a card to see qualifications · Click Apply Now to send your CV
                 </p>
               </div>
-            ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '28px' }}>
-                {activeJobs.map(job => (
-                  <JobCard key={job.id} job={job} onApply={setActiveJob} />
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
 
-        {/* ── WHY JOIN US ── */}
-        <section style={{ position: 'relative', overflow: 'hidden', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE', padding: '64px 32px' }}>
-          <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', backgroundColor: '#b6c548', opacity: 0.25 }} />
-          <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin: '0 0 40px', lineHeight: 1.1 }}>Why Work With Us?</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '20px' }}>
-              {[
-                { title: 'Growth',    desc: 'Learn and grow with a fast-expanding brand' },
-                { title: 'Community', desc: 'Be part of a joyful, supportive team' },
-                { title: 'Pride',     desc: 'Work for the No. 1 avocado dessert brand' },
-                { title: 'Training',  desc: 'Full training provided — no experience required' },
-                { title: 'Purpose',   desc: 'Support local farmers and communities' },
-              ].map((w, i) => (
-                <div key={i} style={{ background: 'rgba(255,255,255,0.08)', borderRadius: '16px', padding: '24px 16px' }}>
-                  <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '800', color: '#3a6b35', marginBottom: '8px', textShadow: '-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff', letterSpacing: '0.04em', textTransform: 'uppercase' }}>{w.title}</div>
-                  <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '600', color: '#8A5F3C', lineHeight: '1.55', textShadow: '0 1px 0 rgba(255,255,255,0.9)' }}>{w.desc}</div>
+              {activeJobs.length === 0 ? (
+                <div style={{ textAlign:'center', padding:'64px 24px' }}>
+                  <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'22px', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin:'0 0 8px' }}>No openings right now</h3>
+                  <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'14px', color:'rgba(138,95,60,0.7)', maxWidth:'380px', margin:'0 auto' }}>
+                    Check back soon or send your resume to <a href="mailto:official@avocadoria.com.ph" style={{ color:'#b6c548' }}>official@avocadoria.com.ph</a> — we'd love to keep your profile on file.
+                  </p>
                 </div>
-              ))}
+              ) : (() => {
+                const hqJobs    = activeJobs.filter(j => j.branch === 'Head Office')
+                const storeJobs = activeJobs.filter(j => j.branch !== 'Head Office')
+                const GroupHeading = ({ title, sub }) => (
+                  <div style={{ marginBottom:'28px' }}>
+                    <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(2.4rem,6vw,4rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 4px', lineHeight:1.1 }}>
+                      {title}
+                    </h3>
+                    <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'13px', color:'rgba(138,95,60,0.7)', margin:0 }}>{sub}</p>
+                  </div>
+                )
+                return (
+                  <div style={{ display:'flex', flexDirection:'column', gap:'64px' }}>
+                    {hqJobs.length > 0 && (
+                      <div>
+                        <GroupHeading title="Corporate / In-House" sub="Based at Head Office · Marikina City · Send CV to avocadoriatccc.recruitment@gmail.com" />
+                        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(300px, 1fr))', gap:'28px' }}>
+                          {hqJobs.map(job => <JobCard key={job.id} job={job} onApply={setActiveJob} />)}
+                        </div>
+                      </div>
+                    )}
+                    {storeJobs.length > 0 && (
+                      <div>
+                        <GroupHeading title="In-Store Openings" sub="Branch-based positions · Apply directly to the branch email" />
+                        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(300px, 1fr))', gap:'28px' }}>
+                          {storeJobs.map(job => <JobCard key={job.id} job={job} onApply={setActiveJob} />)}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )
+              })()}
             </div>
           </div>
-        </section>
 
-        {/* ── GENERAL APPLICATION ── */}
-        <section style={{ position: 'relative', overflow: 'hidden', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE', padding: '64px 32px', textAlign: 'center' }}>
-          <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', backgroundColor: '#b6c548', opacity: 0.25 }} />
-          <div style={{ maxWidth: '560px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-            <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin: '0 0 10px', lineHeight: 1.1 }}>Don't see your branch?</h2>
-            <p style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(13px,1.3vw,15px)', color: 'var(--c-dark)', opacity: 0.7, lineHeight: '1.7', margin: '0 0 24px' }}>
-              Send your CV to our general recruitment inbox and we'll keep your profile on file for future openings.
-            </p>
-            <a
-              href="mailto:official@avocadoria.com.ph?subject=General Application - Store Crew"
-              style={{ display: 'inline-block', background: '#b6c548', color: '#fff', padding: '13px 32px', borderRadius: '999px', fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '800', textDecoration: 'none', transition: 'background 0.2s' }}
-              onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
-              onMouseLeave={e => e.currentTarget.style.background = '#b6c548'}
-            >
-              Send General Application
-            </a>
+          {/* WHY JOIN US */}
+          <div style={{ position:'relative', zIndex:1, padding:'64px 32px' }}>
+            <div style={{ maxWidth:'1000px', margin:'0 auto', textAlign:'center' }}>
+              <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 40px', lineHeight:1.1 }}>Why Work With Us?</h2>
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(180px, 1fr))', gap:'20px' }}>
+                {[
+                  { title:'Growth',    desc:'Learn and grow with a fast-expanding brand' },
+                  { title:'Community', desc:'Be part of a joyful, supportive team' },
+                  { title:'Pride',     desc:'Work for the No. 1 avocado dessert brand' },
+                  { title:'Training',  desc:'Full training provided — no experience required' },
+                  { title:'Purpose',   desc:'Support local farmers and communities' },
+                ].map((w, i) => (
+                  <div key={i} style={{ background:'rgba(255,255,255,0.08)', borderRadius:'16px', padding:'24px 16px' }}>
+                    <div style={{ fontFamily:'Poppins,sans-serif', fontSize:'15px', fontWeight:'800', color:'#3a6b35', marginBottom:'8px', textShadow:'-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff', letterSpacing:'0.04em', textTransform:'uppercase' }}>{w.title}</div>
+                    <div style={{ fontFamily:'Poppins,sans-serif', fontSize:'15px', fontWeight:'600', color:'#8A5F3C', lineHeight:'1.55', textShadow:'0 1px 0 rgba(255,255,255,0.9)' }}>{w.desc}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-        </section>
+
+          {/* GENERAL APPLICATION */}
+          <div style={{ position:'relative', zIndex:1, padding:'64px 32px', textAlign:'center' }}>
+            <div style={{ maxWidth:'560px', margin:'0 auto' }}>
+              <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 10px', lineHeight:1.1 }}>Don't see your branch?</h2>
+              <p style={{ fontFamily:"'Poppins',sans-serif", fontSize:'clamp(13px,1.3vw,15px)', color:'var(--c-dark)', opacity:0.7, lineHeight:'1.7', margin:'0 0 24px' }}>
+                Send your CV to our general recruitment inbox and we'll keep your profile on file for future openings.
+              </p>
+              <a
+                href="mailto:official@avocadoria.com.ph?subject=General Application - Store Crew"
+                style={{ display:'inline-block', background:'#b6c548', color:'#fff', padding:'13px 32px', borderRadius:'999px', fontFamily:'Poppins,sans-serif', fontSize:'15px', fontWeight:'800', textDecoration:'none', transition:'background 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
+                onMouseLeave={e => e.currentTarget.style.background = '#b6c548'}
+              >
+                Send General Application
+              </a>
+            </div>
+          </div>
+
+        </div>{/* end background wrapper */}
 
       </div>
 

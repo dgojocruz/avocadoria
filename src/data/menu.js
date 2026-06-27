@@ -126,14 +126,6 @@ export const CATEGORIES = [
         new:   false,
       },
       {
-        id:    'keto',
-        name:  'Avo Keto',
-        desc:  'Avocado soft-serve with whole almonds — low-carb, keto-friendly and satisfying.',
-        image: '/menu/Soft Serve Menu/keto.webp',
-        tags:  ['Keto', 'Light'],
-        new:   false,
-      },
-      {
         id:    'pistachio-lover',
         name:  'Pistachio Lover',
         desc:  'Avocado cream loaded with pistachio crumble, chocolate drizzle and avocado chunks.',
@@ -294,6 +286,14 @@ export const CATEGORIES = [
         desc:  'A guilt-free blend of avocado and coconut — low-carb, keto-friendly and delicious.',
         image: '/menu/Avocado Shakes/coconut-keto-shake.webp',
         tags:  ['Keto'],
+        new:   false,
+      },
+      {
+        id:    'keto',
+        name:  'Avo Keto',
+        desc:  'Avocado soft-serve with whole almonds — low-carb, keto-friendly and satisfying.',
+        image: '/menu/Soft Serve Menu/keto.webp',
+        tags:  ['Keto', 'Light'],
         new:   false,
       },
       // ↑ ADD MORE HEALTHY SERIES HERE

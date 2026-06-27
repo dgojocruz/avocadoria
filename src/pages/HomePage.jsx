@@ -11,19 +11,19 @@ import { NEWS_POSTS } from '@/data/posts'
 // Add more objects here — files go in /public/
 const PRODUCTS = [
   {
-    bg:     '/Avo_Lover.png',      // BG Layer 1 — full scene photo with Ken Burns zoom
+    bg:     '/Avo_Lover.webp',      // BG Layer 1 — full scene photo with Ken Burns zoom
     src:    '/lover_nobg.webp',     // Product carousel Layer 4 — transparent cutout floating
     alt:    'Avo Lover dessert cup',
     origin: '30% 60%',             // zoom anchor point on BG photo
   },
   {
-    bg:     '/Naked___Inipit.png',
+    bg:     '/Naked___Inipit.webp',
     src:    '/naked_nobg.webp',
     alt:    'Naked Ice Cream & Inipit',
     origin: '30% 60%',
   },
   {
-    bg:     '/Shakes.png',
+    bg:     '/Shakes.webp',
     src:    '/shake_nobg.webp',
     alt:    'Avocadoria Shakes',
     origin: '30% 60%',
@@ -239,7 +239,7 @@ function ProductLayers({ cur, visible, goTo }) {
 const FRANCHISE_CARTS = [
   {
     id:       'food-truck',
-    image:    '/ft-food-truck.png',
+    image:    '/ft-food-truck.webp',
     name:     'Food Truck',
     tag:      'Most Mobile',
     tagColor: '#EF7ECB',
@@ -247,7 +247,7 @@ const FRANCHISE_CARTS = [
   },
   {
     id:       'kiosk',
-    image:    '/ft-kiosk.png',
+    image:    '/ft-kiosk.webp',
     name:     'Kiosk',
     tag:      'Most Popular',
     tagColor: '#b6c548',
@@ -263,7 +263,7 @@ const FRANCHISE_CARTS = [
   },
   {
     id:       'island',
-    image:    '/ft-island.png',
+    image:    '/ft-island.webp',
     name:     'Island',
     tag:      'Largest Format',
     tagColor: '#b6c548',
@@ -315,9 +315,9 @@ const FT_STROKE = [
 
 // ── Franchise overlay tint ─────────────────────────────────────────────────
 // Change OVERLAY_COLOR to any green shade, adjust OVERLAY_OPACITY (0 = none, 1 = solid)
-// ── Matched exactly to avofaves.png top strip (#e3e4c3) ──────────────────
+// ── Matched exactly to avofaves.webp top strip (#e3e4c3) ──────────────────
 // paper base #f3f1ed + this overlay = avofaves green tone
-// ── Pixel-matched to avofaves.png top strip (#e1e2c1) ────────────────────
+// ── Pixel-matched to avofaves.webp top strip (#e1e2c1) ────────────────────
 const FRANCHISE_OVERLAY = {
   color:   '#e1f169',
   opacity: 0.2,   // 0.25 = lighter · 0.30 = avofaves match · 0.35 = darker
@@ -512,13 +512,13 @@ function FranchiseTeaser() {
 // ─────────────────────────────────────────────────────────────────────────────
 // ─── Recognitions Teaser ─────────────────────────────────────────────────────
 const REC_AWARDS = [
-  { img: '/awards/award-p3-0.png',  orient: 'portrait',  fit: 'cover',   pos: 'center 20%', bg: '#1a2a10', year: '2024', label: 'EY Young Entrepreneur of the Year',             issuer: 'Ernst & Young Philippines' },
+  { img: '/awards/award-p3-0.webp',  orient: 'portrait',  fit: 'cover',   pos: 'center 20%', bg: '#1a2a10', year: '2024', label: 'EY Young Entrepreneur of the Year',             issuer: 'Ernst & Young Philippines' },
   { img: '/awards/award-p2-0.png',  orient: 'portrait',  fit: 'cover',   pos: 'center top', bg: '#1a3a20', year: '2025', label: "Asia's Top Outstanding Woman Marketeer",        issuer: 'Asia Marketing Federation' },
   { img: '/awards/award-p2-2.jpeg', orient: 'portrait',  fit: 'cover',   pos: 'center 30%', bg: '#0a1a40', year: '2026', label: 'Gawad Yamang Isip — Top Madrid Protocol Filer', issuer: 'IP Office of the Philippines' },
   { img: '/awards/award-p1-2.png',  orient: 'landscape', fit: 'contain', pos: 'center',     bg: '#1a1205', year: '2023', label: 'Asian Sterling Awards Hall of Fame',            issuer: 'Most Outstanding Avocado Dessert Brand' },
-  { img: '/awards/award-p1-0.png',  orient: 'portrait',  fit: 'cover',   pos: 'center top', bg: '#1a1a2a', year: '2022', label: 'Francorp 100 Club',                             issuer: 'Francorp Philippines' },
+  { img: '/awards/award-p1-0.webp',  orient: 'portrait',  fit: 'cover',   pos: 'center top', bg: '#1a1a2a', year: '2022', label: 'Francorp 100 Club',                             issuer: 'Francorp Philippines' },
   { img: '/awards/award-p2-1.png',  orient: 'landscape', fit: 'cover',   pos: 'center 30%', bg: '#0a1a10', year: '2025', label: 'Outstanding Achievement in Entrepreneurship',   issuer: 'Agora Awards · PMA' },
-  { img: '/awards/award-p1-3.png',  orient: 'landscape', fit: 'cover',   pos: 'center 40%', bg: '#1a0a2a', year: '2024', label: 'YMMA Entrepreneurial Marketing Award',          issuer: 'Young Market Masters Awards' },
+  { img: '/awards/award-p1-3.webp',  orient: 'landscape', fit: 'cover',   pos: 'center 40%', bg: '#1a0a2a', year: '2024', label: 'YMMA Entrepreneurial Marketing Award',          issuer: 'Young Market Masters Awards' },
   { img: '/awards/award-p1-5.jpeg', orient: 'landscape', fit: 'cover',   pos: 'center 35%', bg: '#0a1a30', year: '2023', label: "GoNegosyo Women's Month — Inspiring Filipina",  issuer: 'Go Negosyo' },
   { img: '/awards/award-p1-4.png',  orient: 'landscape', fit: 'cover',   pos: 'center 30%', bg: '#0a0a1a', year: '2021', label: 'Elite Business & Leadership Awards',            issuer: 'Elite Business Awards' },
 ]
@@ -1004,7 +1004,7 @@ export default function HomePage() {
         {/* ════════════ AVO-FAVES ════════════ */}
         <section style={{ background:'#e8f0c8', padding:0, margin:0, lineHeight:0 }}>
           <div style={{ position:'relative', width:'100%', lineHeight:0 }}>
-            <img src="/avofaves.png"
+            <img src="/avofaves.webp"
               alt="Avo-Faves — Avocado Lover, Naked Light Ice Cream, Avocado Shake"
               style={{ width:'100%', display:'block', objectFit:'cover' }}
                     loading="lazy" decoding="async"

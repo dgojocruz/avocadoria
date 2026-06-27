@@ -31,22 +31,22 @@ const STORY_SECTIONS = [
   {
     id:      'mission',
     badge:   'Our Mission',
-    title:   'Happiness in Every Cup',
-    body:    'We are on a mission to bring happiness through avocado — one cup at a time. Every product we serve is crafted with real avocado, no artificial flavors, and a whole lot of love. We believe indulgence and health can coexist, and that every Filipino deserves a treat that is both delicious and nourishing.',
+    title:   'Indulgence Made Better with Avocado',
+    body:    'We create delicious avocado-based treats that bring together indulgent taste and better choices. Made with real avocado and thoughtfully crafted ingredients, every Avocadoria product delivers a premium experience that feels special yet remains accessible. We believe that enjoying a dessert can be both satisfying and meaningful — made better with the goodness of avocado.',
     color:   'var(--c-dark)',
   },
   {
     id:      'vision',
     badge:   'Our Vision',
-    title:   'The No. 1 Avocado Brand in Asia',
-    body:    'We dream big — to become the most recognized avocado dessert brand not just in the Philippines, but across Asia. We are building a brand rooted in authenticity, community, and the joy of sharing something truly delicious with the people you love.',
+    title:   'The Most Loved Avocado Dessert Brand',
+    body:    'We aspire to become the most loved avocado dessert brand, known for redefining indulgence through innovation, quality, and authenticity. By transforming real avocado into exciting and memorable creations, we aim to make premium avocado experiences accessible to more people while celebrating the natural richness and versatility of this incredible ingredient.',
     color:   'var(--c-pink)',
   },
   {
     id:      'farmers',
-    badge:   'Locally Sourced',
-    title:   'Supporting Filipino Farmers',
-    body:    'We proudly partner with local avocado farmers across the Philippines. Every cup you enjoy directly supports Filipino farming communities and helps grow a sustainable, local supply chain. From Benguet to Davao, real farmers grow the real avocados behind every Avocadoria product.',
+    badge:   'Our Values',
+    title:   'Real Avocado. Real Goodness. Real Connections.',
+    body:    'We celebrate the natural goodness of avocado by creating products made with care, quality, and authenticity. We support local farmers and local communities by building meaningful partnerships that bring real avocado from farms to every Avocadoria experience.',
     color:   '#DFD438',
   },
 ]
@@ -54,7 +54,7 @@ const STORY_SECTIONS = [
 const RECOGNITIONS = [
   {
     id: 'award-ey',
-    image: '/awards/award-p3-0.png',
+    image: '/awards/award-p3-0.webp',
     year: '2024', category: 'Entrepreneurship',
     title: 'EY Young Entrepreneur of the Year Award',
     issuer: 'Ernst & Young Philippines',
@@ -94,7 +94,7 @@ const RECOGNITIONS = [
   },
   {
     id: 'award-francorp100',
-    image: '/awards/award-p1-0.png',
+    image: '/awards/award-p1-0.webp',
     year: '2022', category: 'Franchise',
     title: 'Francorp 100 Club',
     issuer: 'Francorp Philippines',
@@ -110,7 +110,7 @@ const RECOGNITIONS = [
   },
   {
     id: 'award-ymma',
-    image: '/awards/award-p1-3.png',
+    image: '/awards/award-p1-3.webp',
     year: '2024', category: 'Marketing',
     title: 'YMMA 2024 — Entrepreneurial Marketing Award',
     issuer: 'Young Market Masters Awards · Mansmith',
@@ -779,7 +779,8 @@ export default function AboutPage() {
                   }}>Chef Czarina Sevilla</p>
                   <p style={{
                     fontFamily: 'Poppins,sans-serif',
-                    fontSize: '12px', color: 'rgba(58,107,53,0.6)',
+                    fontSize: '18px', color: 'rgba(58,107,53,0.6)',
+                    fontWeight: '800',
                     margin: '3px 0 0', letterSpacing: '0.05em',
                     textTransform: 'uppercase',
                   }}>Founder & Chief Avocado Officer</p>
@@ -808,8 +809,19 @@ export default function AboutPage() {
                         display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px',
                         minHeight: 'unset', minWidth: 'unset',
                       }}>{sec.icon}</div>
-  
                     </div>
+                    {/* Badge — OUR MISSION / OUR VISION / OUR VALUES */}
+                    {sec.badge && (
+                      <p style={{
+                        fontFamily: 'Poppins,sans-serif',
+                        fontSize: 'calc(var(--fs-meta) * 2)',
+                        fontWeight: '800',
+                        letterSpacing: '0.1em',
+                        textTransform: 'uppercase',
+                        color: sec.color === 'var(--c-dark)' ? '#3a6b35' : sec.color === 'var(--c-pink)' ? 'var(--c-pink)' : '#b6a800',
+                        margin: '0 0 6px',
+                      }}>{sec.badge}</p>
+                    )}
                     <h3 style={{
                       fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
                       fontSize: '24px',

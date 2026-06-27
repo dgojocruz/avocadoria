@@ -4,8 +4,7 @@
 
 @font-face {
   font-family: 'BubbleboddyNeue-ExtraBold';
-  src: url('/fonts/bubbleboddy-neue-extrabold.ttf') format('truetype'),
-       url('/fonts/bubbleboddy-neue-extrabold.otf') format('opentype');
+  src: url('/fonts/bubbleboddy-neue-extrabold.otf') format('opentype');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
