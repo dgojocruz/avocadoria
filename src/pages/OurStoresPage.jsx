@@ -855,7 +855,7 @@ export default function OurStoresPage() {
             HERO — discovery state (shown until user searches/locates)
         ══════════════════════════════════════════════════════════ */}
         {!showResults && (
-          <section style={{
+          <section className="stores-hero-section" style={{
             position: 'relative', overflow: 'hidden', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
             minHeight: '100vh',
             display: 'flex',
@@ -901,7 +901,7 @@ export default function OurStoresPage() {
             </p>
 
             {/* Stats pills — Countries → Regions → Branches */}
-            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '40px' }}>
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '24px' }}>
               {[
                 { n: totalCountries, l: 'Countries', drill: 'countries' },
                 { n: totalRegions,   l: 'Regions',   drill: 'countries'  },
@@ -936,7 +936,15 @@ export default function OurStoresPage() {
             </div>
 
             {/* Primary action — GPS */}
+            <style>{`
+              @media (max-width: 767px) {
+                .stores-hero-cta { order: -1; margin-bottom: 20px !important; font-size: 20px !important; padding: 13px 28px !important; }
+                .stores-hero-pills { order: 0; }
+                .stores-hero-section { padding-bottom: 100px !important; }
+              }
+            `}</style>
             <button
+              className="stores-hero-cta"
               onClick={handleLocate}
               disabled={phase === 'locating'}
               style={{
