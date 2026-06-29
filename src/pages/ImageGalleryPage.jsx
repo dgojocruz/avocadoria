@@ -26,51 +26,53 @@ function PhotoCard({ photo, onClick }) {
     <div
       onClick={() => photo.src && onClick(photo)}
       style={{
-        borderRadius: '16px',
-        overflow: 'hidden',
         background: 'transparent',
         border: 'none',
-        boxShadow: '0 4px 18px rgba(58,107,53,0.13)',
+        borderRadius: '20px',
+        overflow: 'hidden',
+        boxShadow: 'none',
         cursor: photo.src ? 'pointer' : 'default',
-        transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-        aspectRatio: '4/3',
-        position: 'relative',
+        transition: 'transform 0.25s ease',
+        display: 'flex',
+        flexDirection: 'column',
       }}
-      onMouseEnter={e => { if (photo.src) { e.currentTarget.style.transform = 'translateY(-6px) scale(1.02)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(58,107,53,0.22)' } }}
-      onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.boxShadow = '0 4px 18px rgba(58,107,53,0.13)' }}
+      onMouseEnter={e => { if (photo.src) e.currentTarget.style.transform = 'translateY(-4px)' }}
+      onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)' }}
     >
-      {photo.src
-        ? <img src={photo.src} alt={photo.title}
-            style={{ width:'100%', height:'100%', objectFit:'cover', display:'block', borderRadius:'16px' }}
-            loading="lazy" decoding="async"
-          />
-        : <div style={{ width:'100%', height:'100%', background:'linear-gradient(135deg,#d9e29e,#b6c548)', borderRadius:'16px', display:'flex', alignItems:'center', justifyContent:'center' }}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="5" width="18" height="14" rx="2.5" fill="rgba(255,255,255,0.6)"/>
-              <circle cx="12" cy="12" r="3.2" fill="rgba(255,255,255,0.8)"/>
-            </svg>
-          </div>
-      }
-      {/* Title overlay */}
-      <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0,
-        background: 'linear-gradient(to top, rgba(30,61,27,0.75) 0%, transparent 100%)',
-        borderRadius: '0 0 16px 16px',
-        padding: '28px 14px 12px',
-        pointerEvents: 'none',
-      }}>
-        <p style={{
+      {/* Image — no overlay, full clean photo */}
+      <div style={{ aspectRatio:'4/3', borderRadius:'16px', overflow:'hidden', background:'linear-gradient(135deg,#d9e29e,#b6c548)' }}>
+        {photo.src
+          ? <img src={photo.src} alt={photo.title}
+              style={{ width:'100%', height:'100%', objectFit:'cover', display:'block', transition:'transform 0.4s ease' }}
+              onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
+              onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+              loading="lazy" decoding="async"
+            />
+          : <div style={{ width:'100%', height:'100%', display:'flex', alignItems:'center', justifyContent:'center' }}>
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="5" width="18" height="14" rx="2.5" fill="rgba(255,255,255,0.6)"/>
+                <circle cx="12" cy="12" r="3.2" fill="rgba(255,255,255,0.8)"/>
+              </svg>
+            </div>
+        }
+      </div>
+
+      {/* Title below image — matches video card style */}
+      <div style={{ padding:'12px 4px 16px', display:'flex', flexDirection:'column', gap:'4px' }}>
+        <span style={{ fontFamily:"'Poppins',sans-serif", fontSize:'11px', color:'rgba(138,95,60,0.55)' }}>
+          {photo.event}
+        </span>
+        <h3 style={{
           fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-          fontSize: 'clamp(13px,2vw,17px)',
           fontWeight: 'normal',
-          color: '#b6c548',
+          fontSize: 'clamp(13px,1.6vw,17px)',
+          color: 'var(--c-olive)',
           textShadow: '-1.5px -1.5px 0 #fff,1.5px -1.5px 0 #fff,-1.5px 1.5px 0 #fff,1.5px 1.5px 0 #fff',
           margin: 0,
           lineHeight: 1.2,
-          letterSpacing: '0.03em',
         }}>
-          🥑 Grand Opening — {photo.title}
-        </p>
+          {photo.title}
+        </h3>
       </div>
     </div>
   )
@@ -108,7 +110,7 @@ export default function ImageGalleryPage() {
         {/* FILTER TABS */}
         <section style={{ position:'relative', padding:'clamp(16px,3vw,32px) clamp(16px,3vw,32px) clamp(8px,1.5vw,16px)', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundColor:'#F3F2EE' }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
-          <div style={{ position:'relative', zIndex:1, maxWidth:'1400px', margin:'0 auto', display:'flex', flexWrap:'wrap', gap:'10px', justifyContent:'center' }}>
+          <div style={{ position:'relative', zIndex:1, display:'flex', flexWrap:'wrap', gap:'10px', justifyContent:'center' }}>
             {EVENT_TAGS.map(tag => (
               <button key={tag} onClick={() => setFilter(tag)} style={{
                 fontFamily:'Poppins,sans-serif', fontSize:'12px', fontWeight:'700',
@@ -124,7 +126,7 @@ export default function ImageGalleryPage() {
         {/* GROUPED PHOTO GRID */}
         <section style={{ position:'relative', overflow:'hidden', padding:'clamp(12px,2vw,16px) clamp(12px,2vw,16px) clamp(32px,5vw,64px)', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundColor:'#F3F2EE' }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
-          <div style={{ position:'relative', zIndex:1, maxWidth:'1400px', margin:'0 auto' }}>
+          <div style={{ position:'relative', zIndex:1 }}>
             {Array.from(new Set(filtered.map(p => p.event))).map(group => (
               <div key={group} style={{ marginBottom:'48px' }}>
                 {/* Group heading */}
@@ -140,7 +142,7 @@ export default function ImageGalleryPage() {
                 }}>
                   {group}
                 </h2>
-                <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:'14px' }}>
+                <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:'10px' }}>
                   {filtered.filter(p => p.event === group).map(p => (
                     <PhotoCard key={p.id} photo={p} onClick={setLightbox} />
                   ))}
