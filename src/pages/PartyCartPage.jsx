@@ -16,7 +16,7 @@ const PACKAGES = [
       'Extended service hours',
     ],
     tiers: {
-      50:  { price: 'TBA', serving: '3 hours' },
+      50:  { price: '₱15,500', serving: '3 hours' },
       100: { price: '₱23,000', serving: '5 hours' },
     },
   },
