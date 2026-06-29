@@ -8,70 +8,70 @@ const VIDEOS = [
     title:       'Team Building 2025',
     event:       'Company Events',
     date:        '2025',
-    thumb:       '/gallery/grand-opening-sm-masinag.webp',
+    thumb:       'https://graph.facebook.com/1344881896997442/picture',
     youtubeId:   '',
-    facebookUrl: 'https://www.facebook.com/share/v/1BG5B7P21d/',
+    facebookUrl: 'https://www.facebook.com/watch/?v=1344881896997442',
   },
   {
     id:          'fb-expo-2025',
     title:       'Franchise Expo 2025',
     event:       'Franchise Event',
     date:        '2025',
-    thumb:       '/gallery/grand-opening-robinsons-galleria.webp',
+    thumb:       'https://graph.facebook.com/1369519337664173/picture',
     youtubeId:   '',
-    facebookUrl: 'https://www.facebook.com/share/v/194Uyu3uFy/',
+    facebookUrl: 'https://www.facebook.com/watch/?v=1369519337664173',
   },
   {
     id:          'fb-anniv-6',
     title:       '6th Year Anniversary',
     event:       'Anniversary',
     date:        '2025',
-    thumb:       '/gallery/grand-opening-thailand.webp',
+    thumb:       'https://graph.facebook.com/1344881896997442/picture',
     youtubeId:   '',
-    facebookUrl: 'https://www.facebook.com/share/v/1DuMLJ9WJS/',
+    facebookUrl: 'https://www.facebook.com/watch/?v=1344881896997442',
   },
   {
     id:          'fb-kids-retreat',
     title:       'Kids Retreat',
     event:       'Company Events',
     date:        '2025',
-    thumb:       '/gallery/grand-opening-upad-hotel.webp',
+    thumb:       'https://graph.facebook.com/398522126670916/picture',
     youtubeId:   '',
-    facebookUrl: 'https://www.facebook.com/share/v/1C4Ko5iPyh/',
+    facebookUrl: 'https://www.facebook.com/watch/?v=398522126670916',
   },
   {
     id:          'fb-mansmith-award',
     title:       "Chef Czarina — Mansmith Young Market Master's Award",
     event:       'Awards',
     date:        '2025',
-    thumb:       '/chef-czarina.webp',
+    thumb:       'https://graph.facebook.com/848092920735883/picture',
     youtubeId:   '',
-    facebookUrl: 'https://www.facebook.com/share/v/1GUe8HLruX/',
+    facebookUrl: 'https://www.facebook.com/watch/?v=848092920735883',
   },
   {
     id:          'fb-tb-2024',
     title:       'Team Building 2024',
     event:       'Company Events',
     date:        '2024',
-    thumb:       '/gallery/grand-opening-sm-masinag.webp',
+    thumb:       'https://graph.facebook.com/450945407792431/picture',
     youtubeId:   '',
-    facebookUrl: 'https://www.facebook.com/share/v/1HAx9gkwjW/',
+    facebookUrl: 'https://www.facebook.com/watch/?v=450945407792431',
   },
   {
     id:          'fb-lakbay',
     title:       '#LakbayAvocadoria — Piliin ang Pilipinas',
     event:       'Company Events',
     date:        '2024',
-    thumb:       '/avocadoria_bg.webp',
+    thumb:       'https://graph.facebook.com/4773949566077313/picture',
     youtubeId:   '',
-    facebookUrl: 'https://www.facebook.com/share/v/1cNtxPycYj/',
+    facebookUrl: 'https://www.facebook.com/watch/?v=4773949566077313',
   },
   {
     id:          'fb-anniv-5',
     title:       '5th Year Anniversary',
     event:       'Anniversary',
     date:        '2024',
-    thumb:       '/gallery/grand-opening-robinsons-galleria.webp',
+    thumb:       'https://graph.facebook.com/1164779488033039/picture',
     youtubeId:   '',
     facebookUrl: 'https://www.facebook.com/reel/1164779488033039',
   },
@@ -123,6 +123,7 @@ function VideoCard({ video }) {
           ? <img src={thumb} alt={video.title} style={{ width:'100%', height:'100%', objectFit:'cover', transition:'transform 0.4s ease' }}
               onMouseEnter={e => e.target.style.transform='scale(1.05)'}
               onMouseLeave={e => e.target.style.transform='scale(1)'}
+              onError={e => { e.target.onerror=null; e.target.src='/avocadoria_icon_nobg.png'; e.target.style.objectFit='contain'; e.target.style.padding='40px'; e.target.parentElement.style.background='linear-gradient(145deg,#1a3a12,#2d5a1e)' }}
               loading="lazy" decoding="async"
             />
           : <div style={{ width:'100%', height:'100%', background:'linear-gradient(135deg,#3a6b35,#b6c548)' }} />
@@ -192,8 +193,8 @@ export default function VideoGalleryPage() {
         {/* ── VIDEO GRID ── */}
         <section style={{ position:'relative', overflow:'hidden', padding:'clamp(32px,5vw,64px) clamp(16px,3vw,32px)', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'cover', backgroundPosition:'center', backgroundColor:'#F3F2EE' }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.15 }} />
-          <div style={{ position:'relative', zIndex:1, maxWidth:'1100px', margin:'0 auto' }}>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(300px,1fr))', gap:'24px' }}>
+          <div style={{ position:'relative', zIndex:1 }}>
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:'20px' }}>
               {VIDEOS.map(v => <VideoCard key={v.id} video={v} />)}
             </div>
             {/* Empty state hint */}
