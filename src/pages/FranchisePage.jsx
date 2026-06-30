@@ -90,7 +90,7 @@ const STEPS = [
 ]
 
 // ─── Cart Slideshow ───────────────────────────────────────────────────────────
-function CartSlideshow() {
+function CartSlideshow({ onInquire }) {
   const [current, setCurrent]   = useState(0)
   const [prev,    setPrev]      = useState(null)
   const [fading,  setFading]    = useState(false)
@@ -185,6 +185,7 @@ function CartSlideshow() {
           {/* CTA */}
           <a
             href="#franchise-inquiry"
+            onClick={() => onInquire && onInquire(cart.name)}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '8px',
               background: cart.color, color: '#fff',
@@ -217,10 +218,17 @@ function CartSlideshow() {
 }
 
 // ─── Inquiry Form ─────────────────────────────────────────────────────────────
-function InquiryForm() {
+function InquiryForm({ preselectedFormat }) {
   const [sent,    setSent]    = useState(false)
   const [loading, setLoading] = useState(false)
   const [form,    setForm]    = useState({ name: '', email: '', phone: '', location: '', format: '', message: '' })
+
+  // Sync format field whenever the parent updates the preselected format
+  useEffect(() => {
+    if (preselectedFormat) {
+      setForm(f => ({ ...f, format: preselectedFormat }))
+    }
+  }, [preselectedFormat])
 
   const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
 
@@ -340,6 +348,7 @@ Sent via avocadoria.com.ph franchise inquiry form.`
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function FranchisePage() {
   const [hoveredIcon, setHoveredIcon] = useState(null)
+  const [selectedFormat, setSelectedFormat] = useState('')
   return (
     <>
       {/* Flash keyframe */}
@@ -408,7 +417,7 @@ export default function FranchisePage() {
               Four store types. One brand. Endless happiness.
             </p>
           </div>
-          <div style={{ position:'relative', zIndex:1 }}><CartSlideshow /></div>
+          <div style={{ position:'relative', zIndex:1 }}><CartSlideshow onInquire={setSelectedFormat} /></div>
         </section>
 
         {/* ── WHY AVOCADORIA ── */}
@@ -530,7 +539,7 @@ export default function FranchisePage() {
 
             {/* Form */}
             <div style={{ background: 'transparent', borderRadius: '20px', padding: '36px', border: 'none' }}>
-              <InquiryForm />
+              <InquiryForm preselectedFormat={selectedFormat} />
             </div>
           </div>
         </section>
