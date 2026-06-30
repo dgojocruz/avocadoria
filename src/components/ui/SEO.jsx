@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async'
 
 const SITE_NAME = 'Avocadoria'
-const BASE_URL  = 'https://avocadoria.com.ph'
+const BASE_URL  = 'https://avocadoria.com'
 const DEFAULT_OG = `${BASE_URL}/og-image.jpg`
 
 /**
