@@ -3,19 +3,14 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from '@/components/layout/Layout'
 import PageLoader from '@/components/ui/PageLoader'
 import ScrollToTop from '@/components/ui/ScrollToTop'
+import { usePageTracking } from '@/hooks/usePageTracking'
 
-// ─── Minimum loader display time ─────────────────────────────────────
-// Increase this number (milliseconds) to show the loader longer.
-// Decrease it to show the loader for less time.
-// Set to 0 to disable — loader only shows while the page is downloading.
 const MIN_LOADER_MS = 300
-
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 const lazyMin = (importFn) => lazy(() =>
   Promise.all([importFn(), delay(MIN_LOADER_MS)]).then(([module]) => module)
 )
 
-// ─── Lazy-loaded pages ────────────────────────────────────────────────
 const HomePage      = lazyMin(() => import('@/pages/HomePage'))
 const OurStoresPage = lazyMin(() => import('@/pages/OurStoresPage'))
 const AboutPage     = lazyMin(() => import('@/pages/AboutPage'))
@@ -27,9 +22,15 @@ const NotFoundPage     = lazyMin(() => import('@/pages/NotFoundPage'))
 const VideoGalleryPage = lazyMin(() => import('@/pages/VideoGalleryPage'))
 const ImageGalleryPage = lazyMin(() => import('@/pages/ImageGalleryPage'))
 
+function AnalyticsTracker() {
+  usePageTracking()
+  return null
+}
+
 export default function App() {
   return (
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <AnalyticsTracker />
       <ScrollToTop />
       <Suspense fallback={<PageLoader />}>
         <Routes>
