@@ -122,7 +122,7 @@ function CartSlideshow({ onInquire }) {
         .cart-info-enter { animation: slide-in-left 0.5s cubic-bezier(.22,1,.36,1) forwards }
         .cart-showcase { display: grid; grid-template-columns: 6fr 4fr; gap: 48px; align-items: center; max-width: 1400px; margin: 0 auto; padding: 0 16px; }
         .cart-form-row { display: grid; grid-template-columns: 7fr 3fr; gap: 16px; }
-        .cart-contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 36px; }
+        .cart-contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 36px; }
         @media (max-width: 767px) {
           .cart-showcase { grid-template-columns: 1fr; gap: 24px; }
           .cart-form-row { grid-template-columns: 1fr; }
@@ -512,8 +512,7 @@ export default function FranchisePage() {
             <div className="cart-contact-grid">
               {[
                 { label: 'Email',      value: 'ka.jagto@avocadoria.com.ph', href: 'mailto:ka.jagto@avocadoria.com.ph' },
-                { label: 'Call / SMS', value: '+63 945 971 6599',           href: 'tel:+639459716599' },
-                { label: 'Messenger',  value: 'Message us on FB',           href: 'https://m.me/avocadoria.ph' },
+                { label: 'Messenger',  value: 'Message us on FB',           href: 'https://m.me/avocadoria.official' },
               ].map((c, i) => (
                 <a key={i} href={c.href} target="_blank" rel="noopener noreferrer" style={{
                   display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
