@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import SEO from '@/components/ui/SEO'
-
+import { Helmet } from 'react-helmet-async'
 // ─── BRANCH DATA ─────────────────────────────────────────────────────────────
 // Source: avocadoria_branches_embed_urls.xlsx
 // To add orderUrl later: find the branch by name and set orderUrl:'https://...'
@@ -609,7 +609,41 @@ export default function OurStoresPage() {
     ))
     return countries.size
   }, [])
-
+const branchSchema = useMemo(() => ({
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: BRANCHES.map((b, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'FoodEstablishment',
+      '@id': `https://avocadoria.com/our-stores#branch-${b.id}`,
+      name: `Avocadoria — ${b.name}`,
+      branchCode: String(b.id),
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: b.address,
+        addressCountry: b.region.includes('Singapore') ? 'SG'
+          : b.region.includes('UAE') ? 'AE'
+          : b.region.includes('Thailand') ? 'TH'
+          : 'PH',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: b.lat,
+        longitude: b.lng,
+      },
+      url: b.mapsUrl,
+      hasMap: b.mapsUrl,
+      servesCuisine: 'Avocado Desserts',
+      parentOrganization: {
+        '@type': 'Organization',
+        name: 'Avocadoria',
+        url: 'https://avocadoria.com',
+      },
+    },
+  })),
+}), [])
   return (
     <>
       <SEO
@@ -617,6 +651,11 @@ export default function OurStoresPage() {
         description={`Find 233+ Avocadoria branches across the Philippines. Get directions and order online.`}
         path="/our-stores"
       />
+      <Helmet>
+  <script type="application/ld+json">
+    {JSON.stringify(branchSchema)}
+  </script>
+</Helmet>
       <div className="page-enter" style={{ fontFamily: "'Poppins','Segoe UI',sans-serif" }}>
 
         {/* ══════════════════════════════════════════════════════════
