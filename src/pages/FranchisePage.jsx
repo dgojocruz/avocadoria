@@ -2,6 +2,15 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SEO from '@/components/ui/SEO'
 
+// ─── Franchise inquiry Google Form (owned in Bytecloud Workspace) ────────────
+const GOOGLE_FORM_ACTION  = 'https://docs.google.com/forms/d/e/1FAIpQLSdkiamzIwil0HDDaTDBtTI78yzxzRZqMfGq9AcpRhia__SSjQ/formResponse'
+const FORM_ENTRY_NAME     = 'entry.923916759'
+const FORM_ENTRY_EMAIL    = 'entry.1928784494'
+const FORM_ENTRY_PHONE    = 'entry.1674286926'
+const FORM_ENTRY_FORMAT   = 'entry.374702368'
+const FORM_ENTRY_LOCATION = 'entry.2040465615'
+const FORM_ENTRY_CONSENT  = 'entry.1243471410'
+
 // ─── Cart slideshow config — edit here ───────────────────────────────────────
 const CART_INTERVAL = 5000 // ms between auto-advance (5000 = 5 seconds)
 
@@ -221,7 +230,8 @@ function CartSlideshow({ onInquire }) {
 function InquiryForm({ preselectedFormat }) {
   const [sent,    setSent]    = useState(false)
   const [loading, setLoading] = useState(false)
-  const [form,    setForm]    = useState({ name: '', email: '', phone: '', location: '', format: '', message: '' })
+  const [error,   setError]   = useState(false)
+  const [form,    setForm]    = useState({ name: '', email: '', phone: '', location: '', format: '', consent: false })
 
   // Sync format field whenever the parent updates the preselected format
   useEffect(() => {
@@ -232,26 +242,41 @@ function InquiryForm({ preselectedFormat }) {
 
   const set = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    const subject = encodeURIComponent(`Franchise Inquiry — ${form.name} (${form.format || 'General'})`)
-    const body = encodeURIComponent(
-`Franchise Inquiry
-——————————————————————————
-Name:     ${form.name}
-Email:    ${form.email}
-Phone:    ${form.phone}
-——————————————————————————
-Preferred Format:   ${form.format || 'Not specified'}
-Preferred Location: ${form.location || 'Not specified'}
-——————————————————————————
-Message:
-${form.message || 'None'}
-——————————————————————————
-Sent via avocadoria.com.ph franchise inquiry form.`
-    )
-    window.location.href = `mailto:ka.jagto@avocadoria.com.ph?subject=${subject}&body=${body}`
-    setSent(true)
+    if (!form.consent) {
+      setError(true)
+      return
+    }
+    setError(false)
+    setLoading(true)
+
+    const params = new URLSearchParams({
+      [FORM_ENTRY_NAME]:     form.name,
+      [FORM_ENTRY_EMAIL]:    form.email,
+      [FORM_ENTRY_PHONE]:    form.phone,
+      [FORM_ENTRY_FORMAT]:   form.format || 'Not specified',
+      [FORM_ENTRY_LOCATION]: form.location || 'Not specified',
+      [FORM_ENTRY_CONSENT]:  'I agree',
+    })
+
+    try {
+      // Google Forms doesn't send CORS headers, so the response is opaque —
+      // 'no-cors' lets the POST go through without the browser blocking it
+      // on a failed preflight (which is what happens with JSON/fetch defaults).
+      await fetch(GOOGLE_FORM_ACTION, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
+      })
+      setSent(true)
+    } catch {
+      // Network-level failure (offline, blocked, etc.) — let the visitor know
+      setError(true)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const inputStyle = {
@@ -320,11 +345,23 @@ Sent via avocadoria.com.ph franchise inquiry form.`
         </select>
       </div>
       <div>
-        <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tell us about yourself</label>
-        <textarea value={form.message} onChange={set('message')} rows={4} placeholder="Share your business experience, why you want to franchise Avocadoria, and any questions you have..." style={{ ...inputStyle, resize: 'vertical' }}
-          onFocus={e => e.target.style.borderColor = '#b6c548'}
-          onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
-        />
+        <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer' }}>
+          <input
+            type="checkbox"
+            required
+            checked={form.consent}
+            onChange={e => { setForm(f => ({ ...f, consent: e.target.checked })); setError(false) }}
+            style={{ marginTop: '3px', width: '16px', height: '16px', accentColor: '#b6c548', flexShrink: 0 }}
+          />
+          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', lineHeight: 1.5 }}>
+            I have read and agree to the Data Privacy Notice, and confirm that all information provided is true and accurate. *
+          </span>
+        </label>
+        {error && (
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#d9534f', marginTop: '8px' }}>
+            {form.consent ? 'Something went wrong sending your inquiry — please try again.' : 'Please agree to the Data Privacy Notice to continue.'}
+          </p>
+        )}
       </div>
       <button
         type="submit"
