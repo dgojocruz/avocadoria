@@ -152,6 +152,7 @@ export default function OurStoresPage() {
 
   const searchRef  = useRef(null)
   const listRef    = useRef(null)
+  const detailRef  = useRef(null)   // detail card — scroll target on mobile branch select
   const mapRef     = useRef(null)   // DOM node for Leaflet
   const leafletRef = useRef(null)   // Leaflet map instance
   const markersRef = useRef({})     // id → Leaflet marker
@@ -388,6 +389,19 @@ export default function OurStoresPage() {
         { lat: Math.max(userLoc.lat, branch.lat) + 0.01, lng: Math.max(userLoc.lng, branch.lng) + 0.01 }
       ))
     }
+  }, [activeId])
+
+  // ── Mobile: auto-scroll to the detail card when a branch is selected ───────
+  // On desktop the detail card + map sit beside the list, so no scroll needed.
+  // Breakpoint matches the page's own @media (max-width: 767px) mobile layout.
+  useEffect(() => {
+    if (activeId === null) return
+    if (window.innerWidth > 767) return
+    // Small delay lets the detail card actually render/expand first
+    const t = setTimeout(() => {
+      detailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 100)
+    return () => clearTimeout(t)
   }, [activeId])
 
   // ── Fly map based on drill level ───────────────────────────────────────────
@@ -1211,7 +1225,7 @@ const branchSchema = useMemo(() => ({
 
                 {/* Detail card — shown when a branch is selected */}
                 {activeBranch && (
-                  <div style={{
+                  <div ref={detailRef} style={{
                     background: LAYOUT.detailBg,
                     borderRadius: `${LAYOUT.detailBorderR}px`,
                     border: `1px solid rgba(182,197,72,.2)`,
