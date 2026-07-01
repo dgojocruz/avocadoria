@@ -143,7 +143,7 @@ export const CATEGORIES = [
     name:     'Avocado Shake',
     emoji:    '🥤',
     tagline:  'Thick, creamy, and packed with real avocado — the perfect refreshment.',
-    cover:    '/menu/Avocado Shakes/avo-shake-cover.webp',
+    cover:    '/menu/Avocado Shakes/avo-shake.webp',
     featured: false,
     items: [
       {
