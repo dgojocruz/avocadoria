@@ -9,7 +9,7 @@ const LINKS = {
   // Order Here → goes to Our Stores page so customers find their nearest branch
   // Each branch will have its own GrabFood/FoodPanda link on that page
   orderHere: '/our-stores',   // internal route — change to any path or external URL
-  messenger: 'https://m.me/avocadoria.ph',
+  messenger: 'https://m.me/avocadoria.official',
 }
 
 // ── Button size ───────────────────────────────────────────────────────────────
