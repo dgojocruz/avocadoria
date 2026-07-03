@@ -18,6 +18,7 @@ const MenuPage      = lazyMin(() => import('@/pages/MenuPage'))
 const FranchisePage = lazyMin(() => import('@/pages/FranchisePage'))
 const PartyCartPage = lazyMin(() => import('@/pages/PartyCartPage'))
 const CareersPage   = lazyMin(() => import('@/pages/CareersPage'))
+const CareersJobPage = lazyMin(() => import('@/pages/CareersJobPage'))
 const NotFoundPage     = lazyMin(() => import('@/pages/NotFoundPage'))
 const VideoGalleryPage = lazyMin(() => import('@/pages/VideoGalleryPage'))
 const ImageGalleryPage = lazyMin(() => import('@/pages/ImageGalleryPage'))
@@ -43,6 +44,7 @@ export default function App() {
             <Route path="events"     element={<PartyCartPage />} />
             <Route path="party-cart" element={<PartyCartPage />} />
             <Route path="careers"        element={<CareersPage />} />
+            <Route path="careers/:jobId" element={<CareersJobPage />} />
             <Route path="gallery/videos" element={<VideoGalleryPage />} />
             <Route path="gallery/photos" element={<ImageGalleryPage />} />
             <Route path="*"              element={<NotFoundPage />} />

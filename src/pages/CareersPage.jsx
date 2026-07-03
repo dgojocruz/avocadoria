@@ -1,424 +1,124 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import SEO from '@/components/ui/SEO'
-
+import { JOBS, buildApplyUrl } from '@/data/careersJobs'
 // ─────────────────────────────────────────────────────────────────────────────
-// JOBS CONFIG — Edit this list to add, remove, or update job postings.
-//
-// To REMOVE a job:    Delete its entire { ... } block from the array.
-// To ADD a job:       Copy any block, paste it, and update the fields.
-// To HIDE a job:      Set  active: false  — it won't show but stays saved.
-// ─────────────────────────────────────────────────────────────────────────────
-const JOBS = [
-  {
-    active:        true,
-    id:            'store-crew-robinsons-malabon',
-    role:          'Store Crew',
-    branch:        'Robinsons Malabon',
-    location:      'Malabon, Metro Manila',
-    type:          'Full-time',
-    email:         'avocadoriarobmalabon@gmail.com',
-    emailSubject:  'Store Crew - Robinsons Malabon',
-    image:         '/careers/hiring-robinsons-malabon.webp',
-    qualifications: [
-      'Female or Male',
-      'At least High School Graduate',
-      'Has a pleasing and happy personality',
-      'Friendly and Approachable',
-      'Honest and Trustworthy',
-      'Preferably has a Service Crew experience',
-      'Willing to be trained',
-      'Residing within Malabon, Metro Manila',
-    ],
-  },
-  {
-    active:        true,
-    id:            'store-crew-times-plaza-manila',
-    role:          'Store Crew',
-    branch:        'Times Plaza Manila',
-    location:      'Ermita, Metro Manila',
-    type:          'Full-time',
-    email:         'avocadoria.timesplaza@gmail.com',
-    emailSubject:  'Store Crew - Times Plaza Manila',
-    image:         '/careers/hiring-times-plaza-manila.webp',
-    qualifications: [
-      'Female or Male',
-      'At least High School Graduate',
-      'Has a pleasing and happy personality',
-      'Friendly and Approachable',
-      'Honest and Trustworthy',
-      'Preferably has a Service Crew experience',
-      'Willing to be trained',
-      'Residing within Ermita, Metro Manila',
-    ],
-  },
-  {
-    active:        true,
-    id:            'store-crew-waltermart-sta-maria',
-    role:          'Store Crew',
-    branch:        'WalterMart Sta. Maria',
-    location:      'Sta. Maria, Bulacan',
-    type:          'Full-time',
-    email:         'Mmffinc@gmail.com',
-    emailSubject:  'Store Crew - Waltermart Sta Maria',
-    image:         '/careers/hiring-waltermart-sta-maria.webp',
-    qualifications: [
-      'Female or Male',
-      'At least High School Graduate',
-      'Has a pleasing and happy personality',
-      'Friendly and Approachable',
-      'Honest and Trustworthy',
-      'Preferably has a Service Crew experience',
-      'Willing to be trained',
-      'Residing within Sta Maria, Bulacan',
-    ],
-  },
-  {
-    active:        true,
-    id:            'store-crew-bayombong',
-    role:          'Store Crew',
-    branch:        'Bayombong',
-    location:      'Bayombong, Nueva Vizcaya',
-    type:          'Full-time',
-    email:         'avocadoriabayombongnv@gmail.com',
-    emailSubject:  'Store Crew - Bayombong',
-    image:         '/careers/hiring-bayombong.webp',
-    qualifications: [
-      'Female or Male',
-      'At least High School Graduate',
-      'Has a pleasing and happy personality',
-      'Friendly and Approachable',
-      'Honest and Trustworthy',
-      'Preferably has a Service Crew experience',
-      'Willing to be trained',
-      'Residing within Bayombong, Nueva Vizcaya',
-    ],
-  },
-
-  // ── IN-HOUSE / CORPORATE OPENINGS ────────────────────────────────────────
-  // These go to recruitment@avocadoria.com.ph (HQ Marikina City)
-  {
-    active:        true,
-    id:            'hq-accounting-assistant',
-    role:          'Accounting Assistant',
-    branch:        'Head Office',
-    location:      'Marikina City',
-    type:          'Full-time',
-    email:         'avocadoriatccc.recruitment@gmail.com',
-    emailSubject:  'Accounting Assistant | Last Name',
-    image:         '/careers/hiring-hq-accounting-assistant.webp',
-    qualifications: [
-      "Bachelor's Degree in Accountancy, Accounting Technology, Financial Management, or any related field",
-      'At least 1–2 years of experience in accounting, preferably handling payroll, compensation and benefits, and accounts payable',
-      'Proficient in payroll and accounting software applications',
-      'Strong analytical, communication, and interpersonal skills',
-      'Fast learner with the ability to multitask and stay organized',
-      'Capable of working efficiently in a fast-paced environment while meeting deadlines',
-    ],
-  },
-  {
-    active:        true,
-    id:            'hq-audit-staff',
-    role:          'Audit Staff',
-    branch:        'Head Office',
-    location:      'Marikina City',
-    type:          'Full-time',
-    email:         'avocadoriatccc.recruitment@gmail.com',
-    emailSubject:  'Audit Staff | Last Name',
-    image:         '/careers/hiring-hq-audit-staff.webp',
-    qualifications: [
-      'Male or Female',
-      "Bachelor's Degree in Auditing, Business Administration, or any related field",
-      'At least 2–3 years of experience in auditing, accounting, regulatory compliance within the food manufacturing, processing, or distribution industry',
-      'Knowledgeable of IIA Standards, GAAP, GAAS, COSO Framework, or industry-specific regulations',
-      'Familiarity with auditing principles and techniques',
-      'Proficiency in MS Office (Word, Excel, Outlook)',
-      'Ability to clearly document findings and write concise audit reports',
-      'Willing to do field work',
-      'Can start ASAP',
-    ],
-  },
-  {
-    active:        true,
-    id:            'hq-driver',
-    role:          'Driver',
-    branch:        'Head Office',
-    location:      'Marikina City',
-    type:          'Full-time',
-    email:         'avocadoriatccc.recruitment@gmail.com',
-    emailSubject:  'Driver | Last Name',
-    image:         '/careers/hiring-hq-driver.webp',
-    qualifications: [
-      'At least a High School graduate or Vocational graduate',
-      'With 2–3 years of relevant work experience as a driver or in a similar role',
-      "Must have a valid driver's license with restrictions Code A–D",
-      'Knowledgeable in safe and efficient vehicle operation, including basic vehicle maintenance',
-      'Familiar with local traffic laws and road safety regulations',
-      'Skilled in route planning, navigation, and use of navigation technologies',
-      'Knowledgeable in safe cargo handling procedures',
-      'With good customer service skills and professional driving attitude',
-    ],
-  },
-  {
-    active:        true,
-    id:            'hq-franchise-ops-specialist',
-    role:          'Franchise Operations Specialist',
-    branch:        'Head Office',
-    location:      'Marikina City',
-    type:          'Full-time',
-    email:         'avocadoriatccc.recruitment@gmail.com',
-    emailSubject:  'Franchise Operations Specialist | Last Name',
-    image:         '/careers/hiring-hq-franchise-ops-specialist.webp',
-    qualifications: [
-      "Bachelor's degree in Business Administration, Entrepreneurship, Hospitality Management, or Food Service Management",
-      '2–5 years of experience in franchise operations',
-      'Willing to conduct fieldwork',
-      'Audit and compliance management',
-      'Hands-on experience with standard operations (SO), audits, and franchise-related concerns',
-      'Strong communication skills',
-      'Conflict resolution and negotiation abilities',
-      'Training and coaching experience',
-      'Effective time and territory management',
-    ],
-  },
-  {
-    active:        true,
-    id:            'hq-line-cook',
-    role:          'Line Cook',
-    branch:        'Head Office',
-    location:      'Marikina City',
-    type:          'Full-time',
-    email:         'avocadoriatccc.recruitment@gmail.com',
-    emailSubject:  'Line Cook | Last Name',
-    image:         '/careers/hiring-hq-line-cook.webp',
-    qualifications: [
-      'At least High School graduate',
-      'Culinary or Hospitality training is an advantage',
-      "1–2 years' experience as line cook, cook, or kitchen staff in restaurant, cafe, or hotel",
-      'With knowledge in basic cooking methods',
-      'Ability to prepare ingredients quickly and accurately',
-    ],
-  },
-  {
-    active:        true,
-    id:            'hq-multimedia-artist',
-    role:          'Multimedia Artist',
-    branch:        'Head Office',
-    location:      'Marikina City',
-    type:          'Full-time',
-    email:         'avocadoriatccc.recruitment@gmail.com',
-    emailSubject:  'Multimedia Artist | Last Name',
-    image:         '/careers/hiring-hq-multimedia-artist.webp',
-    qualifications: [
-      "Bachelor's degree in Multimedia Arts, Graphic Design, Digital Arts, Animation, or related field",
-      "2 years' experience in multimedia design, photography, and video production",
-      'Proficiency in Adobe Creative Suite',
-      'Strong understanding of camera settings, lighting techniques, and composition',
-      'Experience with motion graphics and animation is a plus',
-      'Ability to take direction and work collaboratively with team',
-      'Excellent time management and organizational skills',
-      'Willing to do field work',
-      'Can start ASAP',
-    ],
-  },
-  {
-    active:        true,
-    id:            'hq-treasury-assistant',
-    role:          'Treasury Assistant',
-    branch:        'Head Office',
-    location:      'Marikina City',
-    type:          'Full-time',
-    email:         'avocadoriatccc.recruitment@gmail.com',
-    emailSubject:  'Treasury Assistant | Last Name',
-    image:         '/careers/hiring-hq-treasury-assistant.webp',
-    qualifications: [
-      "Bachelor's degree in Finance, Accounting, Business Administration, or related field",
-      "1–2 years' experience in billing, collections, or accounts receivable",
-      'Excellent verbal and written communication skills for client interaction',
-      'Strong analytical, numerical, and organizational skills with high attention to detail',
-      'Proficient in MS Office',
-    ],
-  },
-  // {
-  //   active:        true,
-  //   id:            'unique-id-here',
-  //   role:          'Job Title',
-  //   branch:        'Branch Name',
-  //   location:      'City, Province',
-  //   type:          'Full-time',      // Full-time | Part-time | Contractual
-  //   email:         'email@avocadoria.com.ph',
-  //   emailSubject:  'Job Title - Branch Name',
-  //   image:         '/careers/hiring-poster.webp',   // or null for no poster
-  //   qualifications: [
-  //     'Qualification 1',
-  //     'Qualification 2',
-  //   ],
-  // },
-]
+// Job data lives in src/data/careersJobs.js — edit that file to add, remove,
+// or update job postings. This page only handles filtering/display.
 // ─────────────────────────────────────────────────────────────────────────────
 
-// ── Job Card ──────────────────────────────────────────────────────────────────
-// ── Google Form integration ───────────────────────────────────────────────
-const GOOGLE_FORM_BASE = 'https://docs.google.com/forms/d/e/1FAIpQLSd_XWuZpKUuTT-0wdPo5v0gFiUmfWp5VWLgQ_Q09cynRCUgeg/viewform'
-const FORM_ENTRY_POSITION = 'entry.1078004677'
-const FORM_ENTRY_BRANCH   = 'entry.303772314'
-
-function buildApplyUrl(job) {
-  const params = new URLSearchParams({
-    usp: 'pp_url',
-    [FORM_ENTRY_POSITION]: job.role,
-    [FORM_ENTRY_BRANCH]: job.branch === 'Head Office' ? 'Head Office' : `${job.branch}`,
-  })
-  return `${GOOGLE_FORM_BASE}?${params.toString()}`
-}
-
-function JobListItem({ job, active, onOpen }) {
-  const [hov, setHov] = useState(false)
-  const highlighted = active || hov
+// ── Filter Pill — styled <select> dropdown ──────────────────────────────────
+function FilterPill({ value, onChange, options, allLabel, highlighted }) {
   return (
-    <div
-      onClick={() => onOpen(job)}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      role="button"
-      tabIndex={0}
-      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onOpen(job) }}
-      style={{
-        display: 'flex', flexDirection: 'column', gap: '4px',
-        padding: '16px 14px',
-        background: active ? 'rgba(182,197,72,0.10)' : 'transparent',
-        borderRadius: '10px',
-        borderBottom: active ? 'none' : `1.5px solid ${hov ? 'var(--c-olive)' : 'rgba(138,95,60,0.18)'}`,
-        cursor: 'pointer',
-        transition: 'all 0.2s ease',
-      }}
-    >
-      <span style={{
-        fontFamily: "'Poppins',sans-serif", fontSize: '13px', fontWeight: '700',
-        color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase',
-      }}>
-        {job.type}
-      </span>
-      <h3 style={{
-        fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal',
-        fontSize: 'clamp(17px,1.8vw,22px)', color: 'var(--c-olive)',
-        textShadow: '-1.5px -1.5px 0 #fff,1.5px -1.5px 0 #fff,-1.5px 1.5px 0 #fff,1.5px 1.5px 0 #fff',
-        margin: 0, lineHeight: 1.3,
-      }}>
-        {job.role} <span style={{ color: 'rgba(138,95,60,0.65)', fontFamily: "'Poppins',sans-serif", fontSize: '16px', fontWeight: '600' }}>— {job.branch}, {job.location}</span>
-      </h3>
+    <div style={{
+      position: 'relative', display: 'inline-flex', alignItems: 'center',
+      background: highlighted ? '#b6c548' : '#fff',
+      border: `1.5px solid ${highlighted ? '#b6c548' : 'rgba(182,197,72,0.4)'}`,
+      borderRadius: '999px',
+      padding: '10px 40px 10px 20px',
+      minWidth: '160px',
+    }}>
+      <select
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        style={{
+          appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none',
+          background: 'transparent', border: 'none', outline: 'none', cursor: 'pointer',
+          fontFamily: "'Poppins',sans-serif", fontSize: '15px', fontWeight: '600',
+          color: highlighted ? '#fff' : '#3a6b35',
+          width: '100%',
+        }}
+      >
+        <option value="">{allLabel}</option>
+        {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+      </select>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={highlighted ? '#fff' : '#b6c548'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+        style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
     </div>
   )
 }
 
-// ── Job Detail Panel — right-hand column: qualifications + Apply Now, or empty state ──
-function JobDetailPanel({ job }) {
-  if (!job) {
-    return (
-      <div style={{
-        borderRadius: '24px', border: '1.5px solid rgba(182,197,72,0.25)',
-        background: 'rgba(255,255,255,0.45)',
-        minHeight: '420px',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        textAlign: 'center', padding: '40px 24px', overflow: 'hidden',
-      }}>
-        <svg viewBox="0 0 400 220" width="100%" style={{ maxWidth: '320px', marginBottom: '20px' }} aria-hidden="true">
-          {/* soft background blobs */}
-          <circle cx="60" cy="40" r="46" fill="#b6c548" opacity="0.10" />
-          <circle cx="340" cy="180" r="60" fill="#3a6b35" opacity="0.08" />
-
-          {/* bubble text, slightly tilted */}
-          <g transform="rotate(-4 200 110)">
-            {/* WE ARE */}
-            <text x="200" y="70" textAnchor="middle"
-              fontFamily="'BubbleboddyNeue-ExtraBold','Poppins',sans-serif" fontWeight="normal"
-              fontSize="46" fill="#6e9414" stroke="#fff" strokeWidth="7" strokeLinejoin="round" paintOrder="stroke" letterSpacing="1">
-              WE ARE
-            </text>
-            {/* HIRING — bigger, dominant line */}
-            <text x="200" y="145" textAnchor="middle"
-              fontFamily="'BubbleboddyNeue-ExtraBold','Poppins',sans-serif" fontWeight="normal"
-              fontSize="64" fill="#6e9414" stroke="#fff" strokeWidth="8" strokeLinejoin="round" paintOrder="stroke" letterSpacing="1">
-              HIRING
-            </text>
-          </g>
-
-          {/* avocado accent */}
-          <text x="200" y="200" textAnchor="middle" fontSize="40">🥑</text>
-        </svg>
-        <p style={{ fontFamily: "'Poppins',sans-serif", fontSize: '16px', fontWeight: '600', color: 'rgba(138,95,60,0.6)', maxWidth: '260px', margin: 0, lineHeight: 1.5 }}>
-          Select a position to view qualifications and apply
-        </p>
-      </div>
-    )
-  }
+// ── Job Card ─────────────────────────────────────────────────────────────────
+function JobCard({ job }) {
+  const [hov, setHov] = useState(false)
   return (
-    <div style={{
-      borderRadius: '24px', border: '1.5px solid rgba(182,197,72,0.3)',
-      background: 'rgba(255,255,255,0.45)', backdropFilter: 'blur(6px)',
-      padding: 'clamp(24px,3vw,36px)',
-    }}>
-      <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: '16px', color: 'rgba(138,95,60,0.6)' }}>
-        {job.branch} · {job.location} · {job.type}
-      </span>
-      <h2 style={{
+    <Link
+      to={`/careers/${job.id}`}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        display: 'block', textDecoration: 'none',
+        background: 'rgba(255,255,255,0.08)',
+        backdropFilter: 'blur(2px)',
+        border: `1.5px solid ${hov ? 'var(--c-olive)' : 'rgba(182,197,72,0.25)'}`,
+        borderRadius: '18px',
+        padding: '24px',
+        transition: 'all 0.2s ease',
+        transform: hov ? 'translateY(-3px)' : 'translateY(0)',
+        boxShadow: hov ? '0 12px 28px rgba(58,107,53,0.10)' : 'none',
+      }}
+    >
+      <h3 style={{
         fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal',
-        fontSize: 'clamp(22px,3.5vw,28px)', color: 'var(--c-olive)',
-        textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
-        margin: '4px 0 20px', lineHeight: 1.2,
+        fontSize: 'clamp(18px,1.9vw,22px)', color: 'var(--c-olive)',
+        textShadow: '-1.5px -1.5px 0 #fff,1.5px -1.5px 0 #fff,-1.5px 1.5px 0 #fff,1.5px 1.5px 0 #fff',
+        margin: '0 0 4px', lineHeight: 1.2,
       }}>
         {job.role}
-      </h2>
-
+      </h3>
       <p style={{
-        fontFamily: "'Poppins',sans-serif", fontSize: '15px', fontWeight: '700', color: '#b6c548',
-        letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 12px',
+        fontFamily: "'Poppins',sans-serif", fontSize: 'clamp(15px,1.3vw,18px)', fontWeight: '700',
+        color: '#8A5F3C', opacity: 0.75, margin: '0 0 12px',
       }}>
-        Qualifications
+        {job.branch}
       </p>
-      <ul style={{ margin: '0 0 24px', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {job.qualifications.map((q, i) => (
-          <li key={i} style={{ display: 'flex', gap: '10px', fontFamily: "'Poppins',sans-serif", fontSize: '20px', color: '#8A5F3C', lineHeight: 1.55 }}>
-            <span style={{ color: '#b6c548', fontWeight: '900', flexShrink: 0 }}>—</span>
-            {q}
-          </li>
-        ))}
-      </ul>
-
-      <a
-        href={buildApplyUrl(job)}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          display: 'block', width: '100%', padding: '14px', textAlign: 'center',
-          background: '#b6c548', color: '#fff', textDecoration: 'none',
-          borderRadius: '999px', cursor: 'pointer',
-          fontFamily: "'Poppins',sans-serif", fontSize: '17px', fontWeight: '800',
-          transition: 'background 0.2s',
-        }}
-        onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
-        onMouseLeave={e => e.currentTarget.style.background = '#b6c548'}
-      >
-        Apply Now
-      </a>
-    </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+        <span style={{
+          display: 'inline-flex', alignItems: 'center', gap: '6px',
+          background: 'rgba(138,95,60,0.08)', borderRadius: '8px', padding: '6px 12px',
+          fontFamily: "'Poppins',sans-serif", fontSize: '13px', fontWeight: '600', color: '#8A5F3C',
+        }}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#b6c548" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          {job.location}
+        </span>
+        <span style={{
+          display: 'inline-flex', alignItems: 'center', gap: '6px',
+          background: 'rgba(182,197,72,0.15)', borderRadius: '8px', padding: '6px 12px',
+          fontFamily: "'Poppins',sans-serif", fontSize: '13px', fontWeight: '600', color: '#3a6b35',
+        }}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3a6b35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+          </svg>
+          {job.type}
+        </span>
+      </div>
+    </Link>
   )
 }
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export default function CareersPage() {
   const activeJobs = JOBS.filter(j => j.active)
-  const [selectedJob, setSelectedJob] = useState(null)
-  const splitRef = useRef(null)
+  const [region, setRegion]         = useState('')
+  const [city, setCity]             = useState('')
+  const [jobType, setJobType]       = useState('')
 
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (splitRef.current && !splitRef.current.contains(e.target)) {
-        setSelectedJob(null)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+  const regions     = useMemo(() => [...new Set(activeJobs.map(j => j.region))].sort(), [activeJobs])
+  const cities       = useMemo(() => [...new Set(activeJobs.filter(j => !region || j.region === region).map(j => j.city))].sort(), [activeJobs, region])
+  const jobTypes     = useMemo(() => [...new Set(activeJobs.map(j => j.type))].sort(), [activeJobs])
+
+  const filteredJobs = useMemo(() => activeJobs.filter(j =>
+    (!region || j.region === region) &&
+    (!city || j.city === city) &&
+    (!jobType || j.type === jobType)
+  ), [activeJobs, region, city, jobType])
+
+  const hasActiveFilters = region || city || jobType
+  const clearFilters = () => { setRegion(''); setCity(''); setJobType('') }
 
   return (
     <>
@@ -447,24 +147,13 @@ export default function CareersPage() {
 
           {/* JOB LISTINGS */}
           <div style={{ position:'relative', zIndex:1, padding:'clamp(32px,5vw,64px) clamp(16px,4vw,32px)' }}>
-            <style>{`
-              .careers-split { display:grid; grid-template-columns: 1.15fr 1fr; gap:48px; align-items:start; }
-              .careers-detail-sticky { position: sticky; top: 100px; }
-              @media (max-width: 900px) {
-                .careers-split { grid-template-columns: 1fr; }
-                .careers-detail-sticky { position: static; margin-top: 8px; }
-              }
-              @media (min-width: 768px) {
-                .careers-split { padding-left: 70px; }
-              }
-            `}</style>
-            <div style={{ margin:'0 auto' }}>
-              <div style={{ textAlign:'center', marginBottom:'48px' }}>
+            <div style={{ maxWidth:'1100px', margin:'0 auto' }}>
+              <div style={{ textAlign:'center', marginBottom:'32px' }}>
                 <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 8px', lineHeight:1.1 }}>
                   Current Openings
                 </h2>
                 <p style={{ fontFamily:"'Poppins',sans-serif", fontSize:'clamp(15px,2vw,20px)', color:'var(--c-dark)', opacity:0.7, margin:0 }}>
-                  Click a position to see qualifications and apply
+                  Filter by location, then click a position to view details and apply
                 </p>
               </div>
 
@@ -475,46 +164,59 @@ export default function CareersPage() {
                     Check back soon or <a href={buildApplyUrl({ role: 'General Application', branch: 'Head Office' })} target="_blank" rel="noopener noreferrer" style={{ color:'#b6c548' }}>send a general application</a> — we'd love to keep your profile on file.
                   </p>
                 </div>
-              ) : (() => {
-                const hqJobs    = activeJobs.filter(j => j.branch === 'Head Office')
-                const storeJobs = activeJobs.filter(j => j.branch !== 'Head Office')
-                const GroupHeading = ({ title, sub }) => (
-                  <div style={{ marginBottom:'20px' }}>
-                    <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,3.5vw,2.4rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 4px', lineHeight:1.1 }}>
-                      {title}
-                    </h3>
-                    <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'15px', color:'rgba(138,95,60,0.7)', margin:0 }}>{sub}</p>
+              ) : (
+                <>
+                  {/* Filter pills */}
+                  <div style={{ display:'flex', flexWrap:'wrap', gap:'12px', justifyContent:'center', marginBottom:'36px' }}>
+                    <FilterPill
+                      allLabel="All Locations"
+                      value={region}
+                      onChange={v => { setRegion(v); setCity('') }}
+                      options={regions}
+                      highlighted={!!region}
+                    />
+                    <FilterPill
+                      allLabel="All Cities"
+                      value={city}
+                      onChange={setCity}
+                      options={cities}
+                      highlighted={!!city}
+                    />
+                    <FilterPill
+                      allLabel="All Job Types"
+                      value={jobType}
+                      onChange={setJobType}
+                      options={jobTypes}
+                      highlighted={!!jobType}
+                    />
+                    {hasActiveFilters && (
+                      <button
+                        onClick={clearFilters}
+                        style={{
+                          background:'transparent', border:'none', cursor:'pointer',
+                          fontFamily:"'Poppins',sans-serif", fontSize:'15px', fontWeight:'700',
+                          color:'#8A5F3C', textDecoration:'underline', padding:'10px 8px',
+                        }}
+                      >
+                        Clear filters
+                      </button>
+                    )}
                   </div>
-                )
-                return (
-                  <div className="careers-split" ref={splitRef}>
-                    {/* Left — position list */}
-                    <div style={{ display:'flex', flexDirection:'column', gap:'48px' }}>
-                      {hqJobs.length > 0 && (
-                        <div>
-                          <GroupHeading title="Corporate / In-House" sub="Based at Head Office · Marikina City · Send CV to avocadoriatccc.recruitment@gmail.com" />
-                          <div style={{ display:'flex', flexDirection:'column' }}>
-                            {hqJobs.map(job => <JobListItem key={job.id} job={job} active={selectedJob?.id === job.id} onOpen={setSelectedJob} />)}
-                          </div>
-                        </div>
-                      )}
-                      {storeJobs.length > 0 && (
-                        <div>
-                          <GroupHeading title="In-Store Openings" sub="Branch-based positions · Apply directly to the branch email" />
-                          <div style={{ display:'flex', flexDirection:'column' }}>
-                            {storeJobs.map(job => <JobListItem key={job.id} job={job} active={selectedJob?.id === job.id} onOpen={setSelectedJob} />)}
-                          </div>
-                        </div>
-                      )}
-                    </div>
 
-                    {/* Right — sticky detail panel */}
-                    <div className="careers-detail-sticky">
-                      <JobDetailPanel job={selectedJob} />
+                  {/* Results grid */}
+                  {filteredJobs.length === 0 ? (
+                    <div style={{ textAlign:'center', padding:'48px 24px' }}>
+                      <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'18px', color:'rgba(138,95,60,0.7)', margin:0 }}>
+                        No positions match those filters. <button onClick={clearFilters} style={{ background:'none', border:'none', color:'#b6c548', fontWeight:'700', cursor:'pointer', fontFamily:'inherit', fontSize:'inherit', padding:0, textDecoration:'underline' }}>Clear filters</button>
+                      </p>
                     </div>
-                  </div>
-                )
-              })()}
+                  ) : (
+                    <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(320px, 1fr))', gap:'20px' }}>
+                      {filteredJobs.map(job => <JobCard key={job.id} job={job} />)}
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </div>
 
