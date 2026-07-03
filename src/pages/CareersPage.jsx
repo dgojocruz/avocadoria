@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import SEO from '@/components/ui/SEO'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -271,129 +271,135 @@ function buildApplyUrl(job) {
   return `${GOOGLE_FORM_BASE}?${params.toString()}`
 }
 
-function JobCard({ job, flipped, onFlip }) {
+function JobListItem({ job, active, onOpen }) {
+  const [hov, setHov] = useState(false)
+  const highlighted = active || hov
   return (
     <div
-      style={{ perspective: '1200px', cursor: 'pointer' }}
-      onClick={() => onFlip(flipped ? null : job.id)}
+      onClick={() => onOpen(job)}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onOpen(job) }}
+      style={{
+        display: 'flex', flexDirection: 'column', gap: '4px',
+        padding: '16px 14px',
+        background: active ? 'rgba(182,197,72,0.10)' : 'transparent',
+        borderRadius: '10px',
+        borderBottom: active ? 'none' : `1.5px solid ${hov ? 'var(--c-olive)' : 'rgba(138,95,60,0.18)'}`,
+        cursor: 'pointer',
+        transition: 'all 0.2s ease',
+      }}
     >
-      <div style={{
-        position: 'relative',
-        width: '100%',
-        aspectRatio: '3/4',
-        transformStyle: 'preserve-3d',
-        transition: 'transform 0.6s cubic-bezier(0.4,0.2,0.2,1)',
-        transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+      <span style={{
+        fontFamily: "'Poppins',sans-serif", fontSize: '13px', fontWeight: '700',
+        color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase',
       }}>
+        {job.type}
+      </span>
+      <h3 style={{
+        fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal',
+        fontSize: 'clamp(17px,1.8vw,22px)', color: 'var(--c-olive)',
+        textShadow: '-1.5px -1.5px 0 #fff,1.5px -1.5px 0 #fff,-1.5px 1.5px 0 #fff,1.5px 1.5px 0 #fff',
+        margin: 0, lineHeight: 1.3,
+      }}>
+        {job.role} <span style={{ color: 'rgba(138,95,60,0.65)', fontFamily: "'Poppins',sans-serif", fontSize: '16px', fontWeight: '600' }}>— {job.branch}, {job.location}</span>
+      </h3>
+    </div>
+  )
+}
 
-        {/* ── FRONT — poster image + title ── */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          backfaceVisibility: 'hidden',
-          borderRadius: '20px',
-          overflow: 'hidden',
-          display: 'flex', flexDirection: 'column',
-        }}>
-          {job.image && (
-            <div style={{ width: '100%', flex: 1, overflow: 'hidden' }}>
-              <img src={job.image} alt={`${job.role} - ${job.branch}`}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                loading="lazy" decoding="async"
-              />
-            </div>
-          )}
-          <div style={{ padding: '14px 4px 6px', display: 'flex', flexDirection: 'column', gap: '6px', background: 'transparent' }}>
-            <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'var(--fs-meta)', color: 'rgba(138,95,60,0.55)' }}>
-              {job.branch} · {job.location}
-            </span>
-            <h3 style={{
-              fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-              fontWeight: 'normal',
-              fontSize:   'var(--fs-h3)',
-              color:      'var(--c-olive)',
-              textShadow: '-1.5px -1.5px 0 #fff,1.5px -1.5px 0 #fff,-1.5px 1.5px 0 #fff,1.5px 1.5px 0 #fff',
-              margin:     0,
-              lineHeight: 1.2,
-            }}>
-              {job.role}
-            </h3>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', fontFamily: "'Poppins',sans-serif", fontSize: 'var(--fs-meta)', fontWeight: '700', color: '#b6c548' }}>
-              Tap to see qualifications
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#b6c548" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 12c2-4 6-4 9-4s7 0 9 4c-2 4-6 4-9 4s-7 0-9-4z"/>
-              </svg>
-            </span>
-          </div>
-        </div>
+// ── Job Detail Panel — right-hand column: qualifications + Apply Now, or empty state ──
+function JobDetailPanel({ job }) {
+  if (!job) {
+    return (
+      <div style={{
+        borderRadius: '24px', border: '1.5px solid rgba(182,197,72,0.25)',
+        background: 'rgba(255,255,255,0.45)',
+        minHeight: '420px',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        textAlign: 'center', padding: '40px 24px', overflow: 'hidden',
+      }}>
+        <svg viewBox="0 0 400 220" width="100%" style={{ maxWidth: '320px', marginBottom: '20px' }} aria-hidden="true">
+          {/* soft background blobs */}
+          <circle cx="60" cy="40" r="46" fill="#b6c548" opacity="0.10" />
+          <circle cx="340" cy="180" r="60" fill="#3a6b35" opacity="0.08" />
 
-        {/* ── BACK — qualifications + Apply Now ── */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          backfaceVisibility: 'hidden',
-          transform: 'rotateY(180deg)',
-          borderRadius: '20px',
-          overflow: 'hidden',
-          background: '#fff',
-          boxShadow: '0 8px 28px rgba(58,107,53,0.18)',
-          border: '1.5px solid rgba(182,197,72,0.3)',
-          padding: '20px',
-          display: 'flex', flexDirection: 'column',
-        }}>
-          <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: 'var(--fs-meta)', color: 'rgba(138,95,60,0.55)' }}>
-            {job.branch} · {job.location}
-          </span>
-          <h3 style={{
-            fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-            fontWeight: 'normal',
-            fontSize:   'var(--fs-h3)',
-            color:      'var(--c-olive)',
-            textShadow: '-1.5px -1.5px 0 #fff,1.5px -1.5px 0 #fff,-1.5px 1.5px 0 #fff,1.5px 1.5px 0 #fff',
-            margin:     '0 0 10px',
-            lineHeight: 1.2,
-          }}>
-            {job.role}
-          </h3>
+          {/* bubble text, slightly tilted */}
+          <g transform="rotate(-4 200 110)">
+            {/* WE ARE */}
+            <text x="200" y="70" textAnchor="middle"
+              fontFamily="'BubbleboddyNeue-ExtraBold','Poppins',sans-serif" fontWeight="normal"
+              fontSize="46" fill="#6e9414" stroke="#fff" strokeWidth="7" strokeLinejoin="round" paintOrder="stroke" letterSpacing="1">
+              WE ARE
+            </text>
+            {/* HIRING — bigger, dominant line */}
+            <text x="200" y="145" textAnchor="middle"
+              fontFamily="'BubbleboddyNeue-ExtraBold','Poppins',sans-serif" fontWeight="normal"
+              fontSize="64" fill="#6e9414" stroke="#fff" strokeWidth="8" strokeLinejoin="round" paintOrder="stroke" letterSpacing="1">
+              HIRING
+            </text>
+          </g>
 
-          <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '5px', flex: 1, overflowY: 'auto' }}>
-            {job.qualifications.map((q, i) => (
-              <li key={i} style={{ display: 'flex', gap: '8px', fontFamily: "'Poppins',sans-serif", fontSize: 'var(--fs-meta)', color: '#8A5F3C', lineHeight: 1.5 }}>
-                <span style={{ color: '#b6c548', fontWeight: '900', flexShrink: 0 }}>—</span>
-                {q}
-              </li>
-            ))}
-          </ul>
-
-          <a
-            href={buildApplyUrl(job)}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={e => e.stopPropagation()}
-            style={{
-              marginTop: '14px', width: '100%', padding: '12px', textAlign: 'center',
-              background: '#b6c548', color: '#fff', border: 'none', textDecoration: 'none',
-              borderRadius: '999px', cursor: 'pointer',
-              fontFamily: "'Poppins',sans-serif", fontSize: 'var(--fs-body)', fontWeight: '800',
-              transition: 'background 0.2s', display: 'block',
-            }}
-            onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
-            onMouseLeave={e => e.currentTarget.style.background = '#b6c548'}
-          >
-            Apply Now
-          </a>
-
-          <button
-            onClick={e => { e.stopPropagation(); onFlip(null) }}
-            style={{
-              marginTop: '8px', background: 'none', border: 'none', cursor: 'pointer',
-              fontFamily: "'Poppins',sans-serif", fontSize: 'var(--fs-meta)', fontWeight: '600',
-              color: 'rgba(138,95,60,0.6)', textAlign: 'center',
-            }}
-          >
-            ← Back
-          </button>
-        </div>
-
+          {/* avocado accent */}
+          <text x="200" y="200" textAnchor="middle" fontSize="40">🥑</text>
+        </svg>
+        <p style={{ fontFamily: "'Poppins',sans-serif", fontSize: '16px', fontWeight: '600', color: 'rgba(138,95,60,0.6)', maxWidth: '260px', margin: 0, lineHeight: 1.5 }}>
+          Select a position to view qualifications and apply
+        </p>
       </div>
+    )
+  }
+  return (
+    <div style={{
+      borderRadius: '24px', border: '1.5px solid rgba(182,197,72,0.3)',
+      background: 'rgba(255,255,255,0.45)', backdropFilter: 'blur(6px)',
+      padding: 'clamp(24px,3vw,36px)',
+    }}>
+      <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: '16px', color: 'rgba(138,95,60,0.6)' }}>
+        {job.branch} · {job.location} · {job.type}
+      </span>
+      <h2 style={{
+        fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal',
+        fontSize: 'clamp(22px,3.5vw,28px)', color: 'var(--c-olive)',
+        textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff',
+        margin: '4px 0 20px', lineHeight: 1.2,
+      }}>
+        {job.role}
+      </h2>
+
+      <p style={{
+        fontFamily: "'Poppins',sans-serif", fontSize: '15px', fontWeight: '700', color: '#b6c548',
+        letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 12px',
+      }}>
+        Qualifications
+      </p>
+      <ul style={{ margin: '0 0 24px', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        {job.qualifications.map((q, i) => (
+          <li key={i} style={{ display: 'flex', gap: '10px', fontFamily: "'Poppins',sans-serif", fontSize: '20px', color: '#8A5F3C', lineHeight: 1.55 }}>
+            <span style={{ color: '#b6c548', fontWeight: '900', flexShrink: 0 }}>—</span>
+            {q}
+          </li>
+        ))}
+      </ul>
+
+      <a
+        href={buildApplyUrl(job)}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          display: 'block', width: '100%', padding: '14px', textAlign: 'center',
+          background: '#b6c548', color: '#fff', textDecoration: 'none',
+          borderRadius: '999px', cursor: 'pointer',
+          fontFamily: "'Poppins',sans-serif", fontSize: '17px', fontWeight: '800',
+          transition: 'background 0.2s',
+        }}
+        onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
+        onMouseLeave={e => e.currentTarget.style.background = '#b6c548'}
+      >
+        Apply Now
+      </a>
     </div>
   )
 }
@@ -401,7 +407,18 @@ function JobCard({ job, flipped, onFlip }) {
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export default function CareersPage() {
   const activeJobs = JOBS.filter(j => j.active)
-  const [flippedJobId, setFlippedJobId] = useState(null)
+  const [selectedJob, setSelectedJob] = useState(null)
+  const splitRef = useRef(null)
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (splitRef.current && !splitRef.current.contains(e.target)) {
+        setSelectedJob(null)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
   return (
     <>
@@ -416,34 +433,45 @@ export default function CareersPage() {
         <div style={{ position:'relative', backgroundImage:"url('/website_layer_1.png')", backgroundSize:'1920px auto', backgroundRepeat:'repeat-y', backgroundPosition:'center top', backgroundColor:'#F3F2EE' }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           {/* HERO */}
-          <div style={{ position:'relative', zIndex:1, padding:'clamp(40px,7vw,80px) clamp(16px,4vw,32px) clamp(32px,5vw,60px)', textAlign:'center' }}>
+          <div style={{ position:'relative', zIndex:1, padding:'clamp(64px,10vw,120px) clamp(16px,4vw,32px) clamp(32px,5vw,60px)', textAlign:'center' }}>
             <span style={{ display:'inline-block', background:'#b6c548', color:'#fff', fontSize:'11px', fontWeight:'700', padding:'4px 14px', borderRadius:'999px', fontFamily:'Poppins,sans-serif', letterSpacing:'0.08em', textTransform:'uppercase', marginBottom:'20px' }}>
               {activeJobs.length} Opening{activeJobs.length !== 1 ? 's' : ''} Available
             </span>
             <h1 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', lineHeight:1.1, margin:'0 0 16px' }}>
               Join the <span style={{ color:'#b6c548' }}>Avocadoria</span> Family
             </h1>
-            <p style={{ fontFamily:"'Poppins',sans-serif", fontSize:'clamp(13px,1.3vw,15px)', color:'var(--c-dark)', opacity:0.7, maxWidth:'560px', margin:'0 auto' }}>
+            <p style={{ fontFamily:"'Poppins',sans-serif", fontSize:'clamp(15px,2vw,20px)', color:'var(--c-dark)', opacity:0.7, maxWidth:'560px', margin:'0 auto' }}>
               Be part of a joyful, growing team that's spreading happiness in avocado across the Philippines. We're looking for passionate, energetic crew members to join us!
             </p>
           </div>
 
           {/* JOB LISTINGS */}
           <div style={{ position:'relative', zIndex:1, padding:'clamp(32px,5vw,64px) clamp(16px,4vw,32px)' }}>
+            <style>{`
+              .careers-split { display:grid; grid-template-columns: 1.15fr 1fr; gap:48px; align-items:start; }
+              .careers-detail-sticky { position: sticky; top: 100px; }
+              @media (max-width: 900px) {
+                .careers-split { grid-template-columns: 1fr; }
+                .careers-detail-sticky { position: static; margin-top: 8px; }
+              }
+              @media (min-width: 768px) {
+                .careers-split { padding-left: 70px; }
+              }
+            `}</style>
             <div style={{ margin:'0 auto' }}>
               <div style={{ textAlign:'center', marginBottom:'48px' }}>
                 <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 8px', lineHeight:1.1 }}>
                   Current Openings
                 </h2>
-                <p style={{ fontFamily:"'Poppins',sans-serif", fontSize:'clamp(13px,1.3vw,15px)', color:'var(--c-dark)', opacity:0.7, margin:0 }}>
-                  Tap a card to see qualifications · Click Apply Now to send your CV
+                <p style={{ fontFamily:"'Poppins',sans-serif", fontSize:'clamp(15px,2vw,20px)', color:'var(--c-dark)', opacity:0.7, margin:0 }}>
+                  Click a position to see qualifications and apply
                 </p>
               </div>
 
               {activeJobs.length === 0 ? (
                 <div style={{ textAlign:'center', padding:'64px 24px' }}>
                   <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize:'22px', fontWeight:'normal', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin:'0 0 8px' }}>No openings right now</h3>
-                  <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'14px', color:'rgba(138,95,60,0.7)', maxWidth:'380px', margin:'0 auto' }}>
+                  <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'18px', color:'rgba(138,95,60,0.7)', maxWidth:'380px', margin:'0 auto' }}>
                     Check back soon or <a href={buildApplyUrl({ role: 'General Application', branch: 'Head Office' })} target="_blank" rel="noopener noreferrer" style={{ color:'#b6c548' }}>send a general application</a> — we'd love to keep your profile on file.
                   </p>
                 </div>
@@ -451,31 +479,39 @@ export default function CareersPage() {
                 const hqJobs    = activeJobs.filter(j => j.branch === 'Head Office')
                 const storeJobs = activeJobs.filter(j => j.branch !== 'Head Office')
                 const GroupHeading = ({ title, sub }) => (
-                  <div style={{ marginBottom:'28px' }}>
-                    <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(2.4rem,6vw,4rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 4px', lineHeight:1.1 }}>
+                  <div style={{ marginBottom:'20px' }}>
+                    <h3 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,3.5vw,2.4rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin:'0 0 4px', lineHeight:1.1 }}>
                       {title}
                     </h3>
-                    <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'13px', color:'rgba(138,95,60,0.7)', margin:0 }}>{sub}</p>
+                    <p style={{ fontFamily:'Poppins,sans-serif', fontSize:'15px', color:'rgba(138,95,60,0.7)', margin:0 }}>{sub}</p>
                   </div>
                 )
                 return (
-                  <div style={{ display:'flex', flexDirection:'column', gap:'64px' }}>
-                    {hqJobs.length > 0 && (
-                      <div>
-                        <GroupHeading title="Corporate / In-House" sub="Based at Head Office · Marikina City · Send CV to avocadoriatccc.recruitment@gmail.com" />
-                        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(360px, 1fr))', gap:'32px' }}>
-                          {hqJobs.map(job => <JobCard key={job.id} job={job} flipped={flippedJobId === job.id} onFlip={setFlippedJobId} />)}
+                  <div className="careers-split" ref={splitRef}>
+                    {/* Left — position list */}
+                    <div style={{ display:'flex', flexDirection:'column', gap:'48px' }}>
+                      {hqJobs.length > 0 && (
+                        <div>
+                          <GroupHeading title="Corporate / In-House" sub="Based at Head Office · Marikina City · Send CV to avocadoriatccc.recruitment@gmail.com" />
+                          <div style={{ display:'flex', flexDirection:'column' }}>
+                            {hqJobs.map(job => <JobListItem key={job.id} job={job} active={selectedJob?.id === job.id} onOpen={setSelectedJob} />)}
+                          </div>
                         </div>
-                      </div>
-                    )}
-                    {storeJobs.length > 0 && (
-                      <div>
-                        <GroupHeading title="In-Store Openings" sub="Branch-based positions · Apply directly to the branch email" />
-                        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(360px, 1fr))', gap:'32px' }}>
-                          {storeJobs.map(job => <JobCard key={job.id} job={job} flipped={flippedJobId === job.id} onFlip={setFlippedJobId} />)}
+                      )}
+                      {storeJobs.length > 0 && (
+                        <div>
+                          <GroupHeading title="In-Store Openings" sub="Branch-based positions · Apply directly to the branch email" />
+                          <div style={{ display:'flex', flexDirection:'column' }}>
+                            {storeJobs.map(job => <JobListItem key={job.id} job={job} active={selectedJob?.id === job.id} onOpen={setSelectedJob} />)}
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
+
+                    {/* Right — sticky detail panel */}
+                    <div className="careers-detail-sticky">
+                      <JobDetailPanel job={selectedJob} />
+                    </div>
                   </div>
                 )
               })()}
@@ -483,10 +519,10 @@ export default function CareersPage() {
           </div>
 
           {/* WHY JOIN US */}
-          <div style={{ position:'relative', zIndex:1, padding:'clamp(32px,5vw,64px) clamp(16px,4vw,32px)' }}>
-            <div style={{ maxWidth:'1000px', margin:'0 auto', textAlign:'center' }}>
-              <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 40px', lineHeight:1.1 }}>Why Work With Us?</h2>
-              <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(180px, 1fr))', gap:'20px' }}>
+          <div style={{ position:'relative', zIndex:1, padding:'clamp(32px,6vw,72px) clamp(16px,4vw,32px)', textAlign:'center' }}>
+            <div style={{ maxWidth:'1400px', margin:'0 auto' }}>
+              <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 48px', lineHeight:1.1 }}>Why Work With Us?</h2>
+              <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:'20px' }}>
                 {[
                   { title:'Growth',    desc:'Learn and grow with a fast-expanding brand' },
                   { title:'Community', desc:'Be part of a joyful, supportive team' },
@@ -494,9 +530,23 @@ export default function CareersPage() {
                   { title:'Training',  desc:'Full training provided — no experience required' },
                   { title:'Purpose',   desc:'Support local farmers and communities' },
                 ].map((w, i) => (
-                  <div key={i} style={{ background:'rgba(255,255,255,0.08)', borderRadius:'16px', padding:'24px 16px' }}>
-                    <div style={{ fontFamily:'Poppins,sans-serif', fontSize:'15px', fontWeight:'800', color:'#3a6b35', marginBottom:'8px', textShadow:'-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff', letterSpacing:'0.04em', textTransform:'uppercase' }}>{w.title}</div>
-                    <div style={{ fontFamily:'Poppins,sans-serif', fontSize:'15px', fontWeight:'600', color:'#8A5F3C', lineHeight:'1.55', textShadow:'0 1px 0 rgba(255,255,255,0.9)' }}>{w.desc}</div>
+                  <div key={i} style={{
+                    background: 'rgba(255,255,255,0.08)',
+                    borderRadius: '20px',
+                    padding: '32px 20px',
+                    backdropFilter: 'blur(2px)',
+                  }}>
+                    <div style={{
+                      fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: 'clamp(18px,1.9vw,22px)', fontWeight: 'normal',
+                      color: '#b6c548', letterSpacing: '0.04em',
+                      marginBottom: '14px',
+                      textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
+                    }}>{w.title}</div>
+                    <div style={{
+                      fontFamily: 'Poppins,sans-serif', fontSize: 'clamp(15px,1.3vw,18px)', fontWeight: '500',
+                      color: '#8A5F3C', lineHeight: '1.6',
+                      textShadow: '0 1px 0 rgba(255,255,255,0.9)',
+                    }}>{w.desc}</div>
                   </div>
                 ))}
               </div>
@@ -507,14 +557,14 @@ export default function CareersPage() {
           <div style={{ position:'relative', zIndex:1, padding:'clamp(32px,5vw,64px) clamp(16px,4vw,32px)', textAlign:'center' }}>
             <div style={{ maxWidth:'560px', margin:'0 auto' }}>
               <h2 style={{ fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight:'normal', fontSize:'clamp(1.6rem,4vw,2.8rem)', color:'var(--c-olive)', textShadow:'-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff,0 -2px 0 #fff,0 2px 0 #fff', margin:'0 0 10px', lineHeight:1.1 }}>Don't see your branch?</h2>
-              <p style={{ fontFamily:"'Poppins',sans-serif", fontSize:'clamp(13px,1.3vw,15px)', color:'var(--c-dark)', opacity:0.7, lineHeight:'1.7', margin:'0 0 24px' }}>
+              <p style={{ fontFamily:"'Poppins',sans-serif", fontSize:'clamp(15px,2vw,20px)', color:'var(--c-dark)', opacity:0.7, lineHeight:'1.7', margin:'0 0 24px' }}>
                 Send your CV to our general recruitment inbox and we'll keep your profile on file for future openings.
               </p>
               <a
                 href={buildApplyUrl({ role: 'General Application', branch: 'Head Office' })}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ display:'inline-block', background:'#b6c548', color:'#fff', padding:'13px 32px', borderRadius:'999px', fontFamily:'Poppins,sans-serif', fontSize:'15px', fontWeight:'800', textDecoration:'none', transition:'background 0.2s' }}
+                style={{ display:'inline-block', background:'#b6c548', color:'#fff', padding:'14px 32px', borderRadius:'999px', fontFamily:'Poppins,sans-serif', fontSize:'17px', fontWeight:'800', textDecoration:'none', transition:'background 0.2s' }}
                 onMouseEnter={e => e.currentTarget.style.background = '#3a6b35'}
                 onMouseLeave={e => e.currentTarget.style.background = '#b6c548'}
               >
@@ -527,7 +577,6 @@ export default function CareersPage() {
 
       </div>
 
-      {/* ── Apply Modal ── */}
     </>
   )
 }

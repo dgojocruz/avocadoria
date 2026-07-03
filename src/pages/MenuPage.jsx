@@ -101,6 +101,12 @@ function ProductCard({ item }) {
           color:'#5a3a1a', opacity:1,
           margin:0, flex:1,
         }}>{item.desc}</p>
+        <p style={{
+          fontFamily:'Poppins,sans-serif',
+          fontSize:'12px', fontWeight:'600',
+          color:'#3a6b35', opacity:0.75,
+          margin:0,
+        }}>*Standard price for NCR only</p>
       </div>
     </div>
   )

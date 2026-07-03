@@ -47,7 +47,7 @@ const SOCIAL_LINKS = [
 // Column heading — keep existing brand style
 const COL_LABEL = {
   fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-  fontSize: '13px', fontWeight: 'normal',
+  fontSize: '15px', fontWeight: 'normal',
   color: '#b6c548',
   textShadow: '-1px -1px 0 #fff,1px -1px 0 #fff,-1px 1px 0 #fff,1px 1px 0 #fff',
   letterSpacing: '0.08em', textTransform: 'uppercase',
@@ -63,7 +63,7 @@ function QuickLinks() {
     <nav aria-label="Footer navigation">
       {PINNED_LINKS.map(({ label, to }) => (
         <NavLink key={to} to={to} end={to === '/'} className="footer-ql-link"
-          style={({ isActive }) => ({ color: isActive ? '#fff' : undefined, fontWeight: isActive ? '700' : '500' })}>
+          style={({ isActive }) => ({ color: isActive ? '#fff' : undefined, fontWeight: '700' })}>
           {label}
         </NavLink>
       ))}
@@ -101,7 +101,7 @@ function QuickLinks() {
         <>
           {HIDDEN_LINKS.map(({ label, to }) => (
             <NavLink key={to} to={to} className="footer-ql-link"
-              style={({ isActive }) => ({ color: isActive ? '#fff' : undefined, fontWeight: isActive ? '700' : '500' })}>
+              style={({ isActive }) => ({ color: isActive ? '#fff' : undefined, fontWeight: '700' })}>
               {label}
             </NavLink>
           ))}
@@ -166,7 +166,7 @@ export default function Footer() {
         .footer-ql-link {
           display: block;
           font-family: Poppins, sans-serif;
-          font-size: 12px; font-weight: 500;
+          font-size: 15px; font-weight: 700;
           color: #1e3d1b;
           text-decoration: none;
           padding: 3px 0;
@@ -211,15 +211,15 @@ export default function Footer() {
               }}
             />
           </Link>
-          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: '#1e3d1b', margin: 0, lineHeight: 1.5 }}>
-            Philippines' No. 1<br />avocado dessert brand
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#1e3d1b', margin: 0, lineHeight: 1.5 }}>
+            Philippines' No. 1 avocado dessert brand
           </p>
         </div>
 
         {/* Col 2 — About + Social */}
         <div>
           <p style={COL_LABEL}>About</p>
-          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#1e3d1b', lineHeight: 1.65, margin: '0 0 12px' }}>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '700', color: '#1e3d1b', lineHeight: 1.65, margin: '0 0 12px' }}>
             Bringing happiness in every cup since 2019.
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -235,9 +235,8 @@ export default function Footer() {
         {/* Col 3 — Headquarters */}
         <div>
           <p style={COL_LABEL}>Headquarters</p>
-          <address style={{ fontStyle: 'normal', fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#1e3d1b', lineHeight: 1.7 }}>
-            4th Floor, RC Buenviaje Bldg.<br />
-            Gil Fernando, Marikina City<br />
+          <address style={{ fontStyle: 'normal', fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '700', color: '#1e3d1b', lineHeight: 1.7 }}>
+            4th Floor, RC Buenviaje Bldg., Gil Fernando, Marikina City &nbsp;·&nbsp;
             <a href="mailto:official@avocadoria.com.ph"
               style={{ color: '#fff', textDecoration: 'none', fontWeight: '700' }}>
               official@avocadoria.com.ph
@@ -260,10 +259,7 @@ export default function Footer() {
             onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
           >
             <img src="/dpo-registered-transparent.png" alt="NPC DPO/DPS Registered"
-              style={{ height: '72px', width: 'auto', objectFit: 'contain' }} />
-            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '9px', color: '#1e3d1b', fontWeight: '600', textAlign: 'center', maxWidth: '90px', lineHeight: 1.4 }}>
-              Registered DPO/DPS
-            </span>
+              style={{ height: '110px', width: 'auto', objectFit: 'contain' }} />
           </a>
         </div>
 
@@ -271,7 +267,7 @@ export default function Footer() {
 
       {/* Copyright bar */}
       <div style={{ borderTop: '1px solid rgba(30,61,27,0.15)', padding: '10px 20px', textAlign: 'center' }}>
-        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: 'rgba(30,61,27,0.6)', margin: 0 }}>
+        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: 'rgba(30,61,27,0.6)', margin: 0 }}>
           © {year} Avocadoria. All Rights Reserved.
         </p>
       </div>

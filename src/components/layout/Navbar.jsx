@@ -31,7 +31,7 @@ const NAV_LINKS = [
 const NAV_STYLE = {
   colorDefault:     '#8A5F3C',
   colorActive:      '#b6c548',
-  fontSize:         'clamp(17px, 1.6vw, 21px)',
+  fontSize:         'clamp(22px, 1.9vw, 26px)',
   fontWeight:       '700',
   letterSpacing:    '0.02em',
   glowColor:        'rgba(182,197,72,0.55)',

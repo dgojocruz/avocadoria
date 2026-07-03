@@ -175,7 +175,7 @@ function CartSlideshow({ onInquire }) {
           </h2>
           <p style={{
             fontFamily: 'Poppins,sans-serif',
-            fontSize: '16px', color: '#8A5F3C',
+            fontSize: '20px', color: '#8A5F3C',
             opacity: 0.7, margin: '0 0 24px',
           }}>
             Store Size: <strong>{cart.size}</strong>
@@ -184,7 +184,7 @@ function CartSlideshow({ onInquire }) {
           {/* Highlights */}
           <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {cart.highlights.map((h, i) => (
-              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontFamily: 'Poppins,sans-serif', fontSize: '17px', color: '#8A5F3C' }}>
+              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: '#8A5F3C' }}>
                 <span style={{ width: '22px', height: '22px', borderRadius: '50%', background: cart.color, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', fontWeight: '700', flexShrink: 0, marginTop: '2px' }}>✓</span>
                 {h}
               </li>
@@ -199,7 +199,7 @@ function CartSlideshow({ onInquire }) {
               display: 'inline-flex', alignItems: 'center', gap: '8px',
               background: cart.color, color: '#fff',
               padding: '14px 32px', borderRadius: '999px',
-              fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '700',
+              fontFamily: 'Poppins,sans-serif', fontSize: '17px', fontWeight: '700',
               textDecoration: 'none', transition: 'opacity 0.2s',
             }}
             onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
@@ -280,10 +280,10 @@ function InquiryForm({ preselectedFormat }) {
   }
 
   const inputStyle = {
-    width: '100%', padding: '12px 16px',
+    width: '100%', padding: '14px 16px',
     border: '1.5px solid rgba(182,197,72,0.35)',
     borderRadius: '12px', background: 'rgba(255,255,255,0.7)',
-    fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C',
+    fontFamily: 'Poppins,sans-serif', fontSize: '17px', color: '#8A5F3C',
     outline: 'none', transition: 'border-color 0.2s',
     boxSizing: 'border-box',
   }
@@ -293,7 +293,7 @@ function InquiryForm({ preselectedFormat }) {
       <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '26px', color: '#b6c548', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff', marginBottom: '8px' }}>
         Thank you for your interest!
       </h3>
-      <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', maxWidth: '400px', margin: '0 auto' }}>
+      <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: '#8A5F3C', maxWidth: '400px', margin: '0 auto' }}>
         Our franchise team will reach out to you within 3–5 business days. Let's spread happiness in avocado together!
       </p>
     </div>
@@ -303,14 +303,14 @@ function InquiryForm({ preselectedFormat }) {
     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <div className="cart-form-row">
         <div>
-          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Full Name *</label>
+          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Full Name *</label>
           <input required value={form.name} onChange={set('name')} placeholder="Juan dela Cruz" style={inputStyle}
             onFocus={e => e.target.style.borderColor = '#b6c548'}
             onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
           />
         </div>
         <div>
-          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Address *</label>
+          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Address *</label>
           <input required type="email" value={form.email} onChange={set('email')} placeholder="juan@email.com" style={inputStyle}
             onFocus={e => e.target.style.borderColor = '#b6c548'}
             onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
@@ -319,14 +319,14 @@ function InquiryForm({ preselectedFormat }) {
       </div>
       <div className="cart-form-row">
         <div>
-          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Number *</label>
+          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Phone Number *</label>
           <input required value={form.phone} onChange={set('phone')} placeholder="+63 9XX XXX XXXX" style={inputStyle}
             onFocus={e => e.target.style.borderColor = '#b6c548'}
             onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
           />
         </div>
         <div>
-          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Preferred Location</label>
+          <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Preferred Location</label>
           <input value={form.location} onChange={set('location')} placeholder="City, Province" style={inputStyle}
             onFocus={e => e.target.style.borderColor = '#b6c548'}
             onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
@@ -334,7 +334,7 @@ function InquiryForm({ preselectedFormat }) {
         </div>
       </div>
       <div>
-        <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Preferred Cart Format</label>
+        <label style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '700', color: '#8A5F3C', display: 'block', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Preferred Cart Format</label>
         <select value={form.format} onChange={set('format')} style={{ ...inputStyle, cursor: 'pointer' }}
           onFocus={e => e.target.style.borderColor = '#b6c548'}
           onBlur={e => e.target.style.borderColor = 'rgba(182,197,72,0.35)'}
@@ -353,12 +353,12 @@ function InquiryForm({ preselectedFormat }) {
             onChange={e => { setForm(f => ({ ...f, consent: e.target.checked })); setError(false) }}
             style={{ marginTop: '3px', width: '16px', height: '16px', accentColor: '#b6c548', flexShrink: 0 }}
           />
-          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', lineHeight: 1.5 }}>
+          <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.5 }}>
             I have read and agree to the Data Privacy Notice, and confirm that all information provided is true and accurate. *
           </span>
         </label>
         {error && (
-          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#d9534f', marginTop: '8px' }}>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#d9534f', marginTop: '8px' }}>
             {form.consent ? 'Something went wrong sending your inquiry — please try again.' : 'Please agree to the Data Privacy Notice to continue.'}
           </p>
         )}
@@ -369,8 +369,8 @@ function InquiryForm({ preselectedFormat }) {
         style={{
           background: loading ? 'rgba(182,197,72,0.5)' : '#b6c548',
           color: '#fff', border: 'none', borderRadius: '999px',
-          padding: '14px 32px', fontFamily: 'Poppins,sans-serif',
-          fontSize: '14px', fontWeight: '800', cursor: loading ? 'not-allowed' : 'pointer',
+          padding: '16px 32px', fontFamily: 'Poppins,sans-serif',
+          fontSize: '17px', fontWeight: '800', cursor: loading ? 'not-allowed' : 'pointer',
           transition: 'background 0.2s', letterSpacing: '0.02em',
         }}
         onMouseEnter={e => { if (!loading) e.currentTarget.style.background = '#3a6b35' }}
@@ -414,7 +414,7 @@ export default function FranchisePage() {
         <section style={{
           position:'relative', overflow:'hidden',
           backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE',
-          padding: '80px 32px 48px', textAlign: 'center',
+          padding: 'clamp(64px,10vw,120px) 32px 48px', textAlign: 'center',
         }}>
           <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
           <div style={{ position:'relative', zIndex:1, maxWidth:'700px', margin:'0 auto' }}>
@@ -450,7 +450,7 @@ export default function FranchisePage() {
             <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 8px', lineHeight: 1.1 }}>
               Choose Your Format
             </h2>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: 'rgba(138,95,60,0.7)', margin: 0 }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: 'rgba(138,95,60,0.7)', margin: 0 }}>
               Four store types. One brand. Endless happiness.
             </p>
           </div>
@@ -460,11 +460,11 @@ export default function FranchisePage() {
         {/* ── WHY AVOCADORIA ── */}
         <section style={{ position:'relative', overflow:'hidden', padding:'clamp(32px,6vw,72px) clamp(16px,4vw,32px)', textAlign:'center', backgroundImage: "url('/website_layer_1.png')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundColor: '#F3F2EE' }}>
       <div style={{ position:'absolute', inset:0, zIndex:0, pointerEvents:'none', backgroundColor:'#b6c548', opacity:0.25 }} />
-          <div style={{ position:'relative', zIndex:1, maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ position:'relative', zIndex:1, maxWidth: '1400px', margin: '0 auto' }}>
             <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 48px', lineHeight: 1.1 }}>
               Why Franchise Avocadoria?
             </h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
               {[
                 { title: 'No. 1 Brand',    desc: 'Philippines\' leading avocado-based dessert brand' },
                 { title: '7+ Years',       desc: 'Proven track record and loyal customer base' },
@@ -474,18 +474,18 @@ export default function FranchisePage() {
               ].map((w, i) => (
                 <div key={i} style={{
                   background: 'rgba(255,255,255,0.08)',
-                  borderRadius: '16px',
-                  padding: '28px 20px',
+                  borderRadius: '20px',
+                  padding: '32px 20px',
                   backdropFilter: 'blur(2px)',
                 }}>
                   <div style={{
-                    fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: 'clamp(17px,1.8vw,20px)', fontWeight: 'normal',
+                    fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontSize: 'clamp(18px,1.9vw,22px)', fontWeight: 'normal',
                     color: '#b6c548', letterSpacing: '0.04em',
-                    marginBottom: '12px',
+                    marginBottom: '14px',
                     textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
                   }}>{w.title}</div>
                   <div style={{
-                    fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '500',
+                    fontFamily: 'Poppins,sans-serif', fontSize: 'clamp(15px,1.3vw,18px)', fontWeight: '500',
                     color: '#8A5F3C', lineHeight: '1.6',
                     textShadow: '0 1px 0 rgba(255,255,255,0.9)',
                   }}>{w.desc}</div>
@@ -503,7 +503,7 @@ export default function FranchisePage() {
               <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 8px', lineHeight: 1.1 }}>
                 How to Get Started
               </h2>
-              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: 'rgba(138,95,60,0.7)' }}>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: 'rgba(138,95,60,0.7)' }}>
                 From inquiry to grand opening — here's the journey.
               </p>
             </div>
@@ -516,15 +516,14 @@ export default function FranchisePage() {
                   )}
                   {/* Step number circle */}
                   <div style={{ flexShrink: 0, width: '48px', height: '48px', borderRadius: '50%', background: '#b6c548', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 1, boxShadow: '0 4px 14px rgba(182,197,72,0.35)' }}>
-                    <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', color: '#fff', letterSpacing: '0.02em' }}>{step.num}</span>
+                    <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '800', color: '#fff', letterSpacing: '0.02em' }}>{step.num}</span>
                   </div>
                   {/* Content */}
                   <div style={{ paddingTop: '10px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-                      <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em' }}>STEP {step.num}</span>
-                      <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px, 1.8vw, 20px)', color: '#b6c548', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.2 }}>{step.title}</h3>
+                      <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px, 1.8vw, 22px)', color: '#b6c548', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', margin: 0, lineHeight: 1.2 }}>{step.title}</h3>
                     </div>
-                    <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', color: 'rgba(138,95,60,0.8)', lineHeight: '1.65', margin: 0 }}>{step.desc}</p>
+                    <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: 'rgba(138,95,60,0.8)', lineHeight: '1.65', margin: 0 }}>{step.desc}</p>
                   </div>
                 </div>
               ))}
@@ -540,7 +539,7 @@ export default function FranchisePage() {
               <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.6rem,4vw,2.8rem)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff,2px -2px 0 #fff,-2px 2px 0 #fff,2px 2px 0 #fff', margin: '0 0 8px', lineHeight: 1.1 }}>
                 Ready to Join the Family?
               </h2>
-              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', opacity: 0.85 }}>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: '#8A5F3C', opacity: 0.85 }}>
                 Fill out the form below and our franchise team will get back to you within 3–5 business days.
               </p>
             </div>
@@ -560,8 +559,8 @@ export default function FranchisePage() {
                   onMouseEnter={e => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.borderColor = '#b6c548' }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.7)'; e.currentTarget.style.borderColor = 'rgba(182,197,72,0.3)' }}
                 >
-                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{c.label}</span>
-                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', textAlign: 'center', lineHeight: 1.4 }}>{c.value}</span>
+                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '700', color: '#b6c548', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{c.label}</span>
+                  <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: '#8A5F3C', textAlign: 'center', lineHeight: 1.4 }}>{c.value}</span>
                 </a>
               ))}
             </div>
@@ -569,7 +568,7 @@ export default function FranchisePage() {
             {/* Divider */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
               <div style={{ flex: 1, height: '1px', background: 'rgba(182,197,72,0.3)' }}/>
-              <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: 'rgba(138,95,60,0.6)', whiteSpace: 'nowrap' }}>or fill out the form</span>
+              <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', color: 'rgba(138,95,60,0.6)', whiteSpace: 'nowrap' }}>or fill out the form</span>
               <div style={{ flex: 1, height: '1px', background: 'rgba(182,197,72,0.3)' }}/>
             </div>
 

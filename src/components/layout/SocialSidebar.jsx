@@ -206,7 +206,7 @@ function SoundBars({ playing }) {
 // ── Brochure list — clickable rows expand to view/download ────────────────────
 const FILES = [
   { name:'B2B Franchise Brochure', meta:'PDF · 1MB',     href:'/downloads/avocadoria-b2b-brochure.pdf',     dl:'Avocadoria-B2B-Brochure.pdf' },
-  { name:'Expo 2026 Flyer',        meta:'Image · 882KB', href:'/downloads/avocadoria-expo-flyer-2026.webp', dl:'Avocadoria-Expo-Flyer-2026.webp' },
+  { name:'Expo 2026 Flyer',        meta:'Image · 529KB', href:'/downloads/avocadoria-expo-flyer-2026.webp', dl:'Avocadoria-Expo-Flyer-2026.webp' },
 ]
 
 function BrochureList() {

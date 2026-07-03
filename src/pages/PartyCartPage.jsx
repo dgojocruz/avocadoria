@@ -159,12 +159,12 @@ function BookingModal({ pkg, onClose }) {
     width: '100%', padding: '11px 14px',
     border: '1.5px solid rgba(58,107,53,0.25)',
     borderRadius: '12px', background: 'rgba(255,255,255,0.92)',
-    fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#3a6b35',
+    fontFamily: 'Poppins,sans-serif', fontSize: '17px', color: '#3a6b35',
     outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box',
     boxShadow: '0 2px 8px rgba(58,107,53,0.06)',
   }
   const labelStyle = {
-    fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700',
+    fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '700',
     color: '#3a6b35', display: 'block', marginBottom: '5px',
     textTransform: 'uppercase', letterSpacing: '0.06em',
   }
@@ -205,10 +205,10 @@ Looking forward to hearing from you!`
             <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'var(--fs-h3)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', marginBottom: '10px' }}>
               Booking inquiry sent!
             </h3>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: '#8A5F3C', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
               Facebook Messenger has opened with your booking details for <strong>{pkg.name}</strong>. Just hit send and our party team will get back to you shortly! 🥑
             </p>
-            <button onClick={onClose} style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '13px 28px', fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', cursor: 'pointer', minHeight: '44px' }}>
+            <button onClick={onClose} style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '13px 28px', fontFamily: 'Poppins,sans-serif', fontSize: '17px', fontWeight: '800', cursor: 'pointer', minHeight: '44px' }}>
               Close
             </button>
           </div>
@@ -219,14 +219,14 @@ Looking forward to hearing from you!`
                 <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px,3.5vw,21px)', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
                   {pkg.name}
                 </h2>
-                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#3a6b35', fontWeight: '600', margin: 0 }}>
+                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', color: '#3a6b35', fontWeight: '600', margin: 0 }}>
                   {pkg.size} &nbsp;·&nbsp; {pkg.selectedCups} {pkg.selectedUnit || 'cups'} &nbsp;·&nbsp; {pkg.selectedPrice}
                 </p>
               </div>
               <button onClick={onClose} style={{ background: 'rgba(58,107,53,0.08)', border: 'none', cursor: 'pointer', fontSize: '18px', color: '#3a6b35', padding: '4px', lineHeight: 1, minHeight: '36px', minWidth: '36px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%' }}>✕</button>
             </div>
             <div style={{ borderTop: '1.5px solid rgba(58,107,53,0.2)', paddingTop: '20px' }}>
-              <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '14px', color: 'var(--c-olive)', marginBottom: '16px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff' }}>
+              <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '16px', color: 'var(--c-olive)', marginBottom: '16px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff' }}>
                 Tell us about your party
               </p>
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
@@ -261,13 +261,13 @@ Looking forward to hearing from you!`
                   <textarea value={form.notes} onChange={set('notes')} rows={3} placeholder="Toppings, add-ons, theme notes..." style={{ ...inputStyle, resize: 'vertical' }}
                     onFocus={e => e.target.style.borderColor='#b6c548'} onBlur={e => e.target.style.borderColor='rgba(182,197,72,0.35)'} /></div>
                 <button type="submit"
-                  style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 24px', fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '800', cursor: 'pointer', transition: 'background 0.2s', minHeight: '48px' }}
+                  style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 24px', fontFamily: 'Poppins,sans-serif', fontSize: '17px', fontWeight: '800', cursor: 'pointer', transition: 'background 0.2s', minHeight: '48px' }}
                   onMouseEnter={e => e.currentTarget.style.background='#3a6b35'}
                   onMouseLeave={e => e.currentTarget.style.background='#b6c548'}
                 >
                   Send Booking Inquiry
                 </button>
-                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: '#3a6b35', opacity: 0.75, textAlign: 'center', margin: 0 }}>
+                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#3a6b35', opacity: 0.75, textAlign: 'center', margin: 0 }}>
                   This will open Facebook Messenger with your details pre-filled. Just hit send! 💬
                 </p>
               </form>
@@ -294,12 +294,12 @@ function CustomQuoteModal({ onClose }) {
     width: '100%', padding: '11px 14px',
     border: '1.5px solid rgba(58,107,53,0.25)',
     borderRadius: '12px', background: 'rgba(255,255,255,0.92)',
-    fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#3a6b35',
+    fontFamily: 'Poppins,sans-serif', fontSize: '17px', color: '#3a6b35',
     outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box',
     boxShadow: '0 2px 8px rgba(58,107,53,0.06)',
   }
   const labelStyle = {
-    fontFamily: 'Poppins,sans-serif', fontSize: '11px', fontWeight: '700',
+    fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '700',
     color: '#3a6b35', display: 'block', marginBottom: '5px',
     textTransform: 'uppercase', letterSpacing: '0.06em',
   }
@@ -347,10 +347,10 @@ Looking forward to hearing from you!`
             <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'var(--fs-h3)', color: 'var(--c-olive)', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', marginBottom: '10px' }}>
               Quote request sent!
             </h3>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#3a6b35', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: '#3a6b35', lineHeight: 1.6, maxWidth: '360px', margin: '0 auto 24px' }}>
               Facebook Messenger has opened with your custom inquiry. Just hit send and our party team will get back to you shortly! 🥑
             </p>
-            <button onClick={onClose} style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '13px 28px', fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', cursor: 'pointer', minHeight: '44px' }}>
+            <button onClick={onClose} style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '13px 28px', fontFamily: 'Poppins,sans-serif', fontSize: '17px', fontWeight: '800', cursor: 'pointer', minHeight: '44px' }}>
               Close
             </button>
           </div>
@@ -362,7 +362,7 @@ Looking forward to hearing from you!`
                 <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(18px,3.5vw,22px)', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
                   Custom Quote
                 </h2>
-                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#3a6b35', fontWeight: '600', margin: 0 }}>
+                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', color: '#3a6b35', fontWeight: '600', margin: 0 }}>
                   Tell us what you have in mind — we will build it for you.
                 </p>
               </div>
@@ -373,7 +373,7 @@ Looking forward to hearing from you!`
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
 
                 {/* Section — Contact */}
-                <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '14px', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff' }}>
+                <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '16px', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff' }}>
                   Your details
                 </p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
@@ -395,7 +395,7 @@ Looking forward to hearing from you!`
                 <div style={{ height: '1px', background: 'rgba(58,107,53,0.12)' }} />
 
                 {/* Section — Event */}
-                <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '14px', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff' }}>
+                <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '16px', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff' }}>
                   Event details
                 </p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
@@ -417,7 +417,7 @@ Looking forward to hearing from you!`
                 <div style={{ height: '1px', background: 'rgba(58,107,53,0.12)' }} />
 
                 {/* Section — Custom requirements */}
-                <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '14px', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff' }}>
+                <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '16px', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff' }}>
                   Custom requirements
                 </p>
                 <div>
@@ -447,13 +447,13 @@ Looking forward to hearing from you!`
 
                 <button
                   type="submit"
-                  style={{ background: '#3a6b35', color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 24px', fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '800', cursor: 'pointer', transition: 'background 0.2s', minHeight: '48px' }}
+                  style={{ background: '#3a6b35', color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 24px', fontFamily: 'Poppins,sans-serif', fontSize: '17px', fontWeight: '800', cursor: 'pointer', transition: 'background 0.2s', minHeight: '48px' }}
                   onMouseEnter={e => e.currentTarget.style.background='#b6c548'}
                   onMouseLeave={e => e.currentTarget.style.background='#3a6b35'}
                 >
                   Send Custom Quote Request
                 </button>
-                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '11px', color: '#3a6b35', opacity: 0.75, textAlign: 'center', margin: 0 }}>
+                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#3a6b35', opacity: 0.75, textAlign: 'center', margin: 0 }}>
                   This opens your email app with your details pre-filled. We respond within 24–48 hours.
                 </p>
               </form>
@@ -487,7 +487,7 @@ function PackageCard({ pkg, onBook }) {
     border: 'none',
     cursor: 'pointer',
     fontFamily: 'Poppins,sans-serif',
-    fontSize: '13px',
+    fontSize: '15px',
     fontWeight: '700',
     transition: 'all 0.18s',
     background: active ? color : 'transparent',
@@ -519,7 +519,7 @@ function PackageCard({ pkg, onBook }) {
 
         {/* ── Cup toggle ── */}
         <div style={{ marginBottom: '16px' }}>
-          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 8px' }}>
+          <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 8px' }}>
             {`Choose your ${unit}`}
           </p>
           <div style={{ display: 'flex', gap: '6px', background: 'rgba(182,197,72,0.1)', borderRadius: '999px', padding: '4px' }}>
@@ -541,12 +541,12 @@ function PackageCard({ pkg, onBook }) {
             {tier.price === 'Get a Quote' ? 'Get a Quote' : isTBA ? 'Price TBA' : tier.price}
           </span>
           {!isTBA && (
-            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', opacity: 0.7 }}>
+            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', opacity: 0.7 }}>
               {`starts at · ${cups} ${unit}`}
             </span>
           )}
           {isTBA && (
-            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', opacity: 0.7 }}>
+            <span style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', opacity: 0.7 }}>
               {`· ${cups} ${unit} — contact us`}
             </span>
           )}
@@ -559,12 +559,12 @@ function PackageCard({ pkg, onBook }) {
         <div style={{ display: 'flex', gap: '14px', alignItems: 'stretch', marginBottom: '12px' }}>
           {/* Left — inclusions (serving updates dynamically) */}
           <div style={{ flex: 1, minWidth: 0 }}>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 8px' }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 8px' }}>
               Inclusions
             </p>
             <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '5px' }}>
               {inclusions.map((item, i) => (
-                <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.4 }}>
+                <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: '#8A5F3C', lineHeight: 1.4 }}>
                   <span style={{ color: 'var(--c-olive)', fontWeight: '900', flexShrink: 0, fontSize: '12px', marginTop: '2px' }}>—</span>
                   {item}
                 </li>
@@ -589,7 +589,7 @@ function PackageCard({ pkg, onBook }) {
         {/* Add-ons toggle */}
         <button
           onClick={() => setOpen(o => !o)}
-          style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 0', fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', color: '#8A5F3C', opacity: 0.7, letterSpacing: '0.04em', minHeight: '36px' }}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 0', fontFamily: 'Poppins,sans-serif', fontSize: '15px', fontWeight: '700', color: '#8A5F3C', opacity: 0.7, letterSpacing: '0.04em', minHeight: '36px' }}
         >
           <span style={{ transform: open ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s', display: 'inline-block', fontSize: '10px' }}>▶</span>
           ADD-ONS
@@ -597,7 +597,7 @@ function PackageCard({ pkg, onBook }) {
         {open && (
           <ul style={{ margin: '4px 0 8px', padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '4px' }}>
             {pkg.addons.map((item, i) => (
-              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.45, opacity: 0.85 }}>
+              <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: '#8A5F3C', lineHeight: 1.45, opacity: 0.85 }}>
                 <span style={{ color: '#b6c548', flexShrink: 0 }}>+</span>
                 {item}
               </li>
@@ -606,7 +606,7 @@ function PackageCard({ pkg, onBook }) {
         )}
 
         {/* Note */}
-        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', color: '#8A5F3C', opacity: 0.5, lineHeight: 1.5, margin: '8px 0 0', fontStyle: 'italic' }}>
+        <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', opacity: 0.5, lineHeight: 1.5, margin: '8px 0 0', fontStyle: 'italic' }}>
           {pkg.note}
         </p>
       </div>
@@ -615,7 +615,7 @@ function PackageCard({ pkg, onBook }) {
       <div style={{ padding: '20px 24px 24px' }}>
         <button
           onClick={() => onBook({ ...pkg, selectedCups: cups, selectedUnit: unit, selectedPrice: tier.price, selectedServing: tier.serving })}
-          style={{ width: '100%', background: pkg.color, color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 20px', fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '800', cursor: 'pointer', transition: 'background 0.15s, transform 0.15s', minHeight: '52px', letterSpacing: '0.02em' }}
+          style={{ width: '100%', background: pkg.color, color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 20px', fontFamily: 'Poppins,sans-serif', fontSize: '17px', fontWeight: '800', cursor: 'pointer', transition: 'background 0.15s, transform 0.15s', minHeight: '52px', letterSpacing: '0.02em' }}
           onMouseEnter={e => { e.currentTarget.style.background='#3a6b35'; e.currentTarget.style.transform='scale(0.98)' }}
           onMouseLeave={e => { e.currentTarget.style.background=pkg.color; e.currentTarget.style.transform='scale(1)' }}
         >
@@ -685,12 +685,12 @@ export default function PartyCartPage() {
                 Bring the Party<br />
                 <em style={{ color: '#b6c548', fontStyle: 'normal' }}>to You!</em>
               </h1>
-              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: 'clamp(13px,3vw,15px)', color: '#8A5F3C', maxWidth: '500px', margin: '0 0 32px', lineHeight: 1.7 }}>
+              <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: 'clamp(15px,3.5vw,20px)', color: '#8A5F3C', maxWidth: '500px', margin: '0 0 32px', lineHeight: 1.7 }}>
                 Make your next celebration unforgettable with an Avocadoria Party Cart. We set up, serve, and bring the good vibes — you just enjoy the moment.
               </p>
               <button
                 onClick={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
-                style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 32px', fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '800', cursor: 'pointer', boxShadow: '0 4px 18px rgba(182,197,72,0.4)', transition: 'all 0.15s', minHeight: '48px', marginBottom: '48px', letterSpacing: '0.02em' }}
+                style={{ background: '#b6c548', color: '#fff', border: 'none', borderRadius: '999px', padding: '14px 32px', fontFamily: 'Poppins,sans-serif', fontSize: '17px', fontWeight: '800', cursor: 'pointer', boxShadow: '0 4px 18px rgba(182,197,72,0.4)', transition: 'all 0.15s', minHeight: '48px', marginBottom: '48px', letterSpacing: '0.02em' }}
                 onMouseEnter={e => e.currentTarget.style.background='#3a6b35'}
                 onMouseLeave={e => e.currentTarget.style.background='#b6c548'}
               >
@@ -731,9 +731,9 @@ export default function PartyCartPage() {
           <div className="pc-steps-grid">
             {STEPS.map((s) => (
               <div key={s.num} style={{ background: 'transparent', borderRadius: '16px', border: '1.5px solid rgba(182,197,72,0.35)', padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
-                <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', marginBottom: '10px' }}>{s.num}</div>
-                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px,1.8vw,20px)', color: 'var(--c-olive)', margin: '0 0 10px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>{s.title}</h3>
-                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', lineHeight: 1.65, margin: 0 }}>{s.desc}</p>
+                <div style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '700', color: '#b6c548', letterSpacing: '0.08em', marginBottom: '10px' }}>{s.num}</div>
+                <h3 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(17px,1.8vw,22px)', color: 'var(--c-olive)', margin: '0 0 10px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>{s.title}</h3>
+                <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: '#8A5F3C', lineHeight: 1.65, margin: 0 }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -749,7 +749,7 @@ export default function PartyCartPage() {
             <h2 style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(1.4rem,5vw,2rem)', color: 'var(--c-olive)', margin: '0 0 10px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff' }}>
               Pick your celebration flavour
             </h2>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '13px', color: '#8A5F3C', margin: 0, opacity: 0.8 }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: '#8A5F3C', margin: 0, opacity: 0.8 }}>
               All packages include 100 cups, 5-hour serving, 2 uniformed staff, and transportation. Select 50 cups for a smaller celebration.
             </p>
           </div>
@@ -762,13 +762,13 @@ export default function PartyCartPage() {
 
           {/* Custom quote CTA */}
           <div style={{ marginTop: '48px', background: 'transparent', borderRadius: '20px', border: '1.5px solid rgba(182,197,72,0.35)', padding: '28px 32px', textAlign: 'center' }}>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '14px', fontWeight: '700', color: '#3a6b35', margin: '0 0 6px' }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '700', color: '#3a6b35', margin: '0 0 6px' }}>
               Need something custom?
             </p>
-            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', margin: '0 0 16px', lineHeight: 1.6, opacity: 0.85 }}>
+            <p style={{ fontFamily: 'Poppins,sans-serif', fontSize: '20px', color: '#8A5F3C', margin: '0 0 16px', lineHeight: 1.6, opacity: 0.85 }}>
               Different flavour, cup count, or event setup? Reach out and we will build a package just for you.
             </p>
-            <button onClick={() => setShowQuote(true)} style={{ display: 'inline-flex', alignItems: 'center', background: '#3a6b35', color: '#fff', border: 'none', borderRadius: '999px', padding: '12px 28px', fontFamily: 'Poppins,sans-serif', fontSize: '13px', fontWeight: '700', cursor: 'pointer', minHeight: '44px', letterSpacing: '0.02em', transition: 'background 0.2s' }}
+            <button onClick={() => setShowQuote(true)} style={{ display: 'inline-flex', alignItems: 'center', background: '#3a6b35', color: '#fff', border: 'none', borderRadius: '999px', padding: '12px 28px', fontFamily: 'Poppins,sans-serif', fontSize: '16px', fontWeight: '700', cursor: 'pointer', minHeight: '44px', letterSpacing: '0.02em', transition: 'background 0.2s' }}
               onMouseEnter={e => e.currentTarget.style.background='#b6c548'}
               onMouseLeave={e => e.currentTarget.style.background='#3a6b35'}
             >
@@ -781,10 +781,10 @@ export default function PartyCartPage() {
       {/* ── Bottom strip ── */}
       <section style={{ ...TEXTURE, padding: '32px var(--sp-md)', textAlign: 'center' }}>
         <div style={OVERLAY} />
-        <p style={{ ...INNER, fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(14px,3vw,18px)', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', display: 'block' }}>
+        <p style={{ ...INNER, fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: 'clamp(18px,4vw,24px)', color: 'var(--c-olive)', margin: '0 0 6px', textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff', display: 'block' }}>
           Happiness in avocado — delivered to your party.
         </p>
-        <p style={{ ...INNER, fontFamily: 'Poppins,sans-serif', fontSize: '12px', color: '#8A5F3C', margin: 0, opacity: 0.6, display: 'block' }}>
+        <p style={{ ...INNER, fontFamily: 'Poppins,sans-serif', fontSize: '15px', color: '#8A5F3C', margin: 0, opacity: 0.6, display: 'block' }}>
           official@avocadoria.com.ph &nbsp;·&nbsp; Prices are subject to change without prior notice.
         </p>
       </section>
