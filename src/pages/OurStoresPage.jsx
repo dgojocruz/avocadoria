@@ -181,8 +181,38 @@ export default function OurStoresPage() {
   const showResults = phase === 'results' || search.length > 0
   const showMap = showResults
 
+  // The hero search input and the results search input are separate DOM nodes.
+  // The instant showResults flips true (first keystroke), React swaps one
+  // input for the other and the new node isn't focused — so every keystroke
+  // after the first silently drops until the user clicks back into the field.
+  // Refocus the (new) input and put the caret at the end whenever we land on
+  // the results view, so typing feels continuous instead of "jumping".
   useEffect(() => {
-    if (!mapReady || !showMap || !mapRef.current || leafletRef.current) return
+    if (!showResults) return
+    const el = searchRef.current
+    if (!el) return
+    el.focus()
+    const len = el.value.length
+    el.setSelectionRange(len, len)
+  }, [showResults])
+
+  useEffect(() => {
+    // The results section (and the map DOM node inside it) unmounts whenever
+    // showMap goes false (e.g. hitting "Back"). When that happens, clear the
+    // stale map-instance refs so the guard below doesn't block re-initializing
+    // a fresh map against the new DOM node on the next search.
+    if (!showMap) {
+      if (leafletRef.current) {
+        leafletRef.current = null
+        markersRef.current = {}
+        activeMarkRef.current = null
+        userMarkRef.current = null
+        routeLineRef.current = null
+        infoWindowRef.current = null
+      }
+      return
+    }
+    if (!mapReady || !mapRef.current || leafletRef.current) return
     if (!window.google?.maps) return
 
     // Wait for the container to have actual dimensions before initializing
