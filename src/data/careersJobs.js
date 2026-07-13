@@ -108,6 +108,31 @@ export const JOBS = [
     ],
   },
 
+  {
+    active:        true,
+    id:            'store-crew-ayala-malls-vermosa',
+    role:          'Store Crew',
+    branch:        'Ayala Malls Vermosa',
+    location:      'Imus, Cavite',
+    region:        'Cavite',
+    city:          'Imus',
+    department:    'Store Operations',
+    type:          'Full-time',
+    email:         'avocadoria.vermosa@gmail.com',
+    emailSubject:  'Store Crew - Ayala Malls Vermosa',
+    image:         '/careers/hiring-ayala-malls-vermosa.webp',
+    qualifications: [
+      'Female',
+      'At least High School Graduate',
+      'Has a pleasing and happy personality',
+      'Friendly and Approachable',
+      'Honest and Trustworthy',
+      'Preferably has a Service Crew experience',
+      'Willing to be trained',
+      'Residing within Imus, Cavite',
+    ],
+  },
+
   // ── IN-HOUSE / CORPORATE OPENINGS ────────────────────────────────────────
   // These go to recruitment@avocadoria.com.ph (HQ Marikina City)
   {
