@@ -49,17 +49,25 @@ function JobCard({ job }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        display: 'block', textDecoration: 'none',
-        background: 'rgba(255,255,255,0.08)',
+        display: 'block', textDecoration: 'none', position: 'relative', overflow: 'hidden',
+        background: 'linear-gradient(160deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04))',
         backdropFilter: 'blur(2px)',
-        border: `1.5px solid ${hov ? 'var(--c-olive)' : 'rgba(182,197,72,0.25)'}`,
+        border: `1.5px solid ${hov ? 'var(--c-olive)' : 'rgba(182,197,72,0.28)'}`,
         borderRadius: '18px',
         padding: '24px',
-        transition: 'all 0.2s ease',
-        transform: hov ? 'translateY(-3px)' : 'translateY(0)',
-        boxShadow: hov ? '0 12px 28px rgba(58,107,53,0.10)' : 'none',
+        transition: 'all 0.25s ease',
+        transform: hov ? 'translateY(-4px)' : 'translateY(0)',
+        boxShadow: hov
+          ? '0 1px 0 rgba(255,255,255,0.55) inset, 0 -10px 22px -14px rgba(58,107,53,0.14) inset, 0 18px 34px rgba(58,107,53,0.18)'
+          : '0 1px 0 rgba(255,255,255,0.45) inset, 0 -8px 16px -12px rgba(58,107,53,0.08) inset, 0 4px 12px rgba(58,107,53,0.07)',
       }}
     >
+      {/* subtle top sheen — reinforces the raised/embossed feel */}
+      <span style={{
+        position: 'absolute', top: 0, left: '10%', right: '10%', height: '1px',
+        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent)',
+      }} />
+
       <h3 style={{
         fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal',
         fontSize: 'clamp(18px,1.9vw,22px)', color: 'var(--c-olive)',
@@ -79,6 +87,7 @@ function JobCard({ job }) {
           display: 'inline-flex', alignItems: 'center', gap: '6px',
           background: 'rgba(138,95,60,0.08)', borderRadius: '8px', padding: '6px 12px',
           fontFamily: "'Poppins',sans-serif", fontSize: '13px', fontWeight: '600', color: '#8A5F3C',
+          boxShadow: 'inset 0 1px 2px rgba(58,107,53,0.12), inset 0 -1px 0 rgba(255,255,255,0.6)',
         }}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#b6c548" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
@@ -89,6 +98,7 @@ function JobCard({ job }) {
           display: 'inline-flex', alignItems: 'center', gap: '6px',
           background: 'rgba(182,197,72,0.15)', borderRadius: '8px', padding: '6px 12px',
           fontFamily: "'Poppins',sans-serif", fontSize: '13px', fontWeight: '600', color: '#3a6b35',
+          boxShadow: 'inset 0 1px 2px rgba(58,107,53,0.10), inset 0 -1px 0 rgba(255,255,255,0.5)',
         }}>
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3a6b35" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
