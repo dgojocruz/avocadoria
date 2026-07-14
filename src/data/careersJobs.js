@@ -133,6 +133,31 @@ export const JOBS = [
     ],
   },
 
+  {
+    active:        true,
+    id:            'store-crew-sm-san-jose-del-monte',
+    role:          'Store Crew',
+    branch:        'SM San Jose Del Monte',
+    location:      'San Jose Del Monte, Bulacan',
+    region:        'Bulacan',
+    city:          'San Jose Del Monte',
+    department:    'Store Operations',
+    type:          'Full-time',
+    email:         'Smcity.sjdm.avocadoria@gmail.com',
+    emailSubject:  'Store Crew - SM San Jose Del Monte',
+    image:         '/careers/hiring-sm-san-jose-del-monte.webp',
+    qualifications: [
+      'Female or Male',
+      'At least High School Graduate',
+      'Has a pleasing and happy personality',
+      'Friendly and Approachable',
+      'Honest and Trustworthy',
+      'Preferably has a Service Crew experience',
+      'Willing to be trained',
+      'Residing within San Jose Del Monte, Bulacan',
+    ],
+  },
+
   // ── IN-HOUSE / CORPORATE OPENINGS ────────────────────────────────────────
   // These go to recruitment@avocadoria.com.ph (HQ Marikina City)
   {
