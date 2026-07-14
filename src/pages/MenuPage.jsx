@@ -88,13 +88,24 @@ function ProductCard({ item }) {
         background:'transparent',
       }}>
 
-        <h3 style={{
-          fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
-          fontSize:'clamp(17px,1.8vw,20px)', fontWeight:'normal',
-          color:'var(--c-olive)',
-          textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
-          margin:0, lineHeight:1.2,
-        }}>{item.name}</h3>
+        <div style={{ display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:'10px' }}>
+          <h3 style={{
+            fontFamily:"'BubbleboddyNeue-ExtraBold','Poppins',sans-serif",
+            fontSize:'clamp(17px,1.8vw,20px)', fontWeight:'normal',
+            color:'var(--c-olive)',
+            textShadow: '-2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff, 0 -2px 0 #fff, 0 2px 0 #fff',
+            margin:0, lineHeight:1.2,
+          }}>{item.name}</h3>
+          {item.price && (
+            <span style={{
+              flexShrink:0, textAlign:'center',
+              background:'var(--c-pink)', color:'#fff',
+              fontFamily:'Poppins,sans-serif', fontSize:'12px', fontWeight:'800',
+              padding:'5px 12px', borderRadius:'14px', lineHeight:1.4,
+              boxShadow:'0 3px 8px rgba(0,0,0,0.12)',
+            }}>{item.price}</span>
+          )}
+        </div>
         <p style={{
           fontFamily:'Poppins,sans-serif',
           fontSize:'15px', lineHeight:1.65,
