@@ -26,6 +26,7 @@ export const CATEGORIES = [
     items: [
       {
         id:    'bs-lover',
+        price: '8oz ₱150 · 12oz ₱160',
         name:  'Avo Lover',
         desc:  'Layers of fresh avocado cream, tapioca pearls, almond crumble & chia seeds. Our original signature cup.',
         image: '/menu/Best Sellers/bs-lover.webp',
@@ -34,6 +35,7 @@ export const CATEGORIES = [
       },
       {
         id:    'bs-naked-light-ice-cream',
+        price: '3oz ₱90',
         name:  'Naked Light Ice Cream',
         desc:  'Pure avocado soft-serve — silky smooth, naturally sweet and guilt-free in every bite.',
         image: '/menu/Best Sellers/bs-naked-light-ice-cream.webp',
@@ -42,6 +44,7 @@ export const CATEGORIES = [
       },
       {
         id:    'bs-avo-shake',
+        price: '16oz ₱195',
         name:  'Avo Shake',
         desc:  'Thick, creamy avocado shake topped with almond crumble and chia seeds — refreshingly indulgent.',
         image: '/menu/Best Sellers/bs-avo-shake.webp',
@@ -50,6 +53,7 @@ export const CATEGORIES = [
       },
       {
         id:    'bs-guyabano-shake',
+        price: '16oz ₱195',
         name:  'Guyabano Shake',
         desc:  'Creamy avocado blended with tropical guyabano — refreshing and naturally sweet.',
         image: '/menu/Best Sellers/bs-guyabano-shake.webp',
@@ -58,6 +62,7 @@ export const CATEGORIES = [
       },
       {
         id:    'bs-jackfruit-shake',
+        price: '16oz ₱195',
         name:  'Jackfruit Shake',
         desc:  'Avocado shake loaded with fresh jackfruit, almond crumble and chia seeds on top.',
         image: '/menu/Best Sellers/bs-jackfruit-shake.webp',
@@ -66,6 +71,7 @@ export const CATEGORIES = [
       },
       {
         id:    'bs-mango-shake',
+        price: '16oz ₱195',
         name:  'Mango Shake',
         desc:  'Creamy avocado blended with sweet Philippine mangoes, topped with mango chunks.',
         image: '/menu/Best Sellers/bs-mango-shake.webp',
@@ -74,6 +80,7 @@ export const CATEGORIES = [
       },
       {
         id:    'bs-big-tin-sansrival',
+        price: '₱650',
         name:  'Avocado Sansrival Cake (Big Tin)',
         desc:  'Frozen cake with avocado ice cream filling & pistachio topping. Net wt: 330g.',
         image: '/menu/Best Sellers/bs-big-tin-sansrival.webp',
@@ -82,6 +89,7 @@ export const CATEGORIES = [
       },
       {
         id:    'bs-small-tin-sansrival',
+        price: '₱345',
         name:  'Avocado Sansrival Cake (Small Tin)',
         desc:  'Frozen avocado sansrival cake with pistachio topping. Perfect individual size. Net wt: 185g.',
         image: '/menu/Best Sellers/bs-small-tin-sansrival.webp',
@@ -103,6 +111,7 @@ export const CATEGORIES = [
     items: [
       {
         id:    'lover',
+        price: '8oz ₱150 · 12oz ₱160',
         name:  'Avo Lover',
         desc:  'Layers of fresh avocado cream, tapioca pearls, almond crumble & chia seeds. Our original signature cup.',
         image: '/menu/Soft Serve Menu/lover.webp',
@@ -111,6 +120,7 @@ export const CATEGORIES = [
       },
       {
         id:    'biscoff-lover',
+        price: '12oz ₱270',
         name:  'Biscoff Lover',
         desc:  'Avocado cream meets caramel Biscoff drizzle, toasted almonds & our signature crumble base.',
         image: '/menu/Soft Serve Menu/biscoff-lover.webp',
@@ -119,6 +129,7 @@ export const CATEGORIES = [
       },
       {
         id:    'naked-light-ice-cream',
+        price: '3oz ₱90',
         name:  'Naked Light Ice Cream',
         desc:  'Pure avocado soft-serve — silky smooth, naturally sweet and guilt-free in every bite.',
         image: '/menu/Soft Serve Menu/naked-light-ice-cream.webp',
@@ -127,6 +138,7 @@ export const CATEGORIES = [
       },
       {
         id:    'pistachio-lover',
+        price: '12oz ₱320',
         name:  'Pistachio Lover',
         desc:  'Avocado cream loaded with pistachio crumble, chocolate drizzle and avocado chunks.',
         image: '/menu/Soft Serve Menu/pistachio-lover.webp',
@@ -148,6 +160,7 @@ export const CATEGORIES = [
     items: [
       {
         id:    'avo-shake',
+        price: '16oz ₱195',
         name:  'Avo Shake',
         desc:  'Our signature thick and creamy avocado shake topped with almond crumble and chia seeds.',
         image: '/menu/Avocado Shakes/avo-shake.webp',
@@ -156,6 +169,7 @@ export const CATEGORIES = [
       },
       {
         id:    'mango-shake',
+        price: '16oz ₱195',
         name:  'Mango Shake',
         desc:  'Creamy avocado blended with sweet Philippine mangoes, topped with mango chunks.',
         image: '/menu/Avocado Shakes/mango-shake.webp',
@@ -164,6 +178,7 @@ export const CATEGORIES = [
       },
       {
         id:    'dark-choco-shake',
+        price: '16oz ₱220',
         name:  'Dark Choco Shake',
         desc:  'Avocado meets rich dark chocolate swirls, topped with almonds and chocolate chunks.',
         image: '/menu/Avocado Shakes/dark-choco-shake.webp',
@@ -172,6 +187,7 @@ export const CATEGORIES = [
       },
       {
         id:    'guyabano-shake',
+        price: '16oz ₱195',
         name:  'Guyabano Shake',
         desc:  'Creamy avocado blended with tropical guyabano — refreshing and naturally sweet.',
         image: '/menu/Avocado Shakes/guyabano-shake.webp',
@@ -180,6 +196,7 @@ export const CATEGORIES = [
       },
       {
         id:    'jackfruit-shake',
+        price: '16oz ₱195',
         name:  'Jackfruit Shake',
         desc:  'Avocado shake loaded with fresh jackfruit, almond crumble and chia seeds on top.',
         image: '/menu/Avocado Shakes/jackfruit-shake.webp',
@@ -202,6 +219,7 @@ export const CATEGORIES = [
     items: [
       {
         id:    'big-tin-cheesecake',
+        price: '₱600',
         name:  'Avocado Cheesecake (Big Tin)',
         desc:  'Rich and creamy avocado cheesecake packed with mixed nuts. Net wt: 400g.',
         image: '/menu/Avocado cakes/big-tin-cheesecake.webp',
@@ -210,6 +228,7 @@ export const CATEGORIES = [
       },
       {
         id:    'big-tin-praline',
+        price: '₱700',
         name:  'Dark Mocha Avocado Praline Cake (Big Tin)',
         desc:  'Dark mocha avocado cake with praline crumble topping. Net wt: 500g.',
         image: '/menu/Avocado cakes/big-tin-praline.webp',
@@ -218,6 +237,7 @@ export const CATEGORIES = [
       },
       {
         id:    'big-tin-sansrival',
+        price: '₱650',
         name:  'Avocado Sansrival Cake (Big Tin)',
         desc:  'Frozen cake with avocado ice cream filling & pistachio topping. Net wt: 330g.',
         image: '/menu/Avocado cakes/big-tin-sansrival.webp',
@@ -226,6 +246,7 @@ export const CATEGORIES = [
       },
       {
         id:    'small-tin-cheesecake',
+        price: '₱285',
         name:  'Avocado Cheesecake (Small Tin)',
         desc:  'Individual-sized avocado cheesecake — perfect personal treat. Net wt: 240g.',
         image: '/menu/Avocado cakes/small-tin-cheesecake.webp',
@@ -234,6 +255,7 @@ export const CATEGORIES = [
       },
       {
         id:    'small-tin-praline',
+        price: '₱360',
         name:  'Dark Mocha Avocado Praline Cake (Small Tin)',
         desc:  'Personal-sized dark mocha avocado praline cake. Net wt: 300g.',
         image: '/menu/Avocado cakes/small-tin-praline.webp',
@@ -242,6 +264,7 @@ export const CATEGORIES = [
       },
       {
         id:    'small-tin-sansrival',
+        price: '₱345',
         name:  'Avocado Sansrival Cake (Small Tin)',
         desc:  'Frozen avocado sansrival cake with pistachio topping. Net wt: 185g.',
         image: '/menu/Avocado cakes/small-tin-sansrival.webp',
@@ -266,6 +289,7 @@ export const CATEGORIES = [
 
       {
         id:    'barley-shake',
+        price: 'Classic ₱310 · Low Carb ₱285',
         name:  'Barley Shake',
         desc:  'Refreshing avocado shake with barley — light, nutritious and satisfying.',
         image: '/menu/Avocado Shakes/barley-shake.webp',
@@ -282,6 +306,7 @@ export const CATEGORIES = [
       },
       {
         id:    'coconut-keto-shake',
+        price: '16oz ₱250',
         name:  'Coconut Keto Shake',
         desc:  'A guilt-free blend of avocado and coconut — low-carb, keto-friendly and delicious.',
         image: '/menu/Avocado Shakes/coconut-keto-shake.webp',
@@ -290,6 +315,7 @@ export const CATEGORIES = [
       },
       {
         id:    'keto',
+        price: '3oz ₱115',
         name:  'Avo Keto',
         desc:  'Avocado soft-serve with whole almonds — low-carb, keto-friendly and satisfying.',
         image: '/menu/Soft Serve Menu/keto.webp',
@@ -312,6 +338,7 @@ export const CATEGORIES = [
     items: [
       {
         id:    'dream',
+        price: '₱105',
         name:  'Avo Dream',
         desc:  'Fresh avocado half filled with silky avocado cream — a dreamy, indulgent treat served in its own shell.',
         image: '/menu/Others/dream.webp',
@@ -320,6 +347,7 @@ export const CATEGORIES = [
       },
       {
         id:    'inipit',
+        price: '₱80',
         name:  'Inipit',
         desc:  'Soft and fluffy Filipino sponge cake sandwich filled with rich avocado cream. A local classic reimagined.',
         image: '/menu/Others/inipit.webp',
@@ -329,6 +357,7 @@ export const CATEGORIES = [
 
       {
         id:    'senyorita-matcha',
+        price: '₱115 · ₱99',
         name:  'Señorita Matcha',
         desc:  'Creamy avocado popsicle coated in matcha chocolate — smooth, earthy and indulgent.',
         image: '/menu/Popsicles/senyorita-matcha.webp',
@@ -337,6 +366,7 @@ export const CATEGORIES = [
       },
       {
         id:    'senyorita-choc',
+        price: '₱115 · ₱99',
         name:  'Señorita Chocolate',
         desc:  'Classic avocado popsicle dipped in rich milk chocolate coating.',
         image: '/menu/Popsicles/senyorita-choc.webp',
@@ -345,6 +375,7 @@ export const CATEGORIES = [
       },
       {
         id:    'senyorita-dark-choc',
+        price: '₱115 · ₱99',
         name:  'Señorita Dark Chocolate',
         desc:  'Avocado popsicle coated in premium dark chocolate for a bittersweet finish.',
         image: '/menu/Popsicles/senyorita-dark-choc.webp',
@@ -353,6 +384,7 @@ export const CATEGORIES = [
       },
       {
         id:    'senyorita-white-choc',
+        price: '₱115 · ₱99',
         name:  'Señorita White Chocolate',
         desc:  'Smooth avocado popsicle wrapped in creamy white chocolate coating.',
         image: '/menu/Popsicles/senyorita-white-choc.webp',
@@ -361,6 +393,7 @@ export const CATEGORIES = [
       },
       {
         id:    'senyorita-strawberry',
+        price: '₱115 · ₱99',
         name:  'Señorita Strawberry',
         desc:  'Avocado popsicle coated in sweet strawberry chocolate — fruity and refreshing.',
         image: '/menu/Popsicles/senyorita-strawberry.webp',
@@ -369,6 +402,7 @@ export const CATEGORIES = [
       },
       {
         id:    'senyorita-biscoff',
+        price: '₱115 · ₱99',
         name:  'Señorita Biscoff',
         desc:  'Avocado popsicle coated in Biscoff caramel — rich, crunchy and irresistible.',
         image: '/menu/Popsicles/senyorita-biscoff.webp',
@@ -377,6 +411,7 @@ export const CATEGORIES = [
       },
       {
         id:    'hot-coffee',
+        price: '12oz ₱125 · 16oz ₱155',
         name:  'Hot Avocado Queen Coffee',
         desc:  'Freshly brewed hot coffee served in the iconic Avocadoria cup — warm, rich and satisfying.',
         image: '/menu/coffee/Coffee_Hot.webp',
@@ -385,6 +420,7 @@ export const CATEGORIES = [
       },
       {
         id:    'iced-coffee',
+        price: '12oz ₱130 · 16oz ₱160',
         name:  'Iced Avocado Queen Coffee',
         desc:  'Chilled coffee over ice served in the iconic Avocadoria cup — cool, bold and refreshing.',
         image: '/menu/coffee/Coffee_Iced.webp',
@@ -406,6 +442,7 @@ export const CATEGORIES = [
     items: [
       {
         id:    'nachos',
+        price: '₱265',
         name:  'Avo Nachos',
         desc:  'Crispy nachos loaded with fresh guacamole, cheese sauce, salsa and toppings — the ultimate avocado snack.',
         image: '/menu/Others/nachos.webp',
