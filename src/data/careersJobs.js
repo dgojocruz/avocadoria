@@ -158,6 +158,56 @@ export const JOBS = [
     ],
   },
 
+  // ── NEW OPENINGS — added 2026-07-24 ──────────────────────────────────────
+  {
+    active:        true,
+    id:            'store-crew-ayala-malls-evo-city',
+    role:          'Store Crew',
+    branch:        'Ayala Malls Evo City',
+    location:      'Kawit, Cavite',
+    region:        'Cavite',
+    city:          'Kawit',
+    department:    'Store Operations',
+    type:          'Full-time',
+    email:         'avocadoria.ayalaevo@gmail.com',
+    emailSubject:  'Store Crew - Ayala Malls Evo City',
+    image:         '/careers/hiring-ayala-malls-evo-city.webp',
+    qualifications: [
+      'Female or Male',
+      'At least High School Graduate',
+      'Has a pleasing and happy personality',
+      'Friendly and Approachable',
+      'Honest and Trustworthy',
+      'Preferably has a Service Crew experience',
+      'Willing to be trained',
+      'Residing within Kawit, Gen. Trias, Imus City, or Bacoor City, Cavite',
+    ],
+  },
+  {
+    active:        true,
+    id:            'store-crew-asiatown-mckinley-west',
+    role:          'Store Crew',
+    branch:        'Asiatown at McKinley West',
+    location:      'Taguig City, Metro Manila',
+    region:        'Metro Manila',
+    city:          'Taguig',
+    department:    'Store Operations',
+    type:          'Full-time',
+    email:         'avocadoria.asiatownbgc@gmail.com',
+    emailSubject:  'Store Crew - Asiatown at Mckinley West Taguig City',
+    image:         '/careers/hiring-asiatown-mckinley-west.webp',
+    qualifications: [
+      'Female or Male',
+      'At least High School Graduate',
+      'Has a pleasing and happy personality',
+      'Honest and Trustworthy',
+      'No experience required — willing to learn',
+      'Good team player with customer-service orientation',
+      'Residing in areas near McKinley West, Taguig',
+      'Can work on a night shift schedule',
+    ],
+  },
+
   // ── IN-HOUSE / CORPORATE OPENINGS ────────────────────────────────────────
   // These go to recruitment@avocadoria.com.ph (HQ Marikina City)
   {
