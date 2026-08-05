@@ -40,9 +40,8 @@ export default function OurStoryPage() {
       {/* Story sections */}
       <div style={{ display:'flex', flexDirection:'column', gap:'40px' }}>
         {OUR_STORY.sections.map((sec, i) => (
-          <div key={sec.id} style={{
+          <div key={sec.id} className={sec.image ? 'story-section story-section--split' : 'story-section'} style={{
             display:'grid',
-            gridTemplateColumns: sec.image ? '1fr 1fr' : '1fr',
             gap:'32px', alignItems:'center',
           }}>
             {sec.image && i % 2 === 0 && (
@@ -83,7 +82,7 @@ export default function OurStoryPage() {
       </div>
 
       {/* Stats strip */}
-      <style>{`.story-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:56px; background:rgba(255,255,255,0.7); border-radius:20px; padding:32px; border:1.5px solid rgba(182,197,72,0.2); } @media(max-width:767px){ .story-stats{ grid-template-columns:1fr; text-align:center; } }`}</style>
+      <style>{`.story-section { grid-template-columns:1fr; } .story-section--split { grid-template-columns:1fr 1fr; } @media(max-width:767px){ .story-section--split{ grid-template-columns:1fr; gap:20px; } } .story-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:56px; background:rgba(255,255,255,0.7); border-radius:20px; padding:32px; border:1.5px solid rgba(182,197,72,0.2); } @media(max-width:767px){ .story-stats{ grid-template-columns:1fr; text-align:center; } }`}</style>
       <div className="story-stats">
         {[
           { num:'7+',    label:'Years of happiness' },

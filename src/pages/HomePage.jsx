@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import SEO from '@/components/ui/SEO'
 import { Link, useNavigate } from 'react-router-dom'
 import { NEWS_POSTS } from '@/data/posts'
+import PromoSplash from '@/components/PromoSplash'
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // HERO CONFIG
@@ -1227,6 +1228,9 @@ export default function HomePage() {
         <Wave fromColor="#d9e29e" toColor="#b6c548" height={48} />
 
       </div>
+
+      {/* Promo splash — overlay only, adds no layout */}
+      <PromoSplash />
     </>
   )
 }

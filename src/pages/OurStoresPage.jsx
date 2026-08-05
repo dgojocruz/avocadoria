@@ -881,7 +881,8 @@ const branchSchema = useMemo(() => ({
         {showResults && (() => {
           const LAYOUT = {
             // ── Overall container ────────────────────────────────
-            navbarHeight:    88,    // px — must match your navbar height
+            navbarHeight:    typeof window !== 'undefined' && window.innerWidth <= 768 ? 64 : 88,
+                                   // px — mobile navbar is shorter than desktop
             containerMaxW:   1280,  // px — max width of the whole panel
             containerPadX:   16,    // px — left/right page margin (mobile-friendly)
 
@@ -956,7 +957,10 @@ const branchSchema = useMemo(() => ({
               </button>
 
               {/* Search input */}
-              <div style={{ flex: 1, maxWidth: '520px', position: 'relative' }}>
+              {/* flex-basis 240px (not 0) so the row actually wraps on phones —
+                 with basis 0 this input collapses to nothing behind its siblings.
+                 minWidth 0 lets it shrink below its intrinsic size when it does share a row. */}
+              <div style={{ flex: '1 1 240px', minWidth: 0, maxWidth: '520px', position: 'relative' }}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={C.olive} strokeWidth="2.2"
                   style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
                   aria-hidden="true">
@@ -970,7 +974,7 @@ const branchSchema = useMemo(() => ({
                     width: '100%', padding: '10px 36px 10px 36px',
                     border: `1.5px solid rgba(182,197,72,.35)`, borderRadius: '10px',
                     background: C.cream, fontFamily: "'Poppins',sans-serif",
-                    fontSize: '14px', color: C.brown, outline: 'none',
+                    fontSize: '16px', color: C.brown, outline: 'none',
                     boxSizing: 'border-box', transition: 'border-color .2s',
                   }}
                   onFocus={e => e.target.style.borderColor = C.olive}

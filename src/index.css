@@ -30,8 +30,11 @@
 
 /* ── Reset & base ─────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { margin: 0; padding: 0; overflow-x: hidden; font-family: 'Poppins',sans-serif; }
+/* overflow-x must be clipped on BOTH html and body. With it on body alone,
+   html still scrolls horizontally: section backgrounds stop at the viewport
+   edge while position:fixed elements stay pinned, leaving a white strip. */
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; max-width: 100%; }
+body { margin: 0; padding: 0; overflow-x: hidden; max-width: 100%; font-family: 'Poppins',sans-serif; }
 
 /* Fluid images — rule #5 from guide */
 img, video, iframe, svg { max-width: 100%; height: auto; display: block; }
@@ -136,6 +139,14 @@ a { touch-action: manipulation; }
 .navbar-logo {
   height: clamp(85px, 11vw, 130px);
   width: auto;
+  max-width: calc(100vw - 80px); /* never crowd out the hamburger */
+  object-fit: contain;
+}
+/* The 85px floor above is taller than small phones can fit: at ~3.9:1 the
+   logo renders ~330px wide, which plus 24px padding and the 44px menu
+   button overflows a 360px viewport and clips the hamburger. */
+@media (max-width: 480px) {
+  .navbar-logo { height: 64px; }
 }
 
 /* ── Buttons — min 44px tap target ───────────────────────────────────────── */

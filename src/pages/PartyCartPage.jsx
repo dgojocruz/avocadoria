@@ -230,7 +230,7 @@ Looking forward to hearing from you!`
                 Tell us about your party
               </p>
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="pc-form-row" style={{ display: 'grid', gap: '12px' }}>
                   <div><label style={labelStyle}>Your name *</label>
                     <input required value={form.name} onChange={set('name')} placeholder="Maria Santos" style={inputStyle}
                       onFocus={e => e.target.style.borderColor='#b6c548'} onBlur={e => e.target.style.borderColor='rgba(182,197,72,0.35)'} /></div>
@@ -241,7 +241,7 @@ Looking forward to hearing from you!`
                 <div><label style={labelStyle}>Email address *</label>
                   <input required type="email" value={form.email} onChange={set('email')} placeholder="maria@email.com" style={inputStyle}
                     onFocus={e => e.target.style.borderColor='#b6c548'} onBlur={e => e.target.style.borderColor='rgba(182,197,72,0.35)'} /></div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="pc-form-row" style={{ display: 'grid', gap: '12px' }}>
                   <div><label style={labelStyle}>Event date *</label>
                     <input required type="date" value={form.date} onChange={set('date')} style={inputStyle}
                       onFocus={e => e.target.style.borderColor='#b6c548'} onBlur={e => e.target.style.borderColor='rgba(182,197,72,0.35)'} /></div>
@@ -249,7 +249,7 @@ Looking forward to hearing from you!`
                     <input required type="time" value={form.time} onChange={set('time')} style={inputStyle}
                       onFocus={e => e.target.style.borderColor='#b6c548'} onBlur={e => e.target.style.borderColor='rgba(182,197,72,0.35)'} /></div>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="pc-form-row" style={{ display: 'grid', gap: '12px' }}>
                   <div><label style={labelStyle}>Expected guests</label>
                     <input type="number" min="1" value={form.guests} onChange={set('guests')} placeholder="e.g. 80" style={inputStyle}
                       onFocus={e => e.target.style.borderColor='#b6c548'} onBlur={e => e.target.style.borderColor='rgba(182,197,72,0.35)'} /></div>
@@ -376,7 +376,7 @@ Looking forward to hearing from you!`
                 <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '16px', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff' }}>
                   Your details
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="pc-form-row" style={{ display: 'grid', gap: '12px' }}>
                   <div>
                     <label style={labelStyle}>Name *</label>
                     <input required value={form.name} onChange={set('name')} placeholder="Maria Santos" style={inputStyle} onFocus={focus} onBlur={blur} />
@@ -398,7 +398,7 @@ Looking forward to hearing from you!`
                 <p style={{ fontFamily: "'BubbleboddyNeue-ExtraBold','Poppins',sans-serif", fontWeight: 'normal', fontSize: '16px', color: 'var(--c-olive)', margin: '0 0 4px', textShadow: '-1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff' }}>
                   Event details
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="pc-form-row" style={{ display: 'grid', gap: '12px' }}>
                   <div>
                     <label style={labelStyle}>Event date</label>
                     <input type="date" value={form.date} onChange={set('date')} style={inputStyle} onFocus={focus} onBlur={blur} />
@@ -430,7 +430,7 @@ Looking forward to hearing from you!`
                     <option>Mix / Open to suggestions</option>
                   </select>
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="pc-form-row" style={{ display: 'grid', gap: '12px' }}>
                   <div>
                     <label style={labelStyle}>Cup count needed</label>
                     <input value={form.cups} onChange={set('cups')} placeholder="e.g. 150 cups" style={inputStyle} onFocus={focus} onBlur={blur} />
@@ -664,6 +664,11 @@ export default function PartyCartPage() {
           .pc-pkg-grid { grid-template-columns: 1fr; }
           .pc-steps-grid { grid-template-columns: 1fr; }
         }
+        .pc-form-row { grid-template-columns: 1fr 1fr; }
+        @media (max-width: 560px) {
+          /* date/time/number inputs need their full intrinsic width on phones */
+          .pc-form-row { grid-template-columns: 1fr; }
+        }
       `}</style>
 
       {/* ── Hero ── */}
@@ -676,6 +681,11 @@ export default function PartyCartPage() {
               .pc-hero-grid { grid-template-columns: 1fr; text-align: center; }
               .pc-hero-grid .pc-img { order: -1; }
               .pc-hero-grid p { margin-left: auto; margin-right: auto; }
+              /* Hero art is deliberately oversized (120% + scale) so it bleeds
+                 on desktop. On phones the container IS the viewport, so that
+                 bleed becomes horizontal scroll — rein it in.
+                 !important is required: the sizing lives in inline styles. */
+              .pc-hero-grid .pc-img img { width: 100% !important; transform: none !important; }
             }
           `}</style>
           <div className="pc-hero-grid">

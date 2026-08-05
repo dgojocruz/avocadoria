@@ -1,0 +1,217 @@
+/* PromoSplash — overlay only. Adds no layout to the homepage. */
+
+.promo-splash__backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200; /* above FloatingWidgets */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto; /* short laptop windows can still reach the CTA */
+  background: rgba(28, 32, 18, 0.62);
+  backdrop-filter: blur(3px);
+  animation: promo-splash-fade 240ms ease-out both;
+  overscroll-behavior: contain;
+}
+
+.promo-splash__dialog {
+  position: relative;
+  width: min(420px, 100%);
+  margin: auto; /* centres, but lets tall content scroll instead of clipping */
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  animation: promo-splash-rise 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Close button ───────────────────────────────────────────────── */
+
+.promo-splash__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 40px; /* 40px keeps it a comfortable tap target on phones */
+  height: 40px;
+  padding: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #3a3f2c;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.92);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.promo-splash__close:hover {
+  background: #ffffff;
+  transform: scale(1.06);
+}
+
+.promo-splash__close:focus-visible {
+  outline: 3px solid #b6c548;
+  outline-offset: 2px;
+}
+
+/* ── Media ──────────────────────────────────────────────────────── */
+
+.promo-splash__image,
+.promo-splash__native {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 22px 22px 0 0;
+}
+
+.promo-splash__native {
+  background: #1c2012;
+}
+
+/* Facebook embed. The wrapper clips whatever letterboxing the
+   plugin adds; media.crop scales the iframe to push bars out. */
+.promo-splash__video {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  background: #1c2012;
+  border-radius: 22px 22px 0 0;
+}
+
+.promo-splash__video iframe {
+  display: block;
+  transform-origin: center center;
+}
+
+/* ── Content ────────────────────────────────────────────────────── */
+
+.promo-splash__content {
+  padding: 20px;
+  text-align: center;
+}
+
+.promo-splash__title {
+  margin: 0 0 8px;
+  font-family: 'BubbleboddyNeue-ExtraBold', 'Poppins', sans-serif;
+  font-size: clamp(1.35rem, 5vw, 1.9rem);
+  line-height: 1.15;
+  color: #b6c548;
+  -webkit-text-stroke: 1.5px #ffffff;
+  paint-order: stroke fill;
+}
+
+.promo-splash__body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(0.875rem, 3.4vw, 1rem);
+  line-height: 1.55;
+  color: #4a4f3d;
+}
+
+.promo-splash__cta {
+  display: inline-block;
+  min-height: 44px; /* iOS minimum tap target */
+  margin-top: 14px;
+  padding: 12px 32px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  background: #b6c548;
+  border-radius: 999px;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.promo-splash__cta:hover {
+  background: #a3b13c;
+  transform: translateY(-2px);
+}
+
+.promo-splash__cta:focus-visible {
+  outline: 3px solid #3a3f2c;
+  outline-offset: 3px;
+}
+
+/* ── Video variant tweaks ───────────────────────────────────────── */
+
+.promo-splash__dialog--video {
+  width: auto; /* set inline from the measured embed width */
+  overflow: hidden;
+}
+
+/* Reels are dark and full-bleed — the close button needs contrast. */
+.promo-splash__dialog--video .promo-splash__close {
+  color: #ffffff;
+  background: rgba(28, 32, 18, 0.75);
+}
+
+.promo-splash__dialog--video .promo-splash__close:hover {
+  background: rgba(28, 32, 18, 0.92);
+}
+
+.promo-splash__dialog--video .promo-splash__content {
+  padding: 14px 16px 18px;
+}
+
+.promo-splash__dialog--video .promo-splash__cta {
+  margin-top: 0;
+}
+
+/* ── Small phones ───────────────────────────────────────────────── */
+
+@media (max-width: 400px) {
+  .promo-splash__backdrop {
+    padding: 12px;
+  }
+  .promo-splash__content {
+    padding: 16px;
+  }
+  .promo-splash__cta {
+    width: 100%;
+    padding: 12px 20px;
+  }
+}
+
+/* ── Short viewports (laptops, phones in landscape) ─────────────── */
+
+@media (max-height: 620px) {
+  .promo-splash__dialog--video .promo-splash__content {
+    padding: 10px 14px 14px;
+  }
+  .promo-splash__title {
+    font-size: 1.2rem;
+  }
+  .promo-splash__cta {
+    margin-top: 8px;
+    padding: 10px 26px;
+  }
+}
+
+/* ── Motion ─────────────────────────────────────────────────────── */
+
+@keyframes promo-splash-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes promo-splash-rise {
+  from { opacity: 0; transform: translateY(16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-splash__backdrop,
+  .promo-splash__dialog {
+    animation: none;
+  }
+  .promo-splash__close:hover,
+  .promo-splash__cta:hover {
+    transform: none;
+  }
+}

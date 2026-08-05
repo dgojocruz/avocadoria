@@ -31,7 +31,7 @@ const NAV_LINKS = [
 const NAV_STYLE = {
   colorDefault:     '#8A5F3C',
   colorActive:      '#b6c548',
-  fontSize:         'clamp(22px, 1.9vw, 26px)',
+  fontSize:         'clamp(17px, 1.6vw, 21px)',
   fontWeight:       '700',
   letterSpacing:    '0.02em',
   glowColor:        'rgba(182,197,72,0.55)',
@@ -130,7 +130,6 @@ function DropdownLink({ item, hovered, setHovered }) {
         position:      'absolute',
         top:           'calc(100% + 4px)',
         left:          '50%',
-        transform:     'translateX(-50%)',
         minWidth:      '180px',
         background:    'rgba(244,250,236,0.97)',
         backdropFilter:'blur(12px)',
@@ -219,6 +218,7 @@ export default function Navbar() {
         style={{ display:'flex', alignItems:'center', textDecoration:'none', flexShrink:0 }}>
         <img src="/logo.svg" alt="Avocadoria" className="navbar-logo"
           style={{
+            transform: 'translateY(6.5%)',
             filter: [
               'drop-shadow(0px 1px 0px rgba(255,255,255,0.9))',
               'drop-shadow(0px 2px 0px rgba(255,255,255,0.5))',

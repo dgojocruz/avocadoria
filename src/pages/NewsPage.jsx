@@ -19,6 +19,13 @@ export default function NewsPage() {
     <>
       <SEO title="News & Updates" description="Latest news and updates from Avocadoria." path="/about/news"/>
 
+      <style>{`
+        .news-featured { grid-template-columns: 1fr 1fr; }
+        @media (max-width: 767px) {
+          .news-featured { grid-template-columns: 1fr; gap: 18px; }
+        }
+      `}</style>
+
       <SectionHeader
         title="News & Updates"
         sub="Stay in the loop — new branches, products, and announcements."
@@ -26,7 +33,7 @@ export default function NewsPage() {
 
       {/* Featured */}
       {featured && (
-        <div className="post-card" style={{ marginBottom:'28px', display:'grid', gridTemplateColumns:'1fr 1fr', gap:'28px', alignItems:'center' }}
+        <div className="post-card news-featured" style={{ marginBottom:'28px', display:'grid', gap:'28px', alignItems:'center' }}
           onClick={() => setSelected(featured)}>
           <div style={{
             background:'rgba(182,197,72,0.10)', borderRadius:'12px',
@@ -161,6 +168,7 @@ function PostDetail({ post, onBack }) {
           Watch on Facebook
         </a>
       )}
+    </div>
   )
 }
 
