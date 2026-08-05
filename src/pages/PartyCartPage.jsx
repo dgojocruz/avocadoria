@@ -721,7 +721,7 @@ export default function PartyCartPage() {
                   transform: 'scale(1.12)',
                   transformOrigin: 'bottom center',
                 }}
-                loading="lazy" decoding="async"
+                loading="eager" fetchPriority="high" decoding="async"
               />
             </div>
           </div>
