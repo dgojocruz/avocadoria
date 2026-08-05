@@ -475,6 +475,34 @@ export default function OurStoresPage() {
     }
   }, [drillLevel, selectedCountry, selectedRegion])
 
+  // ── Restore location silently on mount ─────────────────────────────────────
+  // Browser geolocation permission is stored per-origin and userLoc always
+  // starts null, so a returning visitor who already granted location saw no
+  // distances until they clicked "Near me" again. If permission is already
+  // granted we fetch the position quietly — no prompt, no UI hijack. We only
+  // set userLoc (which drives distance labels and sorting); phase, search and
+  // drill level are left alone so this never interrupts what the user is doing.
+  useEffect(() => {
+    if (!navigator.geolocation || !navigator.permissions?.query) return
+    let cancelled = false
+
+    navigator.permissions.query({ name: 'geolocation' })
+      .then(status => {
+        if (cancelled || status.state !== 'granted') return
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            if (cancelled) return
+            setUserLoc({ lat: pos.coords.latitude, lng: pos.coords.longitude })
+          },
+          () => {},                       // stay silent — the button still works
+          { maximumAge: 300000, timeout: 8000 }
+        )
+      })
+      .catch(() => {})                    // Safari/older browsers: no-op
+
+    return () => { cancelled = true }
+  }, [])
+
   // ── GPS locate ─────────────────────────────────────────────────────────────
   const handleLocate = () => {
     if (!navigator.geolocation) { setLocError('Geolocation not supported by your browser.'); return }
@@ -563,8 +591,14 @@ export default function OurStoresPage() {
         : null,
     }))
 
-    // Filter by radius when GPS is active
-    if (userLoc) {
+    // Filter by radius only when the user hasn't asked for a specific set.
+    // Drilling Countries > Philippines > All branches is an explicit request to
+    // see everything, so the proximity slider must not silently hide the rest.
+    // A name search is explicit too. Radius stays in force for the "Near me"
+    // flow, where proximity is the whole point.
+    const browsingExplicitly = Boolean(selectedCountry || selectedRegion || search.trim())
+    const radiusApplies = Boolean(userLoc) && !browsingExplicitly
+    if (radiusApplies) {
       list = list.filter(b => b.distance === null || b.distance <= radiusKm)
     }
 
@@ -991,7 +1025,9 @@ const branchSchema = useMemo(() => ({
               {/* Result count */}
               <span style={{ fontSize: '12px', color: `${C.brown}70`, fontWeight: '600', flexShrink: 0, whiteSpace: 'nowrap' }}>
                 {filtered.length} branch{filtered.length !== 1 ? 'es' : ''}
-                {userLoc ? ' · by distance' : ''}
+                {userLoc && !(selectedCountry || selectedRegion || search.trim())
+                  ? ` within ${radiusKm} km`
+                  : userLoc ? ' \u00B7 by distance' : ''}
               </span>
 
               {/* GPS button */}
@@ -1021,9 +1057,9 @@ const branchSchema = useMemo(() => ({
                     <circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/>
                   </svg>
                   <input
-                    type="range" min="1" max="50" step="1" value={radiusKm}
+                    type="range" min="1" max="100" step="1" value={radiusKm}
                     onChange={e => setRadiusKm(Number(e.target.value))}
-                    style={{ width: '100px', accentColor: C.olive, cursor: 'pointer', flexShrink: 0 }}
+                    style={{ width: '120px', accentColor: C.olive, cursor: 'pointer', flexShrink: 0 }}
                     aria-label="Search radius in kilometers"
                   />
                   <span style={{ fontFamily: "'Poppins',sans-serif", fontSize: '12px', fontWeight: '800', color: C.dark, flexShrink: 0 }}>
@@ -1050,6 +1086,25 @@ const branchSchema = useMemo(() => ({
                 overflow: 'hidden',
                 boxShadow: '0 4px 20px rgba(58,107,53,.08)',
               }}>
+
+                {/* ── Location hint — explains why distances are absent ── */}
+                {!userLoc && !nearbyMessage && (
+                  <button
+                    onClick={handleLocate}
+                    style={{
+                      width: '100%', textAlign: 'left', cursor: 'pointer',
+                      background: 'rgba(182,197,72,.10)', border: 'none',
+                      borderBottom: '1px solid rgba(182,197,72,.25)',
+                      padding: '10px 14px', display: 'flex', alignItems: 'center', gap: '8px',
+                      fontFamily: 'Poppins,sans-serif',
+                    }}
+                  >
+                    <span style={{ fontSize: '15px', flexShrink: 0 }}>📍</span>
+                    <span style={{ fontSize: '13px', color: '#3a6b35', fontWeight: '600', lineHeight: 1.45 }}>
+                      Turn on location to see how far each branch is
+                    </span>
+                  </button>
+                )}
 
                 {/* ── Nearby message banner ── */}
                 {nearbyMessage && (
