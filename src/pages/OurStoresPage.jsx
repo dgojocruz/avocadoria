@@ -561,7 +561,7 @@ export default function OurStoresPage() {
         else if (err.code === 2) setLocError('Could not detect your position. Check your device GPS.')
         else setLocError('Location request timed out. Please try again.')
       },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 60000 }
     )
   }
 
@@ -1087,8 +1087,38 @@ const branchSchema = useMemo(() => ({
                 boxShadow: '0 4px 20px rgba(58,107,53,.08)',
               }}>
 
+                {/* ── Location error — previously only shown on the landing
+                     screen, so failures from the toolbar button were silent ── */}
+                {locError && (
+                  <div style={{
+                    background: 'rgba(240,110,187,.10)',
+                    borderBottom: '1px solid rgba(240,110,187,.3)',
+                    padding: '10px 14px', display: 'flex', alignItems: 'flex-start', gap: '8px',
+                  }}>
+                    <span style={{ fontSize: '14px', flexShrink: 0, lineHeight: 1.4 }}>⚠️</span>
+                    <div>
+                      <p style={{
+                        margin: 0, fontFamily: 'Poppins,sans-serif', fontSize: '13px',
+                        color: C.brown, fontWeight: '600', lineHeight: 1.45,
+                      }}>
+                        {locError}
+                      </p>
+                      <button
+                        onClick={handleLocate}
+                        style={{
+                          marginTop: '4px', padding: 0, background: 'none', border: 'none',
+                          cursor: 'pointer', fontFamily: 'Poppins,sans-serif', fontSize: '12px',
+                          fontWeight: '700', color: C.olive, textDecoration: 'underline',
+                        }}
+                      >
+                        Try again
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 {/* ── Location hint — explains why distances are absent ── */}
-                {!userLoc && !nearbyMessage && (
+                {!userLoc && !locError && !nearbyMessage && (
                   <button
                     onClick={handleLocate}
                     style={{
