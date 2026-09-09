@@ -3,6 +3,7 @@ import SEO from '@/components/ui/SEO'
 import { Link, useNavigate } from 'react-router-dom'
 import { NEWS_POSTS } from '@/data/posts'
 import PromoSplash from '@/components/PromoSplash'
+import PromoCarousel from '@/components/PromoCarousel'
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // HERO CONFIG
@@ -1033,6 +1034,10 @@ export default function HomePage() {
         </section>
 
 
+
+        {/* Current promos — renders nothing when no promo is live, so this
+            section removes itself once campaigns end. */}
+        <PromoCarousel />
 
         {/* Wave: Avo Faves #e8f0c8 → franchise green — matches the slope gradient */}
         <Wave fromColor="#d9e29e" toColor="#b6c548" height={60} />

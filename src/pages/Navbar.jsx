@@ -13,6 +13,7 @@ const NAV_LINKS = [
       { label: "What's New", to: '/about#whats-new'          },
       { label: 'Recognitions',   to: '/about#recognitions'  },
       { label: 'Avo Cares',      to: '/about#avo-cares'     },
+      { label: 'Promos',         to: '/about/promos'       },
     ],
   },
   { label: 'Menu',       to: '/menu'       },

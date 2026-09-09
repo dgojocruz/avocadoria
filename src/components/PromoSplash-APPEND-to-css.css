@@ -1,0 +1,162 @@
+/* ============================================================
+   APPEND THIS to the END of src/components/PromoSplash.css
+   Adds: participating-branch list + a CTA that draws the eye.
+   ============================================================ */
+
+/* ── Participating branches ─────────────────────────────────── */
+
+.promo-splash__branches {
+  margin-top: 14px;
+  text-align: left;
+  border: 1.5px solid rgba(182, 197, 72, 0.35);
+  border-radius: 14px;
+  overflow: hidden;
+  background: rgba(182, 197, 72, 0.07);
+}
+
+.promo-splash__branches-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 14px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #3a6b35;
+  cursor: pointer;
+  background: none;
+  border: none;
+  text-align: left;
+}
+
+.promo-splash__branches-toggle:hover {
+  background: rgba(182, 197, 72, 0.14);
+}
+
+.promo-splash__branches-toggle:focus-visible {
+  outline: 3px solid #b6c548;
+  outline-offset: -3px;
+}
+
+.promo-splash__chevron {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: #b6c548;
+  transition: transform 200ms ease;
+}
+
+.promo-splash__chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.promo-splash__branch-list {
+  max-height: 168px; /* ~7 rows, then scrolls — keeps the CTA reachable */
+  margin: 0;
+  padding: 4px 14px 12px;
+  overflow-y: auto;
+  list-style: none;
+  border-top: 1px solid rgba(182, 197, 72, 0.25);
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.promo-splash__branch-list li {
+  padding: 5px 0 5px 16px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #4a4f3d;
+  position: relative;
+}
+
+.promo-splash__branch-list li::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #b6c548;
+}
+
+/* ── CTA — deliberately the loudest thing in the modal ──────── */
+
+.promo-splash__cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 14px;
+  padding: 14px 28px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  text-decoration: none;
+  background: linear-gradient(135deg, #c3d152 0%, #a3b13c 100%);
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(182, 197, 72, 0.45);
+  /* A slow pulse after a short delay: enough to catch the eye without
+     nagging. Stops after 3 runs so it never becomes a distraction. */
+  animation: promo-cta-pulse 2.2s ease-in-out 1.2s 3;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.promo-splash__cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(182, 197, 72, 0.55);
+  animation: none; /* stop pulsing once they have clearly found it */
+}
+
+.promo-splash__cta:focus-visible {
+  outline: 3px solid #3a6b35;
+  outline-offset: 3px;
+  animation: none;
+}
+
+.promo-splash__cta-arrow {
+  font-size: 1.1em;
+  transition: transform 160ms ease;
+}
+
+.promo-splash__cta:hover .promo-splash__cta-arrow {
+  transform: translateX(3px);
+}
+
+@keyframes promo-cta-pulse {
+  0%, 100% { box-shadow: 0 6px 18px rgba(182, 197, 72, 0.45); }
+  50%      { box-shadow: 0 6px 26px rgba(182, 197, 72, 0.85); }
+}
+
+/* ── Small phones ───────────────────────────────────────────── */
+
+@media (max-width: 400px) {
+  .promo-splash__branch-list {
+    max-height: 140px;
+  }
+  .promo-splash__cta {
+    font-size: 1rem;
+    padding: 13px 20px;
+  }
+}
+
+/* ── Respect reduced-motion preferences ─────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-splash__cta {
+    animation: none;
+  }
+  .promo-splash__cta:hover {
+    transform: none;
+  }
+  .promo-splash__chevron {
+    transition: none;
+  }
+}

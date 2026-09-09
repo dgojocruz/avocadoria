@@ -1,94 +1,228 @@
 /**
- * Promo splash data.
+ * Promo data — the single source of truth for all three surfaces:
  *
- * TODAY: promos live in the PROMOS array below. Edit, commit, push to staging.
- * LATER: replace the body of getActivePromo() with a fetch call when the
- * admin panel exists. Nothing else in the app changes.
+ *   1. PromoSplash        — one flagship promo, shown as a modal on the homepage
+ *   2. PromoCarousel      — rotating cards on the homepage
+ *   3. PromosPage         — the full list at /about/promos
  *
- * media options:
+ * TO ADD A PROMO: copy an entry, fill it in, set active: true. That is the
+ * whole job — all three surfaces pick it up automatically.
  *
- *   { type: 'image', src, alt }
- *       Static artwork from /public. Cheapest and most reliable.
+ * TO END A PROMO: set endDate. It disappears from every surface the day after,
+ * with no code change. Leave endDate null only for evergreen offers.
  *
- *   { type: 'video', src, poster, alt, controls }
- *       Self-hosted MP4 from /public. Autoplays muted, loops, no
- *       third-party cookies, no letterboxing. Preferred for reels.
- *
- *   { type: 'facebook', href, ratio, crop, maxWidth }
- *       Facebook plugin embed. href = the plain reel URL, not the
- *       iframe markup. ratio = height / width (1.78 for 9:16).
- *       crop = scale factor to push FB's black bars outside the
- *       clipping wrapper; start at 1 and nudge up in 0.05 steps
- *       only if you see letterboxing. maxWidth caps desktop size.
+ * FIELDS
+ *   id          Unique + permanent. This is the splash dismissal key — a
+ *               visitor who closes a promo never sees that id again, so give
+ *               a re-run campaign a NEW id.
+ *   title       Short headline. Used on cards and the promos page.
+ *   body        One or two sentences. Optional.
+ *   media       { type:'image', src, alt }  — square artwork works best
+ *               { type:'video', src, poster, alt, controls }
+ *   branches    Optional array of participating branch names.
+ *   period      Optional free-text line describing the run dates, shown to
+ *               customers. Independent of startDate/endDate, which control
+ *               visibility — keep the two in step.
+ *   coverage    Optional array of free-text availability lines. Use this
+ *               instead of `branches` when availability varies by product
+ *               or is regional rather than a fixed branch list.
+ *   ctaLabel    Button text.
+ *   ctaHref     Internal path or full URL.
+ *   startDate   'YYYY-MM-DD'. Hidden before this. Optional.
+ *   endDate     'YYYY-MM-DD', inclusive. Hidden after this. Optional.
+ *   active      false parks a promo without deleting it.
+ *   featured    true = this is the one the splash modal shows. Only the first
+ *               featured promo is used; the rest appear in the carousel only.
  */
 
 export const PROMOS = [
-  {
-    id: 'reel-promo-2026-08',
-    title: null,
-    body: null,
-    media: {
-      type: 'facebook',
-      href: 'https://www.facebook.com/reel/27262381503458532/',
-      ratio: 476 / 267,
-      crop: 1,
-      maxWidth: 340,
-    },
-    ctaLabel: 'See the menu',
-    ctaHref: '/menu',
-    startDate: null,
-    endDate: null,
-    // Held OFF for launch: Facebook's video plugin does not render Reels
-    // correctly (black frame). Switch to the self-hosted MP4 entry below
-    // once the file is in /public/videos/promos/, then flip this to true.
-    active: false,
-  },
-
-  // Self-hosted version of the same reel — swap active flags to compare.
-  {
-    id: 'reel-promo-2026-08-mp4',
-    media: {
-      type: 'video',
-      src: '/videos/promos/reel-2026-08.mp4',
-      poster: '/videos/promos/reel-2026-08.webp',
-      alt: 'Avocadoria promo reel',
-      controls: true,
-    },
-    ctaLabel: 'See the menu',
-    ctaHref: '/menu',
-    active: false,
-  },
 
   {
-    id: 'image-promo-example',
-    title: 'Something new is coming',
-    body: 'Static-image promos still work — just swap the media block.',
+    id: 'foodpanda-100-off-2026-09',
+    title: '₱100 off on foodpanda',
+    body: 'Get ₱100 off with a minimum spend of ₱699. Valid at participating branches.',
     media: {
       type: 'image',
-      src: '/images/promos/sample-promo.webp',
-      alt: 'Avocadoria promotional artwork',
+      src: '/promos/foodpanda-100-off.webp',
+      alt: '₱100 off with a minimum spend of ₱699 on foodpanda. '
+         + 'Valid at participating branches. Terms and conditions apply.',
     },
-    ctaLabel: 'See the menu',
-    ctaHref: '/menu',
-    active: false,
+    branches: [
+      'SM City Marikina',
+      'SM City North EDSA City Center',
+      'SM City North EDSA Sky Garden',
+      'Robinsons Place Magnolia',
+      'Up Town Center',
+      'SM City Grand Central',
+      'SM City Sta. Rosa',
+      'SM Mall of Asia',
+      'Riverbanks Mall',
+      'SM City Lipa',
+      'SM City Batangas',
+      'Up Town Center BGC',
+      'SM City Taytay',
+      'SM City San Mateo',
+      'SM City Sto. Tomas',
+      'SM City Urdaneta',
+      'Mayor Gil Fernando Avenue, Marikina',
+      'SM Megamall',
+      'Ayala 30th',
+    ],
+    ctaLabel: 'Order on foodpanda',
+    ctaHref: 'https://foodpanda.ph/chain/cy2uf/avocadoria-ph',
+    startDate: '2026-09-09',
+    // No end date — running until further notice. Set this when the campaign
+    // ends, or the promo advertises indefinitely.
+    endDate: null,
+    active: true,
+    featured: true,
+  },
+
+
+  {
+    id: 'new-shakes-2026-09',
+    title: 'Shake it. Sip into it.',
+    body: 'Two new shakes: Avocado Yogurt Shake, and Coconut Milk Shake '
+        + '— keto friendly, less sugar.',
+    // Shown on the card and the promos page so customers know the window.
+    period: 'Available 15 September – 31 October 2026',
+    media: {
+      type: 'image',
+      src: '/promos/new-products-nationwide.webp',
+      alt: 'New Avocadoria products: Avocado Yogurt Shake PHP 249 and '
+         + 'Coconut Milk Shake, keto friendly, PHP 250.',
+    },
+    coverage: ['Available nationwide'],
+    ctaLabel: null,
+    ctaHref: null,
+    startDate: '2026-09-15',
+    endDate: '2026-10-31',
+    active: true,
+    featured: false,   // foodpanda keeps the splash modal
+  },
+
+  {
+    id: 'croissant-avo-pops-2026-09',
+    title: 'Croissant Avo Pops',
+    body: 'Senyorita avocado ice cream in a flaky croissant.',
+    media: {
+      type: 'image',
+      src: '/promos/new-products-metro-manila.webp',
+      alt: 'Croissant Avo Pops, PHP 185, with Avocado Yogurt Shake and '
+         + 'Coconut Milk Shake.',
+    },
+    period: 'Available 15 September – 31 October 2026',
+    branches: [
+      'Net 25 - Central Avenue',
+      'SM City Caloocan',
+      'SM City Sangandaan',
+      'Waltermart Caloocan',
+      'Evia Lifestyle Mall',
+      'Robinsons Place Las Pinas',
+      'SM Center Las Pinas',
+      'SM City Southmall',
+      'Landmark Makati',
+      'One Ayala Mall',
+      'The Market Place - Glorietta',
+      'Waltermart Makati',
+      'Zuellig Building',
+      'Robinsons Place Malabon',
+      'SMDC Light Mall',
+      'Starmall Shaw Boulevard',
+      '168 Mall - 5th Floor',
+      '168 Mall - Ground Floor',
+      '999 Shopping Mall',
+      'Ayala Malls Manila Bay',
+      'Greenhills Unimart',
+      'Greenhills Virra Mall',
+      'LRT Pasay Taft Rotonda',
+      'Moriones, Tondo',
+      'R. Square',
+      'Robinsons Place Manila',
+      'SM City Manila',
+      'SM City San Lazaro',
+      'SM City Sta. Mesa',
+      'Tutuban Mall',
+      'Ugbo - Tondo Manila',
+      'UPAD Hotel - Taft',
+      'Victory Mall - Quiapo Underpass',
+      'Youniversity Suites',
+      'Ayala Malls Marikina',
+      'Festival Mall Alabang',
+      'SM Center Muntinlupa',
+      'Waltermart Muntinlupa',
+      'Alabang Town Center',
+      'Landmark - Manila Bay',
+      'PITX',
+      'Shopwise Sucat',
+      'SM City BF Paranaque',
+      'SM City Bicutan',
+      'SM City Sucat',
+      'SM Hypermarket Sucat',
+      'Waltermart Sucat',
+      'Double Dragon Plaza',
+      'C. Raymundo',
+      'Estancia Mall',
+      'Robinsons Place Metro East',
+      'SM Center Pasig',
+      'SM City East Ortigas',
+      'Ayala Malls Cloverleaf',
+      'Ayala Malls Trinoma',
+      'Batasan Hills',
+      'Centris Mall',
+      'Crossroad Tandang Sora',
+      'Ever Commonwealth',
+      'Fishermall QC',
+      'Gateway Mall Cubao',
+      'Landmark - Trinoma',
+      'Robinsons Place Galleria',
+      'SM Araneta City - Cubao',
+      'SM City Fairview',
+      'SM City Novaliches',
+      'SM Hypermarket Cubao',
+      'SM Hypermarket Novaliches',
+      'SMDC Mplace',
+      'SMDC Sun Mall',
+      'UP Shopping Center',
+      'Waltermart E. Rodriguez',
+      'Waltermart North Edsa',
+      'Whiteplains QC',
+      'Wilcon City Center',
+      'AsiaTown McKinley West',
+      'Ayala Malls Market Market',
+      'Food District BGC',
+      'FTI Hypermarket',
+      'Venice Grand Canal Mall',
+      'Vista Mall Taguig',
+      'Drive and Dine NLEX',
+      'One Mall Valenzuela',
+      'SM City Valenzuela',
+      'Metroplaza Caloocan',
+      'Times Plaza',
+      'SM City Marikina',
+      'SM City North EDSA City Center',
+      'SM City North EDSA Sky Garden',
+      'Robinsons Place Magnolia',
+      'Up Town Center',
+      'SM City Grand Central',
+      'SM Mall of Asia',
+      'Riverbanks Mall',
+      'Up Town Center BGC',
+      'SM City Taytay',
+      'SM City San Mateo',
+      'Mayor Gil Fernando Avenue, Marikina',
+      'SM Megamall',
+    ],
+    ctaLabel: null,
+    ctaHref: null,
+    startDate: '2026-09-15',
+    endDate: '2026-10-31',
+    active: true,
+    featured: false,
   },
 ]
 
-/**
- * Builds the Facebook plugin URL at a specific pixel size.
- * Pass the reel's public URL — this handles the encoding.
- */
-export function buildFacebookEmbedUrl(href, width, height) {
-  const params = new URLSearchParams({
-    href,
-    width: String(width),
-    height: String(height),
-    show_text: 'false',
-    t: '0',
-  })
-  return `https://www.facebook.com/plugins/video.php?${params.toString()}`
-}
-
+/** Returns true when `promo` should be visible right now. */
 function isLive(promo, now) {
   if (!promo || promo.active === false) return false
 
@@ -106,13 +240,48 @@ function isLive(promo, now) {
 }
 
 /**
- * Returns the first live promo, or null when there is nothing to show.
- * Async on purpose so the swap to an admin/API source is a one-line change.
+ * Every promo currently running, in array order.
+ * Used by the homepage carousel and the promos page.
+ */
+export function getLivePromos(now = new Date()) {
+  return PROMOS.filter((p) => isLive(p, now))
+}
+
+/**
+ * Promos that have finished — for the "past promos" section, if wanted.
+ */
+export function getExpiredPromos(now = new Date()) {
+  return PROMOS.filter(
+    (p) => p.active !== false && p.endDate && new Date(`${p.endDate}T23:59:59`) < now
+  )
+}
+
+/**
+ * The single promo the splash modal shows: the first live one flagged
+ * `featured`, falling back to the first live promo of any kind.
+ *
+ * Async on purpose so swapping to an admin/API source later is a one-line
+ * change here rather than a change in every component.
  */
 export async function getActivePromo({ ignoreGates = false } = {}) {
-  // Preview mode: return the first promo regardless of active/date gates.
   if (ignoreGates) return PROMOS[0] || null
 
-  const now = new Date()
-  return PROMOS.find((promo) => isLive(promo, now)) || null
+  const live = getLivePromos()
+  return live.find((p) => p.featured) || live[0] || null
+}
+
+/**
+ * Builds a Facebook video plugin URL. Retained for promos using an embed.
+ * NOTE: Facebook's player does not render Reels correctly — it shows a black
+ * frame. Use a self-hosted MP4 (type:'video') instead.
+ */
+export function buildFacebookEmbedUrl(href, width, height) {
+  const params = new URLSearchParams({
+    href,
+    width: String(width),
+    height: String(height),
+    show_text: 'false',
+    t: '0',
+  })
+  return `https://www.facebook.com/plugins/video.php?${params.toString()}`
 }

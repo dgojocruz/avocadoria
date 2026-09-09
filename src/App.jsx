@@ -22,6 +22,7 @@ const CareersJobPage = lazyMin(() => import('@/pages/CareersJobPage'))
 const NotFoundPage     = lazyMin(() => import('@/pages/NotFoundPage'))
 const VideoGalleryPage = lazyMin(() => import('@/pages/VideoGalleryPage'))
 const ImageGalleryPage = lazyMin(() => import('@/pages/ImageGalleryPage'))
+const PromosPage       = lazyMin(() => import('@/pages/PromosPage'))
 
 function AnalyticsTracker() {
   usePageTracking()
@@ -47,6 +48,7 @@ export default function App() {
             <Route path="careers/:jobId" element={<CareersJobPage />} />
             <Route path="gallery/videos" element={<VideoGalleryPage />} />
             <Route path="gallery/photos" element={<ImageGalleryPage />} />
+            <Route path="about/promos"   element={<PromosPage />} />
             <Route path="*"              element={<NotFoundPage />} />
           </Route>
         </Routes>

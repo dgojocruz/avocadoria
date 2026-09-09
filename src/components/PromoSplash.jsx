@@ -4,12 +4,12 @@ import './PromoSplash.css'
 
 const STORAGE_KEY = 'avocadoria_dismissed_promos'
 const OPEN_DELAY_MS = 900
+const MIN_EMBED_WIDTH = 220
 
 /**
- * Preview mode. Add ?promo=force to any homepage URL to bypass the
- * dismissal record and the active/date gates — useful for showing the
- * client a promo before it goes live, and for repeat testing.
- * Nothing is written to storage while forcing.
+ * Preview mode. Add ?promo=force to any homepage URL to bypass the dismissal
+ * record and the active/date gates — useful for showing the client a promo
+ * before it goes live. Nothing is written to storage while forcing.
  */
 function isForced() {
   try {
@@ -18,9 +18,6 @@ function isForced() {
     return false
   }
 }
-
-// Facebook's plugin refuses to render below 220px wide.
-const MIN_EMBED_WIDTH = 220
 
 function readDismissed() {
   try {
@@ -50,26 +47,14 @@ function track(event, promo, extra = {}) {
   })
 }
 
-/**
- * Largest embed that fits the current viewport on BOTH axes.
- * Recomputed on resize and orientation change, so a laptop window
- * drag or a phone rotation re-fits instead of overflowing.
- */
 function fitEmbed(media, hasCopy) {
   const ratio = media.ratio || 16 / 9
   const maxWidth = media.maxWidth || 340
-
-  // Room taken by the CTA block and the modal's outer breathing space.
   const chrome = (hasCopy ? 104 : 0) + 48
-
-  // visualViewport tracks the real usable area on mobile once the
-  // browser's address bar collapses. innerHeight lags behind it.
   const vh = window.visualViewport?.height || window.innerHeight
   const vw = window.visualViewport?.width || window.innerWidth
-
   const byWidth = Math.min(vw - 32, maxWidth)
   const byHeight = (vh * 0.9 - chrome) / ratio
-
   const width = Math.max(MIN_EMBED_WIDTH, Math.floor(Math.min(byWidth, byHeight)))
   return { width, height: Math.round(width * ratio) }
 }
@@ -78,6 +63,7 @@ export default function PromoSplash() {
   const [promo, setPromo] = useState(null)
   const [open, setOpen] = useState(false)
   const [embed, setEmbed] = useState(null)
+  const [branchesOpen, setBranchesOpen] = useState(false)
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
   const lastFocusedRef = useRef(null)
@@ -107,25 +93,20 @@ export default function PromoSplash() {
   const isVideo = media.type === 'facebook'
   const hasCta = Boolean(promo?.ctaLabel && promo?.ctaHref)
   const hasCopy = Boolean(promo?.title || promo?.body || hasCta)
+  const branches = promo?.branches || []
 
-  // Live re-fit. Debounced so dragging a window edge doesn't thrash
-  // the iframe (each resize rebuilds the plugin URL and reloads it).
   useEffect(() => {
     if (!open || !isVideo) return undefined
-
     const apply = () => setEmbed(fitEmbed(media, hasCopy))
     apply()
-
     let debounce
     const onResize = () => {
       window.clearTimeout(debounce)
       debounce = window.setTimeout(apply, 220)
     }
-
     window.addEventListener('resize', onResize)
     window.addEventListener('orientationchange', onResize)
     window.visualViewport?.addEventListener('resize', onResize)
-
     return () => {
       window.clearTimeout(debounce)
       window.removeEventListener('resize', onResize)
@@ -167,13 +148,10 @@ export default function PromoSplash() {
         return
       }
       if (event.key !== 'Tab') return
-
       const focusable = dialogRef.current?.querySelectorAll('a[href], button:not([disabled])')
       if (!focusable?.length) return
-
       const first = focusable[0]
       const last = focusable[focusable.length - 1]
-
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault()
         last.focus()
@@ -193,9 +171,6 @@ export default function PromoSplash() {
   if (!promo || !open) return null
 
   const isExternal = hasCta && /^https?:\/\//i.test(promo.ctaHref)
-
-  // Facebook letterboxes the reel inside whatever box it's given.
-  // `crop` scales the iframe up and lets the wrapper clip the bars.
   const crop = media.crop || 1
 
   return (
@@ -230,6 +205,7 @@ export default function PromoSplash() {
             src={media.src}
             alt={media.alt || ''}
             loading="eager"
+            fetchPriority="high"
             decoding="async"
           />
         )}
@@ -265,14 +241,53 @@ export default function PromoSplash() {
           </div>
         )}
 
-        {hasCopy && (
+        {(hasCopy || branches.length > 0) && (
           <div className="promo-splash__content">
             {promo.title && (
               <h2 className="promo-splash__title" id="promo-splash-title">
                 {promo.title}
               </h2>
             )}
+
             {promo.body && <p className="promo-splash__body">{promo.body}</p>}
+
+            {/* Participating branches. Collapsed by default so the CTA stays
+                above the fold on a phone; the count is in the label so the
+                customer knows it is worth opening. */}
+            {branches.length > 0 && (
+              <div className="promo-splash__branches">
+                <button
+                  type="button"
+                  className="promo-splash__branches-toggle"
+                  onClick={() => {
+                    const next = !branchesOpen
+                    setBranchesOpen(next)
+                    if (next) track('promo_branches_open', promo)
+                  }}
+                  aria-expanded={branchesOpen}
+                  aria-controls="promo-branch-list"
+                >
+                  <span className="promo-splash__branches-label">
+                    Available at {branches.length} branches
+                  </span>
+                  <span
+                    className={`promo-splash__chevron${branchesOpen ? ' is-open' : ''}`}
+                    aria-hidden="true"
+                  >
+                    &#9662;
+                  </span>
+                </button>
+
+                {branchesOpen && (
+                  <ul className="promo-splash__branch-list" id="promo-branch-list">
+                    {branches.map((b) => (
+                      <li key={b}>{b}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
+
             {hasCta && (
               <a
                 className="promo-splash__cta"
@@ -286,6 +301,7 @@ export default function PromoSplash() {
                 }}
               >
                 {promo.ctaLabel}
+                <span className="promo-splash__cta-arrow" aria-hidden="true">&rarr;</span>
               </a>
             )}
           </div>
