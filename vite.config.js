@@ -8,13 +8,13 @@ export default defineConfig({
     sitemap({
       hostname: 'https://avocadoria.com',
       dynamicRoutes: [
-        '/',
         '/our-stores',
         '/about',
         '/menu',
         '/franchise',
         '/party-cart',
         '/careers',
+        '/about/promos',
         '/gallery/photos',
         '/gallery/videos',
       ],
