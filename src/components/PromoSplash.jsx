@@ -4,6 +4,22 @@ import './PromoSplash.css'
 
 const STORAGE_KEY = 'avocadoria_dismissed_promos'
 const OPEN_DELAY_MS = 900
+
+/**
+ * true  — the splash appears on EVERY visit. Closing it only hides it for
+ *         that page view; it returns on the next one.
+ * false — once a visitor closes a promo, that promo id never shows for them
+ *         again on that browser.
+ */
+const SHOW_EVERY_VISIT = true
+
+/**
+ * Auto-dismiss after this long, so the splash never blocks the homepage.
+ * The countdown PAUSES while the visitor is interacting (hover, focus, touch,
+ * or opening the branch list) — pulling a modal away mid-read is worse than
+ * either always showing it or never showing it. Set to 0 to disable.
+ */
+const AUTO_CLOSE_MS = 5000
 const MIN_EMBED_WIDTH = 220
 
 /**
@@ -64,9 +80,11 @@ export default function PromoSplash() {
   const [open, setOpen] = useState(false)
   const [embed, setEmbed] = useState(null)
   const [branchesOpen, setBranchesOpen] = useState(false)
+  const [engaged, setEngaged] = useState(false)
   const dialogRef = useRef(null)
   const closeRef = useRef(null)
   const lastFocusedRef = useRef(null)
+  const touchHoldRef = useRef(null)
 
   const forced = isForced()
 
@@ -77,7 +95,7 @@ export default function PromoSplash() {
     getActivePromo({ ignoreGates: forced })
       .then((found) => {
         if (cancelled || !found) return
-        if (!forced && readDismissed().includes(found.id)) return
+        if (!forced && !SHOW_EVERY_VISIT && readDismissed().includes(found.id)) return
         setPromo(found)
         timer = window.setTimeout(() => !cancelled && setOpen(true), OPEN_DELAY_MS)
       })
@@ -123,15 +141,24 @@ export default function PromoSplash() {
   const close = useCallback(
     (reason) => {
       if (promo) {
-        if (!forced) markDismissed(promo.id)
+        if (!forced && !SHOW_EVERY_VISIT) markDismissed(promo.id)
         track('promo_dismiss', promo, { dismiss_method: reason })
       }
+      window.clearTimeout(touchHoldRef.current)
       setOpen(false)
       const previous = lastFocusedRef.current
       if (previous && typeof previous.focus === 'function') previous.focus()
     },
     [promo, forced]
   )
+
+  // Auto-dismiss. Restarts whenever engagement ends, giving the visitor the
+  // full window back rather than whatever was left when they touched it.
+  useEffect(() => {
+    if (!open || !AUTO_CLOSE_MS || engaged || branchesOpen) return undefined
+    const t = window.setTimeout(() => close('auto'), AUTO_CLOSE_MS)
+    return () => window.clearTimeout(t)
+  }, [open, engaged, branchesOpen, close])
 
   useEffect(() => {
     if (!open) return undefined
@@ -188,16 +215,45 @@ export default function PromoSplash() {
         aria-label={promo.title ? undefined : 'Avocadoria promo'}
         ref={dialogRef}
         style={isVideo && embed ? { width: `${embed.width}px` } : undefined}
+        onMouseEnter={() => setEngaged(true)}
+        onMouseLeave={() => setEngaged(false)}
+        onTouchStart={() => {
+          // No mouseleave on touch devices, so release engagement after a
+          // pause rather than freezing the countdown for good.
+          setEngaged(true)
+          window.clearTimeout(touchHoldRef.current)
+          touchHoldRef.current = window.setTimeout(() => setEngaged(false), 4000)
+        }}
       >
-        <button
-          type="button"
-          className="promo-splash__close"
-          onClick={() => close('close_button')}
-          aria-label="Close promo"
-          ref={closeRef}
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <div className="promo-splash__close-wrap">
+          {/* Countdown ring around the close button: the timer lives where
+              the close action is, so it reads as "closing in a moment"
+              rather than an unexplained progress bar. */}
+          {AUTO_CLOSE_MS > 0 && (
+            <svg
+              className={`promo-splash__ring${engaged || branchesOpen ? ' is-paused' : ''}`}
+              viewBox="0 0 44 44"
+              aria-hidden="true"
+            >
+              <circle className="promo-splash__ring-track" cx="22" cy="22" r="20" />
+              <circle
+                className="promo-splash__ring-fill"
+                cx="22" cy="22" r="20"
+                style={{ animationDuration: `${AUTO_CLOSE_MS}ms` }}
+              />
+            </svg>
+          )}
+
+          <button
+            type="button"
+            className="promo-splash__close"
+            onClick={() => close('close_button')}
+            aria-label="Close promo"
+            ref={closeRef}
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
         {media.type === 'image' && (
           <img
@@ -268,7 +324,7 @@ export default function PromoSplash() {
                   aria-controls="promo-branch-list"
                 >
                   <span className="promo-splash__branches-label">
-                    Available at {branches.length} branches
+                    Click here for the list of participating stores
                   </span>
                   <span
                     className={`promo-splash__chevron${branchesOpen ? ' is-open' : ''}`}
@@ -296,7 +352,7 @@ export default function PromoSplash() {
                 rel={isExternal ? 'noopener noreferrer' : undefined}
                 onClick={() => {
                   track('promo_cta_click', promo, { promo_destination: promo.ctaHref })
-                  if (!forced) markDismissed(promo.id)
+                  if (!forced && !SHOW_EVERY_VISIT) markDismissed(promo.id)
                   setOpen(false)
                 }}
               >

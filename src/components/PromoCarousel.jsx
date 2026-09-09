@@ -20,6 +20,7 @@ export default function PromoCarousel() {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
   const [userTook, setUserTook] = useState(false)
+  const [branchesOpen, setBranchesOpen] = useState(false)
   const touchX = useRef(null)
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function PromoCarousel() {
   const go = useCallback(
     (next, manual = false) => {
       if (manual) setUserTook(true)
+      setBranchesOpen(false)   // don't carry one promo's list onto another
       setIndex(((next % count) + count) % count)
     },
     [count]
@@ -142,9 +144,38 @@ export default function PromoCarousel() {
               {promo.body && <p className="promo-carousel__text">{promo.body}</p>}
 
               {promo.branches?.length > 0 && (
-                <p className="promo-carousel__meta">
-                  Available at {promo.branches.length} branches
-                </p>
+                <div className="promo-carousel__branches">
+                  <button
+                    type="button"
+                    className="promo-carousel__branches-toggle"
+                    onClick={() => {
+                      const next = !branchesOpen
+                      setBranchesOpen(next)
+                      if (next) track('promo_branches_open', promo)
+                    }}
+                    aria-expanded={branchesOpen}
+                    aria-controls={`promo-branches-${promo.id}`}
+                  >
+                    <span>
+                      Click here for the list of participating stores
+                    </span>
+                    <span
+                      className={`promo-carousel__chevron${branchesOpen ? ' is-open' : ''}`}
+                      aria-hidden="true"
+                    >
+                      &#9662;
+                    </span>
+                  </button>
+
+                  {branchesOpen && (
+                    <ul
+                      className="promo-carousel__branch-list"
+                      id={`promo-branches-${promo.id}`}
+                    >
+                      {promo.branches.map((b) => <li key={b}>{b}</li>)}
+                    </ul>
+                  )}
+                </div>
               )}
 
               {promo.coverage?.map((line) => (

@@ -27,11 +27,18 @@
 
 /* ── Close button ───────────────────────────────────────────────── */
 
-.promo-splash__close {
+.promo-splash__close-wrap {
   position: absolute;
   top: 10px;
   right: 10px;
   z-index: 2;
+  width: 40px;
+  height: 40px;
+}
+
+.promo-splash__close {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
   width: 40px; /* 40px keeps it a comfortable tap target on phones */
@@ -113,30 +120,8 @@
   color: #4a4f3d;
 }
 
-.promo-splash__cta {
-  display: inline-block;
-  min-height: 44px; /* iOS minimum tap target */
-  margin-top: 14px;
-  padding: 12px 32px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff;
-  text-decoration: none;
-  background: #b6c548;
-  border-radius: 999px;
-  transition: background-color 160ms ease, transform 160ms ease;
-}
-
-.promo-splash__cta:hover {
-  background: #a3b13c;
-  transform: translateY(-2px);
-}
-
-.promo-splash__cta:focus-visible {
-  outline: 3px solid #3a3f2c;
-  outline-offset: 3px;
-}
+/* .promo-splash__cta is defined once, further down with the branch-list
+   styles — an earlier flat-colour version was removed as dead code. */
 
 /* ── Video variant tweaks ───────────────────────────────────────── */
 
@@ -215,11 +200,6 @@
     transform: none;
   }
 }
-/* ============================================================
-   APPEND THIS to the END of src/components/PromoSplash.css
-   Adds: participating-branch list + a CTA that draws the eye.
-   ============================================================ */
-
 /* ── Participating branches ─────────────────────────────────── */
 
 .promo-splash__branches {
@@ -376,4 +356,55 @@
   .promo-splash__chevron {
     transition: none;
   }
+}
+/* ── Auto-dismiss countdown ring ────────────────────────────── */
+
+/* Sits just outside the close button so the button stays legible.
+   Stroke-dashoffset animates the ring open, draining anticlockwise
+   from the top. */
+.promo-splash__ring {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
+  transform: rotate(-90deg);   /* start the drain at 12 o'clock */
+}
+
+/* Track sits underneath: a full green ring, so the countdown reads as
+   green depleting rather than white being revealed. */
+.promo-splash__ring-track {
+  fill: none;
+  stroke: rgba(182, 197, 72, 0.28);
+  stroke-width: 3;
+}
+
+/* The animated stroke is the solid green one — it shortens as time runs
+   out, leaving only the faint track behind. */
+.promo-splash__ring-fill {
+  fill: none;
+  stroke: #b6c548;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  /* 2 * pi * r, r = 20 */
+  stroke-dasharray: 125.66;
+  animation-name: promo-ring-drain;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.promo-splash__ring.is-paused .promo-splash__ring-fill {
+  animation-play-state: paused;
+}
+
+@keyframes promo-ring-drain {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: 125.66; }
+}
+
+/* Reduced motion: no animated ring. The timer still runs — the close
+   button simply has no countdown indicator. */
+@media (prefers-reduced-motion: reduce) {
+  .promo-splash__ring { display: none; }
 }

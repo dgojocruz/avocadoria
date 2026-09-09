@@ -116,7 +116,7 @@ function PromoCard({ promo }) {
                 color: '#3a6b35', cursor: 'pointer', textAlign: 'left',
               }}
             >
-              Available at {detail.length} branches
+              Click here for the list of participating stores
               <span aria-hidden="true" style={{
                 color: '#b6c548',
                 transform: open ? 'rotate(180deg)' : 'none',
