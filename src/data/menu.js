@@ -322,6 +322,15 @@ export const CATEGORIES = [
         tags:  ['Keto', 'Light'],
         new:   false,
       },
+      {
+        id:    'avo-yogurt-shake',
+        price: '16oz ₱249',
+        name:  'Avocado Yogurt Shake',
+        desc:  'Creamy avocado blended with yogurt, topped with fresh avocado chunks, almonds and seeds.',
+        image: '/menu/Avocado Shakes/avo-yogurt-shake.webp',
+        tags:  ['Light'],
+        new:   true,
+      },
       // ↑ ADD MORE HEALTHY SERIES HERE
     ],
   },

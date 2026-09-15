@@ -97,7 +97,7 @@ export const PROMOS = [
     ctaHref: null,
     startDate: '2026-09-15',
     endDate: '2026-10-31',
-    active: true,
+    active: false,   // paused 2026-09-15 — keeping foodpanda + croissant live
     featured: false,   // foodpanda keeps the splash modal
   },
 
@@ -107,9 +107,9 @@ export const PROMOS = [
     body: 'Senyorita avocado ice cream in a flaky croissant.',
     media: {
       type: 'image',
-      src: '/promos/new-products-metro-manila.webp',
-      alt: 'Croissant Avo Pops, PHP 185, with Avocado Yogurt Shake and '
-         + 'Coconut Milk Shake.',
+      src: '/promos/croissant-avo-pops.webp',
+      alt: 'Croissant Avo Pops — Senyorita avocado ice cream in a flaky '
+         + 'croissant. When Avo meets Masa Madre.',
     },
     period: 'Available 15 September – 31 October 2026',
     branches: [

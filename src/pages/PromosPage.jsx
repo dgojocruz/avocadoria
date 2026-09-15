@@ -28,15 +28,28 @@ function PromoCard({ promo }) {
       style={{
         display: 'flex',
         flexDirection: 'column',
+        position: 'relative',
         borderRadius: '20px',
         overflow: 'hidden',
-        background: '#e8f0c8',
-        boxShadow: '0 8px 28px rgba(58,107,53,0.14)',
+        background: '#b6c548',
+        boxShadow: [
+          '0 1px 0 rgba(255,255,255,0.5) inset',
+          '0 -14px 26px -16px rgba(58,107,53,0.35) inset',
+          '0 2px 4px rgba(255,255,255,0.4) inset',
+          '0 8px 28px rgba(58,107,53,0.22)',
+        ].join(', '),
         height: '100%',
       }}
     >
-      {/* Artwork — 1414x2000 source, so a 707/1000 box shows it whole with
-          no cropping. object-fit: contain guards the odd-sized promo. */}
+      {/* subtle top sheen — reinforces the raised/embossed feel */}
+      <span style={{
+        position: 'absolute', top: 0, left: '10%', right: '10%', height: '1px',
+        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent)',
+        zIndex: 2,
+      }} />
+
+      {/* Artwork — 1414x2000-ish source, so a 707/1000 box shows it whole
+          with no cropping. object-fit: contain guards the odd-sized promo. */}
       <div style={{ position: 'relative', width: '100%', aspectRatio: '707 / 1000' }}>
         {promo.media?.type === 'image' && (
           <img
