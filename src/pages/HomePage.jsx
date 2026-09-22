@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { NEWS_POSTS } from '@/data/posts'
 import PromoSplash from '@/components/PromoSplash'
 import PromoCarousel from '@/components/PromoCarousel'
+import { getLivePromos } from '@/data/promos'
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // HERO CONFIG
@@ -1034,6 +1035,13 @@ export default function HomePage() {
         </section>
 
 
+
+        {/* Wave: Avo Faves → promos — same transition as franchise → What's New.
+            Gated on live promos: PromoCarousel renders nothing when none are
+            running, and an unconditional wave would leave a stray stripe. */}
+        {getLivePromos().length > 0 && (
+          <Wave fromColor="#b6c548" toColor="#d9e29e" height={56} />
+        )}
 
         {/* Current promos — renders nothing when no promo is live, so this
             section removes itself once campaigns end. */}
